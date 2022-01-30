@@ -3,11 +3,8 @@ namespace App\Helpers;
 use App\DeliveryDetailReplace;
 use App\MachineSetup;
 use App\ProductionPlanDetailSetup;
-use App\PurchaseOrderDetail;
 use Illuminate\Support\Facades\DB;
 
-use App\category;
-use App\subcategory;
 class Helper{
    public static function IDwiseData($table_name,$field_name,$Id)
    {
@@ -32,15 +29,6 @@ class Helper{
             ->where($field_name_three,$Id_Three)
             ->first();
     }
-
-   public static function AssetCode($CategoryID,$SubCategoryID)
-   {
-      $category = category::where('CategoryID',$CategoryID)->first();
-      $var1 = $category->CategoryCode;
-      $subcategory = subcategory::where('SubCategoryID',$SubCategoryID)->first();
-      $var2 = $subcategory->SubCategoryCode;
-      return $var1.$var2;
-   }
 
    public static function delete($table_name,$table_ID,$ID_value)
    {
@@ -142,9 +130,9 @@ class Helper{
            ->where('production_plan_detail_setups.purchase_order_detail_id', $detail_id)
            ->sum('production_plan_detail_setups.achievement_production');
 
-       $replacmentQty = (float)DeliveryDetailReplace::getTotalReplacementProductionQtyForPlan($master_id, $detail_id);
+       $replacementQty = (float)DeliveryDetailReplace::getTotalReplacementProductionQtyForPlan($master_id, $detail_id);
        //$replacmentQty = 0;
-       return ($orderQuantity - $targetProductionActive - $productionAchievement + $replacmentQty);
+       return ($orderQuantity - $targetProductionActive - $productionAchievement + $replacementQty);
    }
 
    public static function GetTotalOrderQuantityMaster($master_id){
