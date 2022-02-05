@@ -119,7 +119,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a onclick="refresh()" role="button" tabindex="0" class="tile-refresh">
+                                        <a onclick="loadDataTable()" role="button" tabindex="0" class="tile-refresh">
                                             <i class="fa fa-refresh"></i> Refresh
                                         </a>
                                     </li>
@@ -138,16 +138,16 @@
                             <table class="table table-hover table-bordered table-condensed" id="advanced-usage">
                                 <thead>
                                 <tr style="background-color: #1693A5; color: white;">
-                                    <th class="text-center">Sl No.</th>
+                                    {{--<th class="text-center">Sl No.</th>--}}
                                     <th class="text-center">Section Name</th>
                                     <th class="text-center">Machine Name</th>
-                                    <th class="text-center">Remarks</th>
                                     <th class="text-center">Active Hour</th>
+                                    <th class="text-center">Remarks</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @php($i = 1)
+                               {{-- @php($i = 1)
                                 @foreach($machines as $item)
                                     <tr>
                                         <td class="text-center">{{$i++}}</td>
@@ -164,7 +164,7 @@
                                             @else
                                                 @if($item->status == 'A')
                                                     <a title="De-Activate" class="DeActivateBuyer btn btn-warning btn-xs" data-id = "{{ $item->id }}"><i class="fa fa-arrow-circle-down"></i></a>
-{{--                                                    <a title="Block" class="BlockActivateBuyer btn btn-danger btn-xs" data-id = "{{ $item->id }}"><i class="fa fa-times"></i></a>--}}
+--}}{{--                                                    <a title="Block" class="BlockActivateBuyer btn btn-danger btn-xs" data-id = "{{ $item->id }}"><i class="fa fa-times"></i></a>--}}{{--
                                                 @elseif($item->status == 'IN' || $item->status == 'B')
                                                     <a title="Activate" class="ActivateBuyer btn btn-success btn-xs" data-id = "{{ $item->id }}"><i class="fa fa-arrow-circle-up"></i></a>
                                                 @endif
@@ -174,7 +174,7 @@
                                             @endif
                                         </td>
                                     </tr>
-                                @endforeach
+                                @endforeach--}}
                                 </tbody>
                             </table>
                         </div>
@@ -197,12 +197,60 @@
     {{--    <script src="{{ asset('back-end/assets/MyJS/jquery.min.js') }}"></script>--}}
     <script src="{{ asset('/js/common.js') }}"></script>
     <script>
+        var table = $('#advanced-usage').DataTable({
+            "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
+        });
+
         $(window).load(function(){
             $('.select2').select2();
-            $('#advanced-usage').DataTable({
-
-            });
+            loadDataTable();
         });
+
+        function loadDataTable() {
+            table.destroy();
+            var free_table = '<tr><td class="text-center" colspan="5">--- Please Wait... Loading Data  ----</td></tr>';
+            $('tbody').html(free_table);
+            table = $("#advanced-usage").DataTable({
+                ajax: {
+                    url: "/api/production/machine/not-deleted",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "section_setup_name",
+                    },
+                    {
+                        data: "name",
+                    },
+                    {
+                        data: "active_hours"
+                    },
+                    {
+                        data: "remarks"
+                    },
+                    {
+                        /*data: "id",*/
+                        render: function(data, type, machine) {
+                            if(machine.status === 'I'){
+                                return "<a title= 'Delete' class= 'DeleteBuyer btn btn-danger btn-xs' data-id = "+ machine.id +"><i class='fa fa-trash'></i></a>" +
+                                    " &nbsp;" +
+                                    "<a title= 'Activate' class= 'ActivateBuyer btn btn-success btn-xs' data-id = "+ machine.id +"><i class='fa fa-arrow-circle-up'></i></a>"
+                            }
+                            else if(machine.status === 'A'){
+                                return "<a title= 'Delete' class= 'DeleteBuyer btn btn-danger btn-xs' data-id = "+ machine.id +"><i class='fa fa-trash'></i></a>" +
+                                    " &nbsp;" +
+                                    "<a title= 'Activate' class= 'DeActivateBuyer btn btn-warning btn-xs' data-id = "+ machine.id +"><i class='fa fa-arrow-circle-down'></i></a>" +
+                                    " &nbsp;" +
+                                    "<a title= 'Edit' class= 'EditFactory btn btn-warning btn-xs' data-id = "+ machine.id +"><i class='fa fa-edit'></i></a>"
+                            }
+                            else{
+
+                            }
+                        }
+                    }
+                ]
+            });
+        }
 
         function validateForm() {
             var trims_type = document.forms["PurchaseOrderForm"]["trims_type"].value;
@@ -246,11 +294,29 @@
                         success:function(data){
                             if(data === '2')
                             {
-                               swalUpdateSuccessfulWithRefresh();
+                                swal({
+                                    title: "Data Updated Successfully!",
+                                    icon: "success",
+                                    button: "Ok!",
+                                }).then(function (value) {
+                                    if(value){
+                                        clearFormWithoutDelay("FactoryAdd");
+                                        loadDataTable();
+                                    }
+                                });
                             }
                             else if(data === '1')
                             {
-                               swalInsertSuccessfulWithRefresh();
+                                swal({
+                                    title: "Data Inserted Successfully!",
+                                    icon: "success",
+                                    button: "Ok!",
+                                }).then(function (value) {
+                                    if(value){
+                                        clearFormWithoutDelay("FactoryAdd");
+                                        loadDataTable();
+                                    }
+                                });
                             }
                             else{
                                 swalDataNotSaved();
@@ -264,9 +330,9 @@
 
             })
         });
+
         $('#advanced-usage').on('click',".EditFactory", function(){
             var button = $(this);
-
             var FactoryID = button.attr("data-id");
             var url = '{{ route('production.machine.edit') }}';
             $.ajax({
@@ -501,6 +567,7 @@
             $('#iconChange').find('i').addClass('fa-edit');
 
         }
+
     </script>
 @endsection()
 

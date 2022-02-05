@@ -16,7 +16,6 @@ function changeButtonText(_text, _id, _nodeValue) {
         }
     })
     //$('#iconChange').find('i').addClass('fa-edit');
-
 }
 
 function moveToTop() {

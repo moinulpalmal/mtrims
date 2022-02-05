@@ -3,9 +3,23 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class MachineSetup extends Model{
 
+    public static function getAllNotDeletedMachines(){
+        $data = DB::table('machine_setups')
+            ->join('section_setups', 'section_setups.id', '=', 'machine_setups.section_setup_id')
+            ->select('section_setups.name AS section_setup_name',
+            'machine_setups.id', 'machine_setups.name', 'machine_setups.remarks',
+                'machine_setups.active_hours', 'machine_setups.status')
+            ->where('machine_setups.status', '!=', 'D')
+            ->orderBy('section_setups.name', 'ASC')
+            ->orderBy('machine_setups.name', 'ASC')
+            ->get();
+
+        return $data;
+    }
 
     public static function getActiveMachineCount(){
         return MachineSetup::where('status', '!=', 'D')->get()->count();

@@ -12,15 +12,17 @@ use Illuminate\Support\Facades\DB;
 class MachineController extends Controller
 {
     public function index(){
-        $machines = MachineSetup::orderBy('name')->where('status','!=', 'D')->get();
+        $machines = MachineSetup::getAllNotDeletedMachines();
         //$trimsTypes = TrimsType::orderBy('name')->where('status','!=', 'D')->get();
         $sectionSetups = SectionSetup::orderBy('name')->where('status','!=', 'D')->get();
         return view('production.machine.index', compact('machines', 'sectionSetups'));
     }
 
+    public function getAllNotDeletedMachines(){
+       return MachineSetup::getAllNotDeletedMachines();
+    }
+
     public function saveMachine(Request $request){
-
-
         $id = $request->get('id');
         if(!empty($id))
         {
