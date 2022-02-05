@@ -30,13 +30,14 @@ class Helper{
             ->first();
     }
 
-   public static function delete($table_name,$table_ID,$ID_value)
+  /* public static function delete($table_name,$table_ID,$ID_value)
    {
       DB::table($table_name)
       ->where($table_ID, $ID_value)
       ->delete();
+
       return;
-   }
+   }*/
 
    public static function StockIDBasedOnPO($master_id, $detail_id){
        $getStock = DB::table('trims_stocks')
