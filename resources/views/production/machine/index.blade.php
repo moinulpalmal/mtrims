@@ -218,30 +218,42 @@
                 columns: [
                     {
                         data: "section_setup_name",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
                     },
                     {
                         data: "name",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
                     },
                     {
-                        data: "active_hours"
+                        data: "active_hours",
+                        render: function (data) {
+                            return "<p class ='text-center'>"+ data +"</p>";
+                        }
                     },
                     {
-                        data: "remarks"
+                        data: "remarks",
+                        render: function (data) {
+                            return "<p class ='text-right'>"+ data +"</p>";
+                        }
                     },
                     {
                         /*data: "id",*/
                         render: function(data, type, machine) {
                             if(machine.status === 'I'){
-                                return "<a title= 'Delete' class= 'DeleteBuyer btn btn-danger btn-xs' data-id = "+ machine.id +"><i class='fa fa-trash'></i></a>" +
+                                return "<p class='text-center'><a title= 'Delete' class= 'DeleteBuyer btn btn-danger btn-xs' data-id = "+ machine.id +"><i class='fa fa-trash'></i></a>" +
                                     " &nbsp;" +
-                                    "<a title= 'Activate' class= 'ActivateBuyer btn btn-success btn-xs' data-id = "+ machine.id +"><i class='fa fa-arrow-circle-up'></i></a>"
+                                    "<a title= 'Activate' class= 'ActivateBuyer btn btn-success btn-xs' data-id = "+ machine.id +"><i class='fa fa-arrow-circle-up'></i></a></p>"
                             }
                             else if(machine.status === 'A'){
-                                return "<a title= 'Delete' class= 'DeleteBuyer btn btn-danger btn-xs' data-id = "+ machine.id +"><i class='fa fa-trash'></i></a>" +
+                                return "<p class='text-center'><a title= 'Delete' class= 'DeleteBuyer btn btn-danger btn-xs' data-id = "+ machine.id +"><i class='fa fa-trash'></i></a>" +
                                     " &nbsp;" +
                                     "<a title= 'Activate' class= 'DeActivateBuyer btn btn-warning btn-xs' data-id = "+ machine.id +"><i class='fa fa-arrow-circle-down'></i></a>" +
                                     " &nbsp;" +
-                                    "<a title= 'Edit' class= 'EditFactory btn btn-warning btn-xs' data-id = "+ machine.id +"><i class='fa fa-edit'></i></a>"
+                                    "<a title= 'Edit' class= 'EditFactory btn btn-warning btn-xs' data-id = "+ machine.id +"><i class='fa fa-edit'></i></a></p>"
                             }
                             else{
 
