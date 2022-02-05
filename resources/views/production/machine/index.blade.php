@@ -55,7 +55,7 @@
                                 <div class="col-md-2 no-padding">
                                     <div class="form-group">
                                         <label for="TrimsType" class="control-label">Select Section</label>
-                                        <select id="TrimsType" class="form-control chosen-select" name="section" style="width: 100%;">
+                                        <select id="TrimsType" class="form-control select2" name="section" style="width: 100%;">
                                             <option value="" selected ="selected">- - - Select - - -</option>
                                             @if(!empty($sectionSetups))
                                                 @foreach($sectionSetups as $item)
@@ -71,19 +71,25 @@
                                         <input type="text" class="form-control" name="name" id="TypeName" placeholder="Enter machine name" required="">
                                     </div>
                                 </div>
+                                <div class="col-md-2 no-padding">
+                                    <div class="form-group">
+                                        <label for="ActiveHours" class="control-label">Active Hours</label>
+                                        <input type="number" min="1" max="24" class="form-control" name="active_hours" id="ActiveHours">
+                                    </div>
+                                </div>
                                 <div class="col-md-4 no-padding">
                                     <div class="form-group">
                                         <label for="Remarks" class="control-label">Remarks</label>
                                         <input type="text" class="form-control" name="remarks" id="Remarks">
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                {{--<div class="col-md-2">
                                     <div class="form-group">
                                         <label class="checkbox checkbox-custom-alt checkbox-custom-lg" style="padding-top: 17px">
                                             <input name="IsSubCon" id="IsSubCon" type="checkbox"><i></i> <strong>Is Sub-Con Machine ?</strong>
                                         </label>
                                     </div>
-                                </div>
+                                </div>--}}
                             </div>
                         </div>
                         <!-- /tile body -->
@@ -136,7 +142,7 @@
                                     <th class="text-center">Section Name</th>
                                     <th class="text-center">Machine Name</th>
                                     <th class="text-center">Remarks</th>
-                                    <th class="text-center">Is Sub-Con Machine</th>
+                                    <th class="text-center">Active Hour</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                                 </thead>
@@ -149,11 +155,7 @@
                                         <td>{{$item->name}}</td>
                                         <td>{!! $item->remarks !!}</td>
                                         <td class="text-center">
-                                            @if($item->is_sub_con == true)
-                                                <span class="label label-success">Yes</span>
-                                            @else
-                                                <span class="label label-danger">No</span>
-                                            @endif
+                                            {!! $item->active_hours !!}
                                         </td>
                                         <td class="text-center">
                                             <a onclick="iconChange()" data-id = "{{ $item->id }}" class="EditFactory btn btn-warning btn-xs"><i class="fa fa-edit"></i></a>
@@ -193,19 +195,19 @@
 @endsection
 @section('pageScripts')
     {{--    <script src="{{ asset('back-end/assets/MyJS/jquery.min.js') }}"></script>--}}
-
+    <script src="{{ asset('/js/common.js') }}"></script>
     <script>
         $(window).load(function(){
+            $('.select2').select2();
             $('#advanced-usage').DataTable({
 
             });
         });
 
         function validateForm() {
-
             var trims_type = document.forms["PurchaseOrderForm"]["trims_type"].value;
 
-            if(trims_type == ""){
+            if(trims_type === ""){
                 swal({
                     title: "Select Trims Type!",
                     icon: "warning",
@@ -224,13 +226,10 @@
             $('#FactoryAdd').submit(function(e){
                 e.preventDefault();
                 var data = $(this).serialize();
-                var id = $('#HiddenFactoryID').val();
+               /* var id = $('#HiddenFactoryID').val();*/
                 var url = '{{ route('production.machine.save') }}';
-
-
                 var trims_type = document.forms["MachineForm"]["section"].value;
-
-                if(trims_type == ""){
+                if(trims_type === ""){
                     swal({
                         title: "Select Section!",
                         icon: "warning",
@@ -245,48 +244,23 @@
                         method:'POST',
                         data:data,
                         success:function(data){
-                            /*console.log(data);
-                            return;*/
-                            if(id)
+                            if(data === '2')
                             {
-                                swal({
-                                    title: "Data Updated Successfully!",
-                                    icon: "success",
-                                    button: "Ok!",
-                                }).then(function (value) {
-                                    if(value){
-                                        window.location.href = window.location.href.replace(/#.*$/, '');
-                                    }
-                                });
+                               swalUpdateSuccessfulWithRefresh();
                             }
-                            else
+                            else if(data === '1')
                             {
-                                swal({
-                                    title: "Data Inserted Successfully!",
-                                    icon: "success",
-                                    button: "Ok!",
-                                }).then(function (value) {
-                                    if(value){
-                                        window.location.href = window.location.href.replace(/#.*$/, '');
-                                    }
-                                });
+                               swalInsertSuccessfulWithRefresh();
+                            }
+                            else{
+                                swalDataNotSaved();
                             }
                         },
                         error:function(error){
-                            console.log(error);
-                            swal({
-                                title: "Data Not Saved!",
-                                text: "Please Check Your Data!",
-                                icon: "error",
-                                button: "Ok!",
-                                className: "myClass",
-
-                            });
+                            swalDataNotSaved();
                         }
                     })
                 }
-
-
 
             })
         });
@@ -294,8 +268,6 @@
             var button = $(this);
 
             var FactoryID = button.attr("data-id");
-
-
             var url = '{{ route('production.machine.edit') }}';
             $.ajax({
                 url: url,
@@ -304,14 +276,16 @@
                 success:function(data){
                     $('input[name=name]').val(data.name);
                     $('input[name=remarks]').val(data.remarks);
-                    if (data.is_sub_con === 1)
+                    $('input[name=active_hours]').val(data.active_hours);
+                    $('select[name=section]').val(data.section).change();
+                    /*if (data.is_sub_con === 1)
                     {
                         $('input[name=IsSubCon]').prop('checked', true);
                     }
                     else if (data.is_sub_con === 0)
                     {
                         $('input[name=IsSubCon]').prop('checked', false);
-                    }
+                    }*/
 
                     $('input[name=id]').val(data.id);
                 },
