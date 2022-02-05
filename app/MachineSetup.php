@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class MachineSetup extends Model{
@@ -39,6 +40,7 @@ class MachineSetup extends Model{
         $supplier->section_setup_id = $request->section;
         $supplier->remarks = $request->remarks;
         $supplier->active_hours = $request->active_hours;
+        $supplier->inserted_by = Auth::id();
         if($supplier->save())
         {
             return '1';
@@ -54,6 +56,7 @@ class MachineSetup extends Model{
             $supplier->section_setup_id = $request->section;
             $supplier->remarks = $request->remarks;
             $supplier->active_hours = $request->active_hours;
+            $supplier->last_updated_by = Auth::id();
             if($supplier->save())
             {
                 return '2';
@@ -65,9 +68,45 @@ class MachineSetup extends Model{
     public static function activateMachine($request){
         $supplier = MachineSetup::find($request->id);
         $supplier->status = 'A';
+        $supplier->last_updated_by = Auth::id();
         if($supplier->save()){
-            return true;
+            return '2';
         }
-        return 'Error';
+        return '0';
+    }
+
+    public static function inActivateMachine($request){
+        $supplier = MachineSetup::find($request->id);
+        $supplier->status = 'I';
+        $supplier->last_updated_by = Auth::id();
+        if($supplier->save()){
+            return '2';
+        }
+        return '0';
+    }
+
+    public static function deleteMachine($request){
+        $supplier = MachineSetup::find($request->id);
+        $supplier->status = 'D';
+        $supplier->last_updated_by = Auth::id();
+        if($supplier->save()){
+            return '2';
+        }
+        return '0';
+    }
+
+    public static function returnForUpdate($req){
+        $model = MachineSetup::find($req->id);
+        if($model != null){
+            $modelData = array(
+                'name' => $model->name,
+                'remarks' => $model->remarks,
+                'section' => $model->section_setup_id,
+                'id' => $model->id,
+                'active_hours' => $model->active_hours
+            );
+            return $modelData;
+        }
+        return null;
     }
 }

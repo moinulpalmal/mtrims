@@ -54,7 +54,7 @@
                             <div class="row" style="padding: 0px 15px;">
                                 <div class="col-md-2 no-padding">
                                     <div class="form-group">
-                                        <label for="TrimsType" class="control-label">Select Section</label>
+                                        <label for="TrimsType" class="control-label text-bold">Select Section</label>
                                         <select id="TrimsType" class="form-control select2" name="section" style="width: 100%;">
                                             <option value="" selected ="selected">- - - Select - - -</option>
                                             @if(!empty($sectionSetups))
@@ -67,19 +67,19 @@
                                 </div>
                                 <div class="col-md-4 no-padding">
                                     <div class="form-group">
-                                        <label for="TypeName" class="control-label">Machine Name</label>
+                                        <label for="TypeName" class="control-label text-bold">Machine Name</label>
                                         <input type="text" class="form-control" name="name" id="TypeName" placeholder="Enter machine name" required="">
                                     </div>
                                 </div>
                                 <div class="col-md-2 no-padding">
                                     <div class="form-group">
-                                        <label for="ActiveHours" class="control-label">Active Hours</label>
+                                        <label for="ActiveHours" class="control-label text-bold">Active Hours</label>
                                         <input type="number" min="1" max="24" class="form-control" name="active_hours" id="ActiveHours">
                                     </div>
                                 </div>
                                 <div class="col-md-4 no-padding">
                                     <div class="form-group">
-                                        <label for="Remarks" class="control-label">Remarks</label>
+                                        <label for="Remarks" class="control-label text-bold">Remarks</label>
                                         <input type="text" class="form-control" name="remarks" id="Remarks">
                                     </div>
                                 </div>
@@ -142,39 +142,12 @@
                                     <th class="text-center">Section Name</th>
                                     <th class="text-center">Machine Name</th>
                                     <th class="text-center">Active Hour</th>
+                                    <th class="text-center">Status</th>
                                     <th class="text-center">Remarks</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                               {{-- @php($i = 1)
-                                @foreach($machines as $item)
-                                    <tr>
-                                        <td class="text-center">{{$i++}}</td>
-                                        <td>{{ (App\Helpers\Helper::IDwiseData('section_setups','id',$item->section_setup_id))->name }}</td>
-                                        <td>{{$item->name}}</td>
-                                        <td>{!! $item->remarks !!}</td>
-                                        <td class="text-center">
-                                            {!! $item->active_hours !!}
-                                        </td>
-                                        <td class="text-center">
-                                            <a onclick="iconChange()" data-id = "{{ $item->id }}" class="EditFactory btn btn-warning btn-xs"><i class="fa fa-edit"></i></a>
-                                            @if($item->status == 'I')
-                                                <a title="Activate" class="ActivateBuyer btn btn-success btn-xs" data-id = "{{ $item->id }}"><i class="fa fa-arrow-circle-up"></i></a>
-                                            @else
-                                                @if($item->status == 'A')
-                                                    <a title="De-Activate" class="DeActivateBuyer btn btn-warning btn-xs" data-id = "{{ $item->id }}"><i class="fa fa-arrow-circle-down"></i></a>
---}}{{--                                                    <a title="Block" class="BlockActivateBuyer btn btn-danger btn-xs" data-id = "{{ $item->id }}"><i class="fa fa-times"></i></a>--}}{{--
-                                                @elseif($item->status == 'IN' || $item->status == 'B')
-                                                    <a title="Activate" class="ActivateBuyer btn btn-success btn-xs" data-id = "{{ $item->id }}"><i class="fa fa-arrow-circle-up"></i></a>
-                                                @endif
-                                                @if($item->status == 'A')
-                                                    <a title="Delete" class="DeleteBuyer btn btn-danger btn-xs" data-id = "{{ $item->id }}"><i class="fa fa-trash"></i></a>
-                                                @endif
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @endforeach--}}
                                 </tbody>
                             </table>
                         </div>
@@ -208,7 +181,7 @@
 
         function loadDataTable() {
             table.destroy();
-            var free_table = '<tr><td class="text-center" colspan="5">--- Please Wait... Loading Data  ----</td></tr>';
+            var free_table = '<tr><td class="text-center" colspan="6">--- Please Wait... Loading Data  ----</td></tr>';
             $('tbody').html(free_table);
             table = $("#advanced-usage").DataTable({
                 ajax: {
@@ -232,6 +205,19 @@
                         data: "active_hours",
                         render: function (data) {
                             return "<p class ='text-center'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        render: function(data, type, machine) {
+                            if(machine.status === 'I'){
+                                return "<p class ='text-center '><label class='label label-warning'>In-Active</label></p>";
+                            }
+                            else if(machine.status === 'A'){
+                                return "<p class ='text-center '><label class='label label-success'>Active</label></p>";
+                            }
+                            else{
+
+                            }
                         }
                     },
                     {
@@ -352,30 +338,29 @@
                 method:'POST',
                 data:{id: FactoryID},
                 success:function(data){
-                    $('input[name=name]').val(data.name);
-                    $('input[name=remarks]').val(data.remarks);
-                    $('input[name=active_hours]').val(data.active_hours);
-                    $('select[name=section]').val(data.section).change();
-                    /*if (data.is_sub_con === 1)
-                    {
-                        $('input[name=IsSubCon]').prop('checked', true);
-                    }
-                    else if (data.is_sub_con === 0)
-                    {
-                        $('input[name=IsSubCon]').prop('checked', false);
-                    }*/
+                    if(data){
+                        $('input[name=name]').val(data.name);
+                        $('input[name=remarks]').val(data.remarks);
+                        $('input[name=active_hours]').val(data.active_hours);
+                        $('select[name=section]').val(data.section).change();
+                        /*if (data.is_sub_con === 1)
+                        {
+                            $('input[name=IsSubCon]').prop('checked', true);
+                        }
+                        else if (data.is_sub_con === 0)
+                        {
+                            $('input[name=IsSubCon]').prop('checked', false);
+                        }*/
 
-                    $('input[name=id]').val(data.id);
+                        $('input[name=id]').val(data.id);
+                    }
+                    else{
+                        swalNoDataFound();
+                    }
+
                 },
                 error:function(error){
-                    //console.log(error);
-                    swal({
-                        title: "No Data Found!",
-                        text: "no data!",
-                        icon: "error",
-                        button: "Ok!",
-                        className: "myClass",
-                    });
+                   swalNoDataFound();
                 }
             })
 
@@ -401,23 +386,33 @@
                         success:function(data){
                             if(data){
                                 //console.log(data);
-                                swal({
-                                    title: "Operation Successful!",
-                                    icon: "success",
-                                    button: "Ok!",
-                                }).then(function (value) {
-                                    if(value){
-                                        //console.log(value);
-                                        window.location.href = window.location.href.replace(/#.*$/, '');
-                                    }
-                                });
+                                if(data === '2'){
+                                    swal({
+                                        title: "Operation Successful!",
+                                        icon: "success",
+                                        button: "Ok!",
+                                    }).then(function (value) {
+                                        if(value){
+                                           loadDataTable();
+                                        }
+                                    });
+                                }
+                                else{
+                                    swal({
+                                        title: "Operation Unsuccessful!",
+                                        text: "Something wrong happened please check!",
+                                        icon: "error",
+                                        button: "Ok!",
+                                        className: "myClass",
+                                    });
+                                }
+
                             }
                         },
                         error:function(error){
-                            console.log(error);
                             swal({
                                 title: "Operation Unsuccessful!",
-                                text: "Somthing wrong happend please check!",
+                                text: "Something wrong happened please check!",
                                 icon: "error",
                                 button: "Ok!",
                                 className: "myClass",
@@ -447,24 +442,33 @@
                         data:{id: id, _token: '{{csrf_token()}}'},
                         success:function(data){
                             if(data){
-                                //console.log(data);
-                                swal({
-                                    title: "Operation Successful!",
-                                    icon: "success",
-                                    button: "Ok!",
-                                }).then(function (value) {
-                                    if(value){
-                                        //console.log(value);
-                                        window.location.href = window.location.href.replace(/#.*$/, '');
-                                    }
-                                });
+                                if(data === '2'){
+                                    swal({
+                                        title: "Operation Successful!",
+                                        icon: "success",
+                                        button: "Ok!",
+                                    }).then(function (value) {
+                                        if(value){
+                                            loadDataTable();
+                                        }
+                                    });
+                                }
+                                else{
+                                    swal({
+                                        title: "Operation Unsuccessful!",
+                                        text: "Something wrong happened please check!",
+                                        icon: "error",
+                                        button: "Ok!",
+                                        className: "myClass",
+                                    });
+                                }
                             }
                         },
                         error:function(error){
                             console.log(error);
                             swal({
                                 title: "Operation Unsuccessful!",
-                                text: "Somthing wrong happend please check!",
+                                text: "Something wrong happened please check!",
                                 icon: "error",
                                 button: "Ok!",
                                 className: "myClass",
@@ -474,52 +478,6 @@
                 }
             });
         });
-        /*$('#advanced-usage').on('click',".BlockActivateBuyer", function(){
-            var button = $(this);
-            var id = button.attr("data-id");
-            var url = '{{ route('admin.black-list-supplier') }}';
-            swal({
-                title: 'Are you sure?',
-                text: 'This supplier will be blocked!',
-                icon: 'warning',
-                buttons: ["Cancel", "Yes!"],
-            }).then(function(value) {
-                if (value) {
-                    //window.location.href = url;
-                    //console.log(id);
-                    $.ajax({
-                        method:'DELETE',
-                        url: url,
-                        data:{id: id, _token: '{{csrf_token()}}'},
-                        success:function(data){
-                            if(data){
-                                //console.log(data);
-                                swal({
-                                    title: "Operation Successful!",
-                                    icon: "success",
-                                    button: "Ok!",
-                                }).then(function (value) {
-                                    if(value){
-                                        //console.log(value);
-                                        window.location.href = window.location.href.replace(/#.*$/, '');
-                                    }
-                                });
-                            }
-                        },
-                        error:function(error){
-                            console.log(error);
-                            swal({
-                                title: "Operation Unsuccessful!",
-                                text: "Somthing wrong happend please check!",
-                                icon: "error",
-                                button: "Ok!",
-                                className: "myClass",
-                            });
-                        }
-                    })
-                }
-            });
-        });*/
 
         $('#advanced-usage').on('click',".DeleteBuyer", function(){
             var button = $(this);
@@ -540,24 +498,32 @@
                         data:{id: id, _token: '{{csrf_token()}}'},
                         success:function(data){
                             if(data){
-
-                                swal({
-                                    title: "Operation Successful!",
-                                    icon: "success",
-                                    button: "Ok!",
-                                }).then(function (value) {
-                                    if(value){
-                                        //console.log(value);
-                                        window.location.href = window.location.href.replace(/#.*$/, '');
-                                    }
-                                });
+                                if(data === '2'){
+                                    swal({
+                                        title: "Operation Successful!",
+                                        icon: "success",
+                                        button: "Ok!",
+                                    }).then(function (value) {
+                                        if(value){
+                                            loadDataTable();
+                                        }
+                                    });
+                                }
+                                else{
+                                    swal({
+                                        title: "Operation Unsuccessful!",
+                                        text: "Something wrong happened please check!",
+                                        icon: "error",
+                                        button: "Ok!",
+                                        className: "myClass",
+                                    });
+                                }
                             }
                         },
                         error:function(error){
-                            console.log(error);
                             swal({
                                 title: "Operation Unsuccessful!",
-                                text: "Somthing wrong happend please check!",
+                                text: "Something wrong happened please check!",
                                 icon: "error",
                                 button: "Ok!",
                                 className: "myClass",

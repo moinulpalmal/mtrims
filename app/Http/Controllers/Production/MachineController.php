@@ -36,13 +36,7 @@ class MachineController extends Controller
 
     public function fullDelete(Request $request)
     {
-        $supplier = MachineSetup::find($request->id);
-        $supplier->status = 'D';
-        if($supplier->save()){
-            return true;
-        }
-        return 'Error';
-
+        return MachineSetup::deleteMachine($request);
     }
 
     public function activate(Request $request)
@@ -52,29 +46,12 @@ class MachineController extends Controller
 
     public function inActivate(Request $request)
     {
-        $supplier = MachineSetup::find($request->id);
-        $supplier->status = 'IN';
-        if($supplier->save()){
-            return true;
-        }
-        return 'Error';
-
+       return MachineSetup::inActivateMachine($request);
     }
 
     public function updateMachine(Request $req)
     {
-        $model = MachineSetup::find($req->id);
-        if($model != null){
-            $modelData = array(
-                'name' => $model->name,
-                'remarks' => $model->remarks,
-                'section' => $model->section_setup_id,
-                'id' => $model->id,
-                'active_hours' => $model->active_hours
-            );
-            return $modelData;
-        }
-        return 'Error';
+        return MachineSetup::returnForUpdate($req);
     }
 
     public function getMachineList(Request $request){
