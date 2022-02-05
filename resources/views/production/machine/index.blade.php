@@ -212,7 +212,7 @@
             $('tbody').html(free_table);
             table = $("#advanced-usage").DataTable({
                 ajax: {
-                    url: "/api/production/machine/not-deleted",
+                    url: "/mtrims/public/api/production/machine/not-deleted",
                     dataSrc: ""
                 },
                 columns: [
