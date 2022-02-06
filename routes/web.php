@@ -92,6 +92,9 @@ Route::middleware('auth')->group(function (){
         Route::get('factory','FactoryController@index')->name('factory');
         Route::post('save-factory','FactoryController@savefactory')->name('save-factory');
         Route::post('edit-factory','FactoryController@updatefactory')->name('edit-factory');
+        Route::delete('activate-factory','FactoryController@activatefactory')->name('activate-factory');
+        Route::delete('de-activate-factory','FactoryController@deActivatefactory')->name('de-activate-factory');
+        Route::delete('delete-factory','FactoryController@deletefactory')->name('delete-factory');
         //factory setup
 
         //department setup

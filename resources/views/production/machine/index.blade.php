@@ -353,6 +353,7 @@
                         }*/
 
                         $('input[name=id]').val(data.id);
+                        moveToTop();
                     }
                     else{
                         swalNoDataFound();
