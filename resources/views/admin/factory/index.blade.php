@@ -243,19 +243,12 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a onclick="refresh()" role="button" tabindex="0" class="tile-refresh">
+                                        <a onclick="loadDataTable()" role="button" tabindex="0" class="tile-refresh">
                                             <i class="fa fa-refresh"></i> Refresh
                                         </a>
                                     </li>
-                                    <li>
-                                        <a role="button" tabindex="0" class="tile-fullscreen">
-                                            <i class="fa fa-expand"></i> Fullscreen
-                                        </a>
-                                    </li>
                                 </ul>
-
                             </li>
-                            {{--                            <li class="remove"><a role="button" tabindex="0" class="tile-close"><i class="fa fa-times"></i></a></li>--}}
                         </ul>
                     </div>
                     <!-- /tile header -->
@@ -263,19 +256,19 @@
                     <!-- tile body -->
                     <div class="tile-body">
                         <div class="table-responsive">
-                            <h3 class="text-success text-center">{{Session::get('message')}}</h3>
+                           {{-- <h3 class="text-success text-center">{{Session::get('message')}}</h3>--}}
                             <table class="table table-hover table-bordered table-condensed table-responsive" id="advanced-usage">
                                 <thead>
                                 <tr style="background-color: #1693A5; color: white;">
-                                    <th class="text-center">Sl No.</th>
                                     <th class="text-center">Factory Name</th>
                                     <th class="text-center">Short Name</th>
                                     <th class="text-center">Address</th>
+                                    <th class="text-center">Status</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @php($i = 1)
+                                {{--@php($i = 1)
                                 @foreach($factories as $item)
                                     <tr>
                                         <td class="text-center">{{$i++}}</td>
@@ -288,7 +281,7 @@
                                             <a class="DeleteFactory btn btn-danger btn-xs" ><i class="fa fa-trash"></i></a>
                                         </td>
                                     </tr>
-                                @endforeach
+                                @endforeach--}}
                                 </tbody>
                             </table>
                         </div>
@@ -304,13 +297,12 @@
 @endsection
 
 @section('page-modals')
-    @foreach($factories as $item)
         <!-- Modal -->
-        <div class="modal splash fade" id="user{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal splash fade" id="FactoryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h3 class="modal-title custom-font">{!! $item->name !!}</h3>
+                        <h3 class="modal-title custom-font">Factory Name</h3>
                     </div>
                     <div class="modal-body">
                         <div class="row">
@@ -320,38 +312,38 @@
                                 </div>
                                 <div class="col-md-1">:</div>
                                 <div class="col-md-6 text-right">
-                                    <p>{{$item->name}}</p>
+                                    <p>Factory Name</p>
                                 </div>
                                 <div class="col-md-5">
                                     <strong class="text-left">Short Name</strong>
                                 </div>
                                 <div class="col-md-1">:</div>
                                 <div class="col-md-6">
-                                    <p class="text-right">{{$item->short_name}}</p>
+                                    <p class="text-right"></p>
                                 </div>
                                 <div class="col-md-5">
                                     <strong class="text-left">Address</strong>
                                 </div>
                                 <div class="col-md-1">:</div>
                                 <div class="col-md-6">
-                                    <p class="text-right">{{$item->address}}</div>
+                                    <p class="text-right"></div>
                                 <div class="col-md-5">
                                     <strong class="text-left">Is CHO</strong>
                                 </div>
                                 <div class="col-md-1">:</div>
                                 <div class="col-md-6">
-                                    @if($item->IsCHO == 'CHO')
+                                    {{--@if($item->IsCHO == 'CHO')
                                         <p class="text-white-50 text-right">Yes</p>
                                     @else
                                         <p class="text-danger text-right">No</p>
-                                    @endif
+                                    @endif--}}
                                 </div>
                                 <div class="col-md-5">
                                     <strong class="text-left">VAT No.</strong>
                                 </div>
                                 <div class="col-md-1">:</div>
                                 <div class="col-md-6 text-right">
-                                    <p>{{$item->vat_no}}</p>
+                                   {{-- <p>{{$item->vat_no}}</p>--}}
                                 </div>
                                 <br>
                                 <div class="col-md-5">
@@ -359,7 +351,7 @@
                                 </div>
                                 <div class="col-md-1">:</div>
                                 <div class="col-md-6">
-                                    <p class="text-right">{{$item->bin_no}}</p>
+                                   {{-- <p class="text-right">{{$item->bin_no}}</p>--}}
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -368,34 +360,35 @@
                                 </div>
                                 <div class="col-md-1">:</div>
                                 <div class="col-md-6">
-                                    <p class="text-right">{{$item->factory_head_info}}</p>
+                                    {{--<p class="text-right">{{$item->factory_head_info}}</p>--}}
                                 </div>
                                 <div class="col-md-5">
                                     <strong class="text-left">Factory Manager</strong>
                                 </div>
                                 <div class="col-md-1">:</div>
                                 <div class="col-md-6 text-right">
-                                    <p class="text-right">{{$item->manager_info}}</p>
+                                    {{--<p class="text-right">{{$item->manager_info}}</p>--}}
                                 </div>
                                 <div class="col-md-5">
                                     <strong class="text-left">Contact Person</strong>
                                 </div>
                                 <div class="col-md-1">:</div>
                                 <div class="col-md-6">
-                                    <p class="text-right">{{$item->contact_person_info}}</div>
+                                   {{-- <p class="text-right">{{$item->contact_person_info}}--}}
+                                </div>
                                 <div class="col-md-5">
                                     <strong class="text-left">Store Info</strong>
                                 </div>
                                 <div class="col-md-1">:</div>
                                 <div class="col-md-6">
-                                    <p class="text-right">{{$item->factory_store_info}}</div>
+                                    {{--<p class="text-right">{{$item->factory_store_info}}</div>--}}
                             </div>
                             <div class="col-md-5">
                                 <strong class="text-left">Messenger Info</strong>
                             </div>
                             <div class="col-md-1">:</div>
                             <div class="col-md-6">
-                                <p class="text-right">{{$item->factory_messenger_info}}</p>
+                               {{-- <p class="text-right">{{$item->factory_messenger_info}}</p>--}}
                             </div>
                         </div>
                     </div>
@@ -408,20 +401,88 @@
             </div>
         </div>
         <!-- Modal -->
-    @endforeach
 @endsection
 @section('pageVendorScripts')
 
 @endsection
 @section('pageScripts')
 {{--    <script src="{{ asset('back-end/assets/MyJS/jquery.min.js') }}"></script>--}}
-
+    <script src="{{ asset('/js/common.js') }}"></script>
     <script>
-        $(window).load(function(){
-            $('#advanced-usage').DataTable({
-
-            });
+        var table = $('#advanced-usage').DataTable({
+            "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
         });
+        $(window).load(function(){
+            loadDataTable();
+        });
+        function loadDataTable() {
+            table.destroy();
+            var free_table = '<tr><td class="text-center" colspan="4">--- Please Wait... Loading Data  ----</td></tr>';
+            $('tbody').html(free_table);
+            table = $("#advanced-usage").DataTable({
+                ajax: {
+                    url: "/mtrims/public/api/admin/factory/not-deleted",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "name",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "short_name",
+                        render: function (data) {
+                            return "<p class = 'text-center'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "address",
+                        render: function (data) {
+                            return "<p class ='text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        render: function(data, type, api_item) {
+                            if(api_item.status === 'I'){
+                                return "<p class ='text-center'><label class='label label-warning'>In-Active</label></p>";
+                            }
+                            else if(api_item.status === 'A'){
+                                return "<p class ='text-center '><label class='label label-success'>Active</label></p>";
+                            }
+                            else{
+
+                            }
+                        }
+                    },
+                    {
+                        /*data: "id",*/
+                        render: function(data, type, api_item) {
+                            if(api_item.status === 'I'){
+                                return "<p class='text-center'><a title= 'Show Detail' class= 'ShowDetail btn btn-info btn-xs'  data-id = "+ api_item.id +"><i class='fa fa-eye'></i></a>" +
+                                    " &nbsp;" +
+                                    "<a title= 'Delete' class= 'DeleteBuyer btn btn-danger btn-xs' data-id = "+ api_item.id +"><i class='fa fa-trash'></i></a>" +
+                                    " &nbsp;" +
+                                    "<a title= 'Activate' class= 'ActivateBuyer btn btn-success btn-xs' data-id = "+ api_item.id +"><i class='fa fa-arrow-circle-up'></i></a></p>"
+                            }
+                            else if(api_item.status === 'A'){
+                                return "<p class='text-center'><a title= 'Show Detail' class= 'ShowDetail btn btn-info btn-xs' data-id = "+ api_item.id +"><i class='fa fa-eye'></i></a>" +
+                                    " &nbsp;" +
+                                    "<a title= 'Delete' class= 'DeleteBuyer btn btn-danger btn-xs' data-id = "+ api_item.id +"><i class='fa fa-trash'></i></a>" +
+                                    " &nbsp;" +
+                                    "<a title= 'Activate' class= 'DeActivateBuyer btn btn-warning btn-xs' data-id = "+ api_item.id +"><i class='fa fa-arrow-circle-down'></i></a>" +
+                                    " &nbsp;" +
+                                    "<a title= 'Edit' class= 'EditFactory btn btn-warning btn-xs' data-id = "+ api_item.id +"><i class='fa fa-edit'></i></a></p>"
+                            }
+                            else{
+
+                            }
+                        }
+                    }
+                ]
+            });
+        }
 
         $(function(){
             $.ajaxSetup({
@@ -439,7 +500,7 @@
                     data:data,
                     success:function(data){
                         //console.log(data);
-                        if(id)
+                        if(data === '2')
                         {
                             swal({
                                 title: "Data Updated Successfully!",
@@ -447,11 +508,12 @@
                                 button: "Ok!",
                             }).then(function (value) {
                                 if(value){
-                                    window.location.href = window.location.href.replace(/#.*$/, '');
+                                    clearFormWithoutDelay("FactoryAdd");
+                                    loadDataTable();
                                 }
                             });
                         }
-                        else
+                        else if(data === '1')
                         {
                             swal({
                                 title: "Data Inserted Successfully!",
@@ -459,13 +521,22 @@
                                 button: "Ok!",
                             }).then(function (value) {
                                 if(value){
-                                    window.location.href = window.location.href.replace(/#.*$/, '');
+                                    clearFormWithoutDelay("FactoryAdd");
+                                    loadDataTable();
                                 }
+                            });
+                        }
+                        else{
+                            swal({
+                                title: "Data Not Saved!",
+                                text: "Please Check Your Data!",
+                                icon: "error",
+                                button: "Ok!",
+                                className: "myClass",
                             });
                         }
                     },
                     error:function(error){
-                        console.log(error);
                         swal({
                             title: "Data Not Saved!",
                             text: "Please Check Your Data!",
@@ -478,6 +549,54 @@
                 })
 
             })
+        });
+        $('#advanced-usage').on('click',".ShowDetail", function(){
+            var button = $(this);
+            var FactoryID = button.attr("data-id");
+            var url = '{{ route('admin.edit-factory') }}';
+            $.ajax({
+                url: url,
+                method:'POST',
+                data:{id: FactoryID},
+                success:function(data){
+                    console.log(data);
+                    $("#FactoryModal").modal('show');
+                    return;
+
+                   /* $('input[name=name]').val(data.name);
+                    $('input[name=short_name]').val(data.short_name);
+                    $('input[name=vat_no]').val(data.vat_no);
+                    $('input[name=bin_no]').val(data.bin_no);
+                    document.getElementById('FactoryAddress').value = data.address;
+                    document.getElementById('FHInfo').value = data.factory_head_info;
+                    document.getElementById('ManInfo').value = data.manager_info;
+                    document.getElementById('StoreInfo').value = data.factory_store_info;
+                    document.getElementById('CPInfo').value = data.contact_person_info;
+                    document.getElementById('MasInfo').value = data.factory_messenger_info;
+                    //console.log();
+                    if (data.is_cho == 1)
+                    {
+                        $('input[name=IsCHO]').prop('checked', true);
+                    }
+                    else if (data.is_cho == 0)
+                    {
+                        $('input[name=IsCHO]').prop('checked', false);
+                    }
+                    $('input[name=id]').val(data.id);
+                    moveToTop();*/
+                },
+                error:function(error){
+                    //console.log(error);
+                    swal({
+                        title: "No Data Found!",
+                        text: "no data!",
+                        icon: "error",
+                        button: "Ok!",
+                        className: "myClass",
+                    });
+                }
+            })
+
         });
         $('#advanced-usage').on('click',".EditFactory", function(){
             var button = $(this);
@@ -511,6 +630,7 @@
                         $('input[name=IsCHO]').prop('checked', false);
                     }
                     $('input[name=id]').val(data.id);
+                    moveToTop();
                 },
                 error:function(error){
                     //console.log(error);
@@ -526,6 +646,175 @@
 
         });
 
+        $('#advanced-usage').on('click',".ActivateBuyer", function(){
+            var button = $(this);
+            var id = button.attr("data-id");
+            var url = '{{ route('admin.activate-factory') }}';
+            swal({
+                title: 'Are you sure?',
+                text: 'This factory will be a active one!',
+                icon: 'warning',
+                buttons: ["Cancel", "Yes!"],
+            }).then(function(value) {
+                if (value) {
+                    //window.location.href = url;
+                    //console.log(id);
+                    $.ajax({
+                        method:'DELETE',
+                        url: url,
+                        data:{id: id, _token: '{{csrf_token()}}'},
+                        success:function(data){
+                            if(data){
+                                //console.log(data);
+                                if(data === '2'){
+                                    swal({
+                                        title: "Operation Successful!",
+                                        icon: "success",
+                                        button: "Ok!",
+                                    }).then(function (value) {
+                                        if(value){
+                                            loadDataTable();
+                                        }
+                                    });
+                                }
+                                else{
+                                    swal({
+                                        title: "Operation Unsuccessful!",
+                                        text: "Something wrong happened please check!",
+                                        icon: "error",
+                                        button: "Ok!",
+                                        className: "myClass",
+                                    });
+                                }
+
+                            }
+                        },
+                        error:function(error){
+                            swal({
+                                title: "Operation Unsuccessful!",
+                                text: "Something wrong happened please check!",
+                                icon: "error",
+                                button: "Ok!",
+                                className: "myClass",
+                            });
+                        }
+                    })
+                }
+            });
+        });
+
+        $('#advanced-usage').on('click',".DeActivateBuyer", function(){
+            var button = $(this);
+            var id = button.attr("data-id");
+            var url = '{{ route('admin.de-activate-factory') }}';
+            swal({
+                title: 'Are you sure?',
+                text: 'This factory will be in-active!',
+                icon: 'warning',
+                buttons: ["Cancel", "Yes!"],
+            }).then(function(value) {
+                if (value) {
+                    //window.location.href = url;
+                    //console.log(id);
+                    $.ajax({
+                        method:'DELETE',
+                        url: url,
+                        data:{id: id, _token: '{{csrf_token()}}'},
+                        success:function(data){
+                            if(data){
+                                if(data === '2'){
+                                    swal({
+                                        title: "Operation Successful!",
+                                        icon: "success",
+                                        button: "Ok!",
+                                    }).then(function (value) {
+                                        if(value){
+                                            loadDataTable();
+                                        }
+                                    });
+                                }
+                                else{
+                                    swal({
+                                        title: "Operation Unsuccessful!",
+                                        text: "Something wrong happened please check!",
+                                        icon: "error",
+                                        button: "Ok!",
+                                        className: "myClass",
+                                    });
+                                }
+                            }
+                        },
+                        error:function(error){
+                            console.log(error);
+                            swal({
+                                title: "Operation Unsuccessful!",
+                                text: "Something wrong happened please check!",
+                                icon: "error",
+                                button: "Ok!",
+                                className: "myClass",
+                            });
+                        }
+                    })
+                }
+            });
+        });
+
+        $('#advanced-usage').on('click',".DeleteBuyer", function(){
+            var button = $(this);
+            var id = button.attr("data-id");
+            var url = '{{ route('admin.delete-factory') }}';
+            swal({
+                title: 'Are you sure?',
+                text: 'This factory will be removed permanently!',
+                icon: 'warning',
+                buttons: ["Cancel", "Yes!"],
+            }).then(function(value) {
+                if (value) {
+                    //window.location.href = url;
+                    //console.log(id);
+                    $.ajax({
+                        method:'DELETE',
+                        url: url,
+                        data:{id: id, _token: '{{csrf_token()}}'},
+                        success:function(data){
+                            if(data){
+                                if(data === '2'){
+                                    swal({
+                                        title: "Operation Successful!",
+                                        icon: "success",
+                                        button: "Ok!",
+                                    }).then(function (value) {
+                                        if(value){
+                                            loadDataTable();
+                                        }
+                                    });
+                                }
+                                else{
+                                    swal({
+                                        title: "Operation Unsuccessful!",
+                                        text: "Something wrong happened please check!",
+                                        icon: "error",
+                                        button: "Ok!",
+                                        className: "myClass",
+                                    });
+                                }
+                            }
+                        },
+                        error:function(error){
+                            swal({
+                                title: "Operation Unsuccessful!",
+                                text: "Something wrong happened please check!",
+                                icon: "error",
+                                button: "Ok!",
+                                className: "myClass",
+                            });
+                        }
+                    })
+                }
+            });
+        });
+
+
         function refresh()
         {
             window.location.href = window.location.href.replace(/#.*$/, '');
@@ -537,5 +826,7 @@
             $('#iconChange').find('i').addClass('fa-edit');
 
         }
+
+
     </script>
 @endsection()
