@@ -5,17 +5,14 @@ namespace App\Http\Controllers\Production;
 use App\Http\Controllers\Controller;
 use App\MachineSetup;
 use App\SectionSetup;
-use App\TrimsType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class MachineController extends Controller
 {
     public function index(){
-        $machines = MachineSetup::getAllNotDeletedMachines();
-        //$trimsTypes = TrimsType::orderBy('name')->where('status','!=', 'D')->get();
-        $sectionSetups = SectionSetup::orderBy('name')->where('status','!=', 'D')->get();
-        return view('production.machine.index', compact('machines', 'sectionSetups'));
+        $section_setups = SectionSetup::getSectionSetupsForSelect();
+        return view('production.machine.index', compact('section_setups'));
     }
 
     public function getAllNotDeletedMachines(){

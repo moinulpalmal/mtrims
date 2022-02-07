@@ -57,8 +57,8 @@
                                         <label for="TrimsType" class="control-label text-bold">Select Section</label>
                                         <select id="TrimsType" class="form-control select2" name="section" style="width: 100%;">
                                             <option value="" selected ="selected">- - - Select - - -</option>
-                                            @if(!empty($sectionSetups))
-                                                @foreach($sectionSetups as $item)
+                                            @if(!empty($section_setups))
+                                                @foreach($section_setups as $item)
                                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                                                 @endforeach
                                             @endif
