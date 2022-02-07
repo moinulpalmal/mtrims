@@ -63,23 +63,8 @@
         ============== Vendor JavaScripts ===============
         ============================================= -->
 @yield('pageVendorScripts')
-{{--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="{{ asset('/') }}back-end/assets/js/vendor/jquery/jquery-3.5.1.min.js"><\/script>')</script>--}}{{--
-
 <script src="{{ asset('/') }}back-end/assets/js/vendor/jquery/jquery-1.11.2.min.js"></script>
---}}
-{{--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>--}}{{--
-
---}}
-{{--<script>window.jQuery || document.write('<script src="{{ asset('/') }}back-end/assets/js/vendor/jquery/jquery-1.11.2.min.js"><\/script>')</script>--}}{{--
-
 <script src="{{ asset('/') }}back-end/assets/js/vendor/bootstrap/bootstrap.min.js"></script>
---}}
-{{--<script src="{{ asset('/') }}back-end/assets/fontawesome-5.14.0/js/fontawesome.js"></script>--}}{{--
-
---}}
-{{--<link rel="stylesheet" href="{{ asset('/') }}back-end/assets/fontwesome-5.14.0/fontawesome.min.js">--}}{{--
-
 <script src="{{ asset('/') }}back-end/assets/js/vendor/jRespond/jRespond.min.js"></script>
 <script src="{{ asset('/') }}back-end/assets/js/vendor/d3/d3.min.js"></script>
 <script src="{{ asset('/') }}back-end/assets/js/vendor/d3/d3.layout.min.js"></script>
@@ -87,97 +72,13 @@
 <script src="{{ asset('/') }}back-end/assets/js/vendor/sparkline/jquery.sparkline.min.js"></script>
 <script src="{{ asset('/') }}back-end/assets/js/vendor/slimscroll/jquery.slimscroll.min.js"></script>
 <script src="{{ asset('/') }}back-end/assets/js/vendor/animsition/js/jquery.animsition.min.js"></script>
-<script src="{{ asset('/') }}back-end/assets/js/vendor/chosen/chosen.jquery.min.js"></script>
---}}
-{{--<script src="{{ asset('/') }}back-end/assets/js/vendor/daterangepicker/moment.min.js"></script>--}}{{--
-
---}}
-{{--<script src="{{ asset('/') }}back-end/assets/js/vendor/daterangepicker/daterangepicker.js"></script>--}}{{--
-
---}}
-{{--<script src="{{ asset('/') }}back-end/assets/js/vendor/screenfull/screenfull.min.js"></script>--}}{{--
-
---}}
-{{--<script src="{{ asset('/') }}back-end/assets/js/vendor/flot/jquery.flot.min.js"></script>--}}{{--
-
---}}
-{{--<script src="{{ asset('/') }}back-end/assets/js/vendor/flot-tooltip/jquery.flot.tooltip.min.js"></script>--}}{{--
-
---}}
-{{--<script src="{{ asset('/') }}back-end/assets/js/vendor/flot-spline/jquery.flot.spline.min.js"></script>--}}{{--
-
---}}
-{{--<script src="{{ asset('/') }}back-end/assets/js/vendor/easypiechart/jquery.easypiechart.min.js"></script>--}}{{--
-
-<script src="{{ asset('/') }}back-end/assets/js/vendor/raphael/raphael-min.js"></script>
-<script src="{{ asset('/') }}back-end/assets/js/vendor/morris/morris.min.js"></script>
---}}
-{{--<script src="{{ asset('/') }}back-end/assets/js/vendor/owl-carousel/owl.carousel.min.js"></script>--}}{{--
-
---}}
-{{--<script src="{{ asset('/') }}back-end/assets/js/vendor/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>--}}{{--
-
---}}
-{{--<script src="{{ asset('/') }}back-end/assets/MyJs/dataTables.bootstrap.min.js"></script>--}}{{--
-
-<script src="{{ asset('/') }}back-end/assets/js/vendor/datatables/js/jquery.dataTables.min.js"></script>
-<script src="{{ asset('/') }}back-end/assets/js/vendor/datatables/extensions/dataTables.bootstrap.js"></script>
-<script src="{{ asset('/') }}back-end/assets/js/vendor/chosen/chosen.jquery.min.js"></script>
-<script src="{{ asset('/') }}back-end/assets/js/vendor/summernote/summernote.min.js"></script>
---}}
-{{--<script src="{{ asset('/') }}back-end/assets/js/vendor/coolclock/coolclock.js"></script>--}}{{--
-
---}}
-{{--<script src="{{ asset('/') }}back-end/assets/js/vendor/coolclock/excanvas.js"></script>--}}{{--
-
-<script src="{{ asset('back-end/assets/MyJS/sweetalert.js') }}"></script>
-<script src="{{ asset('back-end/assets/MyJS/select2.full.min.js') }}"></script>
-<!--/ vendor javascripts -->
-<!-- ============================================
-============== Custom JavaScripts ===============
-============================================= -->
-<script src="{{ asset('/') }}back-end/assets/js/main.js"></script>
-<!--/ custom javascripts -->
---}}
-{{--end vendor scripts--}}{{--
-
-
---}}
-
-
-{{--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="{{ asset('/') }}back-end/assets/js/vendor/jquery/jquery-3.5.1.min.js"><\/script>')</script>--}}
-<script src="{{ asset('/') }}back-end/assets/js/vendor/jquery/jquery-1.11.2.min.js"></script>
-{{--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>--}}
-{{--<script>window.jQuery || document.write('<script src="{{ asset('/') }}back-end/assets/js/vendor/jquery/jquery-1.11.2.min.js"><\/script>')</script>--}}
-<script src="{{ asset('/') }}back-end/assets/js/vendor/bootstrap/bootstrap.min.js"></script>
-{{--<script src="{{ asset('/') }}back-end/assets/fontawesome-5.14.0/js/fontawesome.js"></script>--}}
-{{--<link rel="stylesheet" href="{{ asset('/') }}back-end/assets/fontwesome-5.14.0/fontawesome.min.js">--}}
-<script src="{{ asset('/') }}back-end/assets/js/vendor/jRespond/jRespond.min.js"></script>
-<script src="{{ asset('/') }}back-end/assets/js/vendor/d3/d3.min.js"></script>
-<script src="{{ asset('/') }}back-end/assets/js/vendor/d3/d3.layout.min.js"></script>
-<script src="{{ asset('/') }}back-end/assets/js/vendor/rickshaw/rickshaw.min.js"></script>
-<script src="{{ asset('/') }}back-end/assets/js/vendor/sparkline/jquery.sparkline.min.js"></script>
-<script src="{{ asset('/') }}back-end/assets/js/vendor/slimscroll/jquery.slimscroll.min.js"></script>
-<script src="{{ asset('/') }}back-end/assets/js/vendor/animsition/js/jquery.animsition.min.js"></script>
-{{--<script src="{{ asset('/') }}back-end/assets/js/vendor/daterangepicker/moment.min.js"></script>--}}
-{{--<script src="{{ asset('/') }}back-end/assets/js/vendor/daterangepicker/daterangepicker.js"></script>--}}
-{{--<script src="{{ asset('/') }}back-end/assets/js/vendor/screenfull/screenfull.min.js"></script>--}}
-{{--<script src="{{ asset('/') }}back-end/assets/js/vendor/flot/jquery.flot.min.js"></script>--}}
-{{--<script src="{{ asset('/') }}back-end/assets/js/vendor/flot-tooltip/jquery.flot.tooltip.min.js"></script>--}}
-{{--<script src="{{ asset('/') }}back-end/assets/js/vendor/flot-spline/jquery.flot.spline.min.js"></script>--}}
-{{--<script src="{{ asset('/') }}back-end/assets/js/vendor/easypiechart/jquery.easypiechart.min.js"></script>--}}
 <script src="{{ asset('/') }}back-end/assets/js/vendor/raphael/raphael-min.js"></script>
 <script src="{{ asset('/') }}back-end/assets/js/vendor/morris/morris.min.js"></script>
 <script src="{{ asset('/') }}back-end/assets/js/vendor/owl-carousel/owl.carousel.min.js"></script>
-{{--<script src="{{ asset('/') }}back-end/assets/js/vendor/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>--}}
-{{--<script src="{{ asset('/') }}back-end/assets/MyJs/dataTables.bootstrap.min.js"></script>--}}
 <script src="{{ asset('/') }}back-end/assets/js/vendor/datatables/js/jquery.dataTables.min.js"></script>
 <script src="{{ asset('/') }}back-end/assets/js/vendor/datatables/extensions/dataTables.bootstrap.js"></script>
 <script src="{{ asset('/') }}back-end/assets/js/vendor/chosen/chosen.jquery.min.js"></script>
 <script src="{{ asset('/') }}back-end/assets/js/vendor/summernote/summernote.min.js"></script>
-{{--<script src="{{ asset('/') }}back-end/assets/js/vendor/coolclock/coolclock.js"></script>--}}
-{{--<script src="{{ asset('/') }}back-end/assets/js/vendor/coolclock/excanvas.js"></script>--}}
 <script src="{{ asset('back-end/assets/MyJS/sweetalert.js') }}"></script>
 <script src="{{ asset('back-end/assets/MyJS/select2.full.min.js') }}"></script>
 <script src="{{ asset('/') }}back-end/assets/js/vendor/classie/classie.js"></script>
