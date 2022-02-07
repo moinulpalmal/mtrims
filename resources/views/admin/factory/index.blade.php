@@ -132,11 +132,11 @@
                         <!-- tile header -->
                         <div class="tile-header dvd dvd-btm">
                             <h1 class="custom-font"><strong>Factory</strong> Insert/Update Form</h1>
-{{--                            <h3 class="box-title" style="color: white;"><i class="fa fa-industry"></i>&nbsp;&nbsp;Factories Entry/Update</h3>--}}
+                        {{--<h3 class="box-title" style="color: white;"><i class="fa fa-industry"></i>&nbsp;&nbsp;Factories Entry/Update</h3>--}}
                             <a><button id="iconChange" class="pull-right btn-info btn-xs" type="submit"><i class="fa fa-check"></i></button></a>
-{{--                            <ul class="controls">--}}
-{{--                                <li><a><button id="iconChange" class="pull-right" type="submit"><i class="fa fa-check"></i></button></a></li>--}}
-{{--                            </ul>--}}
+                        {{--<ul class="controls">--}}
+                        {{--<li><a><button id="iconChange" class="pull-right" type="submit"><i class="fa fa-check"></i></button></a></li>--}}
+                        {{--</ul>--}}
                         </div>
                         <!-- /tile header -->
                         <!-- tile body -->
@@ -381,14 +381,14 @@
                                 </div>
                                 <div class="col-md-1">:</div>
                                 <div class="col-md-6">
-                                    {{--<p class="text-right">{{$item->factory_store_info}}</div>--}}
+                                    {{-- <p class="text-right">{{$item->factory_store_info}}</div> --}}
                             </div>
                             <div class="col-md-5">
                                 <strong class="text-left">Messenger Info</strong>
                             </div>
                             <div class="col-md-1">:</div>
                             <div class="col-md-6">
-                               {{-- <p class="text-right">{{$item->factory_messenger_info}}</p>--}}
+                               {{-- <p class="text-right">{{$item->factory_messenger_info}}</p> --}}
                             </div>
                         </div>
                     </div>
@@ -550,6 +550,7 @@
 
             })
         });
+
         $('#advanced-usage').on('click',".ShowDetail", function(){
             var button = $(this);
             var FactoryID = button.attr("data-id");
@@ -560,7 +561,7 @@
                 data:{id: FactoryID},
                 success:function(data){
                     console.log(data);
-                    $("#FactoryModal").modal('show');
+                    $("#FactoryModal").show();
                     return;
 
                    /* $('input[name=name]').val(data.name);
@@ -585,6 +586,7 @@
                     $('input[name=id]').val(data.id);
                     moveToTop();*/
                 },
+                
                 error:function(error){
                     //console.log(error);
                     swal({
