@@ -6,6 +6,7 @@ use App\Department;
 use App\Factory;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DepartmentController extends Controller
 {
@@ -15,69 +16,34 @@ class DepartmentController extends Controller
         return view('admin.department.index', compact('departments', 'factories'));
     }
 
-    public function saveDepartment(Request $req)
-    {
-        $HiddenDepartmentID = $req->get('id');
-        if(!empty($HiddenDepartmentID))
+    public function getAllNotDeletedDepartments(){
+        return Department::getAllNotDeletedDepartments();
+    }
+
+    public function saveDepartment(Request $req){
+        if(!empty($req->get('id')))
         {
-
-            $department = Department::find($HiddenDepartmentID);
-
-            if($department != null){
-                $department->name = $req->get('name');
-                $department->factory_id = $req->get('factory_name');
-                $department->short_name = $req->get('short_name');
-                if($req->get('IsMerchandising') == 'on')
-                {
-                    $department->is_merchandising_department = true;
-                }
-                else
-                {
-                    $department->is_merchandising_department = false;
-                }
-                if($department->save())
-                {
-                    return 'Updated';
-                }
-            }
-            return 'Error';
+            return Department::updateDepartment($req);
         }
         else
         {
-            $department = new Department();
-            $department->name = $req->get('name');
-            $department->factory_id = $req->get('factory_name');
-            $department->short_name = $req->get('short_name');
-            if($req->get('IsMerchandising') == 'on')
-            {
-                $department->is_merchandising_department = true;
-            }
-            else
-            {
-                $department->is_merchandising_department = false;
-            }
-
-            if($department->save())
-            {
-                return 'Saved';
-            }
+            return Department::insertDepartment($req);
         }
-        return 'Error';
+
     }
 
     public function updateDepartment(Request $req)
     {
-        $department = Department::find($req->id);
-        if($department != null){
-            $departmentData = array(
-                'name' => $department->name,
-                'factory_name' => $department->factory_id,
-                'IsMerchandising' => $department->is_merchandising_department,
-                'short_name' => $department->short_name,
-                'id' => $department->id
-            );
-            return $departmentData;
-        }
-        return 'Error';
+        return Department::returnUpdateDepartment($req);
+    }
+
+    public function getDepartmentListByFactoryForSelect(Request $request){
+        $status = 'A';
+        $DropDownData = DB::table('departments')
+            ->where('factory_id', $request->factory_id)
+            ->where('status', $status)
+            ->pluck("name","id");
+
+        return json_encode($DropDownData);
     }
 }

@@ -115,11 +115,6 @@
                                             <i class="fa fa-refresh"></i> Refresh
                                         </a>
                                     </li>
-                                    <li>
-                                        <a role="button" tabindex="0" class="tile-fullscreen">
-                                            <i class="fa fa-expand"></i> Fullscreen
-                                        </a>
-                                    </li>
                                 </ul>
                             </li>
                             {{--                            <li class="remove"><a role="button" tabindex="0" class="tile-close"><i class="fa fa-times"></i></a></li>--}}
@@ -178,111 +173,7 @@
 @endsection
 
 @section('page-modals')
-    @foreach($factories as $item)
-        <!-- Modal -->
-        <div class="modal splash fade" id="user{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3 class="modal-title custom-font">{!! $item->name !!}</h3>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="col-md-5">
-                                    <strong class="text-left">Factory Name</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6 text-right">
-                                    <p>{{$item->name}}</p>
-                                </div>
-                                <div class="col-md-5">
-                                    <strong class="text-left">Short Name</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6">
-                                    <p class="text-right">{{$item->short_name}}</p>
-                                </div>
-                                <div class="col-md-5">
-                                    <strong class="text-left">Address</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6">
-                                    <p class="text-right">{{$item->address}}</div>
-                                <div class="col-md-5">
-                                    <strong class="text-left">Is CHO</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6">
-                                    @if($item->IsCHO == 'CHO')
-                                        <p class="text-white-50 text-right">Yes</p>
-                                    @else
-                                        <p class="text-danger text-right">No</p>
-                                    @endif
-                                </div>
-                                <div class="col-md-5">
-                                    <strong class="text-left">VAT No.</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6 text-right">
-                                    <p>{{$item->vat_no}}</p>
-                                </div>
-                                <br>
-                                <div class="col-md-5">
-                                    <strong class="text-left">BIN No.</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6">
-                                    <p class="text-right">{{$item->bin_no}}</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="col-md-5">
-                                    <strong class="text-left">Factory Head</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6">
-                                    <p class="text-right">{{$item->factory_head_info}}</p>
-                                </div>
-                                <div class="col-md-5">
-                                    <strong class="text-left">Factory Manager</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6 text-right">
-                                    <p class="text-right">{{$item->manager_info}}</p>
-                                </div>
-                                <div class="col-md-5">
-                                    <strong class="text-left">Contact Person</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6">
-                                    <p class="text-right">{{$item->contact_person_info}}</div>
-                                <div class="col-md-5">
-                                    <strong class="text-left">Store Info</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6">
-                                    <p class="text-right">{{$item->factory_store_info}}</div>
-                            </div>
-                            <div class="col-md-5">
-                                <strong class="text-left">Messenger Info</strong>
-                            </div>
-                            <div class="col-md-1">:</div>
-                            <div class="col-md-6">
-                                <p class="text-right">{{$item->factory_messenger_info}}</p>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="modal-footer">
-                        <button class="btn btn-success btn-ef btn-ef-3 btn-ef-3c"><i class="fa fa-arrow-right"></i> Submit</button>
-                        <button class="btn btn-lightred btn-ef btn-ef-4 btn-ef-4c" data-dismiss="modal"><i class="fa fa-arrow-left"></i> Cancel</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Modal -->
-    @endforeach
 @endsection
 @section('pageVendorScripts')
 
