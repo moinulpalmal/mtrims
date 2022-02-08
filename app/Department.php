@@ -49,7 +49,7 @@ class Department extends Model
             $department->name = $req->get('name');
             $department->factory_id = $req->get('factory_name');
             $department->short_name = $req->get('short_name');
-            $department->inserted_by = Auth::id();
+            $department->last_updated_by = Auth::id();
             if($req->get('IsMerchandising') == 'on')
             {
                 $department->is_merchandising_department = true;
@@ -69,16 +69,40 @@ class Department extends Model
         return '0';
     }
 
-    public static function deleteDepartment($request){
-
+    public static function deleteDepartment($req){
+        $department = Department::find($req->get('id'));
+        if(!empty($department)){
+            $department->status = 'D';
+            $department->last_updated_by = Auth::id();
+            if($department->save()){
+                return '2';
+            }
+        }
+        return false;
     }
 
-    public static function activateDepartment($request){
-
+    public static function activateDepartment($req){
+        $department = Department::find($req->get('id'));
+        if(!empty($department)){
+            $department->status = 'A';
+            $department->last_updated_by = Auth::id();
+            if($department->save()){
+                return '2';
+            }
+        }
+        return '0';
     }
 
-    public static function deActivateDepartment($request){
-
+    public static function deActivateDepartment($req){
+        $department = Department::find($req->get('id'));
+        if(!empty($department)){
+            $department->status = 'I';
+            $department->last_updated_by = Auth::id();
+            if($department->save()){
+                return '2';
+            }
+        }
+        return '0';
     }
 
     public static function returnUpdateDepartment($req){
@@ -104,5 +128,15 @@ class Department extends Model
             ->where('departments.factory_id', '=', $factory_id)
             ->orderBy('departments.name', 'ASC')
             ->get();
+    }
+
+    public static function getJasonDepartmentListByFactory($request){
+        $status = 'A';
+        $DropDownData = DB::table('departments')
+            ->where('factory_id', $request->factory_id)
+            ->where('status', $status)
+            ->pluck("name","id");
+
+        return json_encode($DropDownData);
     }
 }

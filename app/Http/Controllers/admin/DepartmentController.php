@@ -6,7 +6,6 @@ use App\Department;
 use App\Factory;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class DepartmentController extends Controller
 {
@@ -29,7 +28,6 @@ class DepartmentController extends Controller
         {
             return Department::insertDepartment($req);
         }
-
     }
 
     public function updateDepartment(Request $req)
@@ -37,13 +35,19 @@ class DepartmentController extends Controller
         return Department::returnUpdateDepartment($req);
     }
 
-    public function getDepartmentListByFactoryForSelect(Request $request){
-        $status = 'A';
-        $DropDownData = DB::table('departments')
-            ->where('factory_id', $request->factory_id)
-            ->where('status', $status)
-            ->pluck("name","id");
+    public function deleteDepartment(Request $request){
+        return Department::deleteDepartment($request);
+    }
 
-        return json_encode($DropDownData);
+    public function activateDepartment(Request $request){
+        return Department::activateDepartment($request);
+    }
+
+    public function deActivateDepartment(Request $request){
+        return Department::deActivateDepartment($request);
+    }
+
+    public function getDepartmentListByFactoryForSelect(Request $request){
+        return Department::getJasonDepartmentListByFactory($request);
     }
 }
