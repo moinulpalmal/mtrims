@@ -460,14 +460,14 @@
                         /*data: "id",*/
                         render: function(data, type, api_item) {
                             if(api_item.status === 'I'){
-                                return "<p class='text-center'><a title= 'Show Detail' class= 'ShowDetail btn btn-info btn-xs'  data-id = "+ api_item.id +"><i class='fa fa-eye'></i></a>" +
+                                return "<p class='text-center'><a title= 'Show Detail' class= 'ShowDetail btn btn-info btn-xs' data-toggle='modal' data-target='#FactoryModal' data-options='splash-2 splash-ef-12' data-id = "+ api_item.id +"><i class='fa fa-eye'></i></a>" +
                                     " &nbsp;" +
                                     "<a title= 'Delete' class= 'DeleteBuyer btn btn-danger btn-xs' data-id = "+ api_item.id +"><i class='fa fa-trash'></i></a>" +
                                     " &nbsp;" +
                                     "<a title= 'Activate' class= 'ActivateBuyer btn btn-success btn-xs' data-id = "+ api_item.id +"><i class='fa fa-arrow-circle-up'></i></a></p>"
                             }
                             else if(api_item.status === 'A'){
-                                return "<p class='text-center'><a title= 'Show Detail' class= 'ShowDetail btn btn-info btn-xs' data-id = "+ api_item.id +"><i class='fa fa-eye'></i></a>" +
+                                return "<p class='text-center'><a title= 'Show Detail' class= 'ShowDetail btn btn-info btn-xs' data-toggle='modal' data-target='#FactoryModal' data-options='splash-2 splash-ef-12' data-id = "+ api_item.id +"><i class='fa fa-eye'></i></a>" +
                                     " &nbsp;" +
                                     "<a title= 'Delete' class= 'DeleteBuyer btn btn-danger btn-xs' data-id = "+ api_item.id +"><i class='fa fa-trash'></i></a>" +
                                     " &nbsp;" +
@@ -561,8 +561,7 @@
                 data:{id: FactoryID},
                 success:function(data){
                     console.log(data);
-                    $("#FactoryModal").show();
-                    return;
+                    //$("#FactoryModal").show();
 
                    /* $('input[name=name]').val(data.name);
                     $('input[name=short_name]').val(data.short_name);
@@ -586,7 +585,7 @@
                     $('input[name=id]').val(data.id);
                     moveToTop();*/
                 },
-                
+
                 error:function(error){
                     //console.log(error);
                     swal({

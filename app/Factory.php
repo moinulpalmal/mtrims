@@ -12,6 +12,7 @@ class Factory extends Model
     {
         return DB::table('factories')
             ->select('id', 'name')
+            ->where('status', '=', 'A')
             ->orderBy('name')
             ->get();
     }
