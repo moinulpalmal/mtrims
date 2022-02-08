@@ -306,7 +306,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-md-12"> 
+                            <div class="col-md-12">
                                 <table class="table table-hover table-bordered table-condensed table-responsive">
                                     <tbody>
                                         <tr>
@@ -376,7 +376,8 @@
         function loadDataTable() {
             table.destroy();
             var free_table = '<tr><td class="text-center" colspan="4">--- Please Wait... Loading Data  ----</td></tr>';
-            $('tbody').html(free_table);
+            $('#advanced-usage').find('tbody').append(free_table);
+           // $('tbody').html(free_table);
             table = $("#advanced-usage").DataTable({
                 ajax: {
                     url: "/mtrims/public/api/admin/factory/not-deleted",
@@ -518,6 +519,7 @@
                 method:'POST',
                 data:{id: FactoryID},
                 success:function(data){
+                    console.log(data);
                     document.getElementById("FName").innerHTML  = data.name;
                     document.getElementById("SName").innerHTML  = data.short_name;
                     document.getElementById("FacAddress").innerHTML = data.address;
@@ -528,8 +530,8 @@
                     document.getElementById("TCPInfo").innerHTML = data.contact_person_info;
                     document.getElementById("TStoreInfo").innerHTML = data.factory_store_info;
                     document.getElementById("TMsnInfo").innerHTML = data.factory_messenger_info;
-                    
-                    if (data.is_cho = 1)
+
+                    if (data.is_cho == 1)
                     {
                         document.getElementById("TIsCho").innerHTML = "<p class =''><label class='label label-success'>Yes</label></p>"
                     }
@@ -538,7 +540,7 @@
                         document.getElementById("demo").innerHTML = "<p class =''><label class='label label-warning'>No</label></p>"
                     }
 
-                    if (status = "A")
+                    if (data.status === 'A')
                     {
                         document.getElementById("status").innerHTML = "<p class =''><label class='label label-success'>Active</label></p>"
                     }
@@ -547,7 +549,6 @@
                         document.getElementById("status").innerHTML = "<p class =''><label class='label label-warning'>Inactive</label></p>"
                     }
                 },
-
                 error:function(error){
                     //console.log(error);
                     swal({
