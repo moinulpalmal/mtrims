@@ -101,6 +101,9 @@ Route::middleware('auth')->group(function (){
         Route::get('department','DepartmentController@index')->name('department');
         Route::post('save-department','DepartmentController@saveDepartment')->name('save-department');
         Route::post('edit-department','DepartmentController@updateDepartment')->name('edit-department');
+        Route::delete('activate-department','DepartmentController@activateDepartment')->name('activate-department');
+        Route::delete('de-activate-department','DepartmentController@deActivateDepartment')->name('de-activate-department');
+        Route::delete('delete-department','DepartmentController@deleteDepartment')->name('delete-department');
         //department setup
 
         //buyer setup
