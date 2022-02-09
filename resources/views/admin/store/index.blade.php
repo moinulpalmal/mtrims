@@ -154,7 +154,7 @@
                                 <div class="col-md-4 no-padding">
                                     <div class="form-group">
                                         <label for="StoreType" class="control-label">Select Sub Contractor Type</label>
-                                        <select id="StoreType" class="form-control chosen-select" name="store_type" required = "" style="width: 100%;">
+                                        <select id="StoreType" class="form-control select2" name="store_type" required = "" style="width: 100%;">
                                             <option value="">- - - Select - - -</option>
                                             <option value="C">Central Store</option>
                                             <option value="S">Sub Store</option>
@@ -397,6 +397,7 @@
 
     <script>
         $(window).load(function(){
+            $('.select2').select2();
             $('#advanced-usage').DataTable({
 
             });

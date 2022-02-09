@@ -10,8 +10,11 @@ class StoreController extends Controller
 {
     public function index(){
         $stores = Store::orderBy('name')->where('status','!=', 'D')->get();
-
         return view('admin.store.index', compact('stores'));
+    }
+
+    public function getAllNotDeletedStores(){
+        return Store::getNotDeletedStores();
     }
 
     public function saveStore(Request $request){

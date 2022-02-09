@@ -14,4 +14,12 @@ class Store extends Model
            ->orderBy('name')
            ->get();
    }
+
+    public static function getNotDeletedStores(){
+        return DB::table('stores')
+            ->select('*')
+            ->where('status', '!=', 'D')
+            ->orderBy('name')
+            ->get();
+    }
 }
