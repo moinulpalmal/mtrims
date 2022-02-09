@@ -231,21 +231,22 @@
                     <!-- tile body -->
                     <div class="tile-body">
                         <div class="table-responsive">
-                            <h3 class="text-success text-center">{{Session::get('message')}}</h3>
+                            {{-- <h3 class="text-success text-center">{{Session::get('message')}}</h3> --}}
                             <table class="table table-hover table-bordered table-condensed table-responsive" id="advanced-usage">
                                 <thead>
-                                <tr style="background-color: #1693A5; color: white;">
-                                    <th class="text-center">Sl No.</th>
-                                    <th class="text-center">Store Name</th>
-                                    <th class="text-center">Short Name</th>
-                                    <th class="text-center">Store Type</th>
-                                    <th class="text-center">Contact Person Info</th>
-                                    <th class="text-center">Address</th>
-                                    <th class="text-center">Action</th>
-                                </tr>
+                                    <tr style="background-color: #1693A5; color: white;">
+                                        {{-- <th class="text-center">Sl No.</th> --}}
+                                        <th class="text-center">Store Name</th>
+                                        <th class="text-center">Short Name</th>
+                                        {{-- <th class="text-center">Store Type</th> --}}
+                                        <th class="text-center">Contact Person Info</th>
+                                        <th class="text-center">Address</th>
+                                        <th class="text-center">Status</th>
+                                        <th class="text-center">Action</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                @php($i = 1)
+                                {{-- @php($i = 1)
                                 @foreach($stores as $item)
                                     <tr>
                                         <td class="text-center">{{$i++}}</td>
@@ -267,7 +268,7 @@
                                             <a class="DeleteFactory btn btn-danger btn-xs" ><i class="fa fa-trash"></i></a>
                                         </td>
                                     </tr>
-                                @endforeach
+                                @endforeach --}}
                                 </tbody>
                             </table>
                         </div>
@@ -283,125 +284,151 @@
 @endsection
 
 @section('page-modals')
-    @foreach($stores as $item)
-        <!-- Modal -->
-        <div class="modal splash fade" id="user{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3 class="modal-title custom-font">{!! $item->name !!}</h3>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="col-md-5">
-                                    <strong class="text-left">Factory Name</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6 text-right">
-                                    <p>{{$item->name}}</p>
-                                </div>
-                                <div class="col-md-5">
-                                    <strong class="text-left">Short Name</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6">
-                                    <p class="text-right">{{$item->short_name}}</p>
-                                </div>
-                                <div class="col-md-5">
-                                    <strong class="text-left">Address</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6">
-                                    <p class="text-right">{{$item->address}}</div>
-                                <div class="col-md-5">
-                                    <strong class="text-left">Is CHO</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6">
-                                    @if($item->IsCHO == 'CHO')
-                                        <p class="text-white-50 text-right">Yes</p>
-                                    @else
-                                        <p class="text-danger text-right">No</p>
-                                    @endif
-                                </div>
-                                <div class="col-md-5">
-                                    <strong class="text-left">VAT No.</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6 text-right">
-                                    <p>{{$item->vat_no}}</p>
-                                </div>
-                                <br>
-                                <div class="col-md-5">
-                                    <strong class="text-left">BIN No.</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6">
-                                    <p class="text-right">{{$item->bin_no}}</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="col-md-5">
-                                    <strong class="text-left">Factory Head</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6">
-                                    <p class="text-right">{{$item->factory_head_info}}</p>
-                                </div>
-                                <div class="col-md-5">
-                                    <strong class="text-left">Factory Manager</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6 text-right">
-                                    <p class="text-right">{{$item->manager_info}}</p>
-                                </div>
-                                <div class="col-md-5">
-                                    <strong class="text-left">Contact Person</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6">
-                                    <p class="text-right">{{$item->contact_person_info}}</div>
-                                <div class="col-md-5">
-                                    <strong class="text-left">Store Info</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6">
-                                    <p class="text-right">{{$item->factory_store_info}}</div>
-                            </div>
-                            <div class="col-md-5">
-                                <strong class="text-left">Messenger Info</strong>
-                            </div>
-                            <div class="col-md-1">:</div>
-                            <div class="col-md-6">
-                                <p class="text-right">{{$item->factory_messenger_info}}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button class="btn btn-success btn-ef btn-ef-3 btn-ef-3c"><i class="fa fa-arrow-right"></i> Submit</button>
-                        <button class="btn btn-lightred btn-ef btn-ef-4 btn-ef-4c" data-dismiss="modal"><i class="fa fa-arrow-left"></i> Cancel</button>
+<!-- Modal -->
+<div class="modal splash fade" id="FactoryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title custom-font" id="">Store Details</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-hover table-bordered table-condensed table-responsive">
+                            <tbody>
+                                <tr>
+                                    <td><b>Store Name</b></td>
+                                    <td id="FName"></td>
+                                    <td><b>Short Name</b></td>
+                                    <td id="SName"></td>
+                                </tr>
+                                <tr>
+                                    <td><b>Address</b></td>
+                                    <td id="StoAddress"></td>
+                                    <td><b>Store Type</b></td>
+                                    <td id="StType"></td>
+                                </tr>
+                                <tr>
+                                    <td><b>Manager</b></td>
+                                    <td id="TManInfo"></td>
+                                    <td><b>Contact Person</b></td>
+                                    <td id="TCPInfo"></td>
+                                </tr>
+                                <tr>
+                                    <td><b>Status</b></td>
+                                    <td id="status"></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
+
+            <div class="modal-footer">
+                {{-- <button class="btn btn-success btn-ef btn-ef-3 btn-ef-3c"><i class="fa fa-arrow-right"></i> Submit</button> --}}
+                <button class="btn btn-lightred btn-ef btn-ef-4 btn-ef-4c" data-dismiss="modal"><i class="fa fa-arrow-left"></i> Close</button>
+            </div>
         </div>
-        <!-- Modal -->
-    @endforeach
+    </div>
+</div>
+<!-- Modal -->
 @endsection
+
 @section('pageVendorScripts')
 
 @endsection
+
 @section('pageScripts')
     {{--    <script src="{{ asset('back-end/assets/MyJS/jquery.min.js') }}"></script>--}}
 
     <script>
         $(window).load(function(){
             $('.select2').select2();
-            $('#advanced-usage').DataTable({
-
-            });
         });
+
+        var table = $('#advanced-usage').DataTable({
+            "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
+        });
+        $(window).load(function(){
+            loadDataTable();
+        });
+        function loadDataTable() {
+            table.destroy();
+            var free_table = '<tr><td class="text-center" colspan="4">--- Please Wait... Loading Data  ----</td></tr>';
+            $('#advanced-usage').find('tbody').append(free_table);
+           // $('tbody').html(free_table);
+            table = $("#advanced-usage").DataTable({
+                ajax: {
+                    url: "/mtrims/public/api/admin/store/not-deleted",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "name",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "short_name",
+                        render: function (data) {
+                            return "<p class = 'text-center'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "contact_person_info",
+                        render: function (data) {
+                            return "<p class ='text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "address",
+                        render: function (data) {
+                            return "<p class ='text-left'>"+ data +"</p>";
+                        }
+                    },
+                
+                    {
+                        render: function(data, type, api_item) {
+                            if(api_item.status === 'I'){
+                                return "<p class ='text-center'><label class='label label-warning'>In-Active</label></p>";
+                            }
+                            else if(api_item.status === 'A'){
+                                return "<p class ='text-center '><label class='label label-success'>Active</label></p>";
+                            }
+                            else{
+
+                            }
+                        }
+                    },
+                    {
+                        /*data: "id",*/
+                        render: function(data, type, api_item) {
+                            if(api_item.status === 'I'){
+                                return "<p class='text-center'><a title= 'Show Detail' class= 'ShowDetail btn btn-info btn-xs' data-toggle='modal' data-target='#FactoryModal' data-options='splash-2 splash-ef-12' data-id = "+ api_item.id +"><i class='fa fa-eye'></i></a>" +
+                                    " &nbsp;" +
+                                    "<a title= 'Delete' class= 'DeleteBuyer btn btn-danger btn-xs' data-id = "+ api_item.id +"><i class='fa fa-trash'></i></a>" +
+                                    " &nbsp;" +
+                                    "<a title= 'Activate' class= 'ActivateBuyer btn btn-success btn-xs' data-id = "+ api_item.id +"><i class='fa fa-arrow-circle-up'></i></a></p>"
+                            }
+                            else if(api_item.status === 'A'){
+                                return "<p class='text-center'><a title= 'Show Detail' class= 'ShowDetail btn btn-info btn-xs' data-toggle='modal' data-target='#FactoryModal' data-options='splash-2 splash-ef-12' data-id = "+ api_item.id +"><i class='fa fa-eye'></i></a>" +
+                                    " &nbsp;" +
+                                    "<a title= 'Delete' class= 'DeleteBuyer btn btn-danger btn-xs' data-id = "+ api_item.id +"><i class='fa fa-trash'></i></a>" +
+                                    " &nbsp;" +
+                                    "<a title= 'Activate' class= 'DeActivateBuyer btn btn-warning btn-xs' data-id = "+ api_item.id +"><i class='fa fa-arrow-circle-down'></i></a>" +
+                                    " &nbsp;" +
+                                    "<a title= 'Edit' class= 'EditFactory btn btn-warning btn-xs' data-id = "+ api_item.id +"><i class='fa fa-edit'></i></a></p>"
+                            }
+                            else{
+
+                            }
+                        }
+                    }
+                ]
+            });
+        }
+
 
         $(function(){
             $.ajaxSetup({
@@ -459,6 +486,56 @@
 
             })
         });
+
+        $('#advanced-usage').on('click',".ShowDetail", function(){
+            var button = $(this);
+            var FactoryID = button.attr("data-id");
+            var url = '{{ route('admin.edit-store') }}';
+            $.ajax({
+                url: url,
+                method:'POST',
+                data:{id: FactoryID},
+                success:function(data){
+                    // console.log(data);
+                    document.getElementById("FName").innerHTML  = data.name;
+                    document.getElementById("SName").innerHTML  = data.short_name;
+                    document.getElementById("StoAddress").innerHTML = data.address;
+                    document.getElementById("TManInfo").innerHTML = data.manager_info;
+                    document.getElementById("TCPInfo").innerHTML = data.contact_person_info;
+                    // console.log(document.getElementById("StType").innerHTML = data.store_type);
+
+                    if (data.store_type === "C")
+                    {
+                        document.getElementById("StType").innerHTML = "Center"
+                    }
+                    else
+                    {
+                        document.getElementById("StType").innerHTML = "Sub Store"
+                    }
+
+                    if (data.status === 'A')
+                    {
+                        document.getElementById("status").innerHTML = "<p class =''><label class='label label-success'>Active</label></p>"
+                    }
+                    else
+                    {
+                        document.getElementById("status").innerHTML = "<p class =''><label class='label label-warning'>Inactive</label></p>"
+                    }
+                },
+                error:function(error){
+                    //console.log(error);
+                    swal({
+                        title: "No Data Found!",
+                        text: "no data!",
+                        icon: "error",
+                        button: "Ok!",
+                        className: "myClass",
+                    });
+                }
+            })
+
+        });
+
         $('#advanced-usage').on('click',".EditFactory", function(){
             var button = $(this);
 
