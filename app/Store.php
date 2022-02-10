@@ -89,9 +89,9 @@ class Store extends Model
         $supplier->status = 'A';
         $supplier->last_updated_by = Auth::id();
         if($supplier->save()){
-            return true;
+            return '2';
         }
-        return 'Error';
+        return '0';
     }
 
     public static function inActivateStore($request){
@@ -127,6 +127,4 @@ class Store extends Model
 
     }
 
-
-    
 }
