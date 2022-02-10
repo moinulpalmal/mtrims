@@ -211,17 +211,11 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a onclick="refresh()" role="button" tabindex="0" class="tile-refresh">
+                                        <a onclick="loadDataTable()" role="button" tabindex="0" class="tile-refresh">
                                             <i class="fa fa-refresh"></i> Refresh
                                         </a>
                                     </li>
-                                    <li>
-                                        <a role="button" tabindex="0" class="tile-fullscreen">
-                                            <i class="fa fa-expand"></i> Fullscreen
-                                        </a>
-                                    </li>
                                 </ul>
-
                             </li>
                             {{--                            <li class="remove"><a role="button" tabindex="0" class="tile-close"><i class="fa fa-times"></i></a></li>--}}
                         </ul>
@@ -238,7 +232,7 @@
                                         {{-- <th class="text-center">Sl No.</th> --}}
                                         <th class="text-center">Store Name</th>
                                         <th class="text-center">Short Name</th>
-                                        {{-- <th class="text-center">Store Type</th> --}}
+                                        <th class="text-center">Store Type</th>
                                         <th class="text-center">Contact Person Info</th>
                                         <th class="text-center">Address</th>
                                         <th class="text-center">Status</th>
@@ -246,29 +240,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                {{-- @php($i = 1)
-                                @foreach($stores as $item)
-                                    <tr>
-                                        <td class="text-center">{{$i++}}</td>
-                                        <td>{{$item->name}}</td>
-                                        <td>{!! $item->short_name !!}</td>
-                                        <td class="text-center">
-                                            @if($item->store_type == "C")
-                                                <strong>Central Store</strong>
-                                                @endif
-                                                @if($item->store_type == "S")
-                                                    <strong>Sub Store</strong>
-                                                @endif
-                                        </td>
-                                        <td>{!! $item->contact_person_info !!}</td>
-                                        <td>{!! $item->address !!}</td>
-                                        <td class="text-center">
-                                            <button class="btn btn-info btn-xs" data-toggle="modal" data-target="#user{{$item->id}}" data-options="splash-2 splash-ef-12"><i class="fa fa-eye"></i></button>
-                                            <a onclick="iconChange()" data-id = "{{ $item->id }}" class="EditFactory btn btn-warning btn-xs"><i class="fa fa-edit"></i></a>
-                                            <a class="DeleteFactory btn btn-danger btn-xs" ><i class="fa fa-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                @endforeach --}}
+
                                 </tbody>
                             </table>
                         </div>
@@ -344,14 +316,13 @@
     <script>
         $(window).load(function(){
             $('.select2').select2();
+            loadDataTable();
         });
 
         var table = $('#advanced-usage').DataTable({
             "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
         });
-        $(window).load(function(){
-            loadDataTable();
-        });
+
         function loadDataTable() {
             table.destroy();
             var free_table = '<tr><td class="text-center" colspan="4">--- Please Wait... Loading Data  ----</td></tr>';
@@ -376,6 +347,19 @@
                         }
                     },
                     {
+                        render: function(data, type, api_item) {
+                            if(api_item.store_type === 'C'){
+                                return "<p class ='text-center'>Central Store</p>";
+                            }
+                            else if(api_item.status === 'S'){
+                                return "<p class ='text-center '>Sub Store</p>";
+                            }
+                            else{
+
+                            }
+                        }
+                    },
+                    {
                         data: "contact_person_info",
                         render: function (data) {
                             return "<p class ='text-left'>"+ data +"</p>";
@@ -387,7 +371,6 @@
                             return "<p class ='text-left'>"+ data +"</p>";
                         }
                     },
-                
                     {
                         render: function(data, type, api_item) {
                             if(api_item.status === 'I'){
@@ -550,13 +533,13 @@
                 success:function(data){
                     $('input[name=name]').val(data.name);
                     $('input[name=short_name]').val(data.short_name);
+                    $('select[name=store_type]').val(data.store_type).change();
                     document.getElementById('FactoryAddress').value = data.address;
                     document.getElementById('FHInfo').value = data.manager_info;
                     document.getElementById('CPInfo').value = data.contact_person_info;
                     $('input[name=id]').val(data.id);
                 },
                 error:function(error){
-                    //console.log(error);
                     swal({
                         title: "No Data Found!",
                         text: "no data!",

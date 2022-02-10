@@ -9,8 +9,7 @@ use Illuminate\Http\Request;
 class StoreController extends Controller
 {
     public function index(){
-        $stores = Store::orderBy('name')->where('status','!=', 'D')->get();
-        return view('admin.store.index', compact('stores'));
+        return view('admin.store.index');
     }
 
     public function getAllNotDeletedStores(){

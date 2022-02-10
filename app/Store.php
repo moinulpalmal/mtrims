@@ -70,7 +70,6 @@ class Store extends Model
 
         if($supplier == null)
             return null;
-
         $supplierData = array(
             'id' => $supplier->id,
             'name' => $supplier->name,
