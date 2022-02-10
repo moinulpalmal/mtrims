@@ -19,7 +19,7 @@
         .tile-header{
             background-color:#105e7d;
         }
-        #FactoryAddress {
+        #StoreAddress {
             -moz-box-sizing: border-box;
             -webkit-box-sizing: border-box;
             box-sizing: border-box;
