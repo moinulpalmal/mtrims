@@ -20,4 +20,13 @@ class Buyer extends Model
             ->orderBy('name')
             ->get();
     }
+
+    public static function getAllNotDeletedBuyers()
+    {
+        return DB::table('buyers')
+            ->select('*')
+            ->where('status', '!=', 'D')
+            ->orderBy('name')
+            ->get();
+    }
 }

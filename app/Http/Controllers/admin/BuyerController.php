@@ -13,6 +13,10 @@ class BuyerController extends Controller
         return view('admin.buyer.index', compact('buyers'));
     }
 
+    public function getAllNotDeletedStores(){
+        return Buyer::getAllNotDeletedBuyers();
+    }
+
     public function saveBuyer(Request $req)
     {
         $HiddenDepartmentID = $req->get('id');
