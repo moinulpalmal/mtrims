@@ -311,7 +311,7 @@
 @endsection
 
 @section('pageScripts')
-    {{--    <script src="{{ asset('back-end/assets/MyJS/jquery.min.js') }}"></script>--}}
+<script src="{{ asset('/js/common.js') }}"></script>
 
     <script>
         $(window).load(function(){
@@ -429,7 +429,7 @@
                     data:data,
                     success:function(data){
                         //console.log(data);
-                        if(id)
+                        if(data === '2')
                         {
                             swal({
                                 title: "Data Updated Successfully!",
@@ -437,11 +437,12 @@
                                 button: "Ok!",
                             }).then(function (value) {
                                 if(value){
-                                    window.location.href = window.location.href.replace(/#.*$/, '');
+                                    clearFormWithoutDelay("StoreAdd");
+                                    loadDataTable();
                                 }
                             });
                         }
-                        else
+                        else if(data === '1')
                         {
                             swal({
                                 title: "Data Inserted Successfully!",
@@ -449,8 +450,18 @@
                                 button: "Ok!",
                             }).then(function (value) {
                                 if(value){
-                                    window.location.href = window.location.href.replace(/#.*$/, '');
+                                    clearFormWithoutDelay("StoreAdd");
+                                    loadDataTable();
                                 }
+                            });
+                        }
+                        else{
+                            swal({
+                                title: "Data Not Saved!",
+                                text: "Please Check Your Data!",
+                                icon: "error",
+                                button: "Ok!",
+                                className: "myClass",
                             });
                         }
                     },
