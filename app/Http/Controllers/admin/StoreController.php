@@ -17,104 +17,93 @@ class StoreController extends Controller
         return Store::getNotDeletedStores();
     }
 
-    public function saveStore(Request $request){
-        $id = $request->get('id');
+    public function saveStore(Request $req){
+        $id = $req->get('id');
         if(!empty($id))
         {
-            $supplier = Store::find($request->id);
-            if($supplier != null){
-                $supplier->name = $request->name;
-                $supplier->short_name = $request->short_name;
-                $supplier->address = $request->address;
-                $supplier->store_type = $request->store_type;
-                $supplier->manager_info = $request->manager_info;
-                $supplier->contact_person_info = $request->contact_person_info;
-                $supplier->status = 'A';
-                if($supplier->save())
-                {
-                    return 'Saved';
-                }
-            }
-            return 'Updated';
+            return Store::updateStore($req);
+
+
+
+            // $supplier = Store::find($request->id);
+            // if($supplier != null){
+            //     $supplier->name = $request->name;
+            //     $supplier->short_name = $request->short_name;
+            //     $supplier->address = $request->address;
+            //     $supplier->store_type = $request->store_type;
+            //     $supplier->manager_info = $request->manager_info;
+            //     $supplier->contact_person_info = $request->contact_person_info;
+            //     $supplier->status = 'A';
+            //     if($supplier->save())
+            //     {
+            //         return 'Saved';
+            //     }
+            // }
+            // return 'Updated';
         }
         else
         {
-            $supplier = new Store();
-            $supplier->name = $request->name;
-            $supplier->short_name = $request->short_name;
-            $supplier->address = $request->address;
-            $supplier->store_type = $request->store_type;
-            $supplier->manager_info = $request->manager_info;
-            $supplier->contact_person_info = $request->contact_person_info;
-            if($supplier->save())
-            {
-                return 'Saved';
-            }
+            return Store::insertStore($req);
+
+
+
+            // $supplier = new Store();
+            // $supplier->name = $request->name;
+            // $supplier->short_name = $request->short_name;
+            // $supplier->address = $request->address;
+            // $supplier->store_type = $request->store_type;
+            // $supplier->manager_info = $request->manager_info;
+            // $supplier->contact_person_info = $request->contact_person_info;
+            // if($supplier->save())
+            // {
+            //     return 'Saved';
+            // }
         }
-        return 'BR';
     }
 
     public function updateStore(Request $req)
     {
-        $supplier = Store::find($req->id);
+        return Store::getStoreDetail($req);
 
-        if($supplier == null)
-            return null;
+        // $supplier = Store::find($req->id);
 
-        $supplierData = array(
-            'id' => $supplier->id,
-            'name' => $supplier->name,
-            'address' => $supplier->address,
-            'short_name' => $supplier->short_name,
-            'store_type' => $supplier->store_type,
-            'manager_info' => $supplier->manager_info,
-            'contact_person_info' => $supplier->contact_person_info
-        );
-        return $supplierData;
+        // if($supplier == null)
+        //     return null;
+
+        // $supplierData = array(
+        //     'id' => $supplier->id,
+        //     'name' => $supplier->name,
+        //     'address' => $supplier->address,
+        //     'short_name' => $supplier->short_name,
+        //     'store_type' => $supplier->store_type,
+        //     'manager_info' => $supplier->manager_info,
+        //     'contact_person_info' => $supplier->contact_person_info
+        // );
+        // return $supplierData;
     }
 
-    public function fullDelete(Request $request)
-    {
-        $supplier = Store::find($request->id);
-        $supplier->status = 'D';
-        if($supplier->save()){
-            return true;
-        }
-        return 'Error';
-
-    }
-
-    public function blackList(Request $request)
-    {
-        $supplier = Store::find($request->id);
-        $supplier->status = 'B';
-        if($supplier->save()){
-            return true;
-        }
-        return 'Error';
-
-    }
 
     public function activate(Request $request)
     {
-        $supplier = Store::find($request->id);
-        $supplier->status = 'A';
-        if($supplier->save()){
-            return true;
-        }
-        return 'Error';
-
+        return Store::activateStore($request);
     }
 
     public function inActivate(Request $request)
     {
-        $supplier = Store::find($request->id);
-        $supplier->status = 'IN';
-        if($supplier->save()){
-            return true;
-        }
-        return 'Error';
-
+        return Store::inActivateStore($request);
     }
+
+    public function blackList(Request $request)
+    {
+        return Store::blackListStore($request);
+    }
+
+    public function fullDelete(Request $request)
+    {
+        return Store::deleteStore($request);
+    }
+
+
+    
 
 }

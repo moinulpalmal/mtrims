@@ -519,7 +519,7 @@
                 method:'POST',
                 data:{id: FactoryID},
                 success:function(data){
-                    console.log(data);
+                    // console.log(data);
                     document.getElementById("FName").innerHTML  = data.name;
                     document.getElementById("SName").innerHTML  = data.short_name;
                     document.getElementById("FacAddress").innerHTML = data.address;
