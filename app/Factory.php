@@ -67,7 +67,6 @@ class Factory extends Model
             $factory->factory_head_info = $request->get('factory_head_info');
             $factory->factory_messenger_info = $request->get('factory_messenger_info');
             $factory->last_updated_by = Auth::id();
-            $factory->status = 'A';
             if($request->get('IsCHO') == 'on')
             {
                 $factory->is_cho = true;
