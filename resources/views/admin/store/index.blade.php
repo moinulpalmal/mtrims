@@ -126,7 +126,7 @@
             <!-- col -->
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <!-- tile -->
-                <form method="post" id="FactoryAdd" enctype="multipart/form-data">
+                <form method="post" id="StoreAdd" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <section class="tile">
                         <!-- tile header -->
@@ -141,8 +141,8 @@
                             <div class="row" style="padding: 0px 15px;">
                                 <div class="col-md-4 no-padding">
                                     <div class="form-group">
-                                        <label for="FactoryName" class="control-label">Store Name</label>
-                                        <input type="text" class="form-control" name="name" id="FactoryName" placeholder="Enter factory name" required="">
+                                        <label for="StoreName" class="control-label">Store Name</label>
+                                        <input type="text" class="form-control" name="name" id="StoreName" placeholder="Enter Store Name" required="">
                                     </div>
                                 </div>
                                 <div class="col-md-4 no-padding">
@@ -166,20 +166,20 @@
                             <div class="row" style="padding: 0px 15px;">
                                 <div class="col-md-4 no-padding">
                                     <div class="form-group">
-                                        <label for="FactoryAddress" class="control-label">Store Address</label>
-                                        <textarea type="text" size="3" class="form-control" name="address" id="FactoryAddress" placeholder="Enter factory address" required=""></textarea>
+                                        <label for="StoreAddress" class="control-label">Store Address</label>
+                                        <textarea type="text" size="3" class="form-control" name="address" id="StoreAddress" placeholder="Enter Store Address" required=""></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-4 no-padding">
                                     <div class="form-group">
                                         <label for="CPInfo" class="control-label">Primary Contact Person Info</label>
-                                        <textarea type="text" size="3" class="form-control" name="contact_person_info" id="CPInfo" placeholder="Enter factory address" required=""></textarea>
+                                        <textarea type="text" size="3" class="form-control" name="contact_person_info" id="CPInfo" placeholder="Enter Contact Person Info" required=""></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-4 no-padding">
                                     <div class="form-group">
                                         <label for="FHInfo" class="control-label">Store Manager Info</label>
-                                        <textarea type="text" size="3" class="form-control" name="manager_info" id="FHInfo" placeholder="Enter factory head info" required=""></textarea>
+                                        <textarea type="text" size="3" class="form-control" name="manager_info" id="FHInfo" placeholder="Enter Store Manager Info" required=""></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -390,18 +390,18 @@
                             if(api_item.status === 'I'){
                                 return "<p class='text-center'><a title= 'Show Detail' class= 'ShowDetail btn btn-info btn-xs' data-toggle='modal' data-target='#FactoryModal' data-options='splash-2 splash-ef-12' data-id = "+ api_item.id +"><i class='fa fa-eye'></i></a>" +
                                     " &nbsp;" +
-                                    "<a title= 'Delete' class= 'DeleteBuyer btn btn-danger btn-xs' data-id = "+ api_item.id +"><i class='fa fa-trash'></i></a>" +
+                                    "<a title= 'Delete' class= 'DeleteStore btn btn-danger btn-xs' data-id = "+ api_item.id +"><i class='fa fa-trash'></i></a>" +
                                     " &nbsp;" +
-                                    "<a title= 'Activate' class= 'ActivateBuyer btn btn-success btn-xs' data-id = "+ api_item.id +"><i class='fa fa-arrow-circle-up'></i></a></p>"
+                                    "<a title= 'Activate' class= 'ActivateStore btn btn-success btn-xs' data-id = "+ api_item.id +"><i class='fa fa-arrow-circle-up'></i></a></p>"
                             }
                             else if(api_item.status === 'A'){
                                 return "<p class='text-center'><a title= 'Show Detail' class= 'ShowDetail btn btn-info btn-xs' data-toggle='modal' data-target='#FactoryModal' data-options='splash-2 splash-ef-12' data-id = "+ api_item.id +"><i class='fa fa-eye'></i></a>" +
                                     " &nbsp;" +
-                                    "<a title= 'Delete' class= 'DeleteBuyer btn btn-danger btn-xs' data-id = "+ api_item.id +"><i class='fa fa-trash'></i></a>" +
+                                    "<a title= 'Delete' class= 'DeleteStore btn btn-danger btn-xs' data-id = "+ api_item.id +"><i class='fa fa-trash'></i></a>" +
                                     " &nbsp;" +
-                                    "<a title= 'Activate' class= 'DeActivateBuyer btn btn-warning btn-xs' data-id = "+ api_item.id +"><i class='fa fa-arrow-circle-down'></i></a>" +
+                                    "<a title= 'Activate' class= 'DeActivateStore btn btn-warning btn-xs' data-id = "+ api_item.id +"><i class='fa fa-arrow-circle-down'></i></a>" +
                                     " &nbsp;" +
-                                    "<a title= 'Edit' class= 'EditFactory btn btn-warning btn-xs' data-id = "+ api_item.id +"><i class='fa fa-edit'></i></a></p>"
+                                    "<a title= 'Edit' class= 'EditStore btn btn-warning btn-xs' data-id = "+ api_item.id +"><i class='fa fa-edit'></i></a></p>"
                             }
                             else{
 
@@ -417,7 +417,7 @@
             $.ajaxSetup({
                 headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' }
             });
-            $('#FactoryAdd').submit(function(e){
+            $('#StoreAdd').submit(function(e){
                 e.preventDefault();
                 var data = $(this).serialize();
                 var id = $('#HiddenFactoryID').val();
@@ -472,12 +472,12 @@
 
         $('#advanced-usage').on('click',".ShowDetail", function(){
             var button = $(this);
-            var FactoryID = button.attr("data-id");
+            var StoreID = button.attr("data-id");
             var url = '{{ route('admin.edit-store') }}';
             $.ajax({
                 url: url,
                 method:'POST',
-                data:{id: FactoryID},
+                data:{id: StoreID},
                 success:function(data){
                     // console.log(data);
                     document.getElementById("FName").innerHTML  = data.name;
@@ -519,22 +519,22 @@
 
         });
 
-        $('#advanced-usage').on('click',".EditFactory", function(){
+        $('#advanced-usage').on('click',".EditStore", function(){
             var button = $(this);
 
-            var FactoryID = button.attr("data-id");
+            var StoreID = button.attr("data-id");
 
 
             var url = '{{ route('admin.edit-store') }}';
             $.ajax({
                 url: url,
                 method:'POST',
-                data:{id: FactoryID},
+                data:{id: StoreID},
                 success:function(data){
                     $('input[name=name]').val(data.name);
                     $('input[name=short_name]').val(data.short_name);
                     $('select[name=store_type]').val(data.store_type).change();
-                    document.getElementById('FactoryAddress').value = data.address;
+                    document.getElementById('StoreAddress').value = data.address;
                     document.getElementById('FHInfo').value = data.manager_info;
                     document.getElementById('CPInfo').value = data.contact_person_info;
                     $('input[name=id]').val(data.id);
@@ -551,6 +551,177 @@
             })
 
         });
+
+        $('#advanced-usage').on('click',".ActivateStore", function(){
+            var button = $(this);
+            var id = button.attr("data-id");
+            var url = '{{ route('admin.activate-store') }}';
+            swal({
+                title: 'Are you sure?',
+                text: 'This store will be a active one!',
+                icon: 'warning',
+                buttons: ["Cancel", "Yes!"],
+            }).then(function(value) {
+                if (value) {
+                    //window.location.href = url;
+                    //console.log(id);
+                    $.ajax({
+                        method:'DELETE',
+                        url: url,
+                        data:{id: id, _token: '{{csrf_token()}}'},
+                        success:function(data){
+                            if(data){
+                                //console.log(data);
+                                if(data === '2'){
+                                    swal({
+                                        title: "Operation Successful!",
+                                        icon: "success",
+                                        button: "Ok!",
+                                    }).then(function (value) {
+                                        if(value){
+                                            loadDataTable();
+                                        }
+                                    });
+                                }
+                                else{
+                                    swal({
+                                        title: "Operation Unsuccessful!",
+                                        text: "Something wrong happened please check!",
+                                        icon: "error",
+                                        button: "Ok!",
+                                        className: "myClass",
+                                    });
+                                }
+
+                            }
+                        },
+                        error:function(error){
+                            swal({
+                                title: "Operation Unsuccessful!",
+                                text: "Something wrong happened please check!",
+                                icon: "error",
+                                button: "Ok!",
+                                className: "myClass",
+                            });
+                        }
+                    })
+                }
+            });
+        });
+
+
+        $('#advanced-usage').on('click',".DeActivateStore", function(){
+            var button = $(this);
+            var id = button.attr("data-id");
+            var url = '{{ route('admin.de-activate-store') }}';
+            swal({
+                title: 'Are you sure?',
+                text: 'This store will be in-active!',
+                icon: 'warning',
+                buttons: ["Cancel", "Yes!"],
+            }).then(function(value) {
+                if (value) {
+                    //window.location.href = url;
+                    //console.log(id);
+                    $.ajax({
+                        method:'DELETE',
+                        url: url,
+                        data:{id: id, _token: '{{csrf_token()}}'},
+                        success:function(data){
+                            if(data){
+                                if(data === '2'){
+                                    swal({
+                                        title: "Operation Successful!",
+                                        icon: "success",
+                                        button: "Ok!",
+                                    }).then(function (value) {
+                                        if(value){
+                                            loadDataTable();
+                                        }
+                                    });
+                                }
+                                else{
+                                    swal({
+                                        title: "Operation Unsuccessful!",
+                                        text: "Something wrong happened please check!",
+                                        icon: "error",
+                                        button: "Ok!",
+                                        className: "myClass",
+                                    });
+                                }
+                            }
+                        },
+                        error:function(error){
+                            console.log(error);
+                            swal({
+                                title: "Operation Unsuccessful!",
+                                text: "Something wrong happened please check!",
+                                icon: "error",
+                                button: "Ok!",
+                                className: "myClass",
+                            });
+                        }
+                    })
+                }
+            });
+        });
+
+
+        $('#advanced-usage').on('click',".DeleteStore", function(){
+            var button = $(this);
+            var id = button.attr("data-id");
+            var url = '{{ route('admin.delete-store') }}';
+            swal({
+                title: 'Are you sure?',
+                text: 'This store will be removed permanently!',
+                icon: 'warning',
+                buttons: ["Cancel", "Yes!"],
+            }).then(function(value) {
+                if (value) {
+                    //window.location.href = url;
+                    //console.log(id);
+                    $.ajax({
+                        method:'DELETE',
+                        url: url,
+                        data:{id: id, _token: '{{csrf_token()}}'},
+                        success:function(data){
+                            if(data){
+                                if(data === '2'){
+                                    swal({
+                                        title: "Operation Successful!",
+                                        icon: "success",
+                                        button: "Ok!",
+                                    }).then(function (value) {
+                                        if(value){
+                                            loadDataTable();
+                                        }
+                                    });
+                                }
+                                else{
+                                    swal({
+                                        title: "Operation Unsuccessful!",
+                                        text: "Something wrong happened please check!",
+                                        icon: "error",
+                                        button: "Ok!",
+                                        className: "myClass",
+                                    });
+                                }
+                            }
+                        },
+                        error:function(error){
+                            swal({
+                                title: "Operation Unsuccessful!",
+                                text: "Something wrong happened please check!",
+                                icon: "error",
+                                button: "Ok!",
+                                className: "myClass",
+                            });
+                        }
+                    })
+                }
+            });
+        });
+
 
         function refresh()
         {

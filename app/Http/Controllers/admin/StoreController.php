@@ -34,12 +34,12 @@ class StoreController extends Controller
     }
 
 
-    public function activate(Request $request)
+    public function activateStore(Request $request)
     {
         return Store::activateStore($request);
     }
 
-    public function inActivate(Request $request)
+    public function deActivateStore(Request $request)
     {
         return Store::inActivateStore($request);
     }
@@ -49,7 +49,7 @@ class StoreController extends Controller
         return Store::blackListStore($request);
     }
 
-    public function fullDelete(Request $request)
+    public function deleteStore(Request $request)
     {
         return Store::deleteStore($request);
     }
