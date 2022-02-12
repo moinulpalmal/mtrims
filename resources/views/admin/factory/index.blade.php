@@ -564,10 +564,7 @@
         });
         $('#advanced-usage').on('click',".EditFactory", function(){
             var button = $(this);
-
             var FactoryID = button.attr("data-id");
-
-
             var url = '{{ route('admin.edit-factory') }}';
             $.ajax({
                 url: url,
