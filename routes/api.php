@@ -23,3 +23,4 @@ Route::get('admin/factory/not-deleted','admin\FactoryController@getAllNotDeleted
 Route::get('admin/department/not-deleted','admin\DepartmentController@getAllNotDeletedDepartments');
 Route::get('admin/store/not-deleted','admin\StoreController@getAllNotDeletedStores');
 Route::get('admin/buyer/not-deleted','admin\BuyerController@getAllNotDeletedBuyers');
+Route::get('admin/supplier/not-deleted','admin\SupplierController@getAllNotDeletedSuppliers');
