@@ -33,6 +33,7 @@ class Store extends Model
         $supplier->store_type = $request->store_type;
         $supplier->manager_info = $request->manager_info;
         $supplier->contact_person_info = $request->contact_person_info;
+        $supplier->status = 'A';
         $supplier->inserted_by = Auth::id();
         if($supplier->save())
         {
@@ -54,7 +55,6 @@ class Store extends Model
             $supplier->manager_info = $request->manager_info;
             $supplier->contact_person_info = $request->contact_person_info;
             $supplier->last_updated_by = Auth::id();
-            $supplier->status = 'A';
             if($supplier->save())
             {
                 return '2';
