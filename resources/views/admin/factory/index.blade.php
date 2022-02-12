@@ -268,20 +268,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {{--@php($i = 1)
-                                @foreach($factories as $item)
-                                    <tr>
-                                        <td class="text-center">{{$i++}}</td>
-                                        <td>{{$item->name}}</td>
-                                        <td>{!! $item->short_name !!}</td>
-                                        <td>{!! $item->address !!}</td>
-                                        <td class="text-center">
-                                            <button class="btn btn-info btn-xs" data-toggle="modal" data-target="#user{{$item->id}}" data-options="splash-2 splash-ef-12"><i class="fa fa-eye"></i></button>
-                                            <a onclick="iconChange()" data-id = "{{ $item->id }}" class="EditFactory btn btn-warning btn-xs"><i class="fa fa-edit"></i></a>
-                                            <a class="DeleteFactory btn btn-danger btn-xs" ><i class="fa fa-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                @endforeach--}}
+
                                 </tbody>
                             </table>
                         </div>
