@@ -302,100 +302,58 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h3 class="modal-title custom-font">Factory Name</h3>
+                        <h3 class="modal-title custom-font" id="">Factory Details</h3>
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="col-md-5">
-                                    <strong class="text-left">Factory Name</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6 text-right">
-                                    <p>Factory Name</p>
-                                </div>
-                                <div class="col-md-5">
-                                    <strong class="text-left">Short Name</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6">
-                                    <p class="text-right"></p>
-                                </div>
-                                <div class="col-md-5">
-                                    <strong class="text-left">Address</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6">
-                                    <p class="text-right"></div>
-                                <div class="col-md-5">
-                                    <strong class="text-left">Is CHO</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6">
-                                    {{--@if($item->IsCHO == 'CHO')
-                                        <p class="text-white-50 text-right">Yes</p>
-                                    @else
-                                        <p class="text-danger text-right">No</p>
-                                    @endif--}}
-                                </div>
-                                <div class="col-md-5">
-                                    <strong class="text-left">VAT No.</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6 text-right">
-                                   {{-- <p>{{$item->vat_no}}</p>--}}
-                                </div>
-                                <br>
-                                <div class="col-md-5">
-                                    <strong class="text-left">BIN No.</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6">
-                                   {{-- <p class="text-right">{{$item->bin_no}}</p>--}}
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="col-md-5">
-                                    <strong class="text-left">Factory Head</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6">
-                                    {{--<p class="text-right">{{$item->factory_head_info}}</p>--}}
-                                </div>
-                                <div class="col-md-5">
-                                    <strong class="text-left">Factory Manager</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6 text-right">
-                                    {{--<p class="text-right">{{$item->manager_info}}</p>--}}
-                                </div>
-                                <div class="col-md-5">
-                                    <strong class="text-left">Contact Person</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6">
-                                   {{-- <p class="text-right">{{$item->contact_person_info}}--}}
-                                </div>
-                                <div class="col-md-5">
-                                    <strong class="text-left">Store Info</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6">
-                                    {{-- <p class="text-right">{{$item->factory_store_info}}</div> --}}
-                            </div>
-                            <div class="col-md-5">
-                                <strong class="text-left">Messenger Info</strong>
-                            </div>
-                            <div class="col-md-1">:</div>
-                            <div class="col-md-6">
-                               {{-- <p class="text-right">{{$item->factory_messenger_info}}</p> --}}
+                            <div class="col-md-12">
+                                <table class="table table-hover table-bordered table-condensed table-responsive">
+                                    <tbody>
+                                        <tr>
+                                            <td><b>Factory Name</b></td>
+                                            <td id="FName"></td>
+                                            <td><b>Short Name</b></td>
+                                            <td id="SName"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Address</b></td>
+                                            <td id="FacAddress"></td>
+                                            <td><b>Is CHO</b></td>
+                                            <td id="TIsCho"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>VAT No.</b></td>
+                                            <td id="TVatNo"></td>
+                                            <td><b>BIN No.</b></td>
+                                            <td id="TBinNo"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Factory Head</b></td>
+                                            <td id="TFHInfo"></td>
+                                            <td><b>Factory Manager</b></td>
+                                            <td id="TManInfo"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Contact Person</b></td>
+                                            <td id="TCPInfo"></td>
+                                            <td><b>Store Info</b></td>
+                                            <td id="TStoreInfo"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Messenger Info</b></td>
+                                            <td id="TMsnInfo"></td>
+                                            <td><b>Status</b></td>
+                                            <td id="status"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
 
                     <div class="modal-footer">
-                        <button class="btn btn-success btn-ef btn-ef-3 btn-ef-3c"><i class="fa fa-arrow-right"></i> Submit</button>
-                        <button class="btn btn-lightred btn-ef btn-ef-4 btn-ef-4c" data-dismiss="modal"><i class="fa fa-arrow-left"></i> Cancel</button>
+                        {{-- <button class="btn btn-success btn-ef btn-ef-3 btn-ef-3c"><i class="fa fa-arrow-right"></i> Submit</button> --}}
+                        <button class="btn btn-lightred btn-ef btn-ef-4 btn-ef-4c" data-dismiss="modal"><i class="fa fa-arrow-left"></i> Close</button>
                     </div>
                 </div>
             </div>
@@ -418,7 +376,8 @@
         function loadDataTable() {
             table.destroy();
             var free_table = '<tr><td class="text-center" colspan="4">--- Please Wait... Loading Data  ----</td></tr>';
-            $('tbody').html(free_table);
+            $('#advanced-usage').find('tbody').append(free_table);
+           // $('tbody').html(free_table);
             table = $("#advanced-usage").DataTable({
                 ajax: {
                     url: "/mtrims/public/api/admin/factory/not-deleted",
@@ -560,32 +519,36 @@
                 method:'POST',
                 data:{id: FactoryID},
                 success:function(data){
-                    console.log(data);
-                    //$("#FactoryModal").show();
+                    // console.log(data);
+                    document.getElementById("FName").innerHTML  = data.name;
+                    document.getElementById("SName").innerHTML  = data.short_name;
+                    document.getElementById("FacAddress").innerHTML = data.address;
+                    document.getElementById("TVatNo").innerHTML = data.vat_no;
+                    document.getElementById("TBinNo").innerHTML = data.bin_no;
+                    document.getElementById("TFHInfo").innerHTML = data.factory_head_info;
+                    document.getElementById("TManInfo").innerHTML = data.manager_info;
+                    document.getElementById("TCPInfo").innerHTML = data.contact_person_info;
+                    document.getElementById("TStoreInfo").innerHTML = data.factory_store_info;
+                    document.getElementById("TMsnInfo").innerHTML = data.factory_messenger_info;
 
-                   /* $('input[name=name]').val(data.name);
-                    $('input[name=short_name]').val(data.short_name);
-                    $('input[name=vat_no]').val(data.vat_no);
-                    $('input[name=bin_no]').val(data.bin_no);
-                    document.getElementById('FactoryAddress').value = data.address;
-                    document.getElementById('FHInfo').value = data.factory_head_info;
-                    document.getElementById('ManInfo').value = data.manager_info;
-                    document.getElementById('StoreInfo').value = data.factory_store_info;
-                    document.getElementById('CPInfo').value = data.contact_person_info;
-                    document.getElementById('MasInfo').value = data.factory_messenger_info;
-                    //console.log();
                     if (data.is_cho == 1)
                     {
-                        $('input[name=IsCHO]').prop('checked', true);
+                        document.getElementById("TIsCho").innerHTML = "<p class =''><label class='label label-success'>Yes</label></p>"
                     }
-                    else if (data.is_cho == 0)
+                    else
                     {
-                        $('input[name=IsCHO]').prop('checked', false);
+                        document.getElementById("demo").innerHTML = "<p class =''><label class='label label-warning'>No</label></p>"
                     }
-                    $('input[name=id]').val(data.id);
-                    moveToTop();*/
-                },
 
+                    if (data.status === 'A')
+                    {
+                        document.getElementById("status").innerHTML = "<p class =''><label class='label label-success'>Active</label></p>"
+                    }
+                    else
+                    {
+                        document.getElementById("status").innerHTML = "<p class =''><label class='label label-warning'>Inactive</label></p>"
+                    }
+                },
                 error:function(error){
                     //console.log(error);
                     swal({
@@ -601,10 +564,7 @@
         });
         $('#advanced-usage').on('click',".EditFactory", function(){
             var button = $(this);
-
             var FactoryID = button.attr("data-id");
-
-
             var url = '{{ route('admin.edit-factory') }}';
             $.ajax({
                 url: url,

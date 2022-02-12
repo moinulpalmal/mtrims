@@ -13,6 +13,10 @@ class SupplierController extends Controller
         return view('admin.supplier.index', compact('suppliers'));
     }
 
+    public function getAllNotDeletedSuppliers(){
+        Supplier::getAllNotDeletedSuppliers();
+    }
+
     public function saveSupplier(Request $request){
 
         $id = $request->get('id');
