@@ -65,7 +65,7 @@
             <!-- col -->
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <!-- tile -->
-                <form method="post" id="FactoryAdd" enctype="multipart/form-data">
+                <form method="post" id="SupplierAdd" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <section class="tile">
                         <!-- tile header -->
@@ -246,13 +246,8 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a onclick="refresh()" role="button" tabindex="0" class="tile-refresh">
+                                        <a onclick="loadDataTable()" role="button" tabindex="0" class="tile-refresh">
                                             <i class="fa fa-refresh"></i> Refresh
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a role="button" tabindex="0" class="tile-fullscreen">
-                                            <i class="fa fa-expand"></i> Fullscreen
                                         </a>
                                     </li>
                                 </ul>
@@ -264,11 +259,10 @@
                     <!-- tile body -->
                     <div class="tile-body">
                         <div class="table-responsive">
-                            <h3 class="text-success text-center">{{Session::get('message')}}</h3>
                             <table class="table table-hover table-bordered table-condensed table-responsive" id="advanced-usage">
                                 <thead>
                                 <tr style="background-color: #1693A5; color: white;">
-                                    <th class="text-center">Sl No.</th>
+                                    {{-- <th class="text-center">Sl No.</th> --}}
                                     <th class="text-center">Name</th>
                                     <th class="text-center">Type</th>
                                     <th class="text-center">Status</th>
@@ -276,7 +270,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @php($i = 1)
+                                {{-- @php($i = 1)
                                 @foreach($suppliers as $item)
                                     <tr>
                                         <td class="text-center">{{$i++}}</td>
@@ -305,7 +299,7 @@
                                         </td>
                                         <td class="text-center">
                                             <button class="btn btn-info btn-xs" data-toggle="modal" data-target="#user{{$item->id}}" data-options="splash-2 splash-ef-12"><i class="fa fa-eye"></i></button>
-                                            <a onclick="iconChange()" data-id = "{{ $item->id }}" class="EditFactory btn btn-warning btn-xs"><i class="fa fa-edit"></i></a>
+                                            <a onclick="iconChange()" data-id = "{{ $item->id }}" class="EditSupplier btn btn-warning btn-xs"><i class="fa fa-edit"></i></a>
                                             @if($item->status == 'I')
                                                 <a title="Activate" class="ActivateBuyer btn btn-success btn-xs" data-id = "{{ $item->id }}"><i class="fa fa-arrow-circle-up"></i></a>
                                             @else
@@ -321,7 +315,7 @@
                                             @endif
                                         </td>
                                     </tr>
-                                @endforeach
+                                @endforeach --}}
                                 </tbody>
                             </table>
                         </div>
@@ -337,127 +331,133 @@
 @endsection
 
 @section('page-modals')
-    @foreach($suppliers as $item)
-        <!-- Modal -->
-        <div class="modal splash fade" id="user{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3 class="modal-title custom-font">{!! $item->name !!}</h3>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="col-md-5">
-                                    <strong class="text-left">Factory Name</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6 text-right">
-                                    <p>{{$item->name}}</p>
-                                </div>
-                                <div class="col-md-5">
-                                    <strong class="text-left">Short Name</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6">
-                                    <p class="text-right">{{$item->short_name}}</p>
-                                </div>
-                                <div class="col-md-5">
-                                    <strong class="text-left">Address</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6">
-                                    <p class="text-right">{{$item->address}}</div>
-                                <div class="col-md-5">
-                                    <strong class="text-left">Is CHO</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6">
-                                    @if($item->IsCHO == 'CHO')
-                                        <p class="text-white-50 text-right">Yes</p>
-                                    @else
-                                        <p class="text-danger text-right">No</p>
-                                    @endif
-                                </div>
-                                <div class="col-md-5">
-                                    <strong class="text-left">VAT No.</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6 text-right">
-                                    <p>{{$item->vat_no}}</p>
-                                </div>
-                                <br>
-                                <div class="col-md-5">
-                                    <strong class="text-left">BIN No.</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6">
-                                    <p class="text-right">{{$item->bin_no}}</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="col-md-5">
-                                    <strong class="text-left">Factory Head</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6">
-                                    <p class="text-right">{{$item->factory_head_info}}</p>
-                                </div>
-                                <div class="col-md-5">
-                                    <strong class="text-left">Factory Manager</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6 text-right">
-                                    <p class="text-right">{{$item->manager_info}}</p>
-                                </div>
-                                <div class="col-md-5">
-                                    <strong class="text-left">Contact Person</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6">
-                                    <p class="text-right">{{$item->contact_person_info}}</div>
-                                <div class="col-md-5">
-                                    <strong class="text-left">Store Info</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6">
-                                    <p class="text-right">{{$item->factory_store_info}}</div>
-                            </div>
-                            <div class="col-md-5">
-                                <strong class="text-left">Messenger Info</strong>
-                            </div>
-                            <div class="col-md-1">:</div>
-                            <div class="col-md-6">
-                                <p class="text-right">{{$item->factory_messenger_info}}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button class="btn btn-success btn-ef btn-ef-3 btn-ef-3c"><i class="fa fa-arrow-right"></i> Submit</button>
-                        <button class="btn btn-lightred btn-ef btn-ef-4 btn-ef-4c" data-dismiss="modal"><i class="fa fa-arrow-left"></i> Cancel</button>
+    <!-- Modal -->
+<div class="modal splash fade" id="FactoryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title custom-font" id="">Buyer Details</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-hover table-bordered table-condensed table-responsive">
+                            <tbody>
+                                <tr>
+                                    <td><b>Store Name</b></td>
+                                    <td id="FName"></td>
+                                    <td><b>Short Name</b></td>
+                                    <td id="SName"></td>
+                                </tr>
+                                <tr>
+                                    <td><b>Status</b></td>
+                                    <td id="status"></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-lightred btn-ef btn-ef-4 btn-ef-4c" data-dismiss="modal"><i class="fa fa-arrow-left"></i> Close</button>
+            </div>
         </div>
-        <!-- Modal -->
-    @endforeach
+    </div>
+</div>
+<!-- Modal -->
 @endsection
 @section('pageVendorScripts')
 
 @endsection
 @section('pageScripts')
+<script src="{{ asset('/js/common.js') }}"></script>
     <script>
-        $(window).load(function(){
-            $('#advanced-usage').DataTable({
-
-            });
+        
+        var table = $('#advanced-usage').DataTable({
+            "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
         });
+
+        $(window).load(function(){
+            loadDataTable();
+        });
+
+        function loadDataTable() {
+            table.destroy();
+            var free_table = '<tr><td class="text-center" colspan="4">--- Please Wait... Loading Data  ----</td></tr>';
+            $('#advanced-usage').find('tbody').append(free_table);
+            table = $("#advanced-usage").DataTable({
+                ajax: {
+                    url: "/mtrims/public/api/admin/supplier/not-deleted",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "name",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        render: function(data, type, api_item) {
+                            if(api_item.type === 'I'){
+                                return "<p class ='text-center'>International</p>";
+                            }
+                            else if(api_item.status === 'L'){
+                                return "<p class ='text-center '>Local</p>";
+                            }
+                            else{
+                                return "<p class ='text-center '>Both</p>";
+                            }
+                        }
+                    },
+                    {
+                        render: function(data, type, api_item) {
+                            if(api_item.status === 'I'){
+                                return "<p class ='text-center'><label class='label label-warning'>In-Active</label></p>";
+                            }
+                            else if(api_item.status === 'A'){
+                                return "<p class ='text-center '><label class='label label-success'>Active</label></p>";
+                            }
+                            else{
+
+                            }
+                        }
+                    },
+                    {
+                        /*data: "id",*/
+                        render: function(data, type, api_item) {
+                            if(api_item.status === 'I'){
+                                return "<p class='text-center'><a title= 'Show Detail' class= 'ShowDetail btn btn-info btn-xs' data-toggle='modal' data-target='#FactoryModal' data-options='splash-2 splash-ef-12' data-id = "+ api_item.id +"><i class='fa fa-eye'></i></a>" +
+                                    " &nbsp;" +
+                                    "<a title= 'Delete' class= 'DeleteSupplier btn btn-danger btn-xs' data-id = "+ api_item.id +"><i class='fa fa-trash'></i></a>" +
+                                    " &nbsp;" +
+                                    "<a title= 'Activate' class= 'ActivateSupplier btn btn-success btn-xs' data-id = "+ api_item.id +"><i class='fa fa-arrow-circle-up'></i></a></p>"
+                            }
+                            else if(api_item.status === 'A'){
+                                return "<p class='text-center'><a title= 'Show Detail' class= 'ShowDetail btn btn-info btn-xs' data-toggle='modal' data-target='#FactoryModal' data-options='splash-2 splash-ef-12' data-id = "+ api_item.id +"><i class='fa fa-eye'></i></a>" +
+                                    " &nbsp;" +
+                                    "<a title= 'Delete' class= 'DeleteSupplier btn btn-danger btn-xs' data-id = "+ api_item.id +"><i class='fa fa-trash'></i></a>" +
+                                    " &nbsp;" +
+                                    "<a title= 'Activate' class= 'DeActivateSupplier btn btn-warning btn-xs' data-id = "+ api_item.id +"><i class='fa fa-arrow-circle-down'></i></a>" +
+                                    " &nbsp;" +
+                                    "<a title= 'Edit' class= 'EditSupplier btn btn-warning btn-xs' data-id = "+ api_item.id +"><i class='fa fa-edit'></i></a></p>"
+                            }
+                            else{
+
+                            }
+                        }
+                    }
+                ]
+            });
+        }
+
+
         $(function(){
             $.ajaxSetup({
                 headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' }
             });
-            $('#FactoryAdd').submit(function(e){
+            $('#SupplierAdd').submit(function(e){
                 e.preventDefault();
                 var data = $(this).serialize();
                 var id = $('#HiddenFactoryID').val();
@@ -469,8 +469,8 @@
                     method:'POST',
                     data:data,
                     success:function(data){
-                        //console.log(data);
-                        if(id)
+                        console.log(data);
+                        if(data === '2')
                         {
                             swal({
                                 title: "Data Updated Successfully!",
@@ -478,11 +478,12 @@
                                 button: "Ok!",
                             }).then(function (value) {
                                 if(value){
-                                    window.location.href = window.location.href.replace(/#.*$/, '');
+                                    clearFormWithoutDelay("SupplierAdd");
+                                    loadDataTable();
                                 }
                             });
                         }
-                        else
+                        else if(data === '1')
                         {
                             swal({
                                 title: "Data Inserted Successfully!",
@@ -490,8 +491,18 @@
                                 button: "Ok!",
                             }).then(function (value) {
                                 if(value){
-                                    window.location.href = window.location.href.replace(/#.*$/, '');
+                                    clearFormWithoutDelay("SupplierAdd");
+                                    loadDataTable();
                                 }
+                            });
+                        }
+                        else{
+                            swal({
+                                title: "Data Not Saved!",
+                                text: "Please Check Your Data!",
+                                icon: "error",
+                                button: "Ok!",
+                                className: "myClass",
                             });
                         }
                     },
@@ -509,7 +520,87 @@
 
             })
         });
-        $('#advanced-usage').on('click',".EditFactory", function(){
+
+        $('#advanced-usage').on('click',".EditSupplier", function(){
+            var button = $(this);
+            var BuyerID = button.attr("data-id");
+            var url = '{{ route('admin.edit-supplier') }}';
+            $.ajax({
+                url: url,
+                method:'POST',
+                data:{id: BuyerID},
+                success:function(data){
+                    $('input[name=name]').val(data.name);
+                    $('input[name=short_name]').val(data.short_name);
+                    $('input[name=id]').val(data.id);
+                },
+                error:function(error){
+                    swal({
+                        title: "No Data Found!",
+                        text: "no data!",
+                        icon: "error",
+                        button: "Ok!",
+                        className: "myClass",
+                    });
+                }
+            })
+
+        });
+
+        $('#advanced-usage').on('click',".ShowDetail", function(){
+            var button = $(this);
+            var FactoryID = button.attr("data-id");
+            var url = '{{ route('admin.edit-supplier') }}';
+            $.ajax({
+                url: url,
+                method:'POST',
+                data:{id: FactoryID},
+                success:function(data){
+                    // console.log(data);
+                    document.getElementById("FName").innerHTML  = data.name;
+                    document.getElementById("SName").innerHTML  = data.short_name;
+                    document.getElementById("FacAddress").innerHTML = data.address;
+                    document.getElementById("TVatNo").innerHTML = data.vat_no;
+                    document.getElementById("TBinNo").innerHTML = data.bin_no;
+                    document.getElementById("TFHInfo").innerHTML = data.factory_head_info;
+                    document.getElementById("TManInfo").innerHTML = data.manager_info;
+                    document.getElementById("TCPInfo").innerHTML = data.contact_person_info;
+                    document.getElementById("TStoreInfo").innerHTML = data.factory_store_info;
+                    document.getElementById("TMsnInfo").innerHTML = data.factory_messenger_info;
+
+                    if (data.is_cho == 1)
+                    {
+                        document.getElementById("TIsCho").innerHTML = "<p class =''><label class='label label-success'>Yes</label></p>"
+                    }
+                    else
+                    {
+                        document.getElementById("demo").innerHTML = "<p class =''><label class='label label-warning'>No</label></p>"
+                    }
+
+                    if (data.status === 'A')
+                    {
+                        document.getElementById("status").innerHTML = "<p class =''><label class='label label-success'>Active</label></p>"
+                    }
+                    else
+                    {
+                        document.getElementById("status").innerHTML = "<p class =''><label class='label label-warning'>Inactive</label></p>"
+                    }
+                },
+                error:function(error){
+                    //console.log(error);
+                    swal({
+                        title: "No Data Found!",
+                        text: "no data!",
+                        icon: "error",
+                        button: "Ok!",
+                        className: "myClass",
+                    });
+                }
+            })
+
+        });
+
+        $('#advanced-usage').on('click',".EditSupplier", function(){
             var button = $(this);
             var FactoryID = button.attr("data-id");
             //$('body').animate({scrollTop:0}, 400);
@@ -561,8 +652,7 @@
         });
 
 
-
-        $('#advanced-usage').on('click',".ActivateBuyer", function(){
+        $('#advanced-usage').on('click',".ActivateSupplier", function(){
             var button = $(this);
             var id = button.attr("data-id");
             var url = '{{ route('admin.activate-supplier') }}';
@@ -609,7 +699,7 @@
             });
         });
 
-        $('#advanced-usage').on('click',".DeActivateBuyer", function(){
+        $('#advanced-usage').on('click',".DeActivateSupplier", function(){
             var button = $(this);
             var id = button.attr("data-id");
             var url = '{{ route('admin.in-activate-sub-contractor') }}';
@@ -655,6 +745,7 @@
                 }
             });
         });
+
         $('#advanced-usage').on('click',".BlockActivateBuyer", function(){
             var button = $(this);
             var id = button.attr("data-id");
@@ -702,7 +793,7 @@
             });
         });
 
-        $('#advanced-usage').on('click',".DeleteBuyer", function(){
+        $('#advanced-usage').on('click',".DeleteSupplier", function(){
             var button = $(this);
             var id = button.attr("data-id");
             var url = '{{ route('admin.delete-supplier') }}';
