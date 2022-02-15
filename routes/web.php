@@ -176,7 +176,9 @@ Route::middleware('auth')->group(function (){
         Route::get('unit','UnitController@index')->name('unit');
         Route::post('save-unit','UnitController@saveUnit')->name('save-unit');
         Route::post('edit-unit','UnitController@updateUnit')->name('edit-unit');
-        Route::delete('delete-unit','UnitController@fullDelete')->name('delete-unit');
+        Route::delete('activate-unit','UnitController@activate')->name('unit-activate');
+        Route::delete('de_activate-unit','UnitController@inActivate')->name('unit.de-activate');
+        Route::delete('delete-unit','UnitController@deleteUnit')->name('delete-unit');
         //unit setup
 
         //trims type setup

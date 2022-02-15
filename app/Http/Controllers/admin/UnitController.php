@@ -9,9 +9,14 @@ use Illuminate\Support\Facades\DB;
 
 class UnitController extends Controller
 {
-    public function index(){
-        $units = Unit::orderBy('full_unit')->where('status', '!=', 'D')->get();
-        return view('admin.unit.index', compact('units'));
+    public function index()
+    {
+        return view('admin.unit.index');
+    }
+
+    public function getAllNotDeletedUnits()
+    {
+        return Unit::getAllNotDeletedUnits();
     }
 
     public function saveUnit(Request $request){
@@ -19,56 +24,17 @@ class UnitController extends Controller
         $id = $request->get('id');
         if(!empty($id))
         {
-            $supplier = Unit::find($request->id);
-            if($supplier != null){
-                $supplier->full_unit = $request->full_unit;
-                $supplier->short_unit = $request->short_unit;
-                if($supplier->save())
-                {
-                    return 'Saved';
-                }
-
-            }
-            return 'Updated';
+            return Unit::updateUnit($request);
         }
         else
         {
-            $supplier = new Unit();
-            $supplier->full_unit = $request->full_unit;
-            $supplier->short_unit = $request->short_unit;
-            if($supplier->save())
-            {
-                return 'Saved';
-            }
+            return Unit::insertUnit($request);
         }
-        return 'BR';
     }
 
     public function updateUnit(Request $req)
     {
-        $supplier =  Unit::find($req->id);
-
-        if($supplier == null)
-            return null;
-
-        $supplierData = array(
-            'id' => $supplier->id,
-            'full_unit' => $supplier->full_unit,
-            'short_unit' => $supplier->short_unit
-
-        );
-        return $supplierData;
-    }
-
-    public function fullDelete(Request $request)
-    {
-        $supplier = Unit::find($request->id);
-        $supplier->status = 'D';
-        if($supplier->save()){
-            return true;
-        }
-        return 'Error';
-
+        return Unit::getUnitDetail($req);
     }
 
     /* public function blackList(Request $request)
@@ -84,25 +50,19 @@ class UnitController extends Controller
 
     public function activate(Request $request)
     {
-        $supplier = Unit::find($request->id);
-        $supplier->status = 'A';
-        if($supplier->save()){
-            return true;
-        }
-        return 'Error';
-
+        return Unit::activateUnit($request);
     }
 
     public function inActivate(Request $request)
     {
-        $supplier = Unit::find($request->id);
-        $supplier->status = 'IN';
-        if($supplier->save()){
-            return true;
-        }
-        return 'Error';
-
+        return Unit::inActivateUnit($request);
     }
+
+    public function deleteUnit(Request $request){
+        return Unit::deleteUnit($request);
+    }
+
+
 
 
 }
