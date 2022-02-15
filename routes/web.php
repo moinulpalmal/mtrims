@@ -128,10 +128,10 @@ Route::middleware('auth')->group(function (){
         Route::get('supplier','SupplierController@index')->name('supplier');
         Route::post('save-supplier','SupplierController@saveSupplier')->name('save-supplier');
         Route::post('edit-supplier','SupplierController@updateSupplier')->name('edit-supplier');
-        Route::delete('activate-supplier','SupplierController@activate')->name('activate-supplier');
+        Route::delete('activate-supplier','SupplierController@activateSupplier')->name('activate-supplier');
         Route::delete('in-activate-supplier','SupplierController@inActivate')->name('in-activate-supplier');
         Route::delete('black-list-supplier','SupplierController@blackList')->name('black-list-supplier');
-        Route::delete('delete-supplier','SupplierController@fullDelete')->name('delete-supplier');
+        Route::delete('delete-supplier','SupplierController@deleteSupplier')->name('delete-supplier');
         //supplier setup
 
         //sub-contractor setup

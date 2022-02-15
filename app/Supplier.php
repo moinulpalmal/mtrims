@@ -66,6 +66,7 @@ class Supplier extends Model
             $supplier->secondary_mobile_no = $request->secondary_mobile_no;
             $supplier->secondary_email = $request->secondary_email;
             $supplier->remarks = $request->remarks;
+            $supplier->remarks = $request->remarks;
             $supplier->last_updated_by = Auth::id();
 
             if($supplier->save())
