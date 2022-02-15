@@ -53,7 +53,7 @@ class SupplierController extends Controller
         return Supplier::activateSupplier($request);
     }
 
-    public function inActivateSupplier(Request $request)
+    public function inActivate(Request $request)
     {
         return Supplier::inActivateSupplier($request);
     }
