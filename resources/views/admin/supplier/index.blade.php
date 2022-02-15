@@ -299,7 +299,7 @@
                     <div class="col-md-12">
                         <section class="tile">
                             <div class="tile-header dvd dvd-btm">
-                                <h4 class="custom-font"><strong>Basic</strong> Info</h4>
+                                <h4 class="custom-font"><strong>Basic Info</strong></h4>
                             </div><br>
                             <table class="table table-hover table-bordered table-condensed table-responsive">
                                 <tbody>
@@ -325,7 +325,7 @@
                             </table><br>
 
                             <div class="tile-header dvd dvd-btm">
-                                <h4 class="custom-font"><strong>Owner</strong> Info</h4>
+                                <h4 class="custom-font"><strong>Owner Info</strong></h4>
                             </div><br>
                             <table class="table table-hover table-bordered table-condensed table-responsive">
                                 <tbody>
@@ -345,7 +345,7 @@
                             </table><br>
 
                             <div class="tile-header dvd dvd-btm">
-                                <h4 class="custom-font"><strong>Primary Contact Person</strong> Info</h4>
+                                <h4 class="custom-font"><strong>Primary Contact Person Info</strong></h4>
                             </div><br>
                             <table class="table table-hover table-bordered table-condensed table-responsive">
                                 <tbody>
@@ -365,20 +365,20 @@
                             </table><br>
 
                             <div class="tile-header dvd dvd-btm">
-                                <h4 class="custom-font"><strong>Secondary Contact Person</strong> Info</h4>
+                                <h4 class="custom-font"><strong>Secondary Contact Person Info</strong></h4>
                             </div><br>
                             <table class="table table-hover table-bordered table-condensed table-responsive">
                                 <tbody>
                                      <tr>
-                                        <td><b>Owner Name</b></td>
+                                        <td><b>Person Name</b></td>
                                         <td id="TSecondaryContactPersonName"></td>
-                                        <td><b>Owner Desig</b></td>
+                                        <td><b>Designation</b></td>
                                         <td id="TSecondaryContactPersonDesignation"></td>
                                     </tr>
                                     <tr>
-                                        <td><b>Owner Mobile</b></td>
+                                        <td><b>Mobile No</b></td>
                                         <td id="TSecondaryMobileNo"></td>
-                                        <td><b>Owner Email</b></td>
+                                        <td><b>Email</b></td>
                                         <td id="TSecondaryEmail"></td>
                                     </tr>
                                 </tbody>

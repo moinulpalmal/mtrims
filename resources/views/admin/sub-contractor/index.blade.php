@@ -65,7 +65,7 @@
             <!-- col -->
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <!-- tile -->
-                <form method="post" id="FactoryAdd" enctype="multipart/form-data">
+                <form method="post" id="SubContractorAdd" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <section class="tile">
                         <!-- tile header -->
@@ -87,7 +87,7 @@
                                 <div class="col-md-4 no-padding">
                                     <div class="form-group">
                                         <label for="SubContractorType" class="control-label">Select Sub Contractor Type</label>
-                                        <select id="SubContractorType" class="form-control chosen-select" name="sub_contractor_type" required = "" style="width: 100%;">
+                                        <select id="SubContractorType" class="form-control select2" name="sub_contractor_type" required = "" style="width: 100%;">
                                             <option value="">- - - Select - - -</option>
                                             <option value="I">International</option>
                                             <option value="L">Local</option>
@@ -247,13 +247,8 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a onclick="refresh()" role="button" tabindex="0" class="tile-refresh">
+                                        <a onclick="loadDataTable()" role="button" tabindex="0" class="tile-refresh">
                                             <i class="fa fa-refresh"></i> Refresh
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a role="button" tabindex="0" class="tile-fullscreen">
-                                            <i class="fa fa-expand"></i> Fullscreen
                                         </a>
                                     </li>
                                 </ul>
@@ -265,11 +260,9 @@
                     <!-- tile body -->
                     <div class="tile-body">
                         <div class="table-responsive">
-                            <h3 class="text-success text-center">{{Session::get('message')}}</h3>
                             <table class="table table-hover table-bordered table-condensed table-responsive" id="advanced-usage">
                                 <thead>
                                 <tr style="background-color: #1693A5; color: white;">
-                                    <th class="text-center">Sl No.</th>
                                     <th class="text-center">Name</th>
                                     <th class="text-center">Type</th>
                                     <th class="text-center">Status</th>
@@ -277,52 +270,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @php($i = 1)
-                                @foreach($subContractors as $item)
-                                    <tr>
-                                        <td class="text-center">{{$i++}}</td>
-                                        <td class="text-left">{{$item->name}}</td>
-                                        <td>
-                                            @if($item->type == 'I')
-                                                <p><strong>International</strong></p>
-                                                @elseif($item->type == 'L')
-                                                <p><strong>Local</strong></p>
-                                                    @elseif($item->type == 'LI')
-                                                    <p><strong>International & Local</strong></p>
-                                                        @else
-                                                        <p><strong></strong></p>
-                                            @endif
-                                        </td>
-                                        <td class="text-center">
-                                            @if($item->status == 'I')
-                                                <span class="label label-info">Waiting for approval</span>
-                                            @elseif($item->status == 'A')
-                                                <span class="label label-success">Active</span>
-                                            @elseif($item->status == 'B')
-                                                <span class="label label-danger">Blocked</span>
-                                            @elseif($item->status == 'IN')
-                                                <span class="label label-warning">In-Active</span>
-                                            @endif
-                                        </td>
-                                        <td class="text-center">
-                                            <button class="btn btn-info btn-xs" data-toggle="modal" data-target="#user{{$item->id}}" data-options="splash-2 splash-ef-12"><i class="fa fa-eye"></i></button>
-                                            <a onclick="iconChange()" data-id = "{{ $item->id }}" class="EditFactory btn btn-warning btn-xs"><i class="fa fa-edit"></i></a>
-                                            @if($item->status == 'I')
-                                                <a title="Activate" class="ActivateBuyer btn btn-success btn-xs" data-id = "{{ $item->id }}"><i class="fa fa-arrow-circle-up"></i></a>
-                                                @else
-                                                    @if($item->status == 'A')
-                                                        <a title="De-Activate" class="DeActivateBuyer btn btn-warning btn-xs" data-id = "{{ $item->id }}"><i class="fa fa-arrow-circle-down"></i></a>
-                                                        <a title="Block" class="BlockActivateBuyer btn btn-danger btn-xs" data-id = "{{ $item->id }}"><i class="fa fa-times"></i></a>
-                                                    @elseif($item->status == 'IN' || $item->status == 'B')
-                                                        <a title="Activate" class="ActivateBuyer btn btn-success btn-xs" data-id = "{{ $item->id }}"><i class="fa fa-arrow-circle-up"></i></a>
-                                                    @endif
-                                                    @if($item->status == 'A')
-                                                        <a title="Delete" class="DeleteBuyer btn btn-danger btn-xs" data-id = "{{ $item->id }}"><i class="fa fa-trash"></i></a>
-                                                    @endif
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                
                                 </tbody>
                             </table>
                         </div>
@@ -338,131 +286,212 @@
 @endsection
 
 @section('page-modals')
-    @foreach($subContractors as $item)
-        <!-- Modal -->
-        <div class="modal splash fade" id="user{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3 class="modal-title custom-font">{!! $item->name !!}</h3>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="col-md-5">
-                                    <strong class="text-left">Factory Name</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6 text-right">
-                                    <p>{{$item->name}}</p>
-                                </div>
-                                <div class="col-md-5">
-                                    <strong class="text-left">Short Name</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6">
-                                    <p class="text-right">{{$item->short_name}}</p>
-                                </div>
-                                <div class="col-md-5">
-                                    <strong class="text-left">Address</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6">
-                                    <p class="text-right">{{$item->address}}</div>
-                                <div class="col-md-5">
-                                    <strong class="text-left">Is CHO</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6">
-                                    @if($item->IsCHO == 'CHO')
-                                        <p class="text-white-50 text-right">Yes</p>
-                                    @else
-                                        <p class="text-danger text-right">No</p>
-                                    @endif
-                                </div>
-                                <div class="col-md-5">
-                                    <strong class="text-left">VAT No.</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6 text-right">
-                                    <p>{{$item->vat_no}}</p>
-                                </div>
-                                <br>
-                                <div class="col-md-5">
-                                    <strong class="text-left">BIN No.</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6">
-                                    <p class="text-right">{{$item->bin_no}}</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="col-md-5">
-                                    <strong class="text-left">Factory Head</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6">
-                                    <p class="text-right">{{$item->factory_head_info}}</p>
-                                </div>
-                                <div class="col-md-5">
-                                    <strong class="text-left">Factory Manager</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6 text-right">
-                                    <p class="text-right">{{$item->manager_info}}</p>
-                                </div>
-                                <div class="col-md-5">
-                                    <strong class="text-left">Contact Person</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6">
-                                    <p class="text-right">{{$item->contact_person_info}}</div>
-                                <div class="col-md-5">
-                                    <strong class="text-left">Store Info</strong>
-                                </div>
-                                <div class="col-md-1">:</div>
-                                <div class="col-md-6">
-                                    <p class="text-right">{{$item->factory_store_info}}</div>
-                            </div>
-                            <div class="col-md-5">
-                                <strong class="text-left">Messenger Info</strong>
-                            </div>
-                            <div class="col-md-1">:</div>
-                            <div class="col-md-6">
-                                <p class="text-right">{{$item->factory_messenger_info}}</p>
-                            </div>
-                        </div>
-                    </div>
+    <!-- Modal -->
+<div class="modal splash fade" id="FactoryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title custom-font" id="">Sub-Contractor Details</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="tile">
+                            <div class="tile-header dvd dvd-btm">
+                                <h4 class="custom-font"><strong>Basic Info</strong></h4>
+                            </div><br>
+                            <table class="table table-hover table-bordered table-condensed table-responsive">
+                                <tbody>
+                                    <tr>
+                                        <td><b>Sub-Contractor Name</b></td>
+                                        <td id="TSubName"></td>
+                                        <td><b>Sub-Contractor Type</b></td>
+                                        <td id="TSubType"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Sub-Contractor Grade</b></td>
+                                        <td id="TSubGrade"></td>
+                                        <td><b>Sub-Contractor Address</b></td>
+                                        <td id="TSubAddress"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Remarks</b></td>
+                                        <td id="TSubRemark"></td>
+                                        <td><b>Status</b></td>
+                                        <td id="status"></td>
+                                    </tr>
+                                </tbody>
+                            </table><br>
 
-                    <div class="modal-footer">
-                        <button class="btn btn-success btn-ef btn-ef-3 btn-ef-3c"><i class="fa fa-arrow-right"></i> Submit</button>
-                        <button class="btn btn-lightred btn-ef btn-ef-4 btn-ef-4c" data-dismiss="modal"><i class="fa fa-arrow-left"></i> Cancel</button>
+                            <div class="tile-header dvd dvd-btm">
+                                <h4 class="custom-font"><strong>Owner Info</strong></h4>
+                            </div><br>
+                            <table class="table table-hover table-bordered table-condensed table-responsive">
+                                <tbody>
+                                    <tr>
+                                        <td><b>Owner Name</b></td>
+                                        <td id="TOwnerName"></td>
+                                        <td><b>Owner Desig</b></td>
+                                        <td id="TOwnerDesig"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Owner Mobile</b></td>
+                                        <td id="TOwnerMob"></td>
+                                        <td><b>Owner Email</b></td>
+                                        <td id="TOwnerEmail"></td>
+                                    </tr>
+                                </tbody>
+                            </table><br>
+
+                            <div class="tile-header dvd dvd-btm">
+                                <h4 class="custom-font"><strong>Primary Contact Person Info</strong></h4>
+                            </div><br>
+                            <table class="table table-hover table-bordered table-condensed table-responsive">
+                                <tbody>
+                                    <tr>
+                                        <td><b>Person Name</b></td>
+                                        <td id="TPrimaryContactPersonName"></td>
+                                        <td><b>Designation</b></td>
+                                        <td id="TPrimaryContactPersonDesignation"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Mobile No</b></td>
+                                        <td id="TPrimaryMobileNo"></td>
+                                        <td><b>Email</b></td>
+                                        <td id="TPrimaryEmail"></td>
+                                    </tr>
+                                </tbody>
+                            </table><br>
+
+                            <div class="tile-header dvd dvd-btm">
+                                <h4 class="custom-font"><strong>Secondary Contact Person Info</strong></h4>
+                            </div><br>
+                            <table class="table table-hover table-bordered table-condensed table-responsive">
+                                <tbody>
+                                     <tr>
+                                        <td><b>Person Name</b></td>
+                                        <td id="TSecondaryContactPersonName"></td>
+                                        <td><b>Designation</b></td>
+                                        <td id="TSecondaryContactPersonDesignation"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Mobile No</b></td>
+                                        <td id="TSecondaryMobileNo"></td>
+                                        <td><b>Email</b></td>
+                                        <td id="TSecondaryEmail"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </section>
                     </div>
                 </div>
             </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-lightred btn-ef btn-ef-4 btn-ef-4c" data-dismiss="modal"><i class="fa fa-arrow-left"></i> Close</button>
+            </div>
         </div>
-        <!-- Modal -->
-    @endforeach
+    </div>
+</div>
+    <!-- Modal -->
 @endsection
 @section('pageVendorScripts')
 
 @endsection
 @section('pageScripts')
+<script src="{{ asset('/js/common.js') }}"></script>
     <script>
-        $(window).load(function(){
-            $('#advanced-usage').DataTable({
-
-            });
+        var table = $('#advanced-usage').DataTable({
+            "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
         });
+
+        $(window).load(function(){
+            $('.select2').select2();
+            loadDataTable();
+        });
+
+        function loadDataTable() {
+            table.destroy();
+            var free_table = '<tr><td class="text-center" colspan="4">--- Please Wait... Loading Data  ----</td></tr>';
+            $('#advanced-usage').find('tbody').append(free_table);
+           // $('tbody').html(free_table);
+            table = $("#advanced-usage").DataTable({
+                ajax: {
+                    url: "/mtrims/public/api/admin/sub-contractor/not-deleted",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "name",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        render: function(data, type, api_item) {
+                            if(api_item.type === 'I'){
+                                return "<p class ='text-center'>International</p>";
+                            }
+                            else if(api_item.type === 'L'){
+                                return "<p class ='text-center '>Local</p>";
+                            }
+                            else{
+                                return "<p class ='text-center '>International & Local</p>";
+                            }
+                        }
+                    },
+                    {
+                        render: function(data, type, api_item) {
+                            if(api_item.status === 'I'){
+                                return "<p class ='text-center'><label class='label label-warning'>In-Active</label></p>";
+                            }
+                            else if(api_item.status === 'A'){
+                                return "<p class ='text-center '><label class='label label-success'>Active</label></p>";
+                            }
+                            else{
+
+                            }
+                        }
+                    },
+                    {
+                        /*data: "id",*/
+                        render: function(data, type, api_item) {
+                            if(api_item.status === 'I'){
+                                return "<p class='text-center'><a title= 'Show Detail' class= 'ShowDetail btn btn-info btn-xs' data-toggle='modal' data-target='#FactoryModal' data-options='splash-2 splash-ef-12' data-id = "+ api_item.id +"><i class='fa fa-eye'></i></a>" +
+                                    " &nbsp;" +
+                                    "<a title= 'Delete' class= 'DeleteSubContractor btn btn-danger btn-xs' data-id = "+ api_item.id +"><i class='fa fa-trash'></i></a>" +
+                                    " &nbsp;" +
+                                    "<a title= 'Activate' class= 'ActivateSubContractor btn btn-success btn-xs' data-id = "+ api_item.id +"><i class='fa fa-arrow-circle-up'></i></a></p>"
+                            }
+                            else if(api_item.status === 'A'){
+                                return "<p class='text-center'><a title= 'Show Detail' class= 'ShowDetail btn btn-info btn-xs' data-toggle='modal' data-target='#FactoryModal' data-options='splash-2 splash-ef-12' data-id = "+ api_item.id +"><i class='fa fa-eye'></i></a>" +
+                                    " &nbsp;" +
+                                    "<a title= 'Delete' class= 'DeleteSubContractor btn btn-danger btn-xs' data-id = "+ api_item.id +"><i class='fa fa-trash'></i></a>" +
+                                    " &nbsp;" +
+                                    "<a title= 'Activate' class= 'DeActivateSubContractor btn btn-warning btn-xs' data-id = "+ api_item.id +"><i class='fa fa-arrow-circle-down'></i></a>" +
+                                    " &nbsp;" +
+                                    "<a title= 'Edit' class= 'EditSubContractor btn btn-warning btn-xs' data-id = "+ api_item.id +"><i class='fa fa-edit'></i></a></p>"
+                            }
+                            else{
+
+                            }
+                        }
+                    }
+                ]
+            });
+        }
+
+
         $(function(){
             $.ajaxSetup({
                 headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' }
             });
-            $('#FactoryAdd').submit(function(e){
+            $('#SubContractorAdd').submit(function(e){
                 e.preventDefault();
                 var data = $(this).serialize();
                 var id = $('#HiddenFactoryID').val();
-                console.log(data);
+                // console.log(data);
                 var url = '{{ route('admin.save-sub-contractor') }}';
                 //console.log(data);
                 $.ajax({
@@ -470,8 +499,8 @@
                     method:'POST',
                     data:data,
                     success:function(data){
-                        //console.log(data);
-                        if(id)
+                        // console.log(data);
+                        if(data === '2')
                         {
                             swal({
                                 title: "Data Updated Successfully!",
@@ -479,11 +508,12 @@
                                 button: "Ok!",
                             }).then(function (value) {
                                 if(value){
-                                    window.location.href = window.location.href.replace(/#.*$/, '');
+                                    clearFormWithoutDelay("SubContractorAdd");
+                                    loadDataTable();
                                 }
                             });
                         }
-                        else
+                        else if(data === '1')
                         {
                             swal({
                                 title: "Data Inserted Successfully!",
@@ -491,8 +521,18 @@
                                 button: "Ok!",
                             }).then(function (value) {
                                 if(value){
-                                    window.location.href = window.location.href.replace(/#.*$/, '');
+                                    clearFormWithoutDelay("SubContractorAdd");
+                                    loadDataTable();
                                 }
+                            });
+                        }
+                        else{
+                            swal({
+                                title: "Data Not Saved!",
+                                text: "Please Check Your Data!",
+                                icon: "error",
+                                button: "Ok!",
+                                className: "myClass",
                             });
                         }
                     },
@@ -510,9 +550,73 @@
 
             })
         });
-        $('#advanced-usage').on('click',".EditFactory", function(){
+
+        $('#advanced-usage').on('click',".ShowDetail", function(){
             var button = $(this);
-            var FactoryID = button.attr("data-id");
+            var SupplierID = button.attr("data-id");
+            var url = '{{ route('admin.edit-sub-contractor') }}';
+            $.ajax({
+                url: url,
+                method:'POST',
+                data:{id: SupplierID},
+                success:function(data){
+                    // console.log(data);
+                    document.getElementById("TSubName").innerHTML  = data.name;
+                    document.getElementById("TSubGrade").innerHTML  = data.sub_contractor_grade;
+                    document.getElementById("TSubAddress").innerHTML  = data.address;
+                    document.getElementById("TSubRemark").innerHTML  = data.remarks;
+                    document.getElementById("TOwnerName").innerHTML  = data.owner_name;
+                    document.getElementById("TOwnerDesig").innerHTML  = data.owner_designation;
+                    document.getElementById("TOwnerMob").innerHTML = data.owner_mobile_no;
+                    document.getElementById("TOwnerEmail").innerHTML = data.owner_email;
+                    document.getElementById("TPrimaryContactPersonName").innerHTML = data.primary_contact_person;
+                    document.getElementById("TPrimaryContactPersonDesignation").innerHTML = data.primary_designation;
+                    document.getElementById("TPrimaryEmail").innerHTML = data.primary_email;
+                    document.getElementById("TPrimaryMobileNo").innerHTML = data.primary_mobile_no;
+                    document.getElementById("TSecondaryContactPersonName").innerHTML = data.secondary_contact_person;
+                    document.getElementById("TSecondaryContactPersonDesignation").innerHTML = data.secondary_designation;
+                    document.getElementById("TSecondaryEmail").innerHTML = data.secondary_email;
+                    document.getElementById("TSecondaryMobileNo").innerHTML = data.secondary_mobile_no;
+                    // document.getElementById("supplier_type").innerHTML = data.supplier_type;
+                    
+                    if (data.sub_contractor_type === 'I')
+                    {
+                        document.getElementById("TSubType").innerHTML = "International"
+                    }
+                    else if (data.sub_contractor_type === 'L')
+                    {
+                        document.getElementById("TSubType").innerHTML = "Local"
+                    }
+                    else {
+                        document.getElementById("TSubType").innerHTML = "International & Local"
+                    }
+
+                    if (data.status === 'A')
+                    {
+                        document.getElementById("status").innerHTML = "<p class =''><label class='label label-success'>Active</label></p>"
+                    }
+                    else
+                    {
+                        document.getElementById("status").innerHTML = "<p class =''><label class='label label-warning'>In-Active</label></p>"
+                    }
+                },
+                error:function(error){
+                    //console.log(error);
+                    swal({
+                        title: "No Data Found!",
+                        text: "no data!",
+                        icon: "error",
+                        button: "Ok!",
+                        className: "myClass",
+                    });
+                }
+            })
+
+        });
+
+        $('#advanced-usage').on('click',".EditSubContractor", function(){
+            var button = $(this);
+            var SupplierID = button.attr("data-id");
             //$('body').animate({scrollTop:0}, 400);
             window.scrollTo({
                 top: 0,
@@ -523,9 +627,10 @@
             $.ajax({
                 url: url,
                 method:'POST',
-                data:{id: FactoryID},
+                data:{id: SupplierID},
                 success:function(data){
                     $('input[name=name]').val(data.name);
+                    $('select[name=sub_contractor_type]').val(data.sub_contractor_type).change();
                     $('input[name=sub_contractor_grade]').val(data.sub_contractor_grade);
                     $('input[name=owner_name]').val(data.owner_name);
                     $('input[name=owner_email]').val(data.owner_email);
@@ -540,13 +645,12 @@
                     $('input[name=secondary_email]').val(data.secondary_email);
                     $('input[name=secondary_designation]').val(data.secondary_designation);
                     //$('input[name=remarks]').val(data.remarks);
-
                     document.getElementById('SubContractorAddress').value = data.address;
                     document.getElementById('Remarks').value = data.remarks;
                     //$("#FactoryName option[value = '" + data.factory_name + "']").attr('selected', 'selected').change();
                     //console.log();
-
                     $('input[name=id]').val(data.id);
+                    moveToTop();
                 },
                 error:function(error){
                     swal({
@@ -562,14 +666,13 @@
         });
 
 
-
-        $('#advanced-usage').on('click',".ActivateBuyer", function(){
+        $('#advanced-usage').on('click',".ActivateSubContractor", function(){
             var button = $(this);
             var id = button.attr("data-id");
             var url = '{{ route('admin.activate-sub-contractor') }}';
             swal({
                 title: 'Are you sure?',
-                text: 'This sub-contractor will be a active one!',
+                text: 'This sub-contractor will be active !',
                 icon: 'warning',
                 buttons: ["Cancel", "Yes!"],
             }).then(function(value) {
@@ -583,20 +686,31 @@
                         success:function(data){
                             if(data){
                                 //console.log(data);
-                                swal({
-                                    title: "Operation Successful!",
-                                    icon: "success",
-                                    button: "Ok!",
-                                }).then(function (value) {
-                                    if(value){
-                                        //console.log(value);
-                                        window.location.href = window.location.href.replace(/#.*$/, '');
-                                    }
-                                });
+                                if(data === '2'){
+                                    swal({
+                                        title: "Operation Successful!",
+                                        icon: "success",
+                                        button: "Ok!",
+                                    }).then(function (value) {
+                                        if(value){
+                                            loadDataTable();
+                                        }
+                                    });
+                                }
+                                else{
+                                    swal({
+                                        title: "Operation Unsuccessful!",
+                                        text: "Something wrong happened please check!",
+                                        icon: "error",
+                                        button: "Ok!",
+                                        className: "myClass",
+                                    });
+                                }
+
                             }
                         },
                         error:function(error){
-                            console.log(error);
+                            // console.log(error);
                             swal({
                                 title: "Operation Unsuccessful!",
                                 text: "Somthing wrong happend please check!",
@@ -610,7 +724,7 @@
             });
         });
 
-        $('#advanced-usage').on('click',".DeActivateBuyer", function(){
+        $('#advanced-usage').on('click',".DeActivateSubContractor", function(){
             var button = $(this);
             var id = button.attr("data-id");
             var url = '{{ route('admin.in-activate-sub-contractor') }}';
@@ -630,16 +744,26 @@
                         success:function(data){
                             if(data){
                                 //console.log(data);
-                                swal({
-                                    title: "Operation Successful!",
-                                    icon: "success",
-                                    button: "Ok!",
-                                }).then(function (value) {
-                                    if(value){
-                                        //console.log(value);
-                                        window.location.href = window.location.href.replace(/#.*$/, '');
-                                    }
-                                });
+                                if(data === '2'){
+                                    swal({
+                                        title: "Operation Successful!",
+                                        icon: "success",
+                                        button: "Ok!",
+                                    }).then(function (value) {
+                                        if(value){
+                                            loadDataTable();
+                                        }
+                                    });
+                                }
+                                else{
+                                    swal({
+                                        title: "Operation Unsuccessful!",
+                                        text: "Something wrong happened please check!",
+                                        icon: "error",
+                                        button: "Ok!",
+                                        className: "myClass",
+                                    });
+                                }
                             }
                         },
                         error:function(error){
@@ -656,13 +780,14 @@
                 }
             });
         });
+
         $('#advanced-usage').on('click',".BlockActivateBuyer", function(){
             var button = $(this);
             var id = button.attr("data-id");
-            var url = '{{ route('admin.black-list-sub-contractor') }}';
+            var url = '{{ route('admin.black-list-supplier') }}';
             swal({
                 title: 'Are you sure?',
-                text: 'This sub-contractor will be blocked!',
+                text: 'This supplier will be blocked!',
                 icon: 'warning',
                 buttons: ["Cancel", "Yes!"],
             }).then(function(value) {
@@ -703,7 +828,7 @@
             });
         });
 
-        $('#advanced-usage').on('click',".DeleteBuyer", function(){
+        $('#advanced-usage').on('click',".DeleteSubContractor", function(){
             var button = $(this);
             var id = button.attr("data-id");
             var url = '{{ route('admin.delete-sub-contractor') }}';
@@ -723,20 +848,30 @@
                         success:function(data){
                             if(data){
                                 //console.log(data);
-                                swal({
-                                    title: "Operation Successful!",
-                                    icon: "success",
-                                    button: "Ok!",
-                                }).then(function (value) {
-                                    if(value){
-                                        //console.log(value);
-                                        window.location.href = window.location.href.replace(/#.*$/, '');
-                                    }
-                                });
+                                if(data === '2'){
+                                    swal({
+                                        title: "Operation Successful!",
+                                        icon: "success",
+                                        button: "Ok!",
+                                    }).then(function (value) {
+                                        if(value){
+                                            loadDataTable();
+                                        }
+                                    });
+                                }
+                                else{
+                                    swal({
+                                        title: "Operation Unsuccessful!",
+                                        text: "Something wrong happened please check!",
+                                        icon: "error",
+                                        button: "Ok!",
+                                        className: "myClass",
+                                    });
+                                }
                             }
                         },
                         error:function(error){
-                            console.log(error);
+                            // console.log(error);
                             swal({
                                 title: "Operation Unsuccessful!",
                                 text: "Somthing wrong happend please check!",
