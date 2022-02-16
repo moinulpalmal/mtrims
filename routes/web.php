@@ -141,7 +141,7 @@ Route::middleware('auth')->group(function (){
         Route::delete('activate-sub-contractor','SubContractorController@activate')->name('activate-sub-contractor');
         Route::delete('in-activate-sub-contractor','SubContractorController@inActivate')->name('in-activate-sub-contractor');
         Route::delete('black-list-sub-contractor','SubContractorController@blackList')->name('black-list-sub-contractor');
-        Route::delete('delete-sub-contractor','SubContractorController@fullDelete')->name('delete-sub-contractor');
+        Route::delete('delete-sub-contractor','SubContractorController@deleteSubContractor')->name('delete-sub-contractor');
         //sub-contractor setup
 
         //yarn type setup
@@ -176,7 +176,9 @@ Route::middleware('auth')->group(function (){
         Route::get('unit','UnitController@index')->name('unit');
         Route::post('save-unit','UnitController@saveUnit')->name('save-unit');
         Route::post('edit-unit','UnitController@updateUnit')->name('edit-unit');
-        Route::delete('delete-unit','UnitController@fullDelete')->name('delete-unit');
+        Route::delete('activate-unit','UnitController@activate')->name('unit-activate');
+        Route::delete('de_activate-unit','UnitController@inActivate')->name('unit.de-activate');
+        Route::delete('delete-unit','UnitController@deleteUnit')->name('delete-unit');
         //unit setup
 
         //trims type setup

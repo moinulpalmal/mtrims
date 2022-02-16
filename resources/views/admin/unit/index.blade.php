@@ -20,7 +20,7 @@
     </style>
     <div class="page page-dashboard">
         <div class="pageheader ">
-            <h2>Yarns Types <span>Unit List</span></h2>
+            <h2>Unit <span>Unit List</span></h2>
             <div class="page-bar">
                 <ul class="page-breadcrumb">
                     <li>
@@ -93,13 +93,8 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a onclick="refresh()" role="button" tabindex="0" class="tile-refresh">
+                                        <a onclick="loadDataTable()" role="button" tabindex="0" class="tile-refresh">
                                             <i class="fa fa-refresh"></i> Refresh
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a role="button" tabindex="0" class="tile-fullscreen">
-                                            <i class="fa fa-expand"></i> Fullscreen
                                         </a>
                                     </li>
                                 </ul>
@@ -111,11 +106,10 @@
                     <!-- tile body -->
                     <div class="tile-body">
                         <div class="table-responsive">
-                            <h3 class="text-success text-center">{{Session::get('message')}}</h3>
+                            {{-- <h3 class="text-success text-center">{{Session::get('message')}}</h3> --}}
                             <table class="table table-hover table-bordered table-condensed table-responsive" id="advanced-usage">
                                 <thead>
                                 <tr style="background-color: #1693A5; color: white;">
-                                    <th class="text-center">Sl No.</th>
                                     <th class="text-center">Full Unit</th>
                                     <th class="text-center">Short Unit</th>
                                     <th class="text-center">Status</th>
@@ -123,41 +117,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @php($i = 1)
-                                @foreach($units as $item)
-                                    <tr>
-                                        <td class="text-center">{{$i++}}</td>
-                                        <td class="text-left">{{$item->full_unit}}</td>
-                                        <td class="text-left">{{$item->short_unit}}</td>
-                                        <td class="text-center">
-                                            @if($item->status == 'I')
-                                                <span class="label label-info">Waiting for approval</span>
-                                            @elseif($item->status == 'A')
-                                                <span class="label label-success">Active</span>
-                                            @elseif($item->status == 'B')
-                                                <span class="label label-danger">Blocked</span>
-                                            @elseif($item->status == 'IN')
-                                                <span class="label label-warning">In-Active</span>
-                                            @endif
-                                        </td>
-                                        <td class="text-center">
-                                            <a onclick="iconChange()" data-id = "{{ $item->id }}" class="EditFactory btn btn-warning btn-xs"><i class="fa fa-edit"></i></a>
-                                            @if($item->status == 'I')
-                                                <a title="Activate" class="ActivateBuyer btn btn-success btn-xs" data-id = "{{ $item->id }}"><i class="fa fa-arrow-circle-up"></i></a>
-                                            @else
-                                                @if($item->status == 'A')
-                                                    <a title="De-Activate" class="DeActivateBuyer btn btn-warning btn-xs" data-id = "{{ $item->id }}"><i class="fa fa-arrow-circle-down"></i></a>
-                                                    {{--                                                    <a title="Block" class="BlockActivateBuyer btn btn-danger btn-xs" data-id = "{{ $item->id }}"><i class="fa fa-times"></i></a>--}}
-                                                @elseif($item->status == 'IN' || $item->status == 'B')
-                                                    <a title="Activate" class="ActivateBuyer btn btn-success btn-xs" data-id = "{{ $item->id }}"><i class="fa fa-arrow-circle-up"></i></a>
-                                                @endif
-                                                @if($item->status == 'A')
-                                                    <a title="Delete" class="DeleteBuyer btn btn-danger btn-xs" data-id = "{{ $item->id }}"><i class="fa fa-trash"></i></a>
-                                                @endif
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                
                                 </tbody>
                             </table>
                         </div>
@@ -179,12 +139,75 @@
 
 @endsection
 @section('pageScripts')
+<script src="{{ asset('/js/common.js') }}"></script>
     <script>
-        $(window).load(function(){
-            $('#advanced-usage').DataTable({
 
-            });
+        var table = $('#advanced-usage').DataTable({
+            "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
         });
+        $(window).load(function(){
+            loadDataTable();
+        });
+        function loadDataTable() {
+            table.destroy();
+            var free_table = '<tr><td class="text-center" colspan="4">--- Please Wait... Loading Data  ----</td></tr>';
+            $('#advanced-usage').find('tbody').append(free_table);
+           // $('tbody').html(free_table);
+            table = $("#advanced-usage").DataTable({
+                ajax: {
+                    url: "/mtrims/public/api/admin/unit/not-deleted",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "full_unit",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "short_unit",
+                        render: function (data) {
+                            return "<p class = 'text-center'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        render: function(data, type, api_item) {
+                            if(api_item.status === 'I'){
+                                return "<p class ='text-center'><label class='label label-warning'>In-Active</label></p>";
+                            }
+                            else if(api_item.status === 'A'){
+                                return "<p class ='text-center '><label class='label label-success'>Active</label></p>";
+                            }
+                            else{
+
+                            }
+                        }
+                    },
+                    {
+                        /*data: "id",*/
+                        render: function(data, type, api_item) {
+                            if(api_item.status === 'I'){
+                                return "<p class='text-center'><a title= 'Delete' class= 'DeleteBuyer btn btn-danger btn-xs' data-id = "+ api_item.id +"><i class='fa fa-trash'></i></a>" +
+                                    " &nbsp;" +
+                                    "<a title= 'Activate' class= 'ActivateBuyer btn btn-success btn-xs' data-id = "+ api_item.id +"><i class='fa fa-arrow-circle-up'></i></a></p>"
+                            }
+                            else if(api_item.status === 'A'){
+                                return "<p class='text-center'><a title= 'Delete' class= 'DeleteBuyer btn btn-danger btn-xs' data-id = "+ api_item.id +"><i class='fa fa-trash'></i></a>" +
+                                    " &nbsp;" +
+                                    "<a title= 'Activate' class= 'DeActivateBuyer btn btn-warning btn-xs' data-id = "+ api_item.id +"><i class='fa fa-arrow-circle-down'></i></a>" +
+                                    " &nbsp;" +
+                                    "<a title= 'Edit' class= 'EditUnit btn btn-warning btn-xs' data-id = "+ api_item.id +"><i class='fa fa-edit'></i></a></p>"
+                            }
+                            else{
+
+                            }
+                        }
+                    }
+                ]
+            });
+        }
+
         $(function(){
             $.ajaxSetup({
                 headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' }
@@ -202,7 +225,7 @@
                     data:data,
                     success:function(data){
                         //console.log(data);
-                        if(id)
+                        if(data === '2')
                         {
                             swal({
                                 title: "Data Updated Successfully!",
@@ -210,11 +233,12 @@
                                 button: "Ok!",
                             }).then(function (value) {
                                 if(value){
-                                    window.location.href = window.location.href.replace(/#.*$/, '');
+                                    clearFormWithoutDelay("FactoryAdd");
+                                    loadDataTable();
                                 }
                             });
                         }
-                        else
+                        else if(data === '1')
                         {
                             swal({
                                 title: "Data Inserted Successfully!",
@@ -222,8 +246,18 @@
                                 button: "Ok!",
                             }).then(function (value) {
                                 if(value){
-                                    window.location.href = window.location.href.replace(/#.*$/, '');
+                                    clearFormWithoutDelay("FactoryAdd");
+                                    loadDataTable();
                                 }
+                            });
+                        }
+                        else{
+                            swal({
+                                title: "Data Not Saved!",
+                                text: "Please Check Your Data!",
+                                icon: "error",
+                                button: "Ok!",
+                                className: "myClass",
                             });
                         }
                     },
@@ -241,7 +275,7 @@
 
             })
         });
-        $('#advanced-usage').on('click',".EditFactory", function(){
+        $('#advanced-usage').on('click',".EditUnit", function(){
             var button = $(this);
             var FactoryID = button.attr("data-id");
             //$('body').animate({scrollTop:0}, 400);
@@ -259,6 +293,7 @@
                     $('input[name=full_unit]').val(data.full_unit);
                     $('input[name=short_unit]').val(data.short_unit);
                     $('input[name=id]').val(data.id);
+                    moveToTop();
                 },
                 error:function(error){
                     swal({
@@ -272,13 +307,14 @@
             })
 
         });
-        /*$('#advanced-usage').on('click',".ActivateBuyer", function(){
+        
+        $('#advanced-usage').on('click',".ActivateBuyer", function(){
             var button = $(this);
             var id = button.attr("data-id");
-            var url = '{{ route('admin.yarn.type.activate') }}';
+            var url = '{{ route('admin.unit-activate') }}';
             swal({
                 title: 'Are you sure?',
-                text: 'This yarn type will be a active one!',
+                text: 'This unit will be a active one!',
                 icon: 'warning',
                 buttons: ["Cancel", "Yes!"],
             }).then(function(value) {
@@ -292,20 +328,30 @@
                         success:function(data){
                             if(data){
                                 //console.log(data);
-                                swal({
-                                    title: "Operation Successful!",
-                                    icon: "success",
-                                    button: "Ok!",
-                                }).then(function (value) {
-                                    if(value){
-                                        //console.log(value);
-                                        window.location.href = window.location.href.replace(/#.*$/, '');
-                                    }
-                                });
+                                if(data === '2'){
+                                    swal({
+                                        title: "Operation Successful!",
+                                        icon: "success",
+                                        button: "Ok!",
+                                    }).then(function (value) {
+                                        if(value){
+                                            loadDataTable();
+                                        }
+                                    });
+                                }
+                                else{
+                                    swal({
+                                        title: "Operation Unsuccessful!",
+                                        text: "Something wrong happened please check!",
+                                        icon: "error",
+                                        button: "Ok!",
+                                        className: "myClass",
+                                    });
+                                }
+
                             }
                         },
                         error:function(error){
-                            console.log(error);
                             swal({
                                 title: "Operation Unsuccessful!",
                                 text: "Something wrong happened please check!",
@@ -322,10 +368,10 @@
         $('#advanced-usage').on('click',".DeActivateBuyer", function(){
             var button = $(this);
             var id = button.attr("data-id");
-            var url = '{{ route('admin.yarn.type.de-activate') }}';
+            var url = '{{ route('admin.unit.de-activate') }}';
             swal({
                 title: 'Are you sure?',
-                text: 'This yarn type will be in-active!',
+                text: 'This unit will be in-active!',
                 icon: 'warning',
                 buttons: ["Cancel", "Yes!"],
             }).then(function(value) {
@@ -338,17 +384,26 @@
                         data:{id: id, _token: '{{csrf_token()}}'},
                         success:function(data){
                             if(data){
-                                //console.log(data);
-                                swal({
-                                    title: "Operation Successful!",
-                                    icon: "success",
-                                    button: "Ok!",
-                                }).then(function (value) {
-                                    if(value){
-                                        //console.log(value);
-                                        window.location.href = window.location.href.replace(/#.*$/, '');
-                                    }
-                                });
+                                if(data === '2'){
+                                    swal({
+                                        title: "Operation Successful!",
+                                        icon: "success",
+                                        button: "Ok!",
+                                    }).then(function (value) {
+                                        if(value){
+                                            loadDataTable();
+                                        }
+                                    });
+                                }
+                                else{
+                                    swal({
+                                        title: "Operation Unsuccessful!",
+                                        text: "Something wrong happened please check!",
+                                        icon: "error",
+                                        button: "Ok!",
+                                        className: "myClass",
+                                    });
+                                }
                             }
                         },
                         error:function(error){
@@ -364,7 +419,7 @@
                     })
                 }
             });
-        });*/
+        });
 
         $('#advanced-usage').on('click',".DeleteBuyer", function(){
             var button = $(this);
@@ -385,20 +440,29 @@
                         data:{id: id, _token: '{{csrf_token()}}'},
                         success:function(data){
                             if(data){
-                                //console.log(data);
-                                swal({
-                                    title: "Operation Successful!",
-                                    icon: "success",
-                                    button: "Ok!",
-                                }).then(function (value) {
-                                    if(value){
-                                        window.location.href = window.location.href.replace(/#.*$/, '');
-                                    }
-                                });
+                                if(data === '2'){
+                                    swal({
+                                        title: "Operation Successful!",
+                                        icon: "success",
+                                        button: "Ok!",
+                                    }).then(function (value) {
+                                        if(value){
+                                            loadDataTable();
+                                        }
+                                    });
+                                }
+                                else{
+                                    swal({
+                                        title: "Operation Unsuccessful!",
+                                        text: "Something wrong happened please check!",
+                                        icon: "error",
+                                        button: "Ok!",
+                                        className: "myClass",
+                                    });
+                                }
                             }
                         },
                         error:function(error){
-                            console.log(error);
                             swal({
                                 title: "Operation Unsuccessful!",
                                 text: "Something wrong happened please check!",
