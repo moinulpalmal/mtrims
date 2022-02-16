@@ -141,7 +141,7 @@ Route::middleware('auth')->group(function (){
         Route::delete('activate-sub-contractor','SubContractorController@activate')->name('activate-sub-contractor');
         Route::delete('in-activate-sub-contractor','SubContractorController@inActivate')->name('in-activate-sub-contractor');
         Route::delete('black-list-sub-contractor','SubContractorController@blackList')->name('black-list-sub-contractor');
-        Route::delete('delete-sub-contractor','SubContractorController@fullDelete')->name('delete-sub-contractor');
+        Route::delete('delete-sub-contractor','SubContractorController@deleteSubContractor')->name('delete-sub-contractor');
         //sub-contractor setup
 
         //yarn type setup
