@@ -141,7 +141,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a onclick="refresh()" role="button" tabindex="0" class="tile-refresh">
+                                        <a onclick="loadDataTable()" role="button" tabindex="0" class="tile-refresh">
                                             <i class="fa fa-refresh"></i> Refresh
                                         </a>
                                     </li>
@@ -155,43 +155,23 @@
                     <!-- tile body -->
                     <div class="tile-body">
                         <div class="table-responsive">
-                            <h3 class="text-success text-center">{{Session::get('message')}}</h3>
                             <table class="table table-hover table-bordered table-condensed table-responsive" id="advanced-usage">
                                 <thead>
                                 <tr style="background-color: #1693A5; color: white;">
-                                    <th class="text-center">Sl No.</th>
                                     <th class="text-center">LPD</th>
-                                    <th class="text-center">Section</th>
+                                    <th class="text-center">Trims Section</th>
                                     <th class="text-center">Type Name</th>
                                     <th class="text-center">Short Code</th>
                                     <th class="text-center">Gross Calculation Factor</th>
                                     <th class="text-center">Add Amount(%)</th>
                                     <th class="text-center">Description</th>
                                     <th class="text-center">Remarks</th>
+                                    <th class="text-center">Status</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @php($i = 1)
-                                @foreach($trims as $item)
-                                    <tr>
-                                        <td class="text-center">{{$i++}}</td>
-                                        <td class="text-center">
-                                            LPD-{{$item->lpd}}
-                                        </td>
-                                        <td>{{ (App\Helpers\Helper::IDwiseData('section_setups','id',$item->section_setup_id))->name }}</td>
-                                        <td>{{$item->name}}</td>
-                                        <td>{{$item->short_name}}</td>
-                                        <td class="text-center">{{$item->gross_calculation_amount}}</td>
-                                        <td class="text-center">{{$item->add_amount_percent}}</td>
-                                        <td>{!! $item->description !!}</td>
-                                        <td>{!! $item->remarks !!}</td>
-                                        <td class="text-center">
-                                            <a onclick="iconChange()" data-id = "{{ $item->id }}" class="EditFactory btn btn-warning btn-xs"><i class="fa fa-edit"></i></a>
-                                            <a class="DeleteFactory btn btn-danger btn-xs" ><i class="fa fa-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                
                                 </tbody>
                             </table>
                         </div>
@@ -211,9 +191,14 @@
 
 @endsection
 @section('pageScripts')
-    {{--    <script src="{{ asset('back-end/assets/MyJS/jquery.min.js') }}"></script>--}}
+<script src="{{ asset('/js/common.js') }}"></script>
 
     <script>
+
+        var table = $('#advanced-usage').DataTable({
+            "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
+        });
+
         $(window).load(function(){
             $('#advanced-usage').DataTable({
                 "scrollY":        "200px",
@@ -222,8 +207,116 @@
             });
             $('.select2').select2();
             $('.sectionselect2').select2();
+            loadDataTable();
 
         });
+
+        function loadDataTable() {
+            table.destroy();
+            var free_table = '<tr><td class="text-center" colspan="4">--- Please Wait... Loading Data  ----</td></tr>';
+            $('#advanced-usage').find('tbody').append(free_table);
+            table = $("#advanced-usage").DataTable({
+                ajax: {
+                    url: "/mtrims/public/api/admin/trims-type/not-deleted",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        render: function(data, type, api_item) {
+                            if(api_item.lpd === 1){
+                                return "<p class ='text-center'>LPD-1</p>";
+                            }
+                            else{
+                                return "<p class ='text-center'>LPD-2</p>";
+                            }
+                        }
+                    },
+                    {
+                        data: "section_setup_id",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "name",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "short_name",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+
+                    {
+                        data: "gross_calculation_amount",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+
+                    {
+                        data: "add_amount_percent",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+
+                    {
+                        data: "description",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+
+                    {
+                        data: "remarks",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        render: function(data, type, api_item) {
+                            if(api_item.status === 'I'){
+                                return "<p class ='text-center'><label class='label label-warning'>In-Active</label></p>";
+                            }
+                            else if(api_item.status === 'A'){
+                                return "<p class ='text-center '><label class='label label-success'>Active</label></p>";
+                            }
+                            else{
+
+                            }
+                        }
+                    },
+                    {
+                        /*data: "id",*/
+                        render: function(data, type, api_item) {
+                            if(api_item.status === 'I'){
+                                return "<p class='text-center'><a title= 'Show Detail' class= 'ShowDetail btn btn-info btn-xs' data-toggle='modal' data-target='#FactoryModal' data-options='splash-2 splash-ef-12' data-id = "+ api_item.id +"><i class='fa fa-eye'></i></a>" +
+                                    " &nbsp;" +
+                                    "<a title= 'Delete' class= 'DeleteTrims btn btn-danger btn-xs' data-id = "+ api_item.id +"><i class='fa fa-trash'></i></a>" +
+                                    " &nbsp;" +
+                                    "<a title= 'Activate' class= 'ActivateTrims btn btn-success btn-xs' data-id = "+ api_item.id +"><i class='fa fa-arrow-circle-up'></i></a></p>"
+                            }
+                            else if(api_item.status === 'A'){
+                                return "<p class='text-center'><a title= 'Show Detail' class= 'ShowDetail btn btn-info btn-xs' data-toggle='modal' data-target='#FactoryModal' data-options='splash-2 splash-ef-12' data-id = "+ api_item.id +"><i class='fa fa-eye'></i></a>" +
+                                    " &nbsp;" +
+                                    "<a title= 'Delete' class= 'DeleteTrims btn btn-danger btn-xs' data-id = "+ api_item.id +"><i class='fa fa-trash'></i></a>" +
+                                    " &nbsp;" +
+                                    "<a title= 'Activate' class= 'DeActivateTrims btn btn-warning btn-xs' data-id = "+ api_item.id +"><i class='fa fa-arrow-circle-down'></i></a>" +
+                                    " &nbsp;" +
+                                    "<a title= 'Edit' class= 'EditTrims btn btn-warning btn-xs' data-id = "+ api_item.id +"><i class='fa fa-edit'></i></a></p>"
+                            }
+                            else{
+
+                            }
+                        }
+                    }
+                ]
+            });
+        }
 
         $(function(){
             $.ajaxSetup({
@@ -241,7 +334,7 @@
                     data:data,
                     success:function(data){
                         //console.log(data);
-                        if(id)
+                        if(data === '2')
                         {
                             swal({
                                 title: "Data Updated Successfully!",
@@ -249,11 +342,12 @@
                                 button: "Ok!",
                             }).then(function (value) {
                                 if(value){
-                                    window.location.href = window.location.href.replace(/#.*$/, '');
+                                    clearFormWithoutDelay("FactoryAdd");
+                                    loadDataTable();
                                 }
                             });
                         }
-                        else
+                        else if(data === '1')
                         {
                             swal({
                                 title: "Data Inserted Successfully!",
@@ -261,8 +355,18 @@
                                 button: "Ok!",
                             }).then(function (value) {
                                 if(value){
-                                    window.location.href = window.location.href.replace(/#.*$/, '');
+                                    clearFormWithoutDelay("FactoryAdd");
+                                    loadDataTable();
                                 }
+                            });
+                        }
+                        else{
+                            swal({
+                                title: "Data Not Saved!",
+                                text: "Please Check Your Data!",
+                                icon: "error",
+                                button: "Ok!",
+                                className: "myClass",
                             });
                         }
                     },
@@ -281,7 +385,8 @@
 
             })
         });
-        $('#advanced-usage').on('click',".EditFactory", function(){
+
+        $('#advanced-usage').on('click',".EditTrims", function(){
             var button = $(this);
 
             var FactoryID = button.attr("data-id");
@@ -307,6 +412,7 @@
 
 
                     $('input[name=id]').val(data.id);
+                    moveToTop();
                 },
                 error:function(error){
                     //console.log(error);
@@ -321,6 +427,176 @@
             })
 
         });
+
+        $('#advanced-usage').on('click',".ActivateTrims", function(){
+            var button = $(this);
+            var id = button.attr("data-id");
+            var url = '{{ route('admin.activate-trims-type') }}';
+            swal({
+                title: 'Are you sure?',
+                text: 'This trims-type will be a active one!',
+                icon: 'warning',
+                buttons: ["Cancel", "Yes!"],
+            }).then(function(value) {
+                if (value) {
+                    //window.location.href = url;
+                    //console.log(id);
+                    $.ajax({
+                        method:'DELETE',
+                        url: url,
+                        data:{id: id, _token: '{{csrf_token()}}'},
+                        success:function(data){
+                            if(data){
+                                //console.log(data);
+                                if(data === '2'){
+                                    swal({
+                                        title: "Operation Successful!",
+                                        icon: "success",
+                                        button: "Ok!",
+                                    }).then(function (value) {
+                                        if(value){
+                                            loadDataTable();
+                                        }
+                                    });
+                                }
+                                else{
+                                    swal({
+                                        title: "Operation Unsuccessful!",
+                                        text: "Something wrong happened please check!",
+                                        icon: "error",
+                                        button: "Ok!",
+                                        className: "myClass",
+                                    });
+                                }
+
+                            }
+                        },
+                        error:function(error){
+                            swal({
+                                title: "Operation Unsuccessful!",
+                                text: "Something wrong happened please check!",
+                                icon: "error",
+                                button: "Ok!",
+                                className: "myClass",
+                            });
+                        }
+                    })
+                }
+            });
+        });
+
+        $('#advanced-usage').on('click',".DeActivateTrims", function(){
+            var button = $(this);
+            var id = button.attr("data-id");
+            var url = '{{ route('admin.de-activate-trims-type') }}';
+            swal({
+                title: 'Are you sure?',
+                text: 'This trims-type will be in-active!',
+                icon: 'warning',
+                buttons: ["Cancel", "Yes!"],
+            }).then(function(value) {
+                if (value) {
+                    //window.location.href = url;
+                    //console.log(id);
+                    $.ajax({
+                        method:'DELETE',
+                        url: url,
+                        data:{id: id, _token: '{{csrf_token()}}'},
+                        success:function(data){
+                            if(data){
+                                if(data === '2'){
+                                    swal({
+                                        title: "Operation Successful!",
+                                        icon: "success",
+                                        button: "Ok!",
+                                    }).then(function (value) {
+                                        if(value){
+                                            loadDataTable();
+                                        }
+                                    });
+                                }
+                                else{
+                                    swal({
+                                        title: "Operation Unsuccessful!",
+                                        text: "Something wrong happened please check!",
+                                        icon: "error",
+                                        button: "Ok!",
+                                        className: "myClass",
+                                    });
+                                }
+                            }
+                        },
+                        error:function(error){
+                            console.log(error);
+                            swal({
+                                title: "Operation Unsuccessful!",
+                                text: "Something wrong happened please check!",
+                                icon: "error",
+                                button: "Ok!",
+                                className: "myClass",
+                            });
+                        }
+                    })
+                }
+            });
+        });
+
+        $('#advanced-usage').on('click',".DeleteTrims", function(){
+            var button = $(this);
+            var id = button.attr("data-id");
+            var url = '{{ route('admin.delete-trims-type') }}';
+            swal({
+                title: 'Are you sure?',
+                text: 'This factory will be removed permanently!',
+                icon: 'warning',
+                buttons: ["Cancel", "Yes!"],
+            }).then(function(value) {
+                if (value) {
+                    //window.location.href = url;
+                    //console.log(id);
+                    $.ajax({
+                        method:'DELETE',
+                        url: url,
+                        data:{id: id, _token: '{{csrf_token()}}'},
+                        success:function(data){
+                            if(data){
+                                if(data === '2'){
+                                    swal({
+                                        title: "Operation Successful!",
+                                        icon: "success",
+                                        button: "Ok!",
+                                    }).then(function (value) {
+                                        if(value){
+                                            loadDataTable();
+                                        }
+                                    });
+                                }
+                                else{
+                                    swal({
+                                        title: "Operation Unsuccessful!",
+                                        text: "Something wrong happened please check!",
+                                        icon: "error",
+                                        button: "Ok!",
+                                        className: "myClass",
+                                    });
+                                }
+                            }
+                        },
+                        error:function(error){
+                            swal({
+                                title: "Operation Unsuccessful!",
+                                text: "Something wrong happened please check!",
+                                icon: "error",
+                                button: "Ok!",
+                                className: "myClass",
+                            });
+                        }
+                    })
+                }
+            });
+        });
+
+
 
         function refresh()
         {

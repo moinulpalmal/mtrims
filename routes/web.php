@@ -185,7 +185,7 @@ Route::middleware('auth')->group(function (){
         Route::get('trims-type','TrimsTypeController@index')->name('trims-type');
         Route::post('save-trims-type','TrimsTypeController@saveTrims')->name('save-trims-type');
         Route::post('edit-trims-type','TrimsTypeController@updateTrims')->name('edit-trims-type');
-        Route::delete('delete-trims-type','TrimsTypeController@deleteTrims')->name('delete-trims-type');
+        Route::delete('delete-trims-type','TrimsTypeController@deleteTrimsType')->name('delete-trims-type');
         Route::delete('activate-trims-type','TrimsTypeController@activateTrims')->name('activate-trims-type');
         Route::delete('de-activate-trims-type','TrimsTypeController@deActivateTrims')->name('de-activate-trims-type');
         //trims type setup
