@@ -77,22 +77,22 @@
                         <!-- tile body -->
                         <div class="tile-body">
                             <input type="hidden" id="HiddenFactoryID" name="id">
+                            <div class="col-md-4 no-padding">
+                                <div class="form-group">
+                                    <label for="SubContractorType" class="control-label">Select Sub Contractor Type</label>
+                                    <select id="SubContractorType" class="form-control select2" name="sub_contractor_type" required = "" style="width: 100%;">
+                                        <option value="">- - - Select - - -</option>
+                                        <option value="I">International</option>
+                                        <option value="L">Local</option>
+                                        <option value="LI">Local & International</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="row" style="padding: 0px 15px;">
                                 <div class="col-md-4 no-padding">
                                     <div class="form-group">
                                         <label for="SubContractorName" class="control-label">Name</label>
                                         <input type="text" class="form-control" name="name" id="SubContractorName" placeholder="Enter sub-contractor name" required="">
-                                    </div>
-                                </div>
-                                <div class="col-md-4 no-padding">
-                                    <div class="form-group">
-                                        <label for="SubContractorType" class="control-label">Select Sub Contractor Type</label>
-                                        <select id="SubContractorType" class="form-control select2" name="sub_contractor_type" required = "" style="width: 100%;">
-                                            <option value="">- - - Select - - -</option>
-                                            <option value="I">International</option>
-                                            <option value="L">Local</option>
-                                            <option value="LI">Local & International</option>
-                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-4 no-padding">

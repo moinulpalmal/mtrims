@@ -653,6 +653,7 @@
                     //console.log();
 
                     $('input[name=id]').val(data.id);
+                    moveToTop();
                 },
                 error:function(error){
                     swal({
