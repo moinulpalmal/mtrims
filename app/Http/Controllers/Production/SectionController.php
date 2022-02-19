@@ -9,71 +9,41 @@ use Illuminate\Http\Request;
 class SectionController extends Controller
 {
     public function index(){
-        $sections = SectionSetup::orderBy('name')->where('status','!=', 'D')->get();
+        // $sections = SectionSetup::orderBy('name')->where('status','!=', 'D')->get();
 
-        return view('production.section.index', compact('sections'));
+        // return view('production.section.index', compact('sections'));
+        return view('production.section.index');
+    }
+
+    public function getAllNotDeletedSections()
+    {
+        return SectionSetup::getAllNotDeletedSections();
     }
 
     public function saveSection(Request $request){
         $id = $request->get('id');
         if(!empty($id))
         {
-            $supplier = SectionSetup::find($request->id);
-            if($supplier != null){
-                $supplier->name = $request->name;
-                $supplier->remarks = $request->remarks;
-
-                if($supplier->save())
-                {
-                    return 'Saved';
-                }
-            }
-            return 'Updated';
+            return SectionSetup::updateSectionSetup($request);
         }
         else
         {
-            $supplier = new SectionSetup();
-            $supplier->name = $request->name;
-            $supplier->remarks = $request->remarks;
-            if($supplier->save())
-            {
-                return 'Saved';
-            }
+            return SectionSetup::insertSectionSetup($request);
         }
-        return 'BR';
-    }
-
-    public function fullDelete(Request $request)
-    {
-        $supplier = SectionSetup::find($request->id);
-        $supplier->status = 'D';
-        if($supplier->save()){
-            return true;
-        }
-        return 'Error';
-
     }
 
     public function activate(Request $request)
     {
-        $supplier = SectionSetup::find($request->id);
-        $supplier->status = 'A';
-        if($supplier->save()){
-            return true;
-        }
-        return 'Error';
-
+        return SectionSetup::activateSectionSetup($request);
     }
 
     public function inActivate(Request $request)
     {
-        $supplier = SectionSetup::find($request->id);
-        $supplier->status = 'IN';
-        if($supplier->save()){
-            return true;
-        }
-        return 'Error';
+        return SectionSetup::inActivateSectionSetup($request);
+    }
 
+    public function deleteSectionSetup(Request $request){
+        return SectionSetup::deleteSectionSetup($request);
     }
 
     public function updateSection(Request $req)

@@ -372,7 +372,7 @@ Route::group(['as' => 'lpd1.','prefix' => 'lpd1','namespace' => 'LPD1','middlewa
         Route::get('section','SectionController@index')->name('section');
         Route::post('section/save','SectionController@saveSection')->name('section.save');
         Route::post('section/edit','SectionController@updateSection')->name('section.edit');
-        Route::delete('section/delete','SectionController@fullDelete')->name('section.delete');
+        Route::delete('section/delete','SectionController@deleteSectionSetup')->name('section.delete');
         Route::delete('section/activate','SectionController@activate')->name('section.activate');
         Route::delete('section/de-activate','SectionController@inActivate')->name('section.de-activate');
         //section setup
