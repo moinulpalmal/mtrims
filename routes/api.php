@@ -27,4 +27,4 @@ Route::get('admin/supplier/not-deleted','admin\SupplierController@getAllNotDelet
 Route::get('admin/sub-contractor/not-deleted','admin\SubContractorController@getAllNotDeleteSubcontractors');
 Route::get('admin/unit/not-deleted','admin\UnitController@getAllNotDeletedUnits');
 Route::get('admin/trims-type/not-deleted','admin\TrimsTypeController@getAllNotDeletedTrimsTyps');
-// Route::get('admin/trims-type/not-deleted','admin\TrimsTypeController@GetLpdActiveTrimsTypesForSelectField');
+Route::get('production/section-setup/not-deleted','Production\SectionController@getAllNotDeletedSections');
