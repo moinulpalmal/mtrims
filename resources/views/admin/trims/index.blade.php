@@ -147,7 +147,6 @@
                                     </li>
                                 </ul>
                             </li>
-                            {{--                            <li class="remove"><a role="button" tabindex="0" class="tile-close"><i class="fa fa-times"></i></a></li>--}}
                         </ul>
                     </div>
                     <!-- /tile header -->
@@ -167,7 +166,7 @@
                                     <th class="text-center">Description</th>
                                     <th class="text-center">Remarks</th>
                                     <th class="text-center">Status</th>
-                                    <th class="text-center">Action</th>
+                                    <th width="80" class="text-center">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -200,14 +199,14 @@
         });
 
         $(window).load(function(){
-            $('#advanced-usage').DataTable({
-                "scrollY":        "200px",
-                "scrollCollapse": true,
-                "paging":         false
-            });
+            loadDataTable();
+            // $('#advanced-usage').DataTable({
+            //     "scrollY":        "200px",
+            //     "scrollCollapse": true,
+            //     "paging":         false
+            // });
             $('.select2').select2();
             $('.sectionselect2').select2();
-            loadDataTable();
 
         });
 
@@ -232,7 +231,7 @@
                         }
                     },
                     {
-                        data: "section_setup_id",
+                        data: "section_setup_name",
                         render: function (data) {
                             return "<p class = 'text-left'>"+ data +"</p>";
                         }
@@ -246,21 +245,21 @@
                     {
                         data: "short_name",
                         render: function (data) {
-                            return "<p class = 'text-left'>"+ data +"</p>";
+                            return "<p class = 'text-center'>"+ data +"</p>";
                         }
                     },
 
                     {
                         data: "gross_calculation_amount",
                         render: function (data) {
-                            return "<p class = 'text-left'>"+ data +"</p>";
+                            return "<p class = 'text-center'>"+ data +"</p>";
                         }
                     },
 
                     {
                         data: "add_amount_percent",
                         render: function (data) {
-                            return "<p class = 'text-left'>"+ data +"</p>";
+                            return "<p class = 'text-center'>"+ data +"</p>";
                         }
                     },
 
@@ -294,16 +293,12 @@
                         /*data: "id",*/
                         render: function(data, type, api_item) {
                             if(api_item.status === 'I'){
-                                return "<p class='text-center'><a title= 'Show Detail' class= 'ShowDetail btn btn-info btn-xs' data-toggle='modal' data-target='#FactoryModal' data-options='splash-2 splash-ef-12' data-id = "+ api_item.id +"><i class='fa fa-eye'></i></a>" +
-                                    " &nbsp;" +
-                                    "<a title= 'Delete' class= 'DeleteTrims btn btn-danger btn-xs' data-id = "+ api_item.id +"><i class='fa fa-trash'></i></a>" +
+                                return "<p class='text-center'><a title= 'Delete' class= 'DeleteTrims btn btn-danger btn-xs' data-id = "+ api_item.id +"><i class='fa fa-trash'></i></a>" +
                                     " &nbsp;" +
                                     "<a title= 'Activate' class= 'ActivateTrims btn btn-success btn-xs' data-id = "+ api_item.id +"><i class='fa fa-arrow-circle-up'></i></a></p>"
                             }
                             else if(api_item.status === 'A'){
-                                return "<p class='text-center'><a title= 'Show Detail' class= 'ShowDetail btn btn-info btn-xs' data-toggle='modal' data-target='#FactoryModal' data-options='splash-2 splash-ef-12' data-id = "+ api_item.id +"><i class='fa fa-eye'></i></a>" +
-                                    " &nbsp;" +
-                                    "<a title= 'Delete' class= 'DeleteTrims btn btn-danger btn-xs' data-id = "+ api_item.id +"><i class='fa fa-trash'></i></a>" +
+                                return "<p class='text-center'><a title= 'Delete' class= 'DeleteTrims btn btn-danger btn-xs' data-id = "+ api_item.id +"><i class='fa fa-trash'></i></a>" +
                                     " &nbsp;" +
                                     "<a title= 'Activate' class= 'DeActivateTrims btn btn-warning btn-xs' data-id = "+ api_item.id +"><i class='fa fa-arrow-circle-down'></i></a>" +
                                     " &nbsp;" +
@@ -388,10 +383,7 @@
 
         $('#advanced-usage').on('click',".EditTrims", function(){
             var button = $(this);
-
             var FactoryID = button.attr("data-id");
-
-
             var url = '{{ route('admin.edit-trims-type') }}';
             $.ajax({
                 url: url,
@@ -400,6 +392,8 @@
                 success:function(data){
                     //console.log(data);
                     //return;
+                    $('select[name=lpd]').val(data.lpd).change();
+                    $('select[name=section]').val(data.section).change();
                     $('input[name=name]').val(data.name);
                     $('input[name=description]').val(data.description);
                     $('input[name=remarks]').val(data.remarks);
@@ -407,9 +401,8 @@
                     $('input[name=gross_calculation_amount]').val(data.gross_calculation_amount);
                     $('input[name=add_amount_percent]').val(data.add_amount_percent);
 
-                    $("#SectionID option[value = '" + data.section + "']").attr('selected', 'selected').change();
-                    $("#LPD option[value = '" + data.lpd + "']").attr('selected', 'selected').change();
-
+                    // $("#SectionID option[value = '" + data.section + "']").attr('selected', 'selected').change();
+                    // $("#LPD option[value = '" + data.lpd + "']").attr('selected', 'selected').change();
 
                     $('input[name=id]').val(data.id);
                     moveToTop();
@@ -547,7 +540,7 @@
             var url = '{{ route('admin.delete-trims-type') }}';
             swal({
                 title: 'Are you sure?',
-                text: 'This factory will be removed permanently!',
+                text: 'This trims-type will be removed permanently!',
                 icon: 'warning',
                 buttons: ["Cancel", "Yes!"],
             }).then(function(value) {

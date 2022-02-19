@@ -9,11 +9,16 @@ use Illuminate\Support\Facades\DB;
 class TrimsType extends Model
 {
     public static function getAllNotDeletedTrimsTyps(){
-        return DB::table('trims_types')
-            ->select('*')
-            ->where('status','!=', 'D')
-            ->orderBy('name')
+        $data = DB::table('trims_types')
+            ->join('section_setups', 'section_setups.id', '=', 'trims_types.section_setup_id')
+            ->select('section_setups.name AS section_setup_name',
+            'trims_types.*')
+            ->where('trims_types.status', '!=', 'D')
+            ->orderBy('section_setups.name', 'ASC')
+            ->orderBy('trims_types.name', 'ASC')
             ->get();
+
+        return $data;
     }
 
     public static function GetAllActiveTrimsTypesForSelectField(){
