@@ -354,12 +354,14 @@
 {{--    <script src="{{ asset('back-end/assets/MyJS/jquery.min.js') }}"></script>--}}
     <script src="{{ asset('/js/common.js') }}"></script>
     <script>
+        
         var table = $('#advanced-usage').DataTable({
             "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
         });
         $(window).load(function(){
             loadDataTable();
         });
+
         function loadDataTable() {
             table.destroy();
             var free_table = '<tr><td class="text-center" colspan="4">--- Please Wait... Loading Data  ----</td></tr>';
