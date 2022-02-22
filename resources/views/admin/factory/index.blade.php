@@ -358,6 +358,7 @@
         var table = $('#advanced-usage').DataTable({
             "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
         });
+        
         $(window).load(function(){
             loadDataTable();
         });
