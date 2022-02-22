@@ -29,4 +29,5 @@ Route::get('admin/unit/not-deleted','admin\UnitController@getAllNotDeletedUnits'
 Route::get('admin/trims-type/not-deleted','admin\TrimsTypeController@getAllNotDeletedTrimsTyps');
 Route::get('admin/yarn-type/not-deleted','admin\YarnTypeController@getAllNotDeletedYarnTyps');
 Route::get('admin/yarn-count/not-deleted','admin\YarnCountController@getAllNotDeletedYarnCounts');
+Route::get('admin/yarn-setup/not-deleted','admin\YarnController@getAllNotDeletedYarns');
 Route::get('production/section-setup/not-deleted','Production\SectionController@getAllNotDeletedSections');

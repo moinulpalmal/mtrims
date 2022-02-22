@@ -17,38 +17,22 @@ class YarnController extends Controller
         return view('admin.yarn.index', compact('types', 'yarns', 'counts'));
     }
 
+    public function getAllNotDeletedYarns()
+    {
+        return YarnCount::getAllNotDeletedYarns();
+    }
+
     public function saveYarn(Request $request){
 
         $id = $request->get('id');
         if(!empty($id))
         {
-            $supplier = Yarn::find($request->id);
-            if($supplier != null){
-                $supplier->yarn_count_id = $request->yarn_count;
-                $supplier->color = $request->color;
-                $supplier->remarks = $request->remarks;
-                if($supplier->save())
-                {
-                    return 'Saved';
-                }
-
-            }
-            return 'Updated';
+            return Yarn::updateYarn($request);
         }
         else
         {
-            $supplier = new Yarn();
-            $supplier->yarn_count_id = $request->yarn_count;
-            $supplier->unit_id = 2;
-            $supplier->color = $request->color;
-            $supplier->remarks = $request->remarks;
-            $supplier->status = 'A';
-            if($supplier->save())
-            {
-                return 'Saved';
-            }
+            return Yarn::insertYarn($request);
         }
-        return 'BR';
     }
 
     public function updateYarn(Request $req)
@@ -67,37 +51,19 @@ class YarnController extends Controller
         return $yarnData;
     }
 
-    public function fullDelete(Request $request)
-    {
-        $supplier = Yarn::find($request->id);
-        $supplier->status = 'D';
-        if($supplier->save()){
-            return true;
-        }
-        return 'Error';
-
-    }
-
     public function activate(Request $request)
     {
-        $supplier = Yarn::find($request->id);
-        $supplier->status = 'A';
-        if($supplier->save()){
-            return true;
-        }
-        return 'Error';
-
+        return Yarn::activateYarn($request);
     }
 
     public function inActivate(Request $request)
     {
-        $yarn = Yarn::find($request->id);
-        $yarn->status = 'IN';
-        if($yarn->save()){
-            return true;
-        }
-        return 'Error';
+        return Yarn::inActivateYarn($request);
+    }
 
+    public function fullDelete(Request $request)
+    {
+        return Yarn::deleteYarn($request);
     }
 
 

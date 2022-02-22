@@ -54,26 +54,26 @@
                                 <div class="col-md-3 no-padding">
                                     <div class="form-group">
                                         <label for="YarnTypeName" class="control-label">Select Yarn Type</label>
-                                        <select class="form-control chosen-select" name="yarn_type"  id="YarnTypeName" style="width: 100% !important; height: 100% !important;" onchange="javascript:getYarnCount(this)" required>
+                                        <select class="form-control typelect2" name="yarn_type"  id="YarnTypeName" style="width: 100% !important; height: 100% !important;" onchange="javascript:getYarnCount(this)" required>
                                             <option value="" selected="selected">- - - Select - - -</option>
-                                            @if(!empty($types))
-                                                @foreach($types as $type)
-                                                    <option value="{{ $type->id }}">{{ $type->name }}</option>
-                                                @endforeach
-                                            @endif
+                                                @if(!empty($types))
+                                                    @foreach($types as $type)
+                                                        <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                                    @endforeach
+                                                @endif
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-3 no-padding">
                                     <div class="form-group">
                                         <label for="YarnCountName" class="control-label">Select Yarn Count</label>
-                                        <select class="form-control chosen-select" name="yarn_count"  id="YarnCountName" style="width: 100%;" required>
+                                        <select class="form-control select2" name="yarn_count"  id="YarnCountName" style="width: 100%;" required>
                                             <option value="" selected="selected">- - - Select - - -</option>
-                                            @if(!empty($counts))
-                                                @foreach($counts as $type)
-                                                    <option value="{{ $type->id }}">{{ $type->name }}</option>
-                                                @endforeach
-                                            @endif
+                                                @if(!empty($counts))
+                                                    @foreach($counts as $type)
+                                                        <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                                    @endforeach
+                                                @endif
                                         </select>
                                     </div>
                                 </div>
@@ -118,15 +118,10 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a onclick="refresh()" role="button" tabindex="0" class="tile-refresh">
+                                        <a onclick="loadDataTable()" role="button" tabindex="0" class="tile-refresh">
                                             <i class="fa fa-refresh"></i> Refresh
                                         </a>
                                     </li>
-                                    {{--<li>
-                                        <a role="button" tabindex="0" class="tile-fullscreen">
-                                            <i class="fa fa-expand"></i> Fullscreen
-                                        </a>
-                                    </li>--}}
                                 </ul>
                             </li>
                             {{--                            <li class="remove"><a role="button" tabindex="0" class="tile-close"><i class="fa fa-times"></i></a></li>--}}
@@ -136,11 +131,9 @@
                     <!-- tile body -->
                     <div class="tile-body">
                         <div class="table-responsive">
-                            <h3 class="text-success text-center">{{Session::get('message')}}</h3>
                             <table class="table table-hover table-bordered table-condensed table-responsive" id="advanced-usage">
                                 <thead>
                                 <tr style="background-color: #1693A5; color: white;">
-                                    <th class="text-center">Sl No.</th>
                                     <th class="text-center">Type</th>
                                     <th class="text-center">Count</th>
                                     <th class="text-center">Color</th>
@@ -150,43 +143,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @php($i = 1)
-                                @foreach($yarns as $item)
-                                    <tr>
-                                        <td class="text-center">{{$i++}}</td>
-                                        <td class="text-left">{{ (App\Helpers\Helper::IDwiseData('yarn_types','id', (App\Helpers\Helper::IDwiseData('yarn_counts','id', $item->yarn_count_id))->yarn_type_id))->name }}</td>
-                                        <td class="text-left">{{ (App\Helpers\Helper::IDwiseData('yarn_counts','id', $item->yarn_count_id))->name }}</td>
-                                        <td class="text-left">{{$item->color}}</td>
-                                        <td class="text-left">{{$item->remarks}}</td>
-                                        <td class="text-center">
-                                            @if($item->status == 'I')
-                                                <span class="label label-info">Waiting for approval</span>
-                                            @elseif($item->status == 'A')
-                                                <span class="label label-success">Active</span>
-                                            @elseif($item->status == 'B')
-                                                <span class="label label-danger">Blocked</span>
-                                            @elseif($item->status == 'IN')
-                                                <span class="label label-warning">In-Active</span>
-                                            @endif
-                                        </td>
-                                        <td class="text-center">
-                                            <a onclick="iconChange()" data-id = "{{ $item->id }}" class="EditFactory btn btn-warning btn-xs"><i class="fa fa-edit"></i></a>
-                                            @if($item->status == 'I')
-                                                <a title="Activate" class="ActivateBuyer btn btn-success btn-xs" data-id = "{{ $item->id }}"><i class="fa fa-arrow-circle-up"></i></a>
-                                            @else
-                                                @if($item->status == 'A')
-                                                    <a title="De-Activate" class="DeActivateBuyer btn btn-warning btn-xs" data-id = "{{ $item->id }}"><i class="fa fa-arrow-circle-down"></i></a>
-                                                    {{--                                                    <a title="Block" class="BlockActivateBuyer btn btn-danger btn-xs" data-id = "{{ $item->id }}"><i class="fa fa-times"></i></a>--}}
-                                                @elseif($item->status == 'IN' || $item->status == 'B')
-                                                    <a title="Activate" class="ActivateBuyer btn btn-success btn-xs" data-id = "{{ $item->id }}"><i class="fa fa-arrow-circle-up"></i></a>
-                                                @endif
-                                                @if($item->status == 'A')
-                                                    <a title="Delete" class="DeleteBuyer btn btn-danger btn-xs" data-id = "{{ $item->id }}"><i class="fa fa-trash"></i></a>
-                                                @endif
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                
                                 </tbody>
                             </table>
                         </div>
@@ -208,12 +165,90 @@
 
 @endsection
 @section('pageScripts')
+<script src="{{ asset('/js/common.js') }}"></script>
     <script>
-        $(window).load(function(){
-            $('#advanced-usage').DataTable({
 
-            });
+        var table = $('#advanced-usage').DataTable({
+            "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
         });
+
+        $(window).load(function(){
+            loadDataTable();
+            $('.select2').select2();
+            $('.typelect2').select2();
+        });
+
+        function loadDataTable() {
+            table.destroy();
+            var free_table = '<tr><td class="text-center" colspan="4">--- Please Wait... Loading Data  ----</td></tr>';
+            $('#advanced-usage').find('tbody').append(free_table);
+            table = $("#advanced-usage").DataTable({
+                ajax: {
+                    url: "/mtrims/public/api/admin/yarn-setup/not-deleted",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "type",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "count",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "color",
+                        render: function (data) {
+                            return "<p class = 'text-center'>"+ data +"</p>";
+                        }
+                    },
+
+                    {
+                        data: "remarks",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        render: function(data, type, api_item) {
+                            if(api_item.status === 'I'){
+                                return "<p class ='text-center'><label class='label label-warning'>In-Active</label></p>";
+                            }
+                            else if(api_item.status === 'A'){
+                                return "<p class ='text-center '><label class='label label-success'>Active</label></p>";
+                            }
+                            else{
+
+                            }
+                        }
+                    },
+                    {
+                        /*data: "id",*/
+                        render: function(data, type, api_item) {
+                            if(api_item.status === 'I'){
+                                return "<p class='text-center'><a title= 'Delete' class= 'DeleteTrims btn btn-danger btn-xs' data-id = "+ api_item.id +"><i class='fa fa-trash'></i></a>" +
+                                    " &nbsp;" +
+                                    "<a title= 'Activate' class= 'ActivateTrims btn btn-success btn-xs' data-id = "+ api_item.id +"><i class='fa fa-arrow-circle-up'></i></a></p>"
+                            }
+                            else if(api_item.status === 'A'){
+                                return "<p class='text-center'><a title= 'Delete' class= 'DeleteTrims btn btn-danger btn-xs' data-id = "+ api_item.id +"><i class='fa fa-trash'></i></a>" +
+                                    " &nbsp;" +
+                                    "<a title= 'Activate' class= 'DeActivateTrims btn btn-warning btn-xs' data-id = "+ api_item.id +"><i class='fa fa-arrow-circle-down'></i></a>" +
+                                    " &nbsp;" +
+                                    "<a title= 'Edit' class= 'EditTrims btn btn-warning btn-xs' data-id = "+ api_item.id +"><i class='fa fa-edit'></i></a></p>"
+                            }
+                            else{
+
+                            }
+                        }
+                    }
+                ]
+            });
+        }
 
         function getYarnCount(_yarn_type) {
             var id = _yarn_type.value;
