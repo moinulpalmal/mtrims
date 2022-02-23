@@ -10,16 +10,19 @@ class Yarn extends Model
 {
     public static function getAllNotDeletedYarns(){
         return DB::table('yarns')
-            ->select('*')
-            ->where('status', '!=', 'D')
-            ->orderBy('name')
+            ->join('yarn_counts','yarn_counts.id', '=', 'yarns.yarn_count_id')
+            ->join('yarn_types','yarn_types.id', '=', 'yarns.unit_id')
+            ->select('yarn_counts.name AS yarn_count_name', 'yarn_types.name AS type_name', 'yarns.*')
+            // ->select('*')
+            ->where('yarns.status', '!=', 'D')
             ->get();
     }
 
     public static function insertYarn($request){
         $supplier = new Yarn();
         $supplier->yarn_count_id = $request->yarn_count;
-        $supplier->unit_id = 2;
+        // $supplier->unit_id = 2;
+        $supplier->unit_id = $request->yarn_type;
         $supplier->color = $request->color;
         $supplier->remarks = $request->remarks;
         $supplier->status = 'A';
@@ -34,6 +37,7 @@ class Yarn extends Model
         $supplier = Yarn::find($request->id);
         if($supplier != null){
             $supplier->yarn_count_id = $request->yarn_count;
+            $supplier->unit_id = $request->yarn_type;
             $supplier->color = $request->color;
             $supplier->remarks = $request->remarks;
             if($supplier->save())

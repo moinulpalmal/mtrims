@@ -79,7 +79,9 @@ class YarnCountController extends Controller
     {
         //$status = 'A';
         $status = 'A';
-        $DropDownData = DB::table("yarn_counts")->where("yarn_type_id",$req->YarnTypeID)->where("status", $status)->pluck("name","id");
+        $DropDownData = DB::table("yarn_counts")
+            ->where("yarn_type_id",$req->YarnTypeID)
+            ->where("status", $status)->pluck("name","id");
         return json_encode($DropDownData);
     }
 

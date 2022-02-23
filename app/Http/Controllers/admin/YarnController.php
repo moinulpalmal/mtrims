@@ -19,7 +19,7 @@ class YarnController extends Controller
 
     public function getAllNotDeletedYarns()
     {
-        return YarnCount::getAllNotDeletedYarns();
+        return Yarn::getAllNotDeletedYarns();
     }
 
     public function saveYarn(Request $request){
@@ -44,8 +44,9 @@ class YarnController extends Controller
 
         $yarnData = array(
             'id' => $supplier->id,
-            'color' => $supplier->color,
+            'yarn_type' => $supplier->unit_id,
             'yarn_count' => $supplier->yarn_count_id,
+            'color' => $supplier->color,
             'remarks' => $supplier->remarks,
         );
         return $yarnData;

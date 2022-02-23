@@ -54,7 +54,7 @@
                                 <div class="col-md-3 no-padding">
                                     <div class="form-group">
                                         <label for="YarnTypeName" class="control-label">Select Yarn Type</label>
-                                        <select class="form-control typelect2" name="yarn_type"  id="YarnTypeName" style="width: 100% !important; height: 100% !important;" onchange="javascript:getYarnCount(this)" required>
+                                        <select class="form-control select2" name="yarn_type"  id="YarnTypeName" style="width: 100% !important; height: 100% !important;" onchange="javascript:getYarnCount(this)" required>
                                             <option value="" selected="selected">- - - Select - - -</option>
                                                 @if(!empty($types))
                                                     @foreach($types as $type)
@@ -175,8 +175,64 @@
         $(window).load(function(){
             loadDataTable();
             $('.select2').select2();
-            $('.typelect2').select2();
         });
+
+        function getYarnCount(_yarn_type) {
+            var id = _yarn_type.value;
+            
+            var clicked = false
+                document.getElementById('button').addEventListener("click", function() {
+                    clicked = true
+                });
+            
+
+            //var rowID = _category.getAttribute("data-id");
+           // var targetID = 'SubCategoryID'+ rowID;
+            var url = '{{ route('admin.yarn.count.drop-down-list') }}';
+            $.ajaxSetup({
+                headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' }
+            });
+            if(id)
+            {
+                $.ajax({
+                    url : url,
+                    // url : "/mtrims/public/api/admin/yarn-setup/not-deleted",
+                    data:{YarnTypeID: id},
+                    type : "POST",
+                    dataType : "json",
+                    success:function(data)
+                    {
+                        // console.log(data);
+                        if(data)
+                        {
+                            defaultKey = " ";
+                            defaultValue = "- - - Select - - -";
+                            $('select[id= "YarnCountName"]').empty();
+
+                            // if(data.id == i.city_id)
+                            // $('select[id= "YarnCountName"]').append('<option value="'+ defaultKey +'">'+ defaultValue +'</option>');
+                            $('select[id= "YarnCountName"]').append('<option value="Choose">Select State</option>');
+                            $.each(data, function(key,value){
+                                // console.log(key);
+                                $('select[id= "YarnCountName"]').append('<option value="'+ key +'">'+ value +'</option>');
+                            });
+                            $('#YarnCountName').trigger('chosen:updated');
+                        }
+
+
+                    }
+                });
+            }
+            else
+            {
+                defaultKey = " ";
+                defaultValue = "- - - Select - - -";
+
+                $('select[id= "YarnCountName"]').empty();
+                $('select[id= "YarnCountName"]').append('<option value="'+ defaultKey +'">'+ defaultValue +'</option>');
+                $('#YarnCountName').trigger('chosen:updated');
+            }
+        };
 
         function loadDataTable() {
             table.destroy();
@@ -189,13 +245,13 @@
                 },
                 columns: [
                     {
-                        data: "type",
+                        data: "type_name",
                         render: function (data) {
                             return "<p class = 'text-left'>"+ data +"</p>";
                         }
                     },
                     {
-                        data: "count",
+                        data: "yarn_count_name",
                         render: function (data) {
                             return "<p class = 'text-left'>"+ data +"</p>";
                         }
@@ -230,16 +286,16 @@
                         /*data: "id",*/
                         render: function(data, type, api_item) {
                             if(api_item.status === 'I'){
-                                return "<p class='text-center'><a title= 'Delete' class= 'DeleteTrims btn btn-danger btn-xs' data-id = "+ api_item.id +"><i class='fa fa-trash'></i></a>" +
+                                return "<p class='text-center'><a title= 'Delete' class= 'DeleteBuyer btn btn-danger btn-xs' data-id = "+ api_item.id +"><i class='fa fa-trash'></i></a>" +
                                     " &nbsp;" +
-                                    "<a title= 'Activate' class= 'ActivateTrims btn btn-success btn-xs' data-id = "+ api_item.id +"><i class='fa fa-arrow-circle-up'></i></a></p>"
+                                    "<a title= 'Activate' class= 'ActivateBuyer btn btn-success btn-xs' data-id = "+ api_item.id +"><i class='fa fa-arrow-circle-up'></i></a></p>"
                             }
                             else if(api_item.status === 'A'){
-                                return "<p class='text-center'><a title= 'Delete' class= 'DeleteTrims btn btn-danger btn-xs' data-id = "+ api_item.id +"><i class='fa fa-trash'></i></a>" +
+                                return "<p class='text-center'><a title= 'Delete' class= 'DeleteBuyer btn btn-danger btn-xs' data-id = "+ api_item.id +"><i class='fa fa-trash'></i></a>" +
                                     " &nbsp;" +
-                                    "<a title= 'Activate' class= 'DeActivateTrims btn btn-warning btn-xs' data-id = "+ api_item.id +"><i class='fa fa-arrow-circle-down'></i></a>" +
+                                    "<a title= 'Activate' class= 'DeActivateBuyer btn btn-warning btn-xs' data-id = "+ api_item.id +"><i class='fa fa-arrow-circle-down'></i></a>" +
                                     " &nbsp;" +
-                                    "<a title= 'Edit' class= 'EditTrims btn btn-warning btn-xs' data-id = "+ api_item.id +"><i class='fa fa-edit'></i></a></p>"
+                                    "<a title= 'Edit' class= 'EditBuyer btn btn-warning btn-xs' data-id = "+ api_item.id +"><i class='fa fa-edit'></i></a></p>"
                             }
                             else{
 
@@ -250,47 +306,6 @@
             });
         }
 
-        function getYarnCount(_yarn_type) {
-            var id = _yarn_type.value;
-            //var rowID = _category.getAttribute("data-id");
-           // var targetID = 'SubCategoryID'+ rowID;
-            var url = '{{ route('admin.yarn.count.drop-down-list') }}';
-            $.ajaxSetup({
-                headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' }
-            });
-            if(id)
-            {
-                $.ajax({
-                    url : url,
-                    data:{YarnTypeID: id},
-                    type : "POST",
-                    dataType : "json",
-                    success:function(data)
-                    {
-                        //console.log(data);
-                        defaultKey = " ";
-                        defaultValue = "- - - Select - - -";
-                        $('select[id= "YarnCountName"]').empty();
-
-                        $('select[id= "YarnCountName"]').append('<option value="'+ defaultKey +'">'+ defaultValue +'</option>');
-                        $.each(data, function(key,value){
-                            //console.log(data);
-                            $('select[id= "YarnCountName"]').append('<option value="'+ key +'">'+ value +'</option>');
-                        });
-                        $('#YarnCountName').trigger('chosen:updated');
-                    }
-                });
-            }
-            else
-            {
-                defaultKey = " ";
-                defaultValue = "- - - Select - - -";
-
-                $('select[id= "YarnCountName"]').empty();
-                $('select[id= "YarnCountName"]').append('<option value="'+ defaultKey +'">'+ defaultValue +'</option>');
-                $('#YarnCountName').trigger('chosen:updated');
-            }
-        };
 
         $(function(){
             $.ajaxSetup({
@@ -310,7 +325,7 @@
                     data:data,
                     success:function(data){
                         //console.log(data);
-                        if(id)
+                        if(data === '2')
                         {
                             swal({
                                 title: "Data Updated Successfully!",
@@ -318,11 +333,12 @@
                                 button: "Ok!",
                             }).then(function (value) {
                                 if(value){
-                                    window.location.href = window.location.href.replace(/#.*$/, '');
+                                    clearFormWithoutDelay("FactoryAdd");
+                                    loadDataTable();
                                 }
                             });
                         }
-                        else
+                        else if(data === '1')
                         {
                             swal({
                                 title: "Data Inserted Successfully!",
@@ -330,8 +346,18 @@
                                 button: "Ok!",
                             }).then(function (value) {
                                 if(value){
-                                    window.location.href = window.location.href.replace(/#.*$/, '');
+                                    clearFormWithoutDelay("FactoryAdd");
+                                    loadDataTable();
                                 }
+                            });
+                        }
+                        else{
+                            swal({
+                                title: "Data Not Saved!",
+                                text: "Please Check Your Data!",
+                                icon: "error",
+                                button: "Ok!",
+                                className: "myClass",
                             });
                         }
                     },
@@ -351,7 +377,7 @@
         });
 
 
-        $('#advanced-usage').on('click',".EditFactory", function(){
+        $('#advanced-usage').on('click',".EditBuyer", function(){
             var button = $(this);
             var FactoryID = button.attr("data-id");
             //$('body').animate({scrollTop:0}, 400);
@@ -370,6 +396,9 @@
                     $('input[name=color]').val(data.color);
                     $('input[name=remarks]').val(data.remarks);
                     $('input[name=id]').val(data.id).change();
+                    $('select[name=yarn_count]').val(data.yarn_count).change();
+                    $('select[name=yarn_type]').val(data.yarn_type).change();
+                    moveToTop();
                 },
                 error:function(error){
                     swal({
@@ -383,7 +412,8 @@
             })
 
         });
-        /*$('#advanced-usage').on('click',".ActivateBuyer", function(){
+
+        $('#advanced-usage').on('click',".ActivateBuyer", function(){
             var button = $(this);
             var id = button.attr("data-id");
             var url = '{{ route('admin.yarn.setup.activate') }}';
@@ -403,20 +433,30 @@
                         success:function(data){
                             if(data){
                                 //console.log(data);
-                                swal({
-                                    title: "Operation Successful!",
-                                    icon: "success",
-                                    button: "Ok!",
-                                }).then(function (value) {
-                                    if(value){
-                                        //console.log(value);
-                                        window.location.href = window.location.href.replace(/#.*$/, '');
-                                    }
-                                });
+                                if(data === '2'){
+                                    swal({
+                                        title: "Operation Successful!",
+                                        icon: "success",
+                                        button: "Ok!",
+                                    }).then(function (value) {
+                                        if(value){
+                                            loadDataTable();
+                                        }
+                                    });
+                                }
+                                else{
+                                    swal({
+                                        title: "Operation Unsuccessful!",
+                                        text: "Something wrong happened please check!",
+                                        icon: "error",
+                                        button: "Ok!",
+                                        className: "myClass",
+                                    });
+                                }
+
                             }
                         },
                         error:function(error){
-                            console.log(error);
                             swal({
                                 title: "Operation Unsuccessful!",
                                 text: "Something wrong happened please check!",
@@ -433,7 +473,7 @@
         $('#advanced-usage').on('click',".DeActivateBuyer", function(){
             var button = $(this);
             var id = button.attr("data-id");
-            var url = '{{ route('admin.yarn.count.de-activate') }}';
+            var url = '{{ route('admin.yarn.setup.de-activate') }}';
             swal({
                 title: 'Are you sure?',
                 text: 'This yarn will be in-active!',
@@ -449,17 +489,26 @@
                         data:{id: id, _token: '{{csrf_token()}}'},
                         success:function(data){
                             if(data){
-                                //console.log(data);
-                                swal({
-                                    title: "Operation Successful!",
-                                    icon: "success",
-                                    button: "Ok!",
-                                }).then(function (value) {
-                                    if(value){
-                                        console.log(value);
-                                        window.location.href = window.location.href.replace(/#.*$/, '');
-                                    }
-                                });
+                                if(data === '2'){
+                                    swal({
+                                        title: "Operation Successful!",
+                                        icon: "success",
+                                        button: "Ok!",
+                                    }).then(function (value) {
+                                        if(value){
+                                            loadDataTable();
+                                        }
+                                    });
+                                }
+                                else{
+                                    swal({
+                                        title: "Operation Unsuccessful!",
+                                        text: "Something wrong happened please check!",
+                                        icon: "error",
+                                        button: "Ok!",
+                                        className: "myClass",
+                                    });
+                                }
                             }
                         },
                         error:function(error){
@@ -480,10 +529,10 @@
         $('#advanced-usage').on('click',".DeleteBuyer", function(){
             var button = $(this);
             var id = button.attr("data-id");
-            var url = '{{ route('admin.yarn.count.delete') }}';
+            var url = '{{ route('admin.yarn.setup.delete') }}';
             swal({
                 title: 'Are you sure?',
-                text: 'This yarn setup will be removed permanently!',
+                text: 'This yarn will be removed permanently!',
                 icon: 'warning',
                 buttons: ["Cancel", "Yes!"],
             }).then(function(value) {
@@ -496,21 +545,29 @@
                         data:{id: id, _token: '{{csrf_token()}}'},
                         success:function(data){
                             if(data){
-                                //console.log(data);
-                                swal({
-                                    title: "Operation Successful!",
-                                    icon: "success",
-                                    button: "Ok!",
-                                }).then(function (value) {
-                                    if(value){
-                                        //console.log(value);
-                                        window.location.href = window.location.href.replace(/#.*$/, '');
-                                    }
-                                });
+                                if(data === '2'){
+                                    swal({
+                                        title: "Operation Successful!",
+                                        icon: "success",
+                                        button: "Ok!",
+                                    }).then(function (value) {
+                                        if(value){
+                                            loadDataTable();
+                                        }
+                                    });
+                                }
+                                else{
+                                    swal({
+                                        title: "Operation Unsuccessful!",
+                                        text: "Something wrong happened please check!",
+                                        icon: "error",
+                                        button: "Ok!",
+                                        className: "myClass",
+                                    });
+                                }
                             }
                         },
                         error:function(error){
-                            console.log(error);
                             swal({
                                 title: "Operation Unsuccessful!",
                                 text: "Something wrong happened please check!",
@@ -522,7 +579,8 @@
                     })
                 }
             });
-        });*/
+        });
+        
 
         function refresh()
         {
