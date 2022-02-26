@@ -18,6 +18,14 @@
             background-color:#105e7d;
         }
     </style>
+
+    <script type="text/javascript">
+        function yarnCount()
+        {
+            alert('kk');
+        }
+    </script>
+
     <div class="page page-dashboard">
         <div class="pageheader ">
             <h2>Yarns Types <span>Yarn List</span></h2>
@@ -54,11 +62,11 @@
                                 <div class="col-md-3 no-padding">
                                     <div class="form-group">
                                         <label for="YarnTypeName" class="control-label">Select Yarn Type</label>
-                                        <select class="form-control select2" name="yarn_type"  id="YarnTypeName" style="width: 100% !important; height: 100% !important;" onchange="javascript:getYarnCount(this)" required>
+                                        <select class="form-control select2" name="yarn_type" id="YarnTypeName" style="width: 100% !important; height: 100% !important;" onchange="javascript:getYarnCount(this)" required>
                                             <option value="" selected="selected">- - - Select - - -</option>
                                                 @if(!empty($types))
                                                     @foreach($types as $type)
-                                                        <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                                        <option value="{{ $type->id }}">{{ $type->name }} </option>
                                                     @endforeach
                                                 @endif
                                         </select>
@@ -67,7 +75,7 @@
                                 <div class="col-md-3 no-padding">
                                     <div class="form-group">
                                         <label for="YarnCountName" class="control-label">Select Yarn Count</label>
-                                        <select class="form-control select2" name="yarn_count"  id="YarnCountName" style="width: 100%;" required>
+                                        <select class="form-control select2" name="yarn_count" id="YarnCountName" style="width: 100%;" required>
                                             <option value="" selected="selected">- - - Select - - -</option>
                                                 @if(!empty($counts))
                                                     @foreach($counts as $type)
@@ -167,58 +175,54 @@
 @section('pageScripts')
 <script src="{{ asset('/js/common.js') }}"></script>
     <script>
-
+        
         var table = $('#advanced-usage').DataTable({
             "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
         });
+        let _edit_mode = 0;
+        let _current_count_id = 0;
 
         $(window).load(function(){
             loadDataTable();
             $('.select2').select2();
         });
-
+        
+        
         function getYarnCount(_yarn_type) {
             var id = _yarn_type.value;
-            
-            var clicked = false
-                document.getElementById('button').addEventListener("click", function() {
-                    clicked = true
-                });
-            
-
+            // alert(id);
             //var rowID = _category.getAttribute("data-id");
            // var targetID = 'SubCategoryID'+ rowID;
             var url = '{{ route('admin.yarn.count.drop-down-list') }}';
             $.ajaxSetup({
                 headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' }
             });
+
             if(id)
             {
                 $.ajax({
                     url : url,
-                    // url : "/mtrims/public/api/admin/yarn-setup/not-deleted",
                     data:{YarnTypeID: id},
                     type : "POST",
                     dataType : "json",
                     success:function(data)
                     {
-                        // console.log(data);
+                       
                         if(data)
                         {
                             defaultKey = " ";
                             defaultValue = "- - - Select - - -";
                             $('select[id= "YarnCountName"]').empty();
 
-                            // if(data.id == i.city_id)
-                            // $('select[id= "YarnCountName"]').append('<option value="'+ defaultKey +'">'+ defaultValue +'</option>');
-                            $('select[id= "YarnCountName"]').append('<option value="Choose">Select State</option>');
-                            $.each(data, function(key,value){
-                                // console.log(key);
+                            $('select[id= "YarnCountName"]').append('<option value="'+ defaultKey +'">'+ defaultValue +'</option>');                            
+                            $.each(data, function(key,value){                               
                                 $('select[id= "YarnCountName"]').append('<option value="'+ key +'">'+ value +'</option>');
                             });
                             $('#YarnCountName').trigger('chosen:updated');
+                            if(_edit_mode === 1){
+                                $('select[name=yarn_count]').val(_current_count_id).change();
+                            }
                         }
-
 
                     }
                 });
@@ -334,6 +338,8 @@
                             }).then(function (value) {
                                 if(value){
                                     clearFormWithoutDelay("FactoryAdd");
+                                    _edit_mode = 0;
+                                    _current_count_id = 0;
                                     loadDataTable();
                                 }
                             });
@@ -378,7 +384,7 @@
 
 
         $('#advanced-usage').on('click',".EditBuyer", function(){
-            var button = $(this);
+            var button = $(this);  
             var FactoryID = button.attr("data-id");
             //$('body').animate({scrollTop:0}, 400);
             window.scrollTo({
@@ -398,6 +404,8 @@
                     $('input[name=id]').val(data.id).change();
                     $('select[name=yarn_count]').val(data.yarn_count).change();
                     $('select[name=yarn_type]').val(data.yarn_type).change();
+                    _edit_mode = 1;
+                    _current_count_id = parseInt(data.yarn_count);
                     moveToTop();
                 },
                 error:function(error){
@@ -412,6 +420,7 @@
             })
 
         });
+
 
         $('#advanced-usage').on('click',".ActivateBuyer", function(){
             var button = $(this);
@@ -593,6 +602,7 @@
             $('#iconChange').find('i').addClass('fa-edit');
 
         }
+
     </script>
 @endsection()
 
