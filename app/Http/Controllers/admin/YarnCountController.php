@@ -11,9 +11,13 @@ use Illuminate\Support\Facades\DB;
 class YarnCountController extends Controller
 {
     public function index(){
-        $types = YarnType::orderBy('name')->where('status', '!=', 'D')->get();
-        $counts = YarnCount::orderBy('name')->where('status', '!=', 'D')->get();
-        return view('admin.yarn.count', compact('types', 'counts'));
+        $types = YarnType::orderBy('name')->where('status', '=', 'A')->get();
+        return view('admin.yarn.count', compact('types'));
+    }
+
+    public function getAllNotDeletedYarnCounts()
+    {
+        return YarnCount::getAllNotDeletedYarnCounts();
     }
 
     public function saveCount(Request $request){
@@ -21,30 +25,12 @@ class YarnCountController extends Controller
         $id = $request->get('id');
         if(!empty($id))
         {
-            $supplier = YarnCount::find($request->id);
-            if($supplier != null){
-                $supplier->name = $request->name;
-                $supplier->yarn_type_id = $request->yarn_type;
-                if($supplier->save())
-                {
-                    return 'Saved';
-                }
-
-            }
-            return 'Updated';
+            return YarnCount::updateYarnCount($request);
         }
         else
         {
-            $supplier = new YarnCount();
-            $supplier->name = $request->name;
-            $supplier->yarn_type_id = $request->yarn_type;
-            $supplier->status = 'A';
-            if($supplier->save())
-            {
-                return 'Saved';
-            }
+            return YarnCount::insertYarnCount($request);
         }
-        return 'BR';
     }
 
     public function updateCount(Request $req)
@@ -56,22 +42,11 @@ class YarnCountController extends Controller
 
         $supplierData = array(
             'id' => $supplier->id,
-            'yarn_type_id' => $supplier->yarn_type,
+            'yarn_type_id' => $supplier->yarn_type_id,
             'name' => $supplier->name
 
         );
         return $supplierData;
-    }
-
-    public function fullDelete(Request $request)
-    {
-        $supplier = YarnCount::find($request->id);
-        $supplier->status = 'D';
-        if($supplier->save()){
-            return true;
-        }
-        return 'Error';
-
     }
 
     /* public function blackList(Request $request)
@@ -87,31 +62,29 @@ class YarnCountController extends Controller
 
     public function activate(Request $request)
     {
-        $supplier = YarnCount::find($request->id);
-        $supplier->status = 'A';
-        if($supplier->save()){
-            return true;
-        }
-        return 'Error';
-
+        return YarnCount::activateYarnCount($request);
     }
 
     public function inActivate(Request $request)
     {
-        $supplier = YarnCount::find($request->id);
-        $supplier->status = 'IN';
-        if($supplier->save()){
-            return true;
-        }
-        return 'Error';
+        return YarnCount::inActivateYarnCount($request);
+    }
 
+    public function fullDelete(Request $request)
+    {
+        return YarnCount::deleteYarnCount($request);
     }
 
     public function dropDownList(Request $req)
     {
         //$status = 'A';
         $status = 'A';
-        $DropDownData = DB::table("yarn_counts")->where("yarn_type_id",$req->YarnTypeID)->where("status", $status)->pluck("name","id");
+        $DropDownData = DB::table("yarn_counts")
+            ->where("yarn_type_id",$req->YarnTypeID)
+            ->where("status", $status)->pluck("name","id");
         return json_encode($DropDownData);
     }
+
+
+
 }

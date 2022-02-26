@@ -9,8 +9,13 @@ use Illuminate\Http\Request;
 class YarnTypeController extends Controller
 {
     public function index(){
-        $types = YarnType::orderBy('name')->where('status', '!=', 'D')->get();
-        return view('admin.yarn.type', compact('types'));
+        // $types = YarnType::orderBy('name')->where('status', '!=', 'D')->get();
+        return view('admin.yarn.type');
+    }
+
+    public function getAllNotDeletedYarnTyps()
+    {
+        return YarnType::getAllNotDeletedYarnTyps();
     }
 
     public function saveType(Request $request){
@@ -18,28 +23,12 @@ class YarnTypeController extends Controller
         $id = $request->get('id');
         if(!empty($id))
         {
-            $supplier = YarnType::find($request->id);
-            if($supplier != null){
-                $supplier->name = $request->name;
-                if($supplier->save())
-                {
-                    return 'Saved';
-                }
-
-            }
-            return 'Updated';
+            return YarnType::updateYarnType($request);
         }
         else
         {
-            $supplier = new YarnType();
-            $supplier->name = $request->name;
-            $supplier->status = 'A';
-            if($supplier->save())
-            {
-                return 'Saved';
-            }
+            return YarnType::insertYarnType($request);
         }
-        return 'BR';
     }
 
     public function updateType(Request $req)
@@ -56,16 +45,6 @@ class YarnTypeController extends Controller
         return $supplierData;
     }
 
-    public function fullDelete(Request $request)
-    {
-        $supplier = YarnType::find($request->id);
-        $supplier->status = 'D';
-        if($supplier->save()){
-            return true;
-        }
-        return 'Error';
-
-    }
 
    /* public function blackList(Request $request)
     {
@@ -80,23 +59,18 @@ class YarnTypeController extends Controller
 
     public function activate(Request $request)
     {
-        $supplier = YarnType::find($request->id);
-        $supplier->status = 'A';
-        if($supplier->save()){
-            return true;
-        }
-        return 'Error';
-
+        return YarnType::activateYarnType($request);
     }
 
     public function inActivate(Request $request)
     {
-        $supplier = YarnType::find($request->id);
-        $supplier->status = 'IN';
-        if($supplier->save()){
-            return true;
-        }
-        return 'Error';
-
+        return YarnType::inActivateYarnType($request);
     }
+
+    public function fullDelete(Request $request)
+    {
+        return YarnType::deleteYarnType($request);
+    }
+
+
 }
