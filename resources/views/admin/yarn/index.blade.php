@@ -19,13 +19,6 @@
         }
     </style>
 
-    <script type="text/javascript">
-        function yarnCount()
-        {
-            alert('kk');
-        }
-    </script>
-
     <div class="page page-dashboard">
         <div class="pageheader ">
             <h2>Yarns Types <span>Yarn List</span></h2>
@@ -35,7 +28,7 @@
                         <a href="{{route('admin.home')}}"><i class="fa fa-home"></i> Administration</a>
                     </li>
                     <li>
-                        <a href="{{route('admin.yarn.count')}}"> Yarn Setup</a>
+                        <a href="{{route('admin.yarn.setup')}}"> Yarn Setup</a>
                     </li>
                 </ul>
             </div>

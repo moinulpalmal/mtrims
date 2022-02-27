@@ -190,6 +190,15 @@ Route::middleware('auth')->group(function (){
         Route::delete('de-activate-trims-type','TrimsTypeController@deActivateTrims')->name('de-activate-trims-type');
         //trims type setup
 
+        //bank setup
+        Route::get('bank/setup','BankController@index')->name('bank.setup');
+        Route::post('bank/setup/save','BankController@saveBank')->name('bank.setup.save');
+        Route::post('bank/setup/edit','BankController@updateBank')->name('bank.setup.edit');
+        Route::delete('bank/setup/activate','BankController@activate')->name('bank.setup.activate');
+        Route::delete('bank/setup/de-activate','BankController@inActivate')->name('bank.setup.de-activate');
+        Route::delete('bank/setup/delete','BankController@fullDelete')->name('bank.setup.delete');
+        //bank setup
+
     });
 
     Route::group(['as' => 'admin.','prefix' => 'admin','namespace' => 'Admin','middleware' => ['auth']] , function(){
