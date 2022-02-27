@@ -1,6 +1,6 @@
 @extends('layouts.admin.admin-master')
 @section('title')
-    Yarn Type
+    Bank Branch
 @endsection
 @section('content')
     <style type="text/css">
@@ -20,14 +20,14 @@
     </style>
     <div class="page page-dashboard">
         <div class="pageheader ">
-            <h2>Yarns Types <span>Yarn Type List</span></h2>
+            <h2>Bank Branch <span>Bank Branch List</span></h2>
             <div class="page-bar">
                 <ul class="page-breadcrumb">
                     <li>
                         <a href="{{route('admin.home')}}"><i class="fa fa-home"></i> Administration</a>
                     </li>
                     <li>
-                        <a href="{{route('admin.yarn.type')}}"> Yarn Type</a>
+                        <a href="{{route('admin.yarn.type')}}">Bank Branch</a>
                     </li>
                 </ul>
             </div>
@@ -42,7 +42,7 @@
                     <section class="tile">
                         <!-- tile header -->
                         <div class="tile-header dvd dvd-btm">
-                            <h1 class="custom-font"><strong>Yarn Type</strong> Insert/Update Form</h1>
+                            <h1 class="custom-font"><strong>Bank Branch</strong> Insert/Update Form</h1>
                             <a><button id="iconChange" class="pull-right btn-info btn-xs" type="submit"><i class="fa fa-check"></i></button></a>
                         </div>
                         <!-- /tile header -->
@@ -50,11 +50,41 @@
                         <div class="tile-body">
                             <input type="hidden" id="HiddenFactoryID" name="id">
                             <div class="row" style="padding: 0px 15px;">
-                                <div class="col-md-4 no-padding"></div>
+                                <div class="col-md-3 no-padding">
+                                    <div class="form-group">
+                                        <label for="BankName" class="control-label">Select Bank</label>
+                                        <select class="form-control select2" name="bank_name"  id="BankName" style="width: 100%;" required>
+                                            <option value="" selected="selected">- - - Select - - -</option>
+                                                @if(!empty($banks))
+                                                    @foreach($banks as $bank)
+                                                        <option value="{{ $bank->id }}">{{ $bank->name }}</option>
+                                                    @endforeach
+                                                @endif
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 no-padding">
+                                    <div class="form-group">
+                                        <label for="BranchName" class="control-label">Bank Branch Name</label>
+                                        <input type="text" class="form-control" name="name" id="BranchName" placeholder="Enter Bank Branch Name" required="">
+                                    </div>
+                                </div>
                                 <div class="col-md-4 no-padding">
                                     <div class="form-group">
-                                        <label for="YarnTypeName" class="control-label">Yarn Type Name</label>
-                                        <input type="text" class="form-control" name="name" id="YarnTypeName" placeholder="Enter type name" required="">
+                                        <label for="AddressOne" class="control-label">Address One</label>
+                                        <input type="text" class="form-control" name="address_one" id="AddressOne" placeholder="Enter Address One" required="">
+                                    </div>
+                                </div>
+                                <div class="col-md-3 no-padding">
+                                    <div class="form-group">
+                                        <label for="AddressTwo" class="control-label">Address Two</label>
+                                        <input type="text" class="form-control" name="address_two" id="AddressOne" placeholder="Enter Address Two" required="">
+                                    </div>
+                                </div>
+                                <div class="col-md-4 no-padding">
+                                    <div class="form-group">
+                                        <label for="Remarks" class="control-label">Remarks</label>
+                                        <input type="text" class="form-control" name="remarks" id="Remarks" placeholder="Enter remarks">
                                     </div>
                                 </div>
                                 <div class="col-md-4 no-padding"></div>
@@ -72,7 +102,7 @@
                 <section class="tile">
                     <!-- tile header -->
                     <div class="tile-header dvd dvd-btm">
-                        <h1 class="custom-font"><strong>Yarn Type</strong> List</h1>
+                        <h1 class="custom-font"><strong>Bank Branch</strong> List</h1>
                         <ul class="controls">
                             <li class="dropdown">
                                 <a role="button" tabindex="0" class="dropdown-toggle settings" data-toggle="dropdown">
@@ -103,8 +133,10 @@
                             <table class="table table-hover table-bordered table-condensed table-responsive" id="advanced-usage">
                                 <thead>
                                 <tr style="background-color: #1693A5; color: white;">
-                                    {{-- <th class="text-center">Sl No.</th> --}}
-                                    <th class="text-center">Type</th>
+                                    <th class="text-center">Bank</th>
+                                    <th class="text-center">Branch</th>
+                                    <th class="text-center">Address One</th>
+                                    <th class="text-center">Address Two</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Action</th>
                                 </tr>
@@ -141,23 +173,52 @@
 
         $(window).load(function(){
             loadDataTable();
+            $('.select2').select2();
         });
 
         function loadDataTable() {
             table.destroy();
             var free_table = '<tr><td class="text-center" colspan="4">--- Please Wait... Loading Data  ----</td></tr>';
             $('#advanced-usage').find('tbody').append(free_table);
-           // $('tbody').html(free_table);
             table = $("#advanced-usage").DataTable({
                 ajax: {
-                    url: "/mtrims/public/api/admin/yarn-type/not-deleted",
+                    url: "/mtrims/public/api/admin/bank-setup/not-deleted",
                     dataSrc: ""
                 },
                 columns: [
                     {
-                        data: "name",
+                        data: "bank_name",
                         render: function (data) {
                             return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "name",
+                        render: function (data) {
+                            return "<p class = 'text-center'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "address_one",
+                        render: function (data) {
+                            return "<p class = 'text-center'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "address_two",
+                        render: function (data) {
+                            return "<p class = 'text-center'>"+ data +"</p>";
+                        }
+                    },
+
+                    {
+                        render: function (data, type, val) {
+                            if(val.remarks === null){
+                                return "<p class = 'text-right'></p>";
+                            }
+                            else{
+                                return "<p class = 'text-right'>"+ val.remarks +"</p>";
+                            }
                         }
                     },
                     {
@@ -186,7 +247,7 @@
                                     " &nbsp;" +
                                     "<a title= 'Activate' class= 'DeActivateBuyer btn btn-warning btn-xs' data-id = "+ api_item.id +"><i class='fa fa-arrow-circle-down'></i></a>" +
                                     " &nbsp;" +
-                                    "<a title= 'Edit' class= 'EditFactory btn btn-warning btn-xs' data-id = "+ api_item.id +"><i class='fa fa-edit'></i></a></p>"
+                                    "<a title= 'Edit' class= 'EditBuyer btn btn-warning btn-xs' data-id = "+ api_item.id +"><i class='fa fa-edit'></i></a></p>"
                             }
                             else{
 
@@ -205,15 +266,15 @@
                 e.preventDefault();
                 var data = $(this).serialize();
                 var id = $('#HiddenFactoryID').val();
-                console.log(data);
-                var url = '{{ route('admin.yarn.type.save') }}';
-                //console.log(data);
+                // console.log(data);
+                var url = '{{ route('admin.bank.branch.save') }}';
+                // console.log(url);
+                // return;
                 $.ajax({
                     url: url,
                     method:'POST',
                     data:data,
                     success:function(data){
-                        //console.log(data);
                         if(data === '2')
                         {
                             swal({

@@ -33,8 +33,8 @@
                                     <a role="button" tabindex="0"><i class="fa fa-bank"></i> <span>Bank</span></a>
                                     <ul>
                                         <li class="{{ (request()->is('admin/bank/setup')) ? 'active' : '' }}" ><a href="{{route('admin.bank.setup')}}"><i class="fa fa-caret-right"></i> Bank Setup</a></li>
-                                        {{-- <li class="{{ (request()->is('admin/yarn/count')) ? 'active' : '' }}" ><a href="{{route('admin.yarn.count')}}"><i class="fa fa-caret-right"></i> Yarn Count</a></li>
-                                        <li class="{{ (request()->is('admin/yarn/setup')) ? 'active' : '' }}" ><a href="{{route('admin.yarn.setup')}}"><i class="fa fa-caret-right"></i> Yarn Setup</a></li> --}}
+                                        <li class="{{ (request()->is('admin/bank/branch')) ? 'active' : '' }}" ><a href="{{route('admin.bank.branch')}}"><i class="fa fa-caret-right"></i> Bank Branch</a></li>
+                                        {{-- <li class="{{ (request()->is('admin/yarn/setup')) ? 'active' : '' }}" ><a href="{{route('admin.yarn.setup')}}"><i class="fa fa-caret-right"></i> Yarn Setup</a></li> --}}
                                     </ul>
                                 </li>
                                 <li class="{{ (request()->is('admin/user*')) ? 'active open' : '' }}">

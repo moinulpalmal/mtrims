@@ -72,7 +72,7 @@
                                 <div class="col-md-5 no-padding">
                                     <div class="form-group">
                                         <label for="Remarks" class="control-label">Remarks</label>
-                                        <input type="text" class="form-control" name="remarks" id="Remarks" placeholder="Enter remarks" required="">
+                                        <input type="text" class="form-control" name="remarks" id="Remarks" placeholder="Enter remarks">
                                     </div>
                                 </div>
                             </div>
@@ -89,7 +89,7 @@
                 <section class="tile">
                     <!-- tile header -->
                     <div class="tile-header dvd dvd-btm">
-                        <h1 class="custom-font"><strong>Yarn</strong> List</h1>
+                        <h1 class="custom-font"><strong>Bank</strong> List</h1>
                         <ul class="controls">
                             <li class="dropdown">
                                 <a role="button" tabindex="0" class="dropdown-toggle settings" data-toggle="dropdown">
@@ -125,7 +125,7 @@
                                     <th class="text-center">Swift Code</th>
                                     <th class="text-center">Remarks</th>
                                     <th class="text-center">Status</th>
-                                    <th width="85" class="text-center">Action</th>
+                                    <th class="text-center">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -157,8 +157,6 @@
         var table = $('#advanced-usage').DataTable({
             "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
         });
-        let _edit_mode = 0;
-        let _current_count_id = 0;
 
         $(window).load(function(){
             loadDataTable();
@@ -195,9 +193,13 @@
                     },
 
                     {
-                        data: "remarks",
-                        render: function (data) {
-                            return "<p class = 'text-left'>"+ data +"</p>";
+                        render: function (data, type, val) {
+                            if(val.remarks === null){
+                                return "<p class = 'text-right'></p>";
+                            }
+                            else{
+                                return "<p class = 'text-right'>"+ val.remarks +"</p>";
+                            }
                         }
                     },
                     {
