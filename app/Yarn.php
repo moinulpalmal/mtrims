@@ -49,6 +49,22 @@ class Yarn extends Model
         return '0';
     }
 
+    public static function getBankDetail($request){
+        $supplier =  Yarn::find($request->id);
+
+        if($supplier == null)
+            return null;
+
+        $yarnData = array(
+            'id' => $supplier->id,
+            'yarn_type' => $supplier->unit_id,
+            'yarn_count' => $supplier->yarn_count_id,
+            'color' => $supplier->color,
+            'remarks' => $supplier->remarks,
+        );
+        return $yarnData;
+    }
+
     public static function activateYarn($request){
         $supplier = Yarn::find($request->id);
         $supplier->status = 'A';

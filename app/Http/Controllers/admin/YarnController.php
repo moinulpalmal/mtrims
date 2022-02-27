@@ -37,19 +37,7 @@ class YarnController extends Controller
 
     public function updateYarn(Request $req)
     {
-        $supplier =  Yarn::find($req->id);
-
-        if($supplier == null)
-            return null;
-
-        $yarnData = array(
-            'id' => $supplier->id,
-            'yarn_type' => $supplier->unit_id,
-            'yarn_count' => $supplier->yarn_count_id,
-            'color' => $supplier->color,
-            'remarks' => $supplier->remarks,
-        );
-        return $yarnData;
+        return Yarn::getBankDetail($req);
     }
 
     public function activate(Request $request)
