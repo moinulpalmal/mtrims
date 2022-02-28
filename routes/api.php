@@ -31,5 +31,5 @@ Route::get('admin/yarn-type/not-deleted','admin\YarnTypeController@getAllNotDele
 Route::get('admin/yarn-count/not-deleted','admin\YarnCountController@getAllNotDeletedYarnCounts');
 Route::get('admin/yarn-setup/not-deleted','admin\YarnController@getAllNotDeletedYarns');
 Route::get('admin/bank-setup/not-deleted','admin\BankController@getAllNotDeletedBanks');
-Route::get('admin/bank-branch/not-deleted','admin\BankBranchController@getAllNotDeletedBankBranchs');
+Route::get('admin/bank-branch/not-deleted','admin\BankBranchController@getAllNotDeletedBankBranches');
 Route::get('production/section-setup/not-deleted','Production\SectionController@getAllNotDeletedSections');

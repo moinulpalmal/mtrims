@@ -8,17 +8,18 @@ use Illuminate\Support\Facades\DB;
 
 class BankBranch extends Model
 {
-    public static function getAllNotDeletedBanks(){
+    public static function getAllNotDeletedBankBranches(){
         return DB::table('bank_branches')
-            ->select('*')
-            ->where('status', '!=', 'D')
+            ->join('banks','banks.id', '=', 'bank_branches.bank_id')
+            ->select('banks.name AS bank_name','bank_branches.*')
+            ->where('bank_branches.status', '!=', 'D')
             ->orderBy('name')
             ->get();
     }
 
     public static function insertBankBranch($request){
         $supplier = new BankBranch();
-        $supplier->bank_id = $request->name;
+        $supplier->bank_id = $request->bank_name;
         $supplier->name = $request->name;
         $supplier->address_one = $request->address_one;
         $supplier->address_two = $request->address_two;
@@ -35,6 +36,7 @@ class BankBranch extends Model
     public static function updateBankBranch($request){
         $supplier = BankBranch::find($request->id);
         if($supplier != null){
+            $supplier->bank_id = $request->bank_name;
             $supplier->name = $request->name;
             $supplier->address_one = $request->address_one;
             $supplier->address_two = $request->address_two;
@@ -57,6 +59,7 @@ class BankBranch extends Model
 
         $bankbranchData = array(
             'id' => $supplier->id,
+            'bank_name' => $supplier->bank_id,
             'name' => $supplier->name,
             'address_one' => $supplier->address_one,
             'address_two' => $supplier->address_two,
