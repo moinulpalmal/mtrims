@@ -87,7 +87,7 @@
                                 <div class="col-md-4 no-padding">
                                     <div class="form-group">
                                         <label for="Remarks" class="control-label">Remarks</label>
-                                        <input type="text" class="form-control" name="remarks" id="Remarks" placeholder="Enter remarks" required="">
+                                        <input type="text" class="form-control" name="remarks" id="Remarks" placeholder="Enter remarks">
                                     </div>
                                 </div>
                             </div>
@@ -261,9 +261,13 @@
                     },
 
                     {
-                        data: "remarks",
-                        render: function (data) {
-                            return "<p class = 'text-left'>"+ data +"</p>";
+                        render: function (data, type, val) {
+                            if(val.remarks === null){
+                                return "<p class = 'text-right'></p>";
+                            }
+                            else{
+                                return "<p class = 'text-right'>"+ val.remarks +"</p>";
+                            }
                         }
                     },
                     {

@@ -236,7 +236,7 @@
                                         <th class="text-center">Contact Person Info</th>
                                         <th class="text-center">Address</th>
                                         <th class="text-center">Status</th>
-                                        <th width="108" class="text-center">Action</th>
+                                        <th class="text-center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>

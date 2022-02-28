@@ -199,6 +199,15 @@ Route::middleware('auth')->group(function (){
         Route::delete('bank/setup/delete','BankController@fullDelete')->name('bank.setup.delete');
         //bank setup
 
+        //bank branch setup
+        Route::get('bank/branch','BankBranchController@index')->name('bank.branch');
+        Route::post('bank/branch/save','BankBranchController@saveBankBranch')->name('bank.branch.save');
+        Route::post('bank/branch/edit','BankBranchController@updateBankBranch')->name('bank.branch.edit');
+        Route::delete('bank/branch/activate','BankBranchController@activate')->name('bank.branch.activate');
+        Route::delete('bank/branch/de-activate','BankBranchController@inActivate')->name('bank.branch.de-activate');
+        Route::delete('bank/branch/delete','BankBranchController@fullDelete')->name('bank.branch.delete');
+        //bank branch setup
+
     });
 
     Route::group(['as' => 'admin.','prefix' => 'admin','namespace' => 'Admin','middleware' => ['auth']] , function(){
