@@ -15,9 +15,9 @@ class BankBranchController extends Controller
         return view('admin.bank.branch',compact('banks'));
     }
 
-    public function getAllNotDeletedBankBranchs()
+    public function getAllNotDeletedBankBranches()
     {
-        return BankBranch::getAllNotDeletedBankBranchs();
+        return BankBranch::getAllNotDeletedBankBranches();
     }
 
     public function saveBankBranch(Request $request){
