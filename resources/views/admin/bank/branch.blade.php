@@ -83,7 +83,7 @@ Bank Branch
                                         <input type="text" class="form-control" name="address_two" id="AddressOne" placeholder="Enter Address Two" required="">
                                     </div>
                                 </div>
-                                <div class="col-md-4 no-padding">
+                                <div class="col-md-8 no-padding">
                                     <div class="form-group">
                                         <label for="Remarks" class="control-label">Remarks</label>
                                         <input type="text" class="form-control" name="remarks" id="Remarks" placeholder="Enter remarks">
@@ -204,13 +204,13 @@ Bank Branch
                     {
                         data: "address_one",
                         render: function (data) {
-                            return "<p class = 'text-center'>"+ data +"</p>";
+                            return "<p class = 'text-left'>"+ data +"</p>";
                         }
                     },
                     {
                         data: "address_two",
                         render: function (data) {
-                            return "<p class = 'text-center'>"+ data +"</p>";
+                            return "<p class = 'text-left'>"+ data +"</p>";
                         }
                     },
 
