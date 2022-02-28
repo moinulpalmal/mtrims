@@ -1,6 +1,6 @@
 @extends('layouts.admin.admin-master')
 @section('title')
-    Bank Branch
+Bank Branch
 @endsection
 @section('content')
     <style type="text/css">
@@ -18,6 +18,7 @@
             background-color:#105e7d;
         }
     </style>
+
     <div class="page page-dashboard">
         <div class="pageheader ">
             <h2>Bank Branch <span>Bank Branch List</span></h2>
@@ -27,7 +28,7 @@
                         <a href="{{route('admin.home')}}"><i class="fa fa-home"></i> Administration</a>
                     </li>
                     <li>
-                        <a href="{{route('admin.yarn.type')}}">Bank Branch</a>
+                        <a href="{{route('admin.bank.branch')}}">Bank Branch</a>
                     </li>
                 </ul>
             </div>
@@ -50,20 +51,21 @@
                         <div class="tile-body">
                             <input type="hidden" id="HiddenFactoryID" name="id">
                             <div class="row" style="padding: 0px 15px;">
-                                <div class="col-md-3 no-padding">
+
+                                <div class="col-md-4 no-padding">
                                     <div class="form-group">
                                         <label for="BankName" class="control-label">Select Bank</label>
-                                        <select class="form-control select2" name="bank_name"  id="BankName" style="width: 100%;" required>
+                                        <select class="form-control select2" name="bank_name" id="BankName" style="width: 100% !important; height: 100% !important;" required>
                                             <option value="" selected="selected">- - - Select - - -</option>
-                                                @if(!empty($banks))
-                                                    @foreach($banks as $bank)
-                                                        <option value="{{ $bank->id }}">{{ $bank->name }}</option>
-                                                    @endforeach
-                                                @endif
+                                            @if(!empty($banks))
+                                                @foreach($banks as $bank)
+                                                    <option value="{{ $bank->id }}">{{ $bank->name }}</option>
+                                                @endforeach
+                                            @endif
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-3 no-padding">
+                                <div class="col-md-4 no-padding">
                                     <div class="form-group">
                                         <label for="BranchName" class="control-label">Bank Branch Name</label>
                                         <input type="text" class="form-control" name="name" id="BranchName" placeholder="Enter Bank Branch Name" required="">
@@ -75,7 +77,7 @@
                                         <input type="text" class="form-control" name="address_one" id="AddressOne" placeholder="Enter Address One" required="">
                                     </div>
                                 </div>
-                                <div class="col-md-3 no-padding">
+                                <div class="col-md-4 no-padding">
                                     <div class="form-group">
                                         <label for="AddressTwo" class="control-label">Address Two</label>
                                         <input type="text" class="form-control" name="address_two" id="AddressOne" placeholder="Enter Address Two" required="">
@@ -137,6 +139,7 @@
                                     <th class="text-center">Branch</th>
                                     <th class="text-center">Address One</th>
                                     <th class="text-center">Address Two</th>
+                                    <th class="text-center">Remarks</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Action</th>
                                 </tr>
@@ -166,7 +169,7 @@
 @section('pageScripts')
 <script src="{{ asset('/js/common.js') }}"></script>
     <script>
-
+        
         var table = $('#advanced-usage').DataTable({
             "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
         });
@@ -182,7 +185,7 @@
             $('#advanced-usage').find('tbody').append(free_table);
             table = $("#advanced-usage").DataTable({
                 ajax: {
-                    url: "/mtrims/public/api/admin/bank-setup/not-deleted",
+                    url: "/mtrims/public/api/admin/bank-branch/not-deleted",
                     dataSrc: ""
                 },
                 columns: [
@@ -195,7 +198,7 @@
                     {
                         data: "name",
                         render: function (data) {
-                            return "<p class = 'text-center'>"+ data +"</p>";
+                            return "<p class = 'text-left'>"+ data +"</p>";
                         }
                     },
                     {
@@ -257,6 +260,7 @@
                 ]
             });
         }
+
 
         $(function(){
             $.ajaxSetup({
@@ -326,8 +330,9 @@
             })
         });
 
-        $('#advanced-usage').on('click',".EditFactory", function(){
-            var button = $(this);
+
+        $('#advanced-usage').on('click',".EditBuyer", function(){
+            var button = $(this);  
             var FactoryID = button.attr("data-id");
             //$('body').animate({scrollTop:0}, 400);
             window.scrollTo({
@@ -335,15 +340,20 @@
                 left: 0,
                 behavior: 'smooth'
             });
-            var url = '{{ route('admin.yarn.type.edit') }}';
+            var url = '{{ route('admin.bank.branch.edit') }}';
             $.ajax({
                 url: url,
                 method:'POST',
                 data:{id: FactoryID},
                 success:function(data){
-                    $('input[name=name]').val(data.name);
-
+                    //console.log(data);
                     $('input[name=id]').val(data.id);
+                    $('select[name=bank_name]').val(data.bank_name).change();
+                    $('input[name=name]').val(data.name);
+                    $('input[name=address_one]').val(data.address_one);
+                    $('input[name=address_two]').val(data.address_two);
+                    $('input[name=remarks]').val(data.remarks);
+                    moveToTop();
                 },
                 error:function(error){
                     swal({
@@ -357,13 +367,15 @@
             })
 
         });
+
+
         $('#advanced-usage').on('click',".ActivateBuyer", function(){
             var button = $(this);
             var id = button.attr("data-id");
-            var url = '{{ route('admin.yarn.type.activate') }}';
+            var url = '{{ route('admin.bank.branch.activate') }}';
             swal({
                 title: 'Are you sure?',
-                text: 'This yarn type will be a active one!',
+                text: 'This branch will be a active one!',
                 icon: 'warning',
                 buttons: ["Cancel", "Yes!"],
             }).then(function(value) {
@@ -397,10 +409,10 @@
                                         className: "myClass",
                                     });
                                 }
+
                             }
                         },
                         error:function(error){
-                            console.log(error);
                             swal({
                                 title: "Operation Unsuccessful!",
                                 text: "Something wrong happened please check!",
@@ -417,10 +429,10 @@
         $('#advanced-usage').on('click',".DeActivateBuyer", function(){
             var button = $(this);
             var id = button.attr("data-id");
-            var url = '{{ route('admin.yarn.type.de-activate') }}';
+            var url = '{{ route('admin.bank.branch.de-activate') }}';
             swal({
                 title: 'Are you sure?',
-                text: 'This yarn type will be in-active!',
+                text: 'This branch will be in-active!',
                 icon: 'warning',
                 buttons: ["Cancel", "Yes!"],
             }).then(function(value) {
@@ -433,7 +445,6 @@
                         data:{id: id, _token: '{{csrf_token()}}'},
                         success:function(data){
                             if(data){
-                                //console.log(data);
                                 if(data === '2'){
                                     swal({
                                         title: "Operation Successful!",
@@ -474,10 +485,10 @@
         $('#advanced-usage').on('click',".DeleteBuyer", function(){
             var button = $(this);
             var id = button.attr("data-id");
-            var url = '{{ route('admin.yarn.type.delete') }}';
+            var url = '{{ route('admin.bank.branch.delete') }}';
             swal({
                 title: 'Are you sure?',
-                text: 'This yarn type will be removed permanently!',
+                text: 'This branch will be removed permanently!',
                 icon: 'warning',
                 buttons: ["Cancel", "Yes!"],
             }).then(function(value) {
@@ -490,7 +501,6 @@
                         data:{id: id, _token: '{{csrf_token()}}'},
                         success:function(data){
                             if(data){
-                                //console.log(data);
                                 if(data === '2'){
                                     swal({
                                         title: "Operation Successful!",
@@ -514,7 +524,6 @@
                             }
                         },
                         error:function(error){
-                            console.log(error);
                             swal({
                                 title: "Operation Unsuccessful!",
                                 text: "Something wrong happened please check!",
@@ -527,6 +536,7 @@
                 }
             });
         });
+        
 
         function refresh()
         {
@@ -539,6 +549,6 @@
             $('#iconChange').find('i').addClass('fa-edit');
 
         }
+
     </script>
 @endsection()
-
