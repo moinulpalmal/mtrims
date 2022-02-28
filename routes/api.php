@@ -30,4 +30,6 @@ Route::get('admin/trims-type/not-deleted','admin\TrimsTypeController@getAllNotDe
 Route::get('admin/yarn-type/not-deleted','admin\YarnTypeController@getAllNotDeletedYarnTyps');
 Route::get('admin/yarn-count/not-deleted','admin\YarnCountController@getAllNotDeletedYarnCounts');
 Route::get('admin/yarn-setup/not-deleted','admin\YarnController@getAllNotDeletedYarns');
+Route::get('admin/bank-setup/not-deleted','admin\BankController@getAllNotDeletedBanks');
+Route::get('admin/bank-branch/not-deleted','admin\BankBranchController@getAllNotDeletedBankBranchs');
 Route::get('production/section-setup/not-deleted','Production\SectionController@getAllNotDeletedSections');

@@ -166,7 +166,7 @@
                                     <th class="text-center">Description</th>
                                     <th class="text-center">Remarks</th>
                                     <th class="text-center">Status</th>
-                                    <th width="80" class="text-center">Action</th>
+                                    <th class="text-center">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -271,9 +271,13 @@
                     },
 
                     {
-                        data: "remarks",
-                        render: function (data) {
-                            return "<p class = 'text-left'>"+ data +"</p>";
+                        render: function (data, type, val) {
+                            if(val.remarks === null){
+                                return "<p class = 'text-right'></p>";
+                            }
+                            else{
+                                return "<p class = 'text-right'>"+ val.remarks +"</p>";
+                            }
                         }
                     },
                     {

@@ -190,6 +190,24 @@ Route::middleware('auth')->group(function (){
         Route::delete('de-activate-trims-type','TrimsTypeController@deActivateTrims')->name('de-activate-trims-type');
         //trims type setup
 
+        //bank setup
+        Route::get('bank/setup','BankController@index')->name('bank.setup');
+        Route::post('bank/setup/save','BankController@saveBank')->name('bank.setup.save');
+        Route::post('bank/setup/edit','BankController@updateBank')->name('bank.setup.edit');
+        Route::delete('bank/setup/activate','BankController@activate')->name('bank.setup.activate');
+        Route::delete('bank/setup/de-activate','BankController@inActivate')->name('bank.setup.de-activate');
+        Route::delete('bank/setup/delete','BankController@fullDelete')->name('bank.setup.delete');
+        //bank setup
+
+        //bank branch setup
+        Route::get('bank/branch','BankBranchController@index')->name('bank.branch');
+        Route::post('bank/branch/save','BankBranchController@saveBankBranch')->name('bank.branch.save');
+        Route::post('bank/branch/edit','BankBranchController@updateBankBranch')->name('bank.branch.edit');
+        Route::delete('bank/branch/activate','BankBranchController@activate')->name('bank.branch.activate');
+        Route::delete('bank/branch/de-activate','BankBranchController@inActivate')->name('bank.branch.de-activate');
+        Route::delete('bank/branch/delete','BankBranchController@fullDelete')->name('bank.branch.delete');
+        //bank branch setup
+
     });
 
     Route::group(['as' => 'admin.','prefix' => 'admin','namespace' => 'Admin','middleware' => ['auth']] , function(){

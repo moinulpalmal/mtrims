@@ -1,6 +1,6 @@
 @extends('layouts.admin.admin-master')
 @section('title')
-    Yarn Setup
+    Bank Setup
 @endsection
 @section('content')
     <style type="text/css">
@@ -21,14 +21,14 @@
 
     <div class="page page-dashboard">
         <div class="pageheader ">
-            <h2>Yarns Types <span>Yarn List</span></h2>
+            <h2>Bank <span>Bank List</span></h2>
             <div class="page-bar">
                 <ul class="page-breadcrumb">
                     <li>
                         <a href="{{route('admin.home')}}"><i class="fa fa-home"></i> Administration</a>
                     </li>
                     <li>
-                        <a href="{{route('admin.yarn.setup')}}"> Yarn Setup</a>
+                        <a href="{{route('admin.yarn.setup')}}"> Bank Setup</a>
                     </li>
                 </ul>
             </div>
@@ -43,7 +43,7 @@
                     <section class="tile">
                         <!-- tile header -->
                         <div class="tile-header dvd dvd-btm">
-                            <h1 class="custom-font"><strong>Yarn Setup</strong> Insert/Update Form</h1>
+                            <h1 class="custom-font"><strong>Bank Setup</strong> Insert/Update Form</h1>
                             <a><button id="iconChange" class="pull-right btn-info btn-xs" type="submit"><i class="fa fa-check"></i></button></a>
                         </div>
                         <!-- /tile header -->
@@ -51,40 +51,25 @@
                         <div class="tile-body">
                             <input type="hidden" id="HiddenFactoryID" name="id">
                             <div class="row" style="padding: 0px 15px;">
-
                                 <div class="col-md-3 no-padding">
                                     <div class="form-group">
-                                        <label for="YarnTypeName" class="control-label">Select Yarn Type</label>
-                                        <select class="form-control select2" name="yarn_type" id="YarnTypeName" style="width: 100% !important; height: 100% !important;" onchange="javascript:getYarnCount(this)" required>
-                                            <option value="" selected="selected">- - - Select - - -</option>
-                                                @if(!empty($types))
-                                                    @foreach($types as $type)
-                                                        <option value="{{ $type->id }}">{{ $type->name }} </option>
-                                                    @endforeach
-                                                @endif
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 no-padding">
-                                    <div class="form-group">
-                                        <label for="YarnCountName" class="control-label">Select Yarn Count</label>
-                                        <select class="form-control select2" name="yarn_count" id="YarnCountName" style="width: 100%;" required>
-                                            <option value="" selected="selected">- - - Select - - -</option>
-                                                @if(!empty($counts))
-                                                    @foreach($counts as $type)
-                                                        <option value="{{ $type->id }}">{{ $type->name }}</option>
-                                                    @endforeach
-                                                @endif
-                                        </select>
+                                        <label for="BankName" class="control-label">Bank Name</label>
+                                        <input type="text" class="form-control" name="name" id="BankName" placeholder="Enter Bank Name" required="">
                                     </div>
                                 </div>
                                 <div class="col-md-2 no-padding">
                                     <div class="form-group">
-                                        <label for="YarnColorName" class="control-label">Yarn Color</label>
-                                        <input type="text" class="form-control" name="color" id="YarnColorName" placeholder="Enter yarn color" required="">
+                                        <label for="BankShortName" class="control-label">Short Name</label>
+                                        <input type="text" class="form-control" name="short_name" id="BankShortName" placeholder="Bank Short Name" required="">
                                     </div>
                                 </div>
-                                <div class="col-md-4 no-padding">
+                                <div class="col-md-2 no-padding">
+                                    <div class="form-group">
+                                        <label for="SwiftCode" class="control-label">Swift Code</label>
+                                        <input type="text" class="form-control" name="swift_code" id="SwiftCode" placeholder="Enter Swift Code" required="">
+                                    </div>
+                                </div>
+                                <div class="col-md-5 no-padding">
                                     <div class="form-group">
                                         <label for="Remarks" class="control-label">Remarks</label>
                                         <input type="text" class="form-control" name="remarks" id="Remarks" placeholder="Enter remarks">
@@ -104,7 +89,7 @@
                 <section class="tile">
                     <!-- tile header -->
                     <div class="tile-header dvd dvd-btm">
-                        <h1 class="custom-font"><strong>Yarn</strong> List</h1>
+                        <h1 class="custom-font"><strong>Bank</strong> List</h1>
                         <ul class="controls">
                             <li class="dropdown">
                                 <a role="button" tabindex="0" class="dropdown-toggle settings" data-toggle="dropdown">
@@ -135,9 +120,9 @@
                             <table class="table table-hover table-bordered table-condensed table-responsive" id="advanced-usage">
                                 <thead>
                                 <tr style="background-color: #1693A5; color: white;">
-                                    <th class="text-center">Type</th>
-                                    <th class="text-center">Count</th>
-                                    <th class="text-center">Color</th>
+                                    <th class="text-center">Name</th>
+                                    <th class="text-center">Short Name</th>
+                                    <th class="text-center">Swift Code</th>
                                     <th class="text-center">Remarks</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Action</th>
@@ -172,64 +157,11 @@
         var table = $('#advanced-usage').DataTable({
             "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
         });
-        let _edit_mode = 0;
-        let _current_count_id = 0;
 
         $(window).load(function(){
             loadDataTable();
-            $('.select2').select2();
         });
-        
-        
-        function getYarnCount(_yarn_type) {
-            var id = _yarn_type.value;
-            // alert(id);
-            //var rowID = _category.getAttribute("data-id");
-           // var targetID = 'SubCategoryID'+ rowID;
-            var url = '{{ route('admin.yarn.count.drop-down-list') }}';
-            $.ajaxSetup({
-                headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' }
-            });
 
-            if(id)
-            {
-                $.ajax({
-                    url : url,
-                    data:{YarnTypeID: id},
-                    type : "POST",
-                    dataType : "json",
-                    success:function(data)
-                    {
-                       
-                        if(data)
-                        {
-                            defaultKey = " ";
-                            defaultValue = "- - - Select - - -";
-                            $('select[id= "YarnCountName"]').empty();
-
-                            $('select[id= "YarnCountName"]').append('<option value="'+ defaultKey +'">'+ defaultValue +'</option>');                            
-                            $.each(data, function(key,value){                               
-                                $('select[id= "YarnCountName"]').append('<option value="'+ key +'">'+ value +'</option>');
-                            });
-                            $('#YarnCountName').trigger('chosen:updated');
-                            if(_edit_mode === 1){
-                                $('select[name=yarn_count]').val(_current_count_id).change();
-                            }
-                        }
-
-                    }
-                });
-            }
-            else
-            {
-                defaultKey = " ";
-                defaultValue = "- - - Select - - -";
-
-                $('select[id= "YarnCountName"]').empty();
-                $('select[id= "YarnCountName"]').append('<option value="'+ defaultKey +'">'+ defaultValue +'</option>');
-                $('#YarnCountName').trigger('chosen:updated');
-            }
-        };
 
         function loadDataTable() {
             table.destroy();
@@ -237,24 +169,24 @@
             $('#advanced-usage').find('tbody').append(free_table);
             table = $("#advanced-usage").DataTable({
                 ajax: {
-                    url: "/mtrims/public/api/admin/yarn-setup/not-deleted",
+                    url: "/mtrims/public/api/admin/bank-setup/not-deleted",
                     dataSrc: ""
                 },
                 columns: [
                     {
-                        data: "type_name",
+                        data: "name",
                         render: function (data) {
                             return "<p class = 'text-left'>"+ data +"</p>";
                         }
                     },
                     {
-                        data: "yarn_count_name",
+                        data: "short_name",
                         render: function (data) {
-                            return "<p class = 'text-left'>"+ data +"</p>";
+                            return "<p class = 'text-center'>"+ data +"</p>";
                         }
                     },
                     {
-                        data: "color",
+                        data: "swift_code",
                         render: function (data) {
                             return "<p class = 'text-center'>"+ data +"</p>";
                         }
@@ -316,16 +248,15 @@
                 e.preventDefault();
                 var data = $(this).serialize();
                 var id = $('#HiddenFactoryID').val();
-                //console.log(data);
-                var url = '{{ route('admin.yarn.setup.save') }}';
-                //console.log(url);
-                //return;
+                // console.log(data);
+                var url = '{{ route('admin.bank.setup.save') }}';
+                // console.log(url);
+                // return;
                 $.ajax({
                     url: url,
                     method:'POST',
                     data:data,
                     success:function(data){
-                        //console.log(data);
                         if(data === '2')
                         {
                             swal({
@@ -335,8 +266,6 @@
                             }).then(function (value) {
                                 if(value){
                                     clearFormWithoutDelay("FactoryAdd");
-                                    _edit_mode = 0;
-                                    _current_count_id = 0;
                                     loadDataTable();
                                 }
                             });
@@ -389,20 +318,18 @@
                 left: 0,
                 behavior: 'smooth'
             });
-            var url = '{{ route('admin.yarn.setup.edit') }}';
+            var url = '{{ route('admin.bank.setup.edit') }}';
             $.ajax({
                 url: url,
                 method:'POST',
                 data:{id: FactoryID},
                 success:function(data){
                     //console.log(data);
-                    $('input[name=color]').val(data.color);
+                    $('input[name=id]').val(data.id);
+                    $('input[name=name]').val(data.name);
+                    $('input[name=short_name]').val(data.short_name);
+                    $('input[name=swift_code]').val(data.swift_code);
                     $('input[name=remarks]').val(data.remarks);
-                    $('input[name=id]').val(data.id).change();
-                    $('select[name=yarn_count]').val(data.yarn_count).change();
-                    $('select[name=yarn_type]').val(data.yarn_type).change();
-                    _edit_mode = 1;
-                    _current_count_id = parseInt(data.yarn_count);
                     moveToTop();
                 },
                 error:function(error){
@@ -422,10 +349,10 @@
         $('#advanced-usage').on('click',".ActivateBuyer", function(){
             var button = $(this);
             var id = button.attr("data-id");
-            var url = '{{ route('admin.yarn.setup.activate') }}';
+            var url = '{{ route('admin.bank.setup.activate') }}';
             swal({
                 title: 'Are you sure?',
-                text: 'This yarn will be a active one!',
+                text: 'This bank will be a active one!',
                 icon: 'warning',
                 buttons: ["Cancel", "Yes!"],
             }).then(function(value) {
@@ -479,10 +406,10 @@
         $('#advanced-usage').on('click',".DeActivateBuyer", function(){
             var button = $(this);
             var id = button.attr("data-id");
-            var url = '{{ route('admin.yarn.setup.de-activate') }}';
+            var url = '{{ route('admin.bank.setup.de-activate') }}';
             swal({
                 title: 'Are you sure?',
-                text: 'This yarn will be in-active!',
+                text: 'This bank will be in-active!',
                 icon: 'warning',
                 buttons: ["Cancel", "Yes!"],
             }).then(function(value) {
@@ -535,10 +462,10 @@
         $('#advanced-usage').on('click',".DeleteBuyer", function(){
             var button = $(this);
             var id = button.attr("data-id");
-            var url = '{{ route('admin.yarn.setup.delete') }}';
+            var url = '{{ route('admin.bank.setup.delete') }}';
             swal({
                 title: 'Are you sure?',
-                text: 'This yarn will be removed permanently!',
+                text: 'This bank will be removed permanently!',
                 icon: 'warning',
                 buttons: ["Cancel", "Yes!"],
             }).then(function(value) {
