@@ -217,6 +217,15 @@ Route::middleware('auth')->group(function (){
         Route::delete('bank/bin/delete','BankBinController@fullDelete')->name('bank.bin.delete');
         //bank bin setup
 
+        //bank beneficiary bin setup
+        Route::get('bank/beneficiary-bin','BeneficiaryBinController@index')->name('bank.beneficiary-bin');
+        Route::post('bank/beneficiary-bin/save','BeneficiaryBinController@saveBeneficiaryBin')->name('bank.beneficiary-bin.save');
+        Route::post('bank/beneficiary-bin/edit','BeneficiaryBinController@updateBeneficiaryBin')->name('bank.beneficiary-bin.edit');
+        Route::delete('bank/beneficiary-bin/activate','BeneficiaryBinController@activate')->name('bank.beneficiary-bin.activate');
+        Route::delete('bank/beneficiary-bin/de-activate','BeneficiaryBinController@inActivate')->name('bank.beneficiary-bin.de-activate');
+        Route::delete('bank/beneficiary-bin/delete','BeneficiaryBinController@fullDelete')->name('bank.beneficiary-bin.delete');
+        //bank beneficiary bin setup
+
     });
 
     Route::group(['as' => 'admin.','prefix' => 'admin','namespace' => 'Admin','middleware' => ['auth']] , function(){

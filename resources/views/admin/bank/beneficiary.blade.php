@@ -1,6 +1,6 @@
 @extends('layouts.admin.admin-master')
 @section('title')
-    Bank Bin
+    Bank Beneficiary Bin
 @endsection
 @section('content')
     <style type="text/css">
@@ -20,14 +20,14 @@
     </style>
     <div class="page page-dashboard">
         <div class="pageheader ">
-            <h2>Bank Bin <span>Bank Bin List</span></h2>
+            <h2>Bank Beneficiary Bin <span>Bank Beneficiary Bin List</span></h2>
             <div class="page-bar">
                 <ul class="page-breadcrumb">
                     <li>
                         <a href="{{route('admin.home')}}"><i class="fa fa-home"></i> Administration</a>
                     </li>
                     <li>
-                        <a href="{{route('admin.bank.bin')}}"> Bank Bin</a>
+                        <a href="{{route('admin.bank.beneficiary-bin')}}">Beneficiary Bin</a>
                     </li>
                 </ul>
             </div>
@@ -42,7 +42,7 @@
                     <section class="tile">
                         <!-- tile header -->
                         <div class="tile-header dvd dvd-btm">
-                            <h1 class="custom-font"><strong>Bank Bin</strong> Insert/Update Form</h1>
+                            <h1 class="custom-font"><strong>Bank Beneficiary Bin</strong> Insert/Update Form</h1>
                             <a><button id="iconChange" class="pull-right btn-info btn-xs" type="submit"><i class="fa fa-check"></i></button></a>
                         </div>
                         <!-- /tile header -->
@@ -65,8 +65,8 @@
                                 </div>
                                 <div class="col-md-3 no-padding">
                                     <div class="form-group">
-                                        <label for="BinNo" class="control-label">Bin No</label>
-                                        <input type="text" class="form-control" name="bin_no" id="BinNo" placeholder="Enter Bin No" required="">
+                                        <label for="BinNo" class="control-label">Beneficiary Bin No</label>
+                                        <input type="text" class="form-control" name="bin_no" id="BinNo" placeholder="Enter Beneficiary Bin No" required="">
                                     </div>
                                 </div>
                                 <div class="col-md-6 no-padding">
@@ -89,7 +89,7 @@
                 <section class="tile">
                     <!-- tile header -->
                     <div class="tile-header dvd dvd-btm">
-                        <h1 class="custom-font"><strong>Bank Bin</strong> List</h1>
+                        <h1 class="custom-font"><strong>Bank Beneficiary Bin</strong> List</h1>
                         <ul class="controls">
                             <li class="dropdown">
                                 <a role="button" tabindex="0" class="dropdown-toggle settings" data-toggle="dropdown">
@@ -170,7 +170,7 @@
             $('#advanced-usage').find('tbody').append(free_table);
             table = $("#advanced-usage").DataTable({
                 ajax: {
-                    url: "/mtrims/public/api/admin/bank-bin/not-deleted",
+                    url: "/mtrims/public/api/admin/bank-beneficiary-bin/not-deleted",
                     dataSrc: ""
                 },
                 columns: [
@@ -243,7 +243,7 @@
                 var data = $(this).serialize();
                 var id = $('#HiddenFactoryID').val();
                 console.log(data);
-                var url = '{{ route('admin.bank.bin.save') }}';
+                var url = '{{ route('admin.bank.beneficiary-bin.save') }}';
                 //console.log(data);
                 $.ajax({
                     url: url,
@@ -312,7 +312,7 @@
                 left: 0,
                 behavior: 'smooth'
             });
-            var url = '{{ route('admin.bank.bin.edit') }}';
+            var url = '{{ route('admin.bank.beneficiary-bin.edit') }}';
             $.ajax({
                 url: url,
                 method:'POST',
@@ -341,10 +341,10 @@
         $('#advanced-usage').on('click',".ActivateBuyer", function(){
             var button = $(this);
             var id = button.attr("data-id");
-            var url = '{{ route('admin.bank.bin.activate') }}';
+            var url = '{{ route('admin.bank.beneficiary-bin.activate') }}';
             swal({
                 title: 'Are you sure?',
-                text: 'This bank bin will be a active one!',
+                text: 'This bank beneficiary-bin will be a active one!',
                 icon: 'warning',
                 buttons: ["Cancel", "Yes!"],
             }).then(function(value) {
@@ -398,10 +398,10 @@
         $('#advanced-usage').on('click',".DeActivateBuyer", function(){
             var button = $(this);
             var id = button.attr("data-id");
-            var url = '{{ route('admin.bank.bin.de-activate') }}';
+            var url = '{{ route('admin.bank.beneficiary-bin.de-activate') }}';
             swal({
                 title: 'Are you sure?',
-                text: 'This bank bin will be in-active!',
+                text: 'This bank beneficiary-bin will be in-active!',
                 icon: 'warning',
                 buttons: ["Cancel", "Yes!"],
             }).then(function(value) {
@@ -455,10 +455,10 @@
         $('#advanced-usage').on('click',".DeleteBuyer", function(){
             var button = $(this);
             var id = button.attr("data-id");
-            var url = '{{ route('admin.bank.bin.delete') }}';
+            var url = '{{ route('admin.bank.beneficiary-bin.delete') }}';
             swal({
                 title: 'Are you sure?',
-                text: 'This bin will be removed permanently!',
+                text: 'This beneficiary-bin will be removed permanently!',
                 icon: 'warning',
                 buttons: ["Cancel", "Yes!"],
             }).then(function(value) {
