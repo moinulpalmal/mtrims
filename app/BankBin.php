@@ -76,7 +76,8 @@ class BankBin extends Model
         $supplier = BankBin::find($request->id);
         $supplier->status = 'I';
         $supplier->last_updated_by = Auth::id();
-        if($supplier->save()){
+        if($supplier->save())
+        {
             return '2';
         }
         return '0';
@@ -87,7 +88,8 @@ class BankBin extends Model
         $supplier = BankBin::find($request->id);
         $supplier->status = 'D';
         $supplier->last_updated_by = Auth::id();
-        if($supplier->save()){
+        if($supplier->save())
+        {
             return '2';
         }
         return '0';

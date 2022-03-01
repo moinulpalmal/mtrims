@@ -16,7 +16,7 @@ class CreateHSCodesTable extends Migration
         Schema::create('h_s_codes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('code', 255)->nullable();
-            $table->string('status', 4)->nullable();
+            $table->string('status', 4)->nullable(); 
             $table->bigInteger('inserted_by')->default(0);
             $table->bigInteger('last_updated_by')->default(0);
             $table->string('remarks', 255)->nullable();
