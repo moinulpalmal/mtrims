@@ -50,27 +50,31 @@
                         <div class="tile-body">
                             <input type="hidden" id="HiddenFactoryID" name="id">
                             <div class="row" style="padding: 0px 15px;">
-                                <div class="col-md-3 no-padding"></div>
                                 <div class="col-md-3 no-padding">
                                     <div class="form-group">
-                                        <label for="YarnTypeName" class="control-label">Select Yarn Type</label>
-                                        <select class="form-control select2" name="yarn_type"  id="YarnTypeName" style="width: 100%;" required>
+                                        <label for="BankName" class="control-label">Select Bank</label>
+                                        <select class="form-control select2" name="bank_name" id="BankName" style="width: 100% !important; height: 100% !important;" required>
                                             <option value="" selected="selected">- - - Select - - -</option>
-                                                @if(!empty($types))
-                                                    @foreach($types as $type)
-                                                        <option value="{{ $type->id }}">{{ $type->name }}</option>
-                                                    @endforeach
-                                                @endif
+                                            @if(!empty($banks))
+                                                @foreach($banks as $bank)
+                                                    <option value="{{ $bank->id }}">{{ $bank->name }}</option>
+                                                @endforeach
+                                            @endif
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-3 no-padding">
                                     <div class="form-group">
-                                        <label for="YarnCountName" class="control-label">Yarn Count Name</label>
-                                        <input type="text" class="form-control" name="name" id="YarnCountName" placeholder="Enter count name" required="">
+                                        <label for="BinNo" class="control-label">Bin No</label>
+                                        <input type="text" class="form-control" name="bin_no" id="BinNo" placeholder="Enter Bin No" required="">
                                     </div>
                                 </div>
-                                <div class="col-md-3 no-padding"></div>
+                                <div class="col-md-6 no-padding">
+                                    <div class="form-group">
+                                        <label for="Remarks" class="control-label">Remarks</label>
+                                        <input type="text" class="form-control" name="remarks" id="Remarks" placeholder="Enter remarks">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <!-- /tile body -->
@@ -117,8 +121,9 @@
                                 <thead>
                                 <tr style="background-color: #1693A5; color: white;">
                                     {{-- <th class="text-center">Sl No.</th> --}}
-                                    <th class="text-center">Type</th>
-                                    <th class="text-center">Count</th>
+                                    <th class="text-center">Bank Name</th>
+                                    <th class="text-center">Bin No</th>
+                                    <th class="text-center">Remarks</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Action</th>
                                 </tr>
@@ -165,20 +170,30 @@
             $('#advanced-usage').find('tbody').append(free_table);
             table = $("#advanced-usage").DataTable({
                 ajax: {
-                    url: "/mtrims/public/api/admin/yarn-count/not-deleted",
+                    url: "/mtrims/public/api/admin/bank-bin/not-deleted",
                     dataSrc: ""
                 },
                 columns: [
                     {
-                        data: "yarn_type",
+                        data: "bank_name",
                         render: function (data) {
                             return "<p class = 'text-left'>"+ data +"</p>";
                         }
                     },
                     {
-                        data: "name",
+                        data: "bin_no",
                         render: function (data) {
                             return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        render: function (data, type, val) {
+                            if(val.remarks === null){
+                                return "<p class = 'text-right'></p>";
+                            }
+                            else{
+                                return "<p class = 'text-right'>"+ val.remarks +"</p>";
+                            }
                         }
                     },
                     
@@ -228,7 +243,7 @@
                 var data = $(this).serialize();
                 var id = $('#HiddenFactoryID').val();
                 console.log(data);
-                var url = '{{ route('admin.yarn.count.save') }}';
+                var url = '{{ route('admin.bank.bin.save') }}';
                 //console.log(data);
                 $.ajax({
                     url: url,
@@ -297,16 +312,17 @@
                 left: 0,
                 behavior: 'smooth'
             });
-            var url = '{{ route('admin.yarn.count.edit') }}';
+            var url = '{{ route('admin.bank.bin.edit') }}';
             $.ajax({
                 url: url,
                 method:'POST',
                 data:{id: FactoryID},
                 success:function(data){
-                    $('input[name=name]').val(data.name);
-                    $('select[name=yarn_type]').val(data.yarn_type_id).change();
-                    //console.log();
                     $('input[name=id]').val(data.id);
+                    $('select[name=bank_name]').val(data.bank_name).change();
+                    $('input[name=bin_no]').val(data.bin_no);
+                    $('input[name=remarks]').val(data.remarks);
+                    //console.log();
                     moveToTop();
 
                 },
@@ -325,10 +341,10 @@
         $('#advanced-usage').on('click',".ActivateBuyer", function(){
             var button = $(this);
             var id = button.attr("data-id");
-            var url = '{{ route('admin.yarn.count.activate') }}';
+            var url = '{{ route('admin.bank.bin.activate') }}';
             swal({
                 title: 'Are you sure?',
-                text: 'This yarn count will be a active one!',
+                text: 'This bank bin will be a active one!',
                 icon: 'warning',
                 buttons: ["Cancel", "Yes!"],
             }).then(function(value) {
@@ -382,10 +398,10 @@
         $('#advanced-usage').on('click',".DeActivateBuyer", function(){
             var button = $(this);
             var id = button.attr("data-id");
-            var url = '{{ route('admin.yarn.count.de-activate') }}';
+            var url = '{{ route('admin.bank.bin.de-activate') }}';
             swal({
                 title: 'Are you sure?',
-                text: 'This yarn count will be in-active!',
+                text: 'This bank bin will be in-active!',
                 icon: 'warning',
                 buttons: ["Cancel", "Yes!"],
             }).then(function(value) {
@@ -439,10 +455,10 @@
         $('#advanced-usage').on('click',".DeleteBuyer", function(){
             var button = $(this);
             var id = button.attr("data-id");
-            var url = '{{ route('admin.yarn.count.delete') }}';
+            var url = '{{ route('admin.bank.bin.delete') }}';
             swal({
                 title: 'Are you sure?',
-                text: 'This yarn count will be removed permanently!',
+                text: 'This bin count will be removed permanently!',
                 icon: 'warning',
                 buttons: ["Cancel", "Yes!"],
             }).then(function(value) {

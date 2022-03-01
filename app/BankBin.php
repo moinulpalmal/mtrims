@@ -8,6 +8,15 @@ use Illuminate\Support\Facades\DB;
 
 class BankBin extends Model
 {
+    public static function getAllNotDeletedBankBins(){
+        return DB::table('bank_bins')
+            ->join('banks','banks.id', '=', 'bank_bins.bank_id')
+            ->select('banks.name AS bank_name','bank_bins.*')
+            ->where('bank_bins.status', '!=', 'D')
+            ->orderBy('name')
+            ->get();
+    }
+
     public static function insertBankBin($request){
         $supplier = new BankBin();
         $supplier->bank_id = $request->bank_name;

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\BankBin;
+use App\Bank;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -10,8 +11,8 @@ class BankBinController extends Controller
 {
     public function index()
     {
-        // $banks = Bank::orderBy('name')->where('status', '!=', 'D')->get();
-        return view('admin.bank.bin');
+        $banks = Bank::orderBy('name')->where('status', '!=', 'D')->get();
+        return view('admin.bank.bin', compact('banks'));
     }
 
     public function getAllNotDeletedBankBins()
