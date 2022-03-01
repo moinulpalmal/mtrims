@@ -20,7 +20,7 @@
     </style>
     <div class="page page-dashboard">
         <div class="pageheader ">
-            <h2>Bank Beneficiary Bin <span>Bank Beneficiary Bin List</span></h2>
+            <h2>Beneficiary Bin <span>Beneficiary Bin List</span></h2>
             <div class="page-bar">
                 <ul class="page-breadcrumb">
                     <li>
@@ -42,7 +42,7 @@
                     <section class="tile">
                         <!-- tile header -->
                         <div class="tile-header dvd dvd-btm">
-                            <h1 class="custom-font"><strong>Bank Beneficiary Bin</strong> Insert/Update Form</h1>
+                            <h1 class="custom-font"><strong>Beneficiary Bin</strong> Insert/Update Form</h1>
                             <a><button id="iconChange" class="pull-right btn-info btn-xs" type="submit"><i class="fa fa-check"></i></button></a>
                         </div>
                         <!-- /tile header -->
@@ -89,7 +89,7 @@
                 <section class="tile">
                     <!-- tile header -->
                     <div class="tile-header dvd dvd-btm">
-                        <h1 class="custom-font"><strong>Bank Beneficiary Bin</strong> List</h1>
+                        <h1 class="custom-font"><strong>Beneficiary Bin</strong> List</h1>
                         <ul class="controls">
                             <li class="dropdown">
                                 <a role="button" tabindex="0" class="dropdown-toggle settings" data-toggle="dropdown">
