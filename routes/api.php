@@ -34,4 +34,5 @@ Route::get('admin/bank-setup/not-deleted','admin\BankController@getAllNotDeleted
 Route::get('admin/bank-branch/not-deleted','admin\BankBranchController@getAllNotDeletedBankBranches');
 Route::get('admin/bank-bin/not-deleted','admin\BankBinController@getAllNotDeletedBankBins');
 Route::get('admin/bank-beneficiary-bin/not-deleted','admin\BeneficiaryBinController@getAllNotDeletedBeneficiaryBins');
+Route::get('admin/bank-hs-code/not-deleted','admin\HSCodeController@getAllNotDeletedHSCodes');
 Route::get('production/section-setup/not-deleted','Production\SectionController@getAllNotDeletedSections');
