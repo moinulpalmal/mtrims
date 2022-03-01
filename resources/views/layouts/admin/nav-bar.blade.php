@@ -36,6 +36,7 @@
                                         <li class="{{ (request()->is('admin/bank/branch')) ? 'active' : '' }}" ><a href="{{route('admin.bank.branch')}}"><i class="fa fa-caret-right"></i> Bank Branch</a></li>
                                         <li class="{{ (request()->is('admin/bank/bin')) ? 'active' : '' }}" ><a href="{{route('admin.bank.bin')}}"><i class="fa fa-caret-right"></i> Bank Bin</a></li>
                                         <li class="{{ (request()->is('admin/bank/beneficiary-bin')) ? 'active' : '' }}" ><a href="{{route('admin.bank.beneficiary-bin')}}"><i class="fa fa-caret-right"></i> Beneficiary Bin</a></li>
+                                        <li class="{{ (request()->is('admin/bank/hs-code')) ? 'active' : '' }}" ><a href="{{route('admin.bank.hs-code')}}"><i class="fa fa-caret-right"></i> HS Code</a></li>
                                     </ul>
                                 </li>
                                 <li class="{{ (request()->is('admin/user*')) ? 'active open' : '' }}">

@@ -226,6 +226,15 @@ Route::middleware('auth')->group(function (){
         Route::delete('bank/beneficiary-bin/delete','BeneficiaryBinController@fullDelete')->name('bank.beneficiary-bin.delete');
         //bank beneficiary bin setup
 
+        //bank hs code setup
+        Route::get('bank/hs-code','HSCodeController@index')->name('bank.hs-code');
+        Route::post('bank/hs-code/save','HSCodeController@saveHSCode')->name('bank.hs-code.save');
+        Route::post('bank/hs-code/edit','HSCodeController@updateHSCode')->name('bank.hs-code.edit');
+        Route::delete('bank/hs-code/activate','HSCodeController@activate')->name('bank.hs-code.activate');
+        Route::delete('bank/hs-code/de-activate','HSCodeController@inActivate')->name('bank.hs-code.de-activate');
+        Route::delete('bank/hs-code/delete','HSCodeController@fullDelete')->name('bank.hs-code.delete');
+        //bank hs code setup
+
     });
 
     Route::group(['as' => 'admin.','prefix' => 'admin','namespace' => 'Admin','middleware' => ['auth']] , function(){
