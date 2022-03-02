@@ -148,7 +148,7 @@
                                             <div class="col-md-2 no-padding" style="display: none;" id="IsCheck">
                                                 <div class="form-group">
                                                     <label for="FlowCount" class="control-label">Flow Count</label>
-                                                    <input type="number" class="form-control" name="flow_count" id="FlowCount" placeholder="Enter Flow Count" required value="{{ old('lpd_po_no') }}">
+                                                    <input type="number" min="1" class="form-control" name="flow_count" id="FlowCount" placeholder="Enter Flow Count" required value="{{ old('lpd_po_no') }}">
                                                 </div>
                                             </div>
                                             <div class="col-md-6 no-padding">
