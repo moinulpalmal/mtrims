@@ -101,8 +101,23 @@ class PurchaseOrderController extends Controller
         
         //pitash
         $purchaseOrderMaster->po_type = $request->po_type;
-        $purchaseOrderMaster->is_urgent = $request->is_urgent;
-        $purchaseOrderMaster->has_flow_count = $request->has_flow_count;
+        if($request->is_urgent == 'on')
+        {
+            $purchaseOrderMaster->is_urgent = true;
+        }
+        else
+        {
+            $purchaseOrderMaster->is_urgent = false;
+        }
+        
+        if($request->has_flow_count == 'on')
+        {
+            $purchaseOrderMaster->has_flow_count = true;
+        }
+        else
+        {
+            $purchaseOrderMaster->has_flow_count = false;
+        }
         $purchaseOrderMaster->flow_count = $request->flow_count;
         //pitash
 
