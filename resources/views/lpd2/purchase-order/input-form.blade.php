@@ -42,29 +42,47 @@
                                     <div class="row" style="padding: 0px 15px;">
                                         <div class="col-md-3 no-padding">
                                             <div class="form-group">
-                                                <label for="LPD_PO" class="control-label">LPD PO No.</label>
-                                                <input type="number" class="form-control" name="lpd_po_no" id="LPD_PO" placeholder="2485" required value="{{ old('lpd_po_no') }}">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 no-padding">
-                                            <div class="form-group">
-                                                <label for="Buyer_PO_No" class="control-label">Buyer PO No.</label>
-                                                <input type="text" class="form-control" name="buyer_po_no" id="Buyer_PO_No" required value="{{ old('buyer_po_no') }}">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 no-padding">
-                                            <div class="form-group">
-                                                <label for="PO_Date" class="control-label">Purchase Order Date</label>
-                                                <input type="date" class="form-control" name="purchase_order_date" id="PO_Date" required value="{{ old('purchase_order_date') }}">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 no-padding">
-                                            <div class="form-group">
                                                 <label for="SubContractorType" class="control-label">Select Buyer</label>
-                                                <select id="SubContractorType" class="form-control chosen-select" name="buyer_name" style="width: 100%;">
+                                                <select id="SubContractorType" class="form-control select2" name="buyer_name" style="width: 100%;">
                                                     <option value="" selected ="selected">- - - Select - - -</option>
                                                     @if(!empty($buyers))
                                                         @foreach($buyers as $item)
+                                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 no-padding">
+                                            <div class="form-group">
+                                                <label for="FactoryName" class="control-label">Select Factory</label>
+                                                <select id="FactoryName" class="form-control select2" name="factory_name" style="width: 100%;">
+                                                    <option value="" selected ="selected">- - - Select - - -</option>
+                                                    @if(!empty($factories))
+                                                        @foreach($factories as $item)
+                                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 no-padding">
+                                            <div class="form-group">
+                                                <label for="POType" class="control-label">PO Type</label>
+                                                <select id="POType" class="form-control select2" name="po_type" style="width: 100%;">
+                                                    <option value="">- - - Select - - -</option>
+                                                    <option value="S">Sample PO</option>
+                                                    <option value="P">Production PO</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 no-padding">
+                                            <div class="form-group">
+                                                <label for="DeliveryLocation" class="control-label">Primary Delivery Location</label>
+                                                <select id="DeliveryLocation" class="form-control select2" name="primary_delivery_location" style="width: 100%;">
+                                                    <option value="" selected ="selected">- - - Select - - -</option>
+                                                    @if(!empty($stores))
+                                                        @foreach($stores as $item)
                                                             <option value="{{ $item->id }}">{{ $item->name }}</option>
                                                         @endforeach
                                                     @endif
@@ -97,34 +115,49 @@
                                                 <input type="number" readonly min="0.0" class="form-control" name="add_amount_percent" id="AddAmountPercent" value="{{ old('add_amount_percent') }}">
                                             </div>
                                         </div>--}}
-                                        <div class="col-md-3 no-padding">
-                                            <div class="form-group">
-                                                <label for="FactoryName" class="control-label">Select Factory</label>
-                                                <select id="FactoryName" class="form-control chosen-select" name="factory_name" style="width: 100%;">
-                                                    <option value="" selected ="selected">- - - Select - - -</option>
-                                                    @if(!empty($factories))
-                                                        @foreach($factories as $item)
-                                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                                        @endforeach
-                                                    @endif
-                                                </select>
-                                            </div>
-                                        </div>
+
                                         <div class="row" style="padding: 0px 15px;">
                                             <div class="col-md-3 no-padding">
                                                 <div class="form-group">
-                                                    <label for="DeliveryLocation" class="control-label">Primary Delivery Location</label>
-                                                    <select id="DeliveryLocation" class="form-control chosen-select" name="primary_delivery_location" style="width: 100%;">
-                                                        <option value="" selected ="selected">- - - Select - - -</option>
-                                                        @if(!empty($stores))
-                                                            @foreach($stores as $item)
-                                                                <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                                            @endforeach
-                                                        @endif
-                                                    </select>
+                                                    <label for="PO_Date" class="control-label">Purchase Order Date</label>
+                                                    <input type="date" class="form-control" name="purchase_order_date" id="PO_Date" required value="{{ old('purchase_order_date') }}">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 ">
+                                                <div class="form-group">
+                                                    <label class="checkbox checkbox-custom-alt checkbox-custom-lg" style="padding-top: 17px">
+                                                        <input name="is_urgent" id="IsUrgent" type="checkbox"><i></i> <strong>Is Urgent ?</strong>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 no-padding">
+                                                <div class="form-group">
+                                                    <label class="checkbox checkbox-custom-alt checkbox-custom-lg" style="padding-top: 17px">
+                                                        <input name="has_flow_count" id="HasFlowCount" type="checkbox"><i></i> <strong>Has Flow Count ?</strong>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 no-padding">
+                                                <div class="form-group">
+                                                    <label for="LPD_PO" class="control-label">LPD PO No.</label>
+                                                    <input type="number" class="form-control" name="lpd_po_no" id="LPD_PO" placeholder="2485" required value="{{ old('lpd_po_no') }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="padding: 0px 15px;">
+                                            <div class="col-md-2 no-padding" style="display: none;" id="IsCheck">
+                                                <div class="form-group">
+                                                    <label for="FlowCount" class="control-label">Flow Count</label>
+                                                    <input type="number" class="form-control" name="flow_count" id="FlowCount" placeholder="Enter Flow Count" required value="{{ old('lpd_po_no') }}">
                                                 </div>
                                             </div>
                                             <div class="col-md-6 no-padding">
+                                                <div class="form-group">
+                                                    <label for="Buyer_PO_No" class="control-label">Buyer PO No.</label>
+                                                    <input type="text" class="form-control" name="buyer_po_no" id="Buyer_PO_No" required value="{{ old('buyer_po_no') }}">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 no-padding">
                                                 <div class="form-group">
                                                     <label for="Remarks" class="control-label">Remarks</label>
 {{--                                                    <in size="5" class="form-control" name="remarks" id="Remarks" placeholder="Enter sub-contractor address"></in>--}}
@@ -251,5 +284,21 @@
     </div>
     <!-- /col -->
 </div>
+
+@section('pageScripts')
+    <script>
+        $(window).load(function(){
+            $('.select2').select2();
+            loadDataTable();
+        });
+
+        $(document).ready(
+        function(){
+            $("#HasFlowCount").click(function () {
+                $("#IsCheck").toggle();
+            });
+        });
+    </script>
+@endsection
 
 

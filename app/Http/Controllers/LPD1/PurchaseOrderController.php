@@ -41,8 +41,10 @@ class PurchaseOrderController extends Controller
     }
 
     public function savePurchaseOrder(Request $request){
+        // print_r($request->all());
 
         $this->validate($request, [
+            
             'lpd_po_no' => 'required|numeric',
             'buyer_po_no' => 'required|string',
             'buyer_name' => 'required|numeric',
@@ -96,6 +98,13 @@ class PurchaseOrderController extends Controller
         $purchaseOrderMaster->pi_generation_activated = true;
         $purchaseOrderMaster->status = 'A';
         $purchaseOrderMaster->po_date = $request->purchase_order_date;
+        
+        //pitash
+        $purchaseOrderMaster->po_type = $request->po_type;
+        $purchaseOrderMaster->is_urgent = $request->is_urgent;
+        $purchaseOrderMaster->has_flow_count = $request->has_flow_count;
+        $purchaseOrderMaster->flow_count = $request->flow_count;
+        //pitash
 
         if(Auth::user()->id == null){
             return redirect()->route('lpd1.purchase.order');
