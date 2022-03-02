@@ -113,12 +113,12 @@ class PurchaseOrderController extends Controller
         if($request->has_flow_count == 'on')
         {
             $purchaseOrderMaster->has_flow_count = true;
+            $purchaseOrderMaster->flow_count = $request->flow_count;
         }
         else
         {
             $purchaseOrderMaster->has_flow_count = false;
         }
-        $purchaseOrderMaster->flow_count = $request->flow_count;
         //pitash
 
         if(Auth::user()->id == null){
