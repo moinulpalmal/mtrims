@@ -161,6 +161,7 @@ class PurchaseOrderController extends Controller
 
     public function details($id){
         $purchaseOrder = PurchaseOrderMaster::find($id);
+        // return ($purchaseOrder);
         if($purchaseOrder->lpd==1){
             if($purchaseOrder == null){
                 return redirect()->route('lpd1.purchase.order');
@@ -462,6 +463,21 @@ class PurchaseOrderController extends Controller
             $purchaseOrderMaster->factory_id = $request->factory_name;
             $purchaseOrderMaster->pi_generation_activated = true;
             $purchaseOrderMaster->po_date = $request->purchase_order_date;
+
+            //pitash
+            $purchaseOrderMaster->revise_count = $request->revise_count;
+            $purchaseOrderMaster->lpd_po_no = $request->lpd_po_no;
+            if($request->has_flow_count == 'on')
+            {
+                $purchaseOrderMaster->has_flow_count = true;
+                $purchaseOrderMaster->flow_count = $request->flow_count;
+            }
+            else
+            {
+                $purchaseOrderMaster->has_flow_count = false;
+            }
+            //pitash
+
             if(Auth::user()->id == null){
                 return redirect()->route('lpd2.purchase.order');
             }
