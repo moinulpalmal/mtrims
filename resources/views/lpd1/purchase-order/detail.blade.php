@@ -973,7 +973,7 @@
                                         <select id="POType" class="form-control select2" name="po_type" style="width: 100%;">
                                             <option value="">- - - Select - - -</option>
                                             <option value="S" {{ $purchaseOrder->po_type == 'S' ? 'selected' : '' }}>Sample PO</option>
-                                            <option value="S" {{ $purchaseOrder->po_type == 'P' ? 'selected' : '' }}>Production PO</option>
+                                            <option value="P" {{ $purchaseOrder->po_type == 'P' ? 'selected' : '' }}>Production PO</option>
                                         </select>
                                     </div>
                                 </div>
@@ -1001,8 +1001,7 @@
                                 <div class="col-md-4 ">
                                     <div class="form-group">
                                         <label class="checkbox checkbox-custom-alt checkbox-custom-lg" style="padding-top: 17px">
-                                            <input type="hidden" name="is_urgent" value="0"/>
-                                            <input type="checkbox" name="is_urgent" value="1" {{ old('is_urgent', isset($purchaseOrder) ? 'checked' : '') }}/><i></i> <strong>Is Urgent ?</strong>
+                                            <input type="checkbox" name="is_urgent" value="1"  {{  ($purchaseOrder->is_urgent == 1 ? ' checked' : '') }}/><i></i> <strong>Is Urgent ?</strong>
                                         </label>
                                     </div>
                                 </div>
@@ -1361,6 +1360,7 @@
                 var factory_name = document.forms["POUpdate"]["factory_name"].value;
                 var buyer_name = document.forms["POUpdate"]["buyer_name"].value;
                 var primary_delivery_location = document.forms["POUpdate"]["primary_delivery_location"].value;
+                var po_type = document.forms["POUpdate"]["po_type"].value;
                 if(buyer_name == ""){
                     swal({
                         title: "Select Buyer Name!",
@@ -1380,6 +1380,14 @@
                 else if(factory_name == ""){
                     swal({
                         title: "Select Factory Name!",
+                        icon: "warning",
+                        button: "Ok!",
+                    });
+                    return false;
+                }
+                else if(po_type == ""){
+                    swal({
+                        title: "Select PO Type!",
                         icon: "warning",
                         button: "Ok!",
                     });
