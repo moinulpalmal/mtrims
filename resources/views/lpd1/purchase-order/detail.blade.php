@@ -992,16 +992,23 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-4 no-padding">
+                                <div class="col-md-3 no-padding">
                                     <div class="form-group">
                                         <label for="PO_Date" class="control-label">Purchase Order Date</label>
                                         <input type="date" class="form-control" name="purchase_order_date" id="PO_Date" required value="{{ old('purchase_order_date', $purchaseOrder->po_date) }}">
                                     </div>
                                 </div>
-                                <div class="col-md-4 ">
+                                <div class="col-md-2 ">
                                     <div class="form-group">
                                         <label class="checkbox checkbox-custom-alt checkbox-custom-lg" style="padding-top: 17px">
                                             <input type="checkbox" name="is_urgent" value="1"  {{  ($purchaseOrder->is_urgent == 1 ? ' checked' : '') }}/><i></i> <strong>Is Urgent ?</strong>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 ">
+                                    <div class="form-group">
+                                        <label class="checkbox checkbox-custom-alt checkbox-custom-lg" style="padding-top: 17px">
+                                            <input name="has_flow_count" id="HasFlowCount" value="1"  {{  ($purchaseOrder->has_flow_count == 1 ? ' checked' : '') }} type="checkbox"><i></i> <strong>Has Flow Count ?</strong>
                                         </label>
                                     </div>
                                 </div>
@@ -1020,22 +1027,31 @@
                                     </div>
                                 </div>
                                 @if (($purchaseOrder->has_flow_count == 1))
-                                <div class="col-md-4 no-padding">
-                                    <div class="form-group">
-                                        <label for="FlowCount" class="control-label">Flow Count</label>
-                                        <input type="number" min="1" class="form-control" name="flow_count" id="FlowCount" placeholder="Enter Flow Count" required value="{{ old('flow_count', $purchaseOrder->flow_count) }}">
+                                    <div class="col-md-4 no-padding">
+                                        <div class="form-group">
+                                            <label for="FlowCount" class="control-label">Flow Count</label>
+                                            <input type="number" min="1" class="form-control" name="flow_count" id="FlowCount" placeholder="Enter Flow Count" value="{{ old('flow_count', $purchaseOrder->flow_count) }}">
+                                        </div>
                                     </div>
-                                </div>
+                                @else
+                                    <div class="col-md-4 no-padding" style="display: none;" id="IsCheck">
+                                        <div class="form-group">
+                                            <label for="FlowCount" class="control-label">Flow Count</label>
+                                            <input type="number" min="1" class="form-control" name="flow_count" id="FlowCount" placeholder="Enter Flow Count"  value="{{ old('flow_count', $purchaseOrder->flow_count) }}">
+                                        </div>
+                                    </div>
                                 @endif
                             </div>
                             <div class="row" style="padding: 0px 15px;">
-                                <div class="col-md-7 no-padding">
+                                <div class="col-md-12 no-padding">
                                     <div class="form-group">
                                         <label for="Buyer_PO_No" class="control-label">Buyer PO No.</label>
                                         <input type="text" class="form-control" name="buyer_po_no" id="Buyer_PO_No" required value="{{ old('buyer_po_no', $purchaseOrder->buyer_po_no) }}">
                                     </div>
                                 </div>
-                                <div class="col-md-5 no-padding">
+                            </div>
+                            <div class="row" style="padding: 0px 15px;">
+                                <div class="col-md-12 no-padding">
                                     <div class="form-group">
                                         <label for="Remarks" class="control-label">Remarks</label>
 {{--                                        <textarea size="5" class="form-control" name="remarks_update" id="Remarks" >{!! $purchaseOrder->remarks !!}</textarea>--}}
@@ -1057,6 +1073,7 @@
 
 @section('pageScripts')
     <script>
+
         $(window).load(function(){
             $('#advanced-usage').DataTable({
             });
@@ -1086,6 +1103,15 @@
 
         });
 
+        $(document).ready(
+        function(){
+            $("#HasFlowCount").click(function () {
+                $("#IsCheck").toggle();
+                $('input[name="flow_count"]').val('');
+
+                
+            });
+        });
 
         function getTrimsTypeCode(_category) {
             var categoryId = _category.value;
@@ -1361,6 +1387,23 @@
                 var buyer_name = document.forms["POUpdate"]["buyer_name"].value;
                 var primary_delivery_location = document.forms["POUpdate"]["primary_delivery_location"].value;
                 var po_type = document.forms["POUpdate"]["po_type"].value;
+                var flow_count = document.forms["POUpdate"]["flow_count"].value;
+                // var hasFlowChck = document.forms["POUpdate"]["has_flow_count"].prop('checked', true);
+                // var hasFlowChck = $('#HasFlowCount').prop('checked', true);
+                // var hasFlowChck = $("input[name='has_flow_count']:checked")
+                
+                if ($("#HasFlowCount").is(":checked")) {
+                    if(flow_count == ""){
+                        swal({
+                            title: "Insert Flow Count!",
+                            icon: "warning",
+                            button: "Ok!",
+                        });
+                        return false;
+                    }
+                    } else {
+
+                    }
                 if(buyer_name == ""){
                     swal({
                         title: "Select Buyer Name!",
@@ -1393,6 +1436,31 @@
                     });
                     return false;
                 }
+
+
+
+                // if(hasFlowChck){
+                //     if(flow_count == ""){
+                //         swal({
+                //             title: "Select Flow Count!",
+                //             icon: "warning",
+                //             button: "Ok!",
+                //         });
+                //         return false;
+                //     }
+                //     else{
+
+                //     }
+                // }
+
+                // $('#check1').click(function() {
+                //     if($(this).is(':checked'))
+                //         alert('checked');
+                //     else
+                //         alert('unchecked');
+                // });
+
+
                 else{
                     var url = '{{ route('lpd1.purchase.order.update') }}';
                     //console.log(data);
