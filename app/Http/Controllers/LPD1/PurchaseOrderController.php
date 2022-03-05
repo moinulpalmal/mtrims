@@ -477,14 +477,15 @@ class PurchaseOrderController extends Controller
             {
                 $purchaseOrderMaster->is_urgent = false;
             }
-
-            if($request->flow_count)
+            if($request->get('has_flow_count') == 1)
             {
+                $purchaseOrderMaster->has_flow_count = true;
                 $purchaseOrderMaster->flow_count = $request->flow_count;
             }
             else
             {
-
+                $purchaseOrderMaster->flow_count = $request->flow_count;
+                $purchaseOrderMaster->has_flow_count = false;
             }
             
             //pitash
