@@ -161,6 +161,7 @@ class PurchaseOrderController extends Controller
 
     public function details($id){
         $purchaseOrder = PurchaseOrderMaster::find($id);
+        // return ($purchaseOrder);
         if($purchaseOrder->lpd==1){
             if($purchaseOrder == null){
                 return redirect()->route('lpd1.purchase.order');
@@ -441,12 +442,13 @@ class PurchaseOrderController extends Controller
     }
 
     public function updatePurchaseOrder(Request $request){
-
         $this->validate($request, [
-            'lpd_po_no' => 'required|numeric',
-            'buyer_po_no' => 'required|string',
             'buyer_name' => 'required|numeric',
+            'buyer_po_no' => 'required|string',
+            'factory_name' => 'required|numeric',
+            'po_type' => 'required',
             'primary_delivery_location' => 'required|numeric',
+            'lpd_po_no' => 'required|numeric',
             'purchase_order_date' => 'required|date'
         ]);
 
@@ -462,9 +464,36 @@ class PurchaseOrderController extends Controller
             $purchaseOrderMaster->factory_id = $request->factory_name;
             $purchaseOrderMaster->pi_generation_activated = true;
             $purchaseOrderMaster->po_date = $request->purchase_order_date;
+
+            //pitash
+            $purchaseOrderMaster->revise_count = $request->revise_count;
+            $purchaseOrderMaster->lpd_po_no = $request->lpd_po_no;
+            $purchaseOrderMaster->po_type = $request->po_type;
+            if($request->get('is_urgent') == 1)
+            {
+                $purchaseOrderMaster->is_urgent = true;
+            }
+            else
+            {
+                $purchaseOrderMaster->is_urgent = false;
+            }
+            if($request->get('has_flow_count') == 1)
+            {
+                $purchaseOrderMaster->has_flow_count = true;
+                $purchaseOrderMaster->flow_count = $request->flow_count;
+            }
+            else
+            {
+                $purchaseOrderMaster->flow_count = $request->flow_count;
+                $purchaseOrderMaster->has_flow_count = false;
+            }
+            
+            //pitash
+
             if(Auth::user()->id == null){
                 return redirect()->route('lpd2.purchase.order');
             }
+
             $purchaseOrderMaster->inserted_by = Auth::user()->id;
             if($purchaseOrderMaster->save()){
                 return "Update";

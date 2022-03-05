@@ -3,8 +3,8 @@ AS
 SELECT delivery_detail_replaces.purchase_order_master_id, delivery_detail_replaces.purchase_order_detail_id,
 delivery_detail_replaces.delivery_master_id, delivery_detail_replaces.delivery_detail_id,
 delivery_detail_replaces.production_replace_quantity, delivery_details.gross_quantity_factor, 
-(delivery_detail_replaces.production_replace_quantity * delivery_details.gross_quantity_factor) AS actual_production_replace_quantity 
-
+(delivery_detail_replaces.production_replace_quantity * delivery_details.gross_quantity_factor) AS actual_production_replace_quantity,
+delivery_detail_replaces.status
 FROM delivery_detail_replaces
 INNER JOIN delivery_details 
 ON 
