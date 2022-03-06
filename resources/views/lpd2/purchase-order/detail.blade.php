@@ -943,28 +943,8 @@
 
                             <div class="col-md-4 no-padding">
                                 <div class="form-group">
-                                    <label for="LPD_PO" class="control-label">LPD PO No.</label>
-                                    <input type="number" class="form-control" name="lpd_po_no" id="LPD_PO" readonly placeholder="2485" required value="{{ old('lpd_po_no', $purchaseOrder->lpd_po_no) }}">
-                                </div>
-                            </div>
-                            <div class="col-md-4 no-padding">
-                                <div class="form-group">
-                                    <label for="Buyer_PO_No" class="control-label">Buyer PO No.</label>
-                                    <input type="text" class="form-control" name="buyer_po_no" id="Buyer_PO_No" required value="{{ old('buyer_po_no', $purchaseOrder->buyer_po_no) }}">
-                                </div>
-                            </div>
-                            <div class="col-md-4 no-padding">
-                                <div class="form-group">
-                                    <label for="PO_Date" class="control-label">Purchase Order Date</label>
-                                    <input type="date" class="form-control" name="purchase_order_date" id="PO_Date" required value="{{ old('purchase_order_date', $purchaseOrder->po_date) }}">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" style="padding: 0px 15px;">
-                            <div class="col-md-4 no-padding">
-                                <div class="form-group">
                                     <label for="SubContractorType" class="control-label">Select Buyer</label>
-                                    <select id="SubContractorType" class="form-control chosen-select" name="buyer_name" style="width: 100%;">
+                                    <select id="SubContractorType" class="form-control select2" name="buyer_name" style="width: 100%;">
                                         <option value="">- - - Select - - -</option>
                                         @if(!empty($buyers))
                                             @foreach($buyers as $item)
@@ -977,7 +957,7 @@
                             <div class="col-md-4 no-padding">
                                 <div class="form-group">
                                     <label for="FactoryName" class="control-label">Select Factory</label>
-                                    <select id="FactoryName" class="form-control chosen-select" name="factory_name" style="width: 100%;">
+                                    <select id="FactoryName" class="form-control select2" name="factory_name" style="width: 100%;">
                                         <option value="">- - - Select - - -</option>
                                         @if(!empty($factories))
                                             @foreach($factories as $item)
@@ -989,8 +969,20 @@
                             </div>
                             <div class="col-md-4 no-padding">
                                 <div class="form-group">
+                                    <label for="POType" class="control-label">PO Type</label>
+                                    <select id="POType" class="form-control select2" name="po_type" style="width: 100%;">
+                                        <option value="">- - - Select - - -</option>
+                                        <option value="S" {{ $purchaseOrder->po_type == 'S' ? 'selected' : '' }}>Sample PO</option>
+                                        <option value="P" {{ $purchaseOrder->po_type == 'P' ? 'selected' : '' }}>Production PO</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="padding: 0px 15px;">
+                            <div class="col-md-4 no-padding">
+                                <div class="form-group">
                                     <label for="DeliveryLocation" class="control-label">Primary Delivery Location</label>
-                                    <select id="DeliveryLocation" class="form-control chosen-select" name="primary_delivery_location" style="width: 100%;">
+                                    <select id="DeliveryLocation" class="form-control select2" name="primary_delivery_location" style="width: 100%;">
                                         <option value="">- - - Select - - -</option>
                                         @if(!empty($stores))
                                             @foreach($stores as $item)
@@ -1000,13 +992,70 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="col-md-3 no-padding">
+                                <div class="form-group">
+                                    <label for="PO_Date" class="control-label">Purchase Order Date</label>
+                                    <input type="date" class="form-control" name="purchase_order_date" id="PO_Date" required value="{{ old('purchase_order_date', $purchaseOrder->po_date) }}">
+                                </div>
+                            </div>
+                            <div class="col-md-2 ">
+                                <div class="form-group">
+                                    <label class="checkbox checkbox-custom-alt checkbox-custom-lg" style="padding-top: 17px">
+                                        <input type="checkbox" name="is_urgent" value="1"  {{  ($purchaseOrder->is_urgent == 1 ? ' checked' : '') }}/><i></i> <strong>Is Urgent ?</strong>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-3 ">
+                                <div class="form-group">
+                                    <label class="checkbox checkbox-custom-alt checkbox-custom-lg" style="padding-top: 17px">
+                                        <input name="has_flow_count" id="HasFlowCount" value="1"  {{  ($purchaseOrder->has_flow_count == 1 ? ' checked' : '') }} type="checkbox"><i></i> <strong>Has Flow Count ?</strong>
+                                    </label>
+                                </div>
+                            </div>
 
+                        </div>
+                        <div class="row" style="padding: 0px 15px;">
+                            <div class="col-md-4 no-padding">
+                                <div class="form-group">
+                                    <label for="LPD_PO" class="control-label">LPD PO No.</label>
+                                    <input type="text" class="form-control" name="lpd_po_no" id="LPD_PO" placeholder="2485" required value="{{ old('lpd_po_no', $purchaseOrder->lpd_po_no) }}">
+                                </div>
+                            </div>
+                            <div class="col-md-4 no-padding">
+                                <div class="form-group">
+                                    <label for="ReviseCount" class="control-label">Revise Count</label>
+                                    <input type="number" min="0" class="form-control" name="revise_count" id="ReviseCount" placeholder="Enter Revise Count" required value="{{ old('revise_count', $purchaseOrder->revise_count) }}">
+                                </div>
+                            </div>
+                            @if (($purchaseOrder->has_flow_count == 1))
+                                <div class="col-md-4 no-padding">
+                                    <div class="form-group">
+                                        <label for="FlowCount" class="control-label">Flow Count</label>
+                                        <input type="number" min="1" class="form-control" name="flow_count" id="FlowCount" placeholder="Enter Flow Count" value="{{ old('flow_count', $purchaseOrder->flow_count) }}">
+                                    </div>
+                                </div>
+                            @else
+                                <div class="col-md-4 no-padding" style="display: none;" id="IsCheck">
+                                    <div class="form-group">
+                                        <label for="FlowCount" class="control-label">Flow Count</label>
+                                        <input type="number" min="1" class="form-control" name="flow_count" id="FlowCount" placeholder="Enter Flow Count"  value="{{ old('flow_count', $purchaseOrder->flow_count) }}">
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                        <div class="row" style="padding: 0px 15px;">
+                            <div class="col-md-12 no-padding">
+                                <div class="form-group">
+                                    <label for="Buyer_PO_No" class="control-label">Buyer PO No.</label>
+                                    <input type="text" class="form-control" name="buyer_po_no" id="Buyer_PO_No" required value="{{ old('buyer_po_no', $purchaseOrder->buyer_po_no) }}">
+                                </div>
+                            </div>
                         </div>
                         <div class="row" style="padding: 0px 15px;">
                             <div class="col-md-12 no-padding">
                                 <div class="form-group">
                                     <label for="Remarks" class="control-label">Remarks</label>
-                                    <input type="text" class="form-control" name="remarks_update" id="Remarks" value="{{old('remarks_update',$purchaseOrder->remarks)}}">
+                                    <input type="text" class="form-control" name="remarks" id="Remarks" value="{{old('remarks',$purchaseOrder->remarks)}}">
 {{--                                    <textarea size="5" class="form-control" name="remarks_update" id="Remarks" >{!! $purchaseOrder->remarks !!}</textarea>--}}
                                 </div>
                             </div>
@@ -1272,6 +1321,14 @@
                     ['para', ['ul', 'ol', 'paragraph']],
                     ['height', ['height']]
                 ]
+            });
+
+
+            $(document).ready(function(){
+                $("#HasFlowCount").click(function () {
+                    $("#IsCheck").toggle();
+                    $('input[name="flow_count"]').val('');
+                });
             });
 
         });
@@ -1696,6 +1753,21 @@
                 var factory_name = document.forms["POUpdate"]["factory_name"].value;
                 var buyer_name = document.forms["POUpdate"]["buyer_name"].value;
                 var primary_delivery_location = document.forms["POUpdate"]["primary_delivery_location"].value;
+                var po_type = document.forms["POUpdate"]["po_type"].value;
+                var flow_count = document.forms["POUpdate"]["flow_count"].value;
+
+                if ($("#HasFlowCount").is(":checked")) {
+                    if(flow_count == ""){
+                        swal({
+                            title: "Insert Flow Count!",
+                            icon: "warning",
+                            button: "Ok!",
+                        });
+                        return false;
+                    }
+                    } else {
+
+                    }
                 if(buyer_name == ""){
                     swal({
                         title: "Select Buyer Name!",
@@ -1715,6 +1787,14 @@
                 else if(factory_name == ""){
                     swal({
                         title: "Select Factory Name!",
+                        icon: "warning",
+                        button: "Ok!",
+                    });
+                    return false;
+                }
+                else if(po_type == ""){
+                    swal({
+                        title: "Select PO Type!",
                         icon: "warning",
                         button: "Ok!",
                     });
