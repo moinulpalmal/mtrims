@@ -1018,7 +1018,7 @@
                             <div class="col-md-4 no-padding">
                                 <div class="form-group">
                                     <label for="LPD_PO" class="control-label">LPD PO No.</label>
-                                    <input type="text" class="form-control" name="lpd_po_no" id="LPD_PO" readonly placeholder="2485" required value="{{ old('lpd_po_no', $purchaseOrder->lpd_po_no) }}">
+                                    <input type="text" class="form-control" name="lpd_po_no" id="LPD_PO" placeholder="2485" required value="{{ old('lpd_po_no', $purchaseOrder->lpd_po_no) }}">
                                 </div>
                             </div>
                             <div class="col-md-4 no-padding">
