@@ -1017,7 +1017,7 @@
                                 <div class="col-md-4 no-padding">
                                     <div class="form-group">
                                         <label for="LPD_PO" class="control-label">LPD PO No.</label>
-                                        <input type="number" class="form-control" name="lpd_po_no" id="LPD_PO" placeholder="2485" required value="{{ old('lpd_po_no', $purchaseOrder->lpd_po_no) }}">
+                                        <input type="text" class="form-control" name="lpd_po_no" id="LPD_PO" placeholder="2485" required value="{{ old('lpd_po_no', $purchaseOrder->lpd_po_no) }}">
                                     </div>
                                 </div>
                                 <div class="col-md-4 no-padding">
@@ -1388,9 +1388,6 @@
                 var primary_delivery_location = document.forms["POUpdate"]["primary_delivery_location"].value;
                 var po_type = document.forms["POUpdate"]["po_type"].value;
                 var flow_count = document.forms["POUpdate"]["flow_count"].value;
-                // var hasFlowChck = document.forms["POUpdate"]["has_flow_count"].prop('checked', true);
-                // var hasFlowChck = $('#HasFlowCount').prop('checked', true);
-                // var hasFlowChck = $("input[name='has_flow_count']:checked")
                 
                 if ($("#HasFlowCount").is(":checked")) {
                     if(flow_count == ""){
@@ -1436,30 +1433,6 @@
                     });
                     return false;
                 }
-
-
-
-                // if(hasFlowChck){
-                //     if(flow_count == ""){
-                //         swal({
-                //             title: "Select Flow Count!",
-                //             icon: "warning",
-                //             button: "Ok!",
-                //         });
-                //         return false;
-                //     }
-                //     else{
-
-                //     }
-                // }
-
-                // $('#check1').click(function() {
-                //     if($(this).is(':checked'))
-                //         alert('checked');
-                //     else
-                //         alert('unchecked');
-                // });
-
 
                 else{
                     var url = '{{ route('lpd1.purchase.order.update') }}';
