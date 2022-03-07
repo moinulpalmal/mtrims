@@ -59,6 +59,12 @@
             sessionStorage.clear();
         });
 
+        $(document).ready(function(){
+            $("#HasFlowCount").click(function () {
+                $("#IsCheck").toggle();
+            });
+        });
+
         function getTrimsTypeCode(_category) {
             var categoryId = _category.value;
             var rowID = _category.getAttribute("data-id");

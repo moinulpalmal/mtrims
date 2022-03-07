@@ -285,20 +285,4 @@
     <!-- /col -->
 </div>
 
-@section('pageScripts')
-    <script>
-        $(window).load(function(){
-            $('.select2').select2();
-            loadDataTable();
-        });
-
-        $(document).ready(
-        function(){
-            $("#HasFlowCount").click(function () {
-                $("#IsCheck").toggle();
-            });
-        });
-    </script>
-@endsection
-
 
