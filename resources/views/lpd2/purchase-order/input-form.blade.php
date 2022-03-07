@@ -289,7 +289,6 @@
     <script>
         $(window).load(function(){
             $('.select2').select2();
-            loadDataTable();
         });
 
         $(document).ready(

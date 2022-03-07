@@ -255,8 +255,7 @@
     <script>
 
         $(window).load(function(){
-            $('.select2').select2();
-            loadDataTable();
+            $('.select2').select2();            
         });
 
         $(document).ready(
