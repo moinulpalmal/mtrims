@@ -164,23 +164,23 @@
                             <div class="tile-body">
                                 <table id="myTable" class="table table-bordered table-hover">
                                     <thead>
-                                    <tr>
-                                        <th>Style No</th>
-                                        <th>Trims Type</th>
-                                        <th>Size / Count</th>
-                                        <th>Color</th>
-                                        <th>Description/Shade</th>
-                                        <th>Unit</th>
-                                        <th>Remarks</th>
-                                        <th>Qty</th>
-                                        <th>Gross (F)</th>
-                                        <th>Qty (Gross)</th>
-                                        <th>U. Price (USD)</th>
-                                        <th>Add Amt(%)</th>
-                                        <th>G. U. Price(%)</th>
-                                        <th>Total (USD)</th>
-                                        <th class="text-center"><a style="text-align: center;color: white;" href="#" class="addRow Scroll"><i class="fa fa-plus"></i></a></th>
-                                    </tr>
+                                        <tr>
+                                            <th>Style No</th>
+                                            <th>Trims Type</th>
+                                            <th>Size / Count</th>
+                                            <th>Color</th>
+                                            <th>Description/Shade</th>
+                                            <th>Unit</th>
+                                            <th>Remarks</th>
+                                            <th>Qty</th>
+                                            <th>Gross (F)</th>
+                                            <th>Qty (Gross)</th>
+                                            <th>U. Price (USD)</th>
+                                            <th>Add Amt(%)</th>
+                                            <th>G. U. Price(%)</th>
+                                            <th>Total (USD)</th>
+                                            <th class="text-center"><a style="text-align: center;color: white;" href="#" class="addRow Scroll"><i class="fa fa-plus"></i></a></th>
+                                        </tr>
                                     </thead>
                                     <tbody>
                                     </tbody>
@@ -250,21 +250,5 @@
     </div>
     <!-- /col -->
 </div>
-
-@section('pageScripts')
-    <script>
-
-        $(window).load(function(){
-            $('.select2').select2();            
-        });
-
-        $(document).ready(
-        function(){
-            $("#HasFlowCount").click(function () {
-                $("#IsCheck").toggle();
-            });
-        });
-    </script>
-@endsection
 
 

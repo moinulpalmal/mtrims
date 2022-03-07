@@ -66,9 +66,14 @@
              } );*/
 
             $('.select2').select2();
-
             sessionStorage.clear()
 
+        });
+
+        $(document).ready(function(){
+            $("#HasFlowCount").click(function () {
+                $("#IsCheck").toggle();
+            });
         });
 
         function getTrimsTypeCode(_category) {
@@ -89,11 +94,9 @@
                     data:{id: categoryId},
                     type : "POST",
                     dataType : "json",
-                    success:function(data)                    {
-
+                    success:function(data){
                         document.getElementById(targetID).value = data.gross_calculation_amount;
                         document.getElementById(targetID2).value = data.add_amount_percent;
-
                     }
                 });
             }
@@ -102,7 +105,7 @@
                 document.getElementById(targetID).value = 0;
                 document.getElementById(targetID2).value = 0;
             }
-        };
+        }
 
         $('.addRow').on('click',function(){
             //var trims_type = document.forms["PurchaseOrderForm"]["trims_type"].value;
