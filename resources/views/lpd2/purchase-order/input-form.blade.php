@@ -206,9 +206,11 @@
                                         <th>Description</th>
                                         <th>Unit</th>
                                         <th>Remarks</th>
-                                        <th>Qty</th>
+                                        <th>P.Qty</th>
+                                        <th>S.Qty</th>
                                         <th>Gross(F)</th>
-                                        <th>Qty (Gross)</th>
+                                        <th>P.Qty (G)</th>
+                                        <th>S.Qty (G)</th>
                                         <th>U. Price (USD)</th>
                                         <th>Add Amt(%)</th>
                                         <th>G. U. Price(%)</th>
@@ -220,6 +222,12 @@
                                     </tbody>
                                     <tfoot>
                                     <tr>
+                                        <td style="border: none;">
+
+                                        </td>
+                                        <td style="border: none;">
+
+                                        </td>
                                         <td style="border: none;">
 
                                         </td>

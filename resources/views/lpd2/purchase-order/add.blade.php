@@ -7,8 +7,8 @@
         th{
             background-color: #0689bd;
             color: white;
-            /*font-size: x-small;
-            height: 10px !important;*/
+            font-size: x-small;
+            /*height: 10px !important;*/
         }
         .tile-body{
             background-color: white;
@@ -253,13 +253,13 @@
                 '</td>'+
                 '<td width="7%"><input type="text" class="form-control ItemRemarks" name="item_remarks['+rowID+']" ></td>'+
                 '<td width="8%"><input type="number" step="any" class="form-control qty" name="quantity['+rowID+']" required="" ></td>'+
+                '<td width="8%"><input type="number" step="any" class="form-control s_qty" name="s_quantity['+rowID+']" required="" ></td>'+
                 '<td width="5%"><input type="number" step="any" class="form-control gross" name="gross['+rowID+']" id = "grossID'+rowID+'" readonly required=""></td>'+
                 '<td width="8%"><input type="number" step="any" readonly step="any" class="form-control g_qty" name="gross_quantity['+rowID+']"></td>'+
-
+                '<td width="8%"><input type="number" step="any" readonly step="any" class="form-control s_g_qty" name="s_gross_quantity['+rowID+']"></td>'+
                 '<td width="8%"><input type="number" step="any" class="form-control UnitPrice" name="unit_price['+rowID+']" required=""></td>'+
                 '<td width="5%"><input type="number" step="any" class="form-control AddPercent" name="add_percent['+rowID+']" id="AddParcentID'+rowID+'" required=""></td>'+
                 '<td width="9%"><input type="number" step="any" readonly class="form-control GrossUnitPrice"  name="gross_unit_price['+rowID+']"></td>'+
-
                 '<td width="9%"><input type="number" step="any" class="form-control Total" readonly = "" name="total['+rowID+']" required=""></td>'+
                 '<td width="2%" class="text-center"><a href="#" class="btn-danger btn-sm remove"><i class="fa fa-trash"></i></a></td>'+
                 '</tr>';
@@ -289,9 +289,10 @@
             }
         });
 
-        $('tbody').delegate('.qty,.UnitPrice,.Total, .AddPercent, .gross, .GrossUnitPrice','keyup',function(){
+        $('tbody').delegate('.qty, .s_qty, .UnitPrice,.Total, .AddPercent, .gross, .GrossUnitPrice','keyup',function(){
             var tr = $(this).parent().parent();
             var qty = parseFloat(tr.find('.qty').val()).toFixed(5);
+            var s_qty = parseFloat(tr.find('.s_qty').val()).toFixed(5);
 
             //var gross_qty_factory = parseFloat(document.forms["PurchaseOrderForm"]["gross_calculation_amount"].value).toFixed(3);
             var gross_qty_factory = parseFloat(tr.find('.gross').val()).toFixed(5);
@@ -299,10 +300,12 @@
             //return;
 
             var g_qty = parseFloat(qty/gross_qty_factory).toFixed(3);
+            var s_g_qty = parseFloat(s_qty/gross_qty_factory).toFixed(3);
             //console.log(g_qty);
             //return;
 
             tr.find('.g_qty').val(g_qty);
+            tr.find('.s_g_qty').val(s_g_qty);
 
             var unit_price = parseFloat(tr.find('.UnitPrice').val()).toFixed(5);
 
