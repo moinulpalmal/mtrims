@@ -140,8 +140,10 @@ class PurchaseOrderController extends Controller
                     $purchaseOrderDetail->item_unit_id = $request->item_unit[$key];
                     $purchaseOrderDetail->remarks = $request->item_remarks[$key];
                     $purchaseOrderDetail->item_order_quantity = $request->quantity[$key];
+                    $purchaseOrderDetail->sample_item_order_quantity = $request->s_quantity[$key];
                     $purchaseOrderDetail->gross_calculation_amount = $request->gross[$key];
                     $purchaseOrderDetail->gross_item_order_quantity = $request->gross_quantity[$key];
+                    $purchaseOrderDetail->gross_sample_item_order_quantity = $request->s_gross_quantity[$key];
                     $purchaseOrderDetail->unit_price_in_usd = $request->unit_price[$key];
                     $purchaseOrderDetail->add_amount_percent = $request->add_percent[$key];
                     $purchaseOrderDetail->gross_unit_price = $request->gross_unit_price[$key];

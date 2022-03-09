@@ -240,7 +240,7 @@
                 '</td>'+
                 '<td width="7%"><input type="text" class="form-control ItemSize" name="item_size['+rowID+']" required=""></td>'+
                 '<td width="6%"><input type="text" class="form-control ItemColor" name="item_color['+rowID+']" required=""></td>'+
-                '<td width="10%"><input type="text" class="form-control ItemDescription" name="item_description['+rowID+']" required=""></td>'+
+                '<td width="7%"><input type="text" class="form-control ItemDescription" name="item_description['+rowID+']" required=""></td>'+
                 '<td width="6%">'+
                 '<select style="width: 100%;" class="form-control select2 UnitID" name="item_unit['+rowID+']" id="UnitID'+rowID+'" required="">'+
                 '<option value = "">- Select -</option>'+
@@ -252,12 +252,12 @@
                 '</select>'+
                 '</td>'+
                 '<td width="7%"><input type="text" class="form-control ItemRemarks" name="item_remarks['+rowID+']" ></td>'+
-                '<td width="8%"><input type="number" step="any" class="form-control qty" name="quantity['+rowID+']" required="" ></td>'+
-                '<td width="8%"><input type="number" step="any" class="form-control s_qty" name="s_quantity['+rowID+']" required="" ></td>'+
-                '<td width="5%"><input type="number" step="any" class="form-control gross" name="gross['+rowID+']" id = "grossID'+rowID+'" readonly required=""></td>'+
-                '<td width="8%"><input type="number" step="any" readonly step="any" class="form-control g_qty" name="gross_quantity['+rowID+']"></td>'+
-                '<td width="8%"><input type="number" step="any" readonly step="any" class="form-control s_g_qty" name="s_gross_quantity['+rowID+']"></td>'+
-                '<td width="8%"><input type="number" step="any" class="form-control UnitPrice" name="unit_price['+rowID+']" required=""></td>'+
+                '<td width="7%"><input type="number" step="any" class="form-control qty" name="quantity['+rowID+']" required="" ></td>'+
+                '<td width="7%"><input type="number" step="any" class="form-control s_qty" name="s_quantity['+rowID+']" required="" ></td>'+
+                '<td width="5%"><input type="number" step="any" class="form-control gross" name="gross['+rowID+']" id = "grossID'+rowID+'" required=""></td>'+
+                '<td width="7%"><input type="number" step="any" readonly step="any" class="form-control g_qty" name="gross_quantity['+rowID+']"></td>'+
+                '<td width="7%"><input type="number" step="any" readonly step="any" class="form-control s_g_qty" name="s_gross_quantity['+rowID+']"></td>'+
+                '<td width="7%"><input type="number" step="any" class="form-control UnitPrice" name="unit_price['+rowID+']" required=""></td>'+
                 '<td width="5%"><input type="number" step="any" class="form-control AddPercent" name="add_percent['+rowID+']" id="AddParcentID'+rowID+'" required=""></td>'+
                 '<td width="9%"><input type="number" step="any" readonly class="form-control GrossUnitPrice"  name="gross_unit_price['+rowID+']"></td>'+
                 '<td width="9%"><input type="number" step="any" class="form-control Total" readonly = "" name="total['+rowID+']" required=""></td>'+
