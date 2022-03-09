@@ -353,8 +353,14 @@
                                                                             </div>
                                                                             <div class="col-md-3 no-padding">
                                                                                 <div class="form-group">
-                                                                                    <label for="ItemQuantity" class="control-label">Item Quantity</label>
+                                                                                    <label for="ItemQuantity" class="control-label">Item Quantity (P)</label>
                                                                                     <input type="number" class="form-control qty" step="any" name="quantity" id="ItemQuantity" required>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-3 no-padding">
+                                                                                <div class="form-group">
+                                                                                    <label for="SItemQuantity" class="control-label">Item Quantity (S)</label>
+                                                                                    <input type="number" class="form-control s_qty" step="any" name="sample_quantity" id="SItemQuantity" required>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="col-md-3 no-padding">
@@ -363,14 +369,20 @@
                                                                                     <input type="number" step="any" class="form-control gross_factor" name="gross_calculation_amount" id="GrossCalculationFactor" required >
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="col-md-3 no-padding">
-                                                                                <div class="form-group">
-                                                                                    <label for="GrossQuantity" class="control-label">Gross Quantity</label>
-                                                                                    <input type="number" step="any" class="form-control gross_quantity" name="gross_item_order_quantity" id="GrossQuantity" required readonly>
-                                                                                </div>
-                                                                            </div>
                                                                         </div>
                                                                         <div class="row" style="padding: 0px 15px;">
+                                                                            <div class="col-md-3 no-padding">
+                                                                                <div class="form-group">
+                                                                                    <label for="GrossQuantity" class="control-label">Gross Quantity (P)</label>
+                                                                                    <input type="number" step="any" class="form-control gross_quantity" name="gross_item_order_quantity" id="GrossQuantity" readonly>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-3 no-padding">
+                                                                                <div class="form-group">
+                                                                                    <label for="SGrossQuantity" class="control-label">Gross Quantity (S)</label>
+                                                                                    <input type="number" step="any" class="form-control s_gross_quantity" name="sample_gross_item_order_quantity" id="SGrossQuantity" readonly>
+                                                                                </div>
+                                                                            </div>
                                                                             <div class="col-md-3 no-padding">
                                                                                 <div class="form-group">
                                                                                     <label for="UnitPrice" class="control-label">Unit Price (USD)</label>
@@ -385,6 +397,9 @@
                                                                                     {{--                                                                            <input type="number" class="form-control qty" name="quantity" id="ItemQuantity" required>--}}
                                                                                 </div>
                                                                             </div>
+                                                                            
+                                                                        </div>
+                                                                        <div class="row" style="padding: 0px 15px;">
                                                                             <div class="col-md-3 no-padding">
                                                                                 <div class="form-group">
                                                                                     <label for="GrossUnitPrice" class="control-label">Gross Unit Price (USD)</label>
@@ -399,18 +414,18 @@
                                                                                     {{--                                                                            <input type="number" class="form-control qty" name="quantity" id="ItemQuantity" required>--}}
                                                                                 </div>
                                                                             </div>
-                                                                        </div>
-                                                                        <div class="row" style="padding: 0px 15px;">
-                                                                            <div class="col-md-6 no-padding">
-                                                                                <div class="form-group">
-                                                                                    <label for="ItemDescription" class="control-label">Description</label>
-                                                                                    <input type="text" id="ItemDescription" class="form-control ItemDescription" name="item_description" required>{{--                                                                            <input type="number" class="form-control qty" name="quantity" id="ItemQuantity" required>--}}
-                                                                                </div>
-                                                                            </div>
                                                                             <div class="col-md-6 no-padding">
                                                                                 <div class="form-group">
                                                                                     <label for="ItemRemarks" class="control-label">Remarks</label>
                                                                                     <input type="text" id="ItemRemarks" class="form-control ItemRemarks" name="item_remarks">{{--                                                                            <input type="number" class="form-control qty" name="quantity" id="ItemQuantity" required>--}}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row" style="padding: 0px 15px;">
+                                                                            <div class="col-md-12 no-padding">
+                                                                                <div class="form-group">
+                                                                                    <label for="ItemDescription" class="control-label">Description</label>
+                                                                                    <input type="text" id="ItemDescription" class="form-control ItemDescription" name="item_description" required>{{--                                                                            <input type="number" class="form-control qty" name="quantity" id="ItemQuantity" required>--}}
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -444,7 +459,8 @@
                                                                         <th class="text-center">Color</th>
                                                                         <th class="text-center">Description</th>
                                                                         <th class="text-center">Unit</th>
-                                                                        <th class="text-center">Ordered Qty</th>
+                                                                        <th class="text-center">Ordered Qty (P)</th>
+                                                                        <th class="text-center">Ordered Qty (S)</th>
                                                                         <th class="text-center">Unit Price (USD)</th>
                                                                         <th class="text-center">Total Price (USD)</th>
                                                                         <th class="text-center">Remarks</th>
@@ -465,6 +481,7 @@
                                                                             <td class="text-left">{{$item->item_description}}</td>
                                                                             <td class="text-center">{{ (App\Helpers\Helper::IDwiseData('units','id',$item->item_unit_id))->full_unit }}</td>
                                                                             <td class="text-right">{{ $item->item_order_quantity }}</td>
+                                                                            <td class="text-right">{{ $item->sample_item_order_quantity }}</td>
                                                                             <td class="text-right">{{ $item->unit_price_in_usd }}</td>
                                                                             <td class="text-right">{{ $item->total_price_in_usd }}</td>
                                                                             <td class="text-right">{{$item->remarks}}</td>
@@ -1147,14 +1164,17 @@
         };
 
 
-        $('#ItemAdd').delegate('.qty,.UnitPrice,.Total, .AddAmountPercent, .gross_factor, .GrossUnitPrice','keyup',function(){
+        $('#ItemAdd').delegate('.qty, .s_qty, .UnitPrice,.Total, .AddAmountPercent, .gross_factor, .GrossUnitPrice','keyup',function(){
             var tr = $(this).parent().parent().parent().parent().parent().parent();
             //console.log($(this).parent().parent().parent().parent().parent().parent());
             //var qty = tr.find('.qty').val();
             var qty = parseFloat(tr.find('.qty').val()).toFixed(5);
+            var s_qty = parseFloat(tr.find('.s_qty').val()).toFixed(5);
             var gross_qty_factory = parseFloat(document.forms["ItemAddForm"]["gross_calculation_amount"].value).toFixed(5);
             var g_qty = parseFloat(qty/gross_qty_factory).toFixed(3);
+            var s_g_qty = parseFloat(s_qty/gross_qty_factory).toFixed(3);
             tr.find('.gross_quantity').val(g_qty);
+            tr.find('.s_gross_quantity').val(s_g_qty);
 
             var unit_price = parseFloat(tr.find('.UnitPrice').val()).toFixed(5);
             var add_amount = parseFloat(document.forms["ItemAddForm"]["add_amount_percent"].value).toFixed(5);
@@ -1653,11 +1673,13 @@
                     $('input[name=total]').val(data.total_price_in_usd);
                     $('input[name=item_remarks]').val(data.remarks);
                     $('input[name=quantity]').val(data.item_order_quantity);
+                    $('input[name=sample_quantity]').val(data.sample_item_order_quantity);
                     $('input[name=style_no]').val(data.style_no);
                     $('input[name=item_id]').val(data.item_id);
                     $('input[name=gross_unit_price]').val(data.gross_unit_price);
                     //$('input[name=gross_calculation_amount]').val(data.gross_calculation_amount);
                     $('input[name=gross_item_order_quantity]').val(data.gross_item_order_quantity);
+                    $('input[name=sample_gross_item_order_quantity]').val(data.gross_sample_item_order_quantity);
 
 
                     //$('input[name=remarks]').val(data.remarks);
