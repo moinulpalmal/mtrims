@@ -253,7 +253,7 @@
 
         $('tbody').delegate('.qty, .s_qty, .UnitPrice, .Total, .AddPercent, .gross, .GrossUnitPrice','keyup',function(){
             var tr = $(this).parent().parent();
-            var qty = parseFloat(tr.find('.qty').val()).toFixed(5);
+            var qty = parseFloat(tr.find('.qty').val()).toFixed(5); 
             var s_qty = parseFloat(tr.find('.s_qty').val()).toFixed(5);
 
             //var gross_qty_factory = parseFloat(document.forms["PurchaseOrderForm"]["gross_calculation_amount"].value).toFixed(3);
