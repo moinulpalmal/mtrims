@@ -343,6 +343,7 @@ class PurchaseOrderController extends Controller
                 'total_price_in_usd' => $subContractor->total_price_in_usd,
                 'remarks' => $subContractor->remarks,
                 'item_order_quantity' => $subContractor->item_order_quantity,
+                'sample_item_order_quantity' => $subContractor->sample_item_order_quantity,
                 'finished_quantity' => $subContractor->finished_quantity,
                 'sub_con_order_quantity' => $subContractor->sub_con_order_quantity,
                 'sub_con_finished_quantity' => $subContractor->sub_con_finished_quantity,
@@ -353,6 +354,7 @@ class PurchaseOrderController extends Controller
                 'gross_unit_price' => $subContractor->gross_unit_price,
                 'gross_calculation_amount' => $subContractor->gross_calculation_amount,
                 'gross_item_order_quantity' => $subContractor->gross_item_order_quantity,
+                'gross_sample_item_order_quantity' => $subContractor->gross_sample_item_order_quantity,
                 'add_amount_percent' => $subContractor->add_amount_percent
             );
             return $subContractorData;
@@ -381,8 +383,10 @@ class PurchaseOrderController extends Controller
                         'item_unit_id' => $request->item_unit,
                         'remarks' => $request->item_remarks,
                         'item_order_quantity' => $request->quantity,
+                        'sample_item_order_quantity' => $request->sample_quantity,
                         'gross_calculation_amount' => $request->gross_calculation_amount,
                         'gross_item_order_quantity' => $request->gross_item_order_quantity,
+                        'gross_sample_item_order_quantity' => $request->sample_gross_item_order_quantity,
                         'unit_price_in_usd' => $request->unit_price,
                         'add_amount_percent' => $request->add_amount_percent,
                         'gross_unit_price' => $request->gross_unit_price,
@@ -414,8 +418,10 @@ class PurchaseOrderController extends Controller
             $purchaseOrderDetail->remarks = $request->item_remarks;
 
             $purchaseOrderDetail->item_order_quantity = $request->quantity;
+            $purchaseOrderDetail->sample_item_order_quantity = $request->sample_quantity;
             $purchaseOrderDetail->gross_calculation_amount = $request->gross_calculation_amount;
             $purchaseOrderDetail->gross_item_order_quantity = $request->gross_item_order_quantity;
+            $purchaseOrderDetail->gross_sample_item_order_quantity = $request->sample_gross_item_order_quantity;
             $purchaseOrderDetail->unit_price_in_usd = $request->unit_price;
             $purchaseOrderDetail->add_amount_percent = $request->add_amount_percent;
             $purchaseOrderDetail->gross_unit_price = $request->gross_unit_price;
