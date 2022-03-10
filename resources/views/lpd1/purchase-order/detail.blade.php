@@ -444,6 +444,27 @@
                                                         <!-- tile header -->
                                                         <div class="tile-header dvd dvd-btm">
                                                             <h1 class="custom-font"><strong>Item</strong> List</h1>
+                                                            <ul class="controls">
+                                                                <li class="dropdown">
+                                                                    <a role="button" tabindex="0" class="dropdown-toggle settings" data-toggle="dropdown">
+                                                                        <i class="fa fa-cog"></i>
+                                                                        <i class="fa fa-spinner fa-spin"></i>
+                                                                    </a>
+                                                                    <ul class="dropdown-menu pull-right with-arrow animated littleFadeInUp">
+                                                                        <li>
+                                                                            <a role="button" tabindex="0" class="tile-toggle">
+                                                                                <span class="minimize"><i class="fa fa-angle-down"></i>&nbsp;&nbsp;&nbsp;Minimize</span>
+                                                                                <span class="expand"><i class="fa fa-angle-up"></i>&nbsp;&nbsp;&nbsp;Expand</span>
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a onclick="" role="button" tabindex="0" class="tile-refresh">
+                                                                                <i class="fa fa-refresh"></i> Refresh
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
                                                         </div>
                                                         <!-- /tile header -->
                                                         <!-- tile body -->
@@ -487,10 +508,6 @@
                                                                             <td class="text-right">{{$item->remarks}}</td>
                                                                             @if($purchaseOrder->close_request == 0)
                                                                             <td class="text-center">
-                                                                                {{--<a title="Detail" href="{{route('lpd2.purchase.order.detail',['id'=>$item->id])}}" class="btn btn-info btn-xs">
-                                                                                    <i class="fa fa-eye"></i>
-                                                                                </a>--}}
-                                                                                {{--                                            <button class="btn btn-info btn-xs" data-toggle="modal" data-target="#user{{$item->id}}" data-options="splash-2 splash-ef-12"><i class="fa fa-eye"></i></button>--}}
                                                                                 @if(Auth::user()->hasTaskPermission('lpdtwoadditem', Auth::user()->id))
                                                                                     <a onclick="iconChange()" data-id = "{{ $item->item_count }}" class="EditFactory btn btn-warning btn-xs"><i class="fa fa-edit"></i></a>
                                                                                 @endif

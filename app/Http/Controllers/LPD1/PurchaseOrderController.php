@@ -27,6 +27,11 @@ class PurchaseOrderController extends Controller
         return view('lpd1.purchase-order.index', compact('purchaseOrders'));
     }
 
+    // public function getAllNotDeletedPurchaseOrders()
+    // {
+    //     return PurchaseOrderMaster::getActivePurchaseOrderByLpd(1);
+    // }
+
     public function newPurchaseOrder(){
         $buyers = Buyer::getActiveBuyerListForSelect();
         $factories = Factory::getActiveFactoryListForSelect();
