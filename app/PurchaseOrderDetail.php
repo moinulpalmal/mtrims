@@ -22,6 +22,18 @@ class PurchaseOrderDetail extends Model
                 ->get();
     }
 
+    // public static function getPOProductionPlan($purchase_order_master_id) {
+    //     // return  DB::table('purchase_order_details')->orderBy('item_count')
+    //     //         ->where('purchase_order_details.status','!=', 'D')
+    //     //         ->where('purchase_order_master_id', $purchase_order_master_id)
+    //     //         ->get();
+
+        
+                
+    // }
+
+
+
     public static function insertPOProductList($request){        
         $purchaseOrderDetail = new PurchaseOrderDetail();
         $purchaseOrderDetail->purchase_order_master_id = $request->purchase_order_master_id;
