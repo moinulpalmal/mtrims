@@ -36,4 +36,4 @@ Route::get('admin/bank-bin/not-deleted','admin\BankBinController@getAllNotDelete
 Route::get('admin/bank-beneficiary-bin/not-deleted','admin\BeneficiaryBinController@getAllNotDeletedBeneficiaryBins');
 Route::get('admin/bank-hs-code/not-deleted','admin\HSCodeController@getAllNotDeletedHSCodes');
 Route::get('production/section-setup/not-deleted','Production\SectionController@getAllNotDeletedSections');
-Route::get('lpd1/purchase/order/detail/not-deleted','LPD1\PurchaseOrderController@getAllNotDeletedPurchaseOrders');
+Route::get('lpd1/purchase-order/detail/product-list/{id}','LPD1\API\PurchaseOrderController@getPOProductList');
