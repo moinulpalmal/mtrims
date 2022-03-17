@@ -307,20 +307,15 @@
                                                                         <div class="row" style="padding: 0px 15px;">
                                                                             <div class="col-md-3 no-padding">
                                                                                 <div class="form-group">
-                                                                                    <label for="StyleNo" class="control-label">Style No</label>
-                                                                                    <input type="text" class="form-control" name="style_no" id="StyleNo" placeholder="Enter style no" required>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-md-3 no-padding">
-                                                                                <div class="form-group">
-                                                                                    <label for="ItemSize" class="control-label">Item Size / Count</label>
-                                                                                    <input type="text" class="form-control" name="item_size" id="ItemSize" placeholder="Enter item size" required>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-md-3 no-padding">
-                                                                                <div class="form-group">
-                                                                                    <label for="ItemColor" class="control-label">Item Color</label>
-                                                                                    <input type="text" class="form-control" name="item_color" id="ItemColor" placeholder="Enter item color" required>
+                                                                                    <label for="TrimsTypeID" class="control-label">Select Trims Type</label>
+                                                                                    <select id="TrimsTypeID" class="form-control select2" name="trims_type" required style="width: 100%;" onchange="javascript:getTrimsTypeCode(this)">
+                                                                                        <option value="">- - - Select - - -</option>
+                                                                                        @if(!empty($trimsTypes))
+                                                                                            @foreach($trimsTypes as $group)
+                                                                                                <option value="{{ $group->id }}">{{ $group->name }}</option>
+                                                                                            @endforeach'
+                                                                                        @endif'
+                                                                                    </select>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="col-md-3 no-padding">
@@ -336,19 +331,24 @@
                                                                                     </select>
                                                                                 </div>
                                                                             </div>
+                                                                            <div class="col-md-3 no-padding">
+                                                                                <div class="form-group">
+                                                                                    <label for="StyleNo" class="control-label">Style No</label>
+                                                                                    <input type="text" class="form-control" name="style_no" id="StyleNo" placeholder="Enter style no" required>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-3 no-padding">
+                                                                                <div class="form-group">
+                                                                                    <label for="ItemSize" class="control-label">Item Size / Count</label>
+                                                                                    <input type="text" class="form-control" name="item_size" id="ItemSize" placeholder="Enter item size" required>
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                         <div class="row" style="padding: 0px 15px;">
                                                                             <div class="col-md-3 no-padding">
                                                                                 <div class="form-group">
-                                                                                    <label for="TrimsTypeID" class="control-label">Select Trims Type</label>
-                                                                                    <select id="TrimsTypeID" class="form-control select2" name="trims_type" required style="width: 100%;" onchange="javascript:getTrimsTypeCode(this)">
-                                                                                        <option value="">- - - Select - - -</option>
-                                                                                        @if(!empty($trimsTypes))
-                                                                                            @foreach($trimsTypes as $group)
-                                                                                                <option value="{{ $group->id }}">{{ $group->name }}</option>
-                                                                                            @endforeach'
-                                                                                        @endif'
-                                                                                    </select>
+                                                                                    <label for="ItemColor" class="control-label">Item Color</label>
+                                                                                    <input type="text" class="form-control" name="item_color" id="ItemColor" placeholder="Enter item color" required>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="col-md-3 no-padding">
@@ -444,6 +444,27 @@
                                                         <!-- tile header -->
                                                         <div class="tile-header dvd dvd-btm">
                                                             <h1 class="custom-font"><strong>Item</strong> List</h1>
+                                                            <ul class="controls">
+                                                                <li class="dropdown">
+                                                                    <a role="button" tabindex="0" class="dropdown-toggle settings" data-toggle="dropdown">
+                                                                        <i class="fa fa-cog"></i>
+                                                                        <i class="fa fa-spinner fa-spin"></i>
+                                                                    </a>
+                                                                    <ul class="dropdown-menu pull-right with-arrow animated littleFadeInUp">
+                                                                        <li>
+                                                                            <a role="button" tabindex="0" class="tile-toggle">
+                                                                                <span class="minimize"><i class="fa fa-angle-down"></i>&nbsp;&nbsp;&nbsp;Minimize</span>
+                                                                                <span class="expand"><i class="fa fa-angle-up"></i>&nbsp;&nbsp;&nbsp;Expand</span>
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a onclick="" role="button" tabindex="0" class="tile-refresh">
+                                                                                <i class="fa fa-refresh"></i> Refresh
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
                                                         </div>
                                                         <!-- /tile header -->
                                                         <!-- tile body -->
@@ -452,7 +473,6 @@
                                                                 <table class="table table-hover table-bordered table-condensed table-responsive" id="advanced-usage">
                                                                     <thead>
                                                                     <tr style="background-color: #1693A5; color: white;">
-                                                                        <th class="text-center">Sl No.</th>
                                                                         <th class="text-center">Trims Type</th>
                                                                         <th class="text-center">Style No</th>
                                                                         <th class="text-center">Size</th>
@@ -464,43 +484,14 @@
                                                                         <th class="text-center">Unit Price (USD)</th>
                                                                         <th class="text-center">Total Price (USD)</th>
                                                                         <th class="text-center">Remarks</th>
+                                                                        {{-- <th class="text-center">Status</th> --}}
                                                                         @if($purchaseOrder->close_request == 0)
-                                                                        <th class="text-center">Action</th>
-                                                                            @endif
+                                                                            <th class="text-center">Action</th>
+                                                                        @endif
                                                                     </tr>
                                                                     </thead>
                                                                     <tbody>
-                                                                    @php($i = 1)
-                                                                    @foreach($purchaseOrderDetails as $item)
-                                                                        <tr>
-                                                                            <td class="text-center">{{$i++}}</td>
-                                                                            <td class="text-left">{{(App\Helpers\Helper::IDwiseData('trims_types','id',$item->trims_type_id))->name}}</td>
-                                                                            <td class="text-left">{{$item->style_no}}</td>
-                                                                            <td class="text-left">{{$item->item_size}}</td>
-                                                                            <td class="text-left">{{$item->item_color}}</td>
-                                                                            <td class="text-left">{{$item->item_description}}</td>
-                                                                            <td class="text-center">{{ (App\Helpers\Helper::IDwiseData('units','id',$item->item_unit_id))->full_unit }}</td>
-                                                                            <td class="text-right">{{ $item->item_order_quantity }}</td>
-                                                                            <td class="text-right">{{ $item->sample_item_order_quantity }}</td>
-                                                                            <td class="text-right">{{ $item->unit_price_in_usd }}</td>
-                                                                            <td class="text-right">{{ $item->total_price_in_usd }}</td>
-                                                                            <td class="text-right">{{$item->remarks}}</td>
-                                                                            @if($purchaseOrder->close_request == 0)
-                                                                            <td class="text-center">
-                                                                                {{--<a title="Detail" href="{{route('lpd2.purchase.order.detail',['id'=>$item->id])}}" class="btn btn-info btn-xs">
-                                                                                    <i class="fa fa-eye"></i>
-                                                                                </a>--}}
-                                                                                {{--                                            <button class="btn btn-info btn-xs" data-toggle="modal" data-target="#user{{$item->id}}" data-options="splash-2 splash-ef-12"><i class="fa fa-eye"></i></button>--}}
-                                                                                @if(Auth::user()->hasTaskPermission('lpdtwoadditem', Auth::user()->id))
-                                                                                    <a onclick="iconChange()" data-id = "{{ $item->item_count }}" class="EditFactory btn btn-warning btn-xs"><i class="fa fa-edit"></i></a>
-                                                                                @endif
-                                                                                @if(Auth::user()->hasTaskPermission('lpdtwodeleteitem', Auth::user()->id))
-                                                                                    <a title="Delete" class="DeleteDetail btn btn-danger btn-xs" data-id = "{{ $item->item_count }}"><i class="fa fa-trash"></i></a>
-                                                                                @endif
-                                                                            </td>
-                                                                                @endif
-                                                                        </tr>
-                                                                    @endforeach
+                                                                    
 
                                                                     </tbody>
                                                                 </table>
@@ -1089,11 +1080,21 @@
 @endsection
 
 @section('pageScripts')
+<script src="{{ asset('/js/common.js') }}"></script>
     <script>
 
+        var po_master_id = {{ $purchaseOrder->id }};       
+        
+        // saveValue = localStorage.getItem("saveValue");
+        // document.getElementById("MasterID").value = saveValue;
+        
+        var po_product_list_table = $('#advanced-usage').DataTable({
+            "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
+        });
+
         $(window).load(function(){
-            $('#advanced-usage').DataTable({
-            });
+           
+            loadPOListDataTable();
 
             $('#production_plan_table').DataTable({
 
@@ -1129,6 +1130,109 @@
                 
             });
         });
+
+        function loadPOListDataTable() {
+
+            po_product_list_table.destroy();
+            var free_table = '<tr><td class="text-center" colspan="12">--- Please Wait... Loading Data  ----</td></tr>';
+            $('#advanced-usage').find('tbody').append(free_table);
+           // $('tbody').html(free_table);
+           po_product_list_table = $("#advanced-usage").DataTable({
+                ajax: {
+                    url: "/mtrims/public/api/lpd1/purchase-order/detail/product-list/"+ {{ $purchaseOrder->id }},
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "trims_types_name",
+                        render: function (data) {
+                            return "<p class = 'text-center'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "style_no",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "item_size",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "item_color",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "item_description",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "full_unit",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "item_order_quantity",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "sample_item_order_quantity",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "unit_price_in_usd",
+                        render: function (data) {
+                            return "<p class = 'text-right'><span style='float:left;'>$</span>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "total_price_in_usd",
+                        render: function (data) {
+                            return "<p class = 'text-right'><span style='float:left;'>$</span>"+data +"</p>";
+                        }
+                    },
+                    {
+                        render: function (data, type, val) {
+                            if(val.remarks === null){
+                                return "<p class = 'text-right'></p>";
+                            }
+                            else{
+                                return "<p class = 'text-right'>"+ val.remarks +"</p>";
+                            }
+                        }
+                    },
+                    @if($purchaseOrder->close_request == 0)
+                    {                       
+                        render: function(data, type, api_item) {
+                            return "<p class='text-center'>"+
+                                    @if(Auth::user()->hasTaskPermission('lpdtwodeleteitem', Auth::user()->id))
+                                    "<a title= 'Delete' class= 'DeleteDetail btn btn-danger btn-xs' data-id = "+ api_item.item_count +"><i class='fa fa-trash'></i></a>" +
+                                    " &nbsp;" +
+                                    @endif
+                                    @if(Auth::user()->hasTaskPermission('lpdtwoadditem', Auth::user()->id))
+                                    "<a title= 'Edit' class= 'EditFactory btn btn-warning btn-xs' data-id = "+ api_item.item_count +"><i class='fa fa-edit'></i></a></p>"
+                                    @endif
+                        }
+                    }
+                    @endif
+                ]
+            });
+        }
+
+
+
 
         function getTrimsTypeCode(_category) {
             var categoryId = _category.value;
@@ -1224,19 +1328,24 @@
             $('#ItemAdd').submit(function(e){
                 e.preventDefault();
                 var data = $(this).serialize();
-                var id = $('#DetailID').val();
-                var masterId = $('#MasterID').val();
-                //console.log(masterId);
-                //return;
+                // var id = $('#DetailID').val();
+                // var masterId = $('#MasterID').val();
+                // console.log(masterId);
+                // return;
+
                 var url = '{{ route('lpd1.purchase.order.detail.save') }}';
-                //console.log(data);
+                // console.log(data);
+                
                 $.ajax({
                     url: url,
                     method:'POST',
                     data:data,
-                    success:function(data){
-                        console.log(data);
-                        if(id)
+                    success:function(data){    
+                    //    console.log(data);
+                    //    clearFormWithoutDelay("ItemAdd");
+                    // var poMasterID = 
+                    //    return;                    
+                        if(data === '2')
                         {
                             swal({
                                 title: "Data Updated Successfully!",
@@ -1244,11 +1353,13 @@
                                 button: "Ok!",
                             }).then(function (value) {
                                 if(value){
-                                    window.location.href = window.location.href.replace(/#.*$/, '');
+                                    clearFormWithoutDelay("ItemAdd");                                    
+                                    loadPOListDataTable();
+                                    document.forms["ItemAddForm"]["purchase_order_master_id"].value = po_master_id;
                                 }
                             });
                         }
-                        else
+                        else if(data === '1')
                         {
                             swal({
                                 title: "Data Inserted Successfully!",
@@ -1256,8 +1367,19 @@
                                 button: "Ok!",
                             }).then(function (value) {
                                 if(value){
-                                    window.location.href = window.location.href.replace(/#.*$/, '');
+                                    clearFormWithoutDelay("ItemAdd");
+                                    loadPOListDataTable();
+                                    document.forms["ItemAddForm"]["purchase_order_master_id"].value = po_master_id;
                                 }
+                            });
+                        }
+                        else{
+                            swal({
+                                title: "Data Not Saved!",
+                                text: "Please Check Your Data!",
+                                icon: "error",
+                                button: "Ok!",
+                                className: "myClass",
                             });
                         }
                     },
@@ -1274,6 +1396,117 @@
                 })
 
             })
+        });
+
+
+        $('#advanced-usage').on('click',".EditFactory", function(){
+            var button = $(this);
+            var FactoryID = button.attr("data-id");      
+            var url = '{{ route('lpd1.purchase.order.detail.edit') }}';
+            $.ajax({
+                url: url,
+                method:'POST',
+                data:{item_count: FactoryID, purchase_order_master_id: $('#MasterID').val()},
+                success:function(data){                    
+                    $('input[name=item_size]').val(data.item_size);
+                    $('input[name=item_color]').val(data.item_color);
+                    $('input[name=item_description]').val(data.item_description);
+                    $('input[name=unit_price]').val(data.unit_price_in_usd);
+                    $('input[name=total]').val(data.total_price_in_usd);
+                    $('input[name=item_remarks]').val(data.remarks);
+                    $('input[name=quantity]').val(data.item_order_quantity);
+                    $('input[name=sample_quantity]').val(data.sample_item_order_quantity);
+                    $('input[name=style_no]').val(data.style_no);
+                    $('input[name=item_id]').val(data.item_id);
+                    $('input[name=gross_unit_price]').val(data.gross_unit_price);
+                    //$('input[name=gross_calculation_amount]').val(data.gross_calculation_amount);
+                    $('input[name=gross_item_order_quantity]').val(data.gross_item_order_quantity);
+                    $('input[name=sample_gross_item_order_quantity]').val(data.gross_sample_item_order_quantity);
+
+
+                    //$('input[name=remarks]').val(data.remarks);
+
+                    //document.getElementById('ItemRemarks').value = data.remarks;
+                    //document.getElementById('Remarks').value = data.remarks;
+                    $("#UnitID option[value = '" + data.item_unit + "']").attr('selected', 'selected').change();
+                    $("#TrimsTypeID option[value = '" + data.trims_type_id + "']").attr('selected', 'selected').change();
+
+                    $('input[name=gross_calculation_amount]').val(data.gross_calculation_amount);
+                    $('input[name=add_amount_percent]').val(data.add_amount_percent);
+                    //console.log();
+
+                    $('input[name=id]').val(data.id);
+                    moveToTop();
+                },
+                error:function(error){
+                    swal({
+                        title: "No Data Found!",
+                        text: "no data!",
+                        icon: "error",
+                        button: "Ok!",
+                        className: "myClass",
+                    });
+                }
+            })
+
+        });
+
+
+        $('#advanced-usage').on('click',".DeleteDetail", function(){
+            var button = $(this);
+            var id = button.attr("data-id");
+            var url = '{{ route('lpd1.purchase.order.detail.delete') }}';
+            swal({
+                title: 'Are you sure?',
+                text: 'This item will be removed permanently!',
+                icon: 'warning',
+                buttons: ["Cancel", "Yes!"],
+            }).then(function(value) {
+                if (value) {
+                    //window.location.href = url;
+                    //console.log(id);
+                    $.ajax({
+                        method:'DELETE',
+                        url: url,
+                        data:{item_id: id, _token: '{{csrf_token()}}', purchase_order_master_id: $('#MasterID').val()},
+                        success:function(data){
+                            if(data){
+                                //console.log(data);
+                                if(data === '2'){
+                                    swal({
+                                        title: "Operation Successful!",
+                                        icon: "success",
+                                        button: "Ok!",
+                                    }).then(function (value) {
+                                        if(value){
+                                            loadPOListDataTable();
+                                        }
+                                    });
+                                }
+                                else{
+                                    swal({
+                                        title: "Operation Unsuccessful!",
+                                        text: "Something wrong happened please check!",
+                                        icon: "error",
+                                        button: "Ok!",
+                                        className: "myClass",
+                                    });
+                                }
+                            }
+                        },
+                        error:function(error){
+                            console.log(error);
+                            swal({
+                                title: "Operation Unsuccessful!",
+                                text: "Somthing wrong happend please check!",
+                                icon: "error",
+                                button: "Ok!",
+                                className: "myClass",
+                            });
+                        }
+                    })
+                }
+            });
         });
 
 
@@ -1322,7 +1555,7 @@
                         }
                     },
                     error:function(error){
-                        console.log(error);
+                        //console.log(error);
                         swal({
                             title: "Data Not Saved!",
                             text: "Please Check Your Data!",
@@ -1354,7 +1587,7 @@
                     method:'POST',
                     data:data,
                     success:function(data){
-                        console.log(data);
+                       // console.log(data);
                         if(id)
                         {
                             swal({
@@ -1649,64 +1882,6 @@
         });
 
 
-
-
-        $('#advanced-usage').on('click',".EditFactory", function(){
-            var button = $(this);
-            var FactoryID = button.attr("data-id");
-            //$('body').animate({scrollTop:0}, 400);
-            window.scrollTo({
-                top: 0,
-                left: 0,
-                behavior: 'smooth'
-            });
-            var url = '{{ route('lpd1.purchase.order.detail.edit') }}';
-            $.ajax({
-                url: url,
-                method:'POST',
-                data:{item_count: FactoryID, purchase_order_master_id: $('#MasterID').val()},
-                success:function(data){
-                    $('input[name=item_size]').val(data.item_size);
-                    $('input[name=item_color]').val(data.item_color);
-                    $('input[name=item_description]').val(data.item_description);
-                    $('input[name=unit_price]').val(data.unit_price_in_usd);
-                    $('input[name=total]').val(data.total_price_in_usd);
-                    $('input[name=item_remarks]').val(data.remarks);
-                    $('input[name=quantity]').val(data.item_order_quantity);
-                    $('input[name=sample_quantity]').val(data.sample_item_order_quantity);
-                    $('input[name=style_no]').val(data.style_no);
-                    $('input[name=item_id]').val(data.item_id);
-                    $('input[name=gross_unit_price]').val(data.gross_unit_price);
-                    //$('input[name=gross_calculation_amount]').val(data.gross_calculation_amount);
-                    $('input[name=gross_item_order_quantity]').val(data.gross_item_order_quantity);
-                    $('input[name=sample_gross_item_order_quantity]').val(data.gross_sample_item_order_quantity);
-
-
-                    //$('input[name=remarks]').val(data.remarks);
-
-                    //document.getElementById('ItemRemarks').value = data.remarks;
-                    //document.getElementById('Remarks').value = data.remarks;
-                    $("#UnitID option[value = '" + data.item_unit + "']").attr('selected', 'selected').change();
-                    $("#TrimsTypeID option[value = '" + data.trims_type_id + "']").attr('selected', 'selected').change();
-
-                    $('input[name=gross_calculation_amount]').val(data.gross_calculation_amount);
-                    $('input[name=add_amount_percent]').val(data.add_amount_percent);
-                    //console.log();
-
-                    $('input[name=id]').val(data.id);
-                },
-                error:function(error){
-                    swal({
-                        title: "No Data Found!",
-                        text: "no data!",
-                        icon: "error",
-                        button: "Ok!",
-                        className: "myClass",
-                    });
-                }
-            })
-
-        });
         $('#purchase-order').on('click',".DeleteOrder", function(){
             var button = $(this);
             var id = button.attr("data-id");
@@ -1735,56 +1910,6 @@
                                     if(value){
                                         //console.log(value);
                                         window.location.href = window.location.href.replace(/#.*$/, '');
-                                    }
-                                });
-                            }
-                        },
-                        error:function(error){
-                            console.log(error);
-                            swal({
-                                title: "Operation Unsuccessful!",
-                                text: "Somthing wrong happend please check!",
-                                icon: "error",
-                                button: "Ok!",
-                                className: "myClass",
-                            });
-                        }
-                    })
-                }
-            });
-        });
-        $('#advanced-usage').on('click',".DeleteDetail", function(){
-            var button = $(this);
-            var id = button.attr("data-id");
-            var url = '{{ route('lpd1.purchase.order.detail.delete') }}';
-            swal({
-                title: 'Are you sure?',
-                text: 'This item will be removed permanently!',
-                icon: 'warning',
-                buttons: ["Cancel", "Yes!"],
-            }).then(function(value) {
-                if (value) {
-                    //window.location.href = url;
-                    //console.log(id);
-                    $.ajax({
-                        method:'DELETE',
-                        url: url,
-                        data:{item_id: id, _token: '{{csrf_token()}}', purchase_order_master_id: $('#MasterID').val()},
-                        success:function(data){
-                            if(data){
-                                //console.log(data);
-                                swal({
-                                    title: "Operation Successful!",
-                                    icon: "success",
-                                    button: "Ok!",
-                                }).then(function (value) {
-                                    if(value){
-                                        //console.log(value);
-                                        var url = '{{ route('lpd1.purchase.order.active') }}';
-                                        //url = url.replace('pid', FactoryID);
-
-                                        document.location.href = url;
-                                        //window.location.href = window.location.href.replace(/#.*$/, '');
                                     }
                                 });
                             }
