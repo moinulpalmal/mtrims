@@ -57,8 +57,42 @@ class PurchaseOrderDetail extends Model
         return '0';
     }
 
-    public static function updatePOProductList($request){
-        
+    public static function updatePOProductList($request, $id){
+        $purchaseOrderDetail = PurchaseOrderDetail::where('purchase_order_master_id', $request->purchase_order_master_id)
+                ->where('item_count', $id)
+                ->first();
+            if(!empty($purchaseOrderDetail)){
+
+                $result = DB::table('purchase_order_details')
+                    ->where('item_count', $id)
+                    ->where('purchase_order_master_id', $request->purchase_order_master_id)
+                    ->update(['style_no' => $request->style_no,
+                        'item_size' => $request->item_size,
+                        'item_color' => $request->item_color,
+                        'item_description' => $request->item_description,
+                        'item_unit_id' => $request->item_unit,
+                        'remarks' => $request->item_remarks,
+                        'item_order_quantity' => $request->quantity,
+                        'sample_item_order_quantity' => $request->sample_quantity,
+                        'gross_calculation_amount' => $request->gross_calculation_amount,
+                        'gross_item_order_quantity' => $request->gross_item_order_quantity,
+                        'gross_sample_item_order_quantity' => $request->sample_gross_item_order_quantity,
+                        'unit_price_in_usd' => $request->unit_price,
+                        'add_amount_percent' => $request->add_amount_percent,
+                        'gross_unit_price' => $request->gross_unit_price,
+                        'trims_type_id' => $request->trims_type,
+                        'total_price_in_usd' => $request->total]);
+
+                if($result){
+
+                    $purchaseOrder = PurchaseOrderMaster::find($request->purchase_order_master_id);
+
+                    $purchaseOrder->pi_generation_activated = true;
+                    $purchaseOrder->save();
+                    return "2";
+                }
+            }
+            return "0";
     }
 
     public static function getPOProductListEditDetail($request){
