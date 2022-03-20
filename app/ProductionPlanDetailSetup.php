@@ -7,6 +7,27 @@ use Illuminate\Support\Facades\DB;
 
 class ProductionPlanDetailSetup extends Model
 {
+    public static function getPOProductionPlanByPOID($purchase_order_master_id) {
+        return DB::table('production_plan_detail_setups')
+                ->join('purchase_order_masters', 'production_plan_detail_setups.purchase_order_master_id', '=', 'purchase_order_masters.id')
+                ->join('purchase_order_details', function ($join) {
+                    $join->on('purchase_order_details.purchase_order_master_id', '=', 'production_plan_detail_setups.purchase_order_master_id');
+                    $join->on('purchase_order_details.item_count', '=', 'production_plan_detail_setups.purchase_order_detail_id');
+                })
+                ->join('trims_types', 'purchase_order_details.trims_type_id', '=', 'trims_types.id')
+                ->join('machine_setups', 'machine_setups.id', '=', 'production_plan_detail_setups.machine_id')
+                ->join('stores', 'stores.id', '=', 'production_plan_detail_setups.delivery_location_id')
+                ->join('units', 'units.id', '=', 'production_plan_detail_setups.item_unit_id')
+                ->select('trims_types.name AS trims_type','purchase_order_details.trims_type_id','purchase_order_details.item_size','purchase_order_details.item_color','purchase_order_details.item_description','units.short_unit As unit_name','stores.short_name AS delivery_location','machine_setups.name AS machine_name','production_plan_detail_setups.no_of_heads','production_plan_detail_setups.target_production',
+                'production_plan_detail_setups.production_date','production_plan_detail_setups.machine_id','production_plan_detail_setups.delivery_location_id',
+                'production_plan_detail_setups.production_date','production_plan_detail_setups.item_unit_id','production_plan_detail_setups.remarks')
+                ->where('production_plan_detail_setups.purchase_order_master_id', $purchase_order_master_id)
+                ->where('production_plan_detail_setups.status', '!=', 'D')
+                ->orderBy('production_plan_detail_setups.production_date', 'DESC')
+                ->get();
+
+    }
+    
     public static function activeProductionPlanList($lpd, $date){
         if($lpd == -1){
             return ProductionPlanDetailSetup::orderBy('production_date', 'ASC')
