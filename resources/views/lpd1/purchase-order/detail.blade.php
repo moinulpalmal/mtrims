@@ -512,7 +512,7 @@
                                                         {{--                                                        <p>Your personal account settings</p>--}}
                                                     </div>
                                                     <div class="form-group col-md-6 legend text-right">
-                                                        <a onclick="loadPOProductionPlanDataTable()" role="button" class="tile-refresh myIcon icon-warning icon-ef-3 icon-ef-3b icon-color" title="Refresh">
+                                                        <a onclick="loadPOProductionPlanDataTable()" role="button" class="tile-refresh myIcon icon-info icon-ef-3 icon-ef-3b icon-color" title="Refresh">
                                                             <i class="fa fa-refresh"></i>
                                                         </a>
                                                         <a href="{{route('lpd1.purchase.order.detail.plan-report', ['id' => $purchaseOrder->id])}}" title="Production Plan Report" class ="myIcon icon-danger icon-ef-3 icon-ef-3b icon-color">
