@@ -464,13 +464,13 @@ class PurchaseOrderController extends Controller
                                     ->groupBy('purchase_order_details.trims_type_id', 'trims_types.short_name', 'trims_types.name')
                                     ->get();
 
-                $productionPlanDetails = ProductionPlanDetailSetup::where('purchase_order_master_id', $id)
-                    ->where('status', '!=', 'D')
-                    ->orderBy('production_date', 'DESC')
-                    ->get();
+                // $productionPlanDetails = ProductionPlanDetailSetup::where('purchase_order_master_id', $id)
+                //     ->where('status', '!=', 'D')
+                //     ->orderBy('production_date', 'DESC')
+                //     ->get();
 
                 return view('lpd1.purchase-order.plan-print-view',
-                    compact('uniqTrimsTypes', 'productionPlanDetails', 'purchaseOrder'));
+                    compact('uniqTrimsTypes', 'purchaseOrder'));
             } // other data
         }
         else{
