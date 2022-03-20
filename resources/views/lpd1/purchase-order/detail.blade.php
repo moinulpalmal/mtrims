@@ -1256,7 +1256,7 @@
                 },
                 columns: [
                     {
-                        data: "machine_id",
+                        data: "machine_name",
                         render: function (data) {
                             return "<p class = 'text-center'>"+ data +"</p>";
                         }
@@ -1268,13 +1268,13 @@
                         }
                     },
                     {
-                        data: "delivery_location_id",
+                        data: "delivery_location",
                         render: function (data) {
                             return "<p class = 'text-left'>"+ data +"</p>";
                         }
                     },
                     {
-                        data: "trims_type_id",
+                        data: "trims_type",
                         render: function (data) {
                             return "<p class = 'text-left'>"+ data +"</p>";
                         }
@@ -1304,7 +1304,7 @@
                         }
                     },
                     {
-                        data: "item_unit_id",
+                        data: "unit_name",
                         render: function (data) {
                             return "<p class = 'text-right'>"+ data +"</p>";
                         }
