@@ -470,7 +470,7 @@ class PurchaseOrderController extends Controller
                 //     ->get();
 
                 return view('lpd1.purchase-order.plan-print-view',
-                    compact('uniqTrimsTypes', 'purchaseOrder'));
+                    compact('uniqTrimsTypes', 'purchaseOrder','productionPlanDetails'));
             } // other data
         }
         else{
@@ -505,8 +505,9 @@ class PurchaseOrderController extends Controller
                     ->orderBy('production_date', 'DESC')
                     ->get();
 
+                // , 'productionPlanDetails'
                 return view('lpd1.purchase-order.achievement-print-view',
-                    compact('uniqTrimsTypes', 'productionPlanDetails', 'purchaseOrder'));
+                    compact('uniqTrimsTypes', 'purchaseOrder','productionPlanDetails'));
             } // other data
         }
         else{

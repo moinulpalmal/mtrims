@@ -9,12 +9,19 @@ use Illuminate\Http\Request;
 
 class PurchaseOrderController extends Controller
 {
-    public function getPOProductList($id){
+    public function getPOProductList($id)
+    {
         return PurchaseOrderDetail::getPOProductList($id);
     } 
 
-    public function getPOProductionPlanByPOID($id){
+    public function getPOProductionPlanByPOID($id)
+    {
         return ProductionPlanDetailSetup::getPOProductionPlanByPOID($id);
+    } 
+
+    public function getPOProductionAchievementByPOID($id)
+    {
+        return ProductionPlanDetailSetup::getPOProductionAchievementByPOID($id);
     } 
 
 }
