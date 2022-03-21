@@ -397,7 +397,7 @@
                                                                                     {{--                                                                            <input type="number" class="form-control qty" name="quantity" id="ItemQuantity" required>--}}
                                                                                 </div>
                                                                             </div>
-                                                                            
+
                                                                         </div>
                                                                         <div class="row" style="padding: 0px 15px;">
                                                                             <div class="col-md-3 no-padding">
@@ -491,7 +491,7 @@
                                                                     </tr>
                                                                     </thead>
                                                                     <tbody>
-                                                                    
+
 
                                                                     </tbody>
                                                                 </table>
@@ -1092,7 +1092,7 @@
 <script src="{{ asset('/js/common.js') }}"></script>
     <script>
 
-        var po_master_id = {{ $purchaseOrder->id }};       
+        var po_master_id = {{ $purchaseOrder->id }};
 
         var po_product_list_table = $('#advanced-usage').DataTable({
             "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
@@ -1111,7 +1111,7 @@
         });
 
         $(window).load(function(){
-           
+
             loadPOListDataTable();
 
             // $('#production_plan_table').DataTable({
@@ -1149,7 +1149,7 @@
                 $("#IsCheck").toggle();
                 $('input[name="flow_count"]').val('');
 
-                
+
             });
         });
 
@@ -1236,7 +1236,7 @@
                         }
                     },
                     @if($purchaseOrder->close_request == 0)
-                    {                       
+                    {
                         render: function(data, type, api_item) {
                             return "<p class='text-center'>"+
                                     @if(Auth::user()->hasTaskPermission('lpdtwodeleteitem', Auth::user()->id))
@@ -1335,7 +1335,7 @@
                             }
                         }
                     }
-                    
+
                 ]
             });
         }
@@ -1435,7 +1435,7 @@
                     //         }
                     //     }
                     // }
-                    
+
                 ]
             });
         }
@@ -1455,7 +1455,7 @@
                     {
                         data: "trims_type",
                         render: function (data) {
-                            return "<p class = 'text-center'>"+ data +"</p>";
+                            return "<p class = 'text-left'>"+ data +"</p>";
                         }
                     },
                     {
@@ -1479,11 +1479,17 @@
                     {
                         data: "short_unit",
                         render: function (data) {
-                            return "<p class = 'text-left'>"+ data +"</p>";
+                            return "<p class = 'text-center'>"+ data +"</p>";
                         }
                     },
                     {
-                        data: "stock_quantity",
+                        data: "received_quantity",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "total_delivered_quantity",
                         render: function (data) {
                             return "<p class = 'text-right'>"+ data +"</p>";
                         }
@@ -1494,13 +1500,7 @@
                             return "<p class = 'text-right'>"+ data +"</p>";
                         }
                     },
-                    {
-                        data: "stock_quantity",
-                        render: function (data) {
-                            return "<p class = 'text-right'>"+ data +"</p>";
-                        }
-                    },
-                    
+
                 ]
             });
         }
@@ -1609,16 +1609,16 @@
 
                 var url = '{{ route('lpd1.purchase.order.detail.save') }}';
                 // console.log(data);
-                
+
                 $.ajax({
                     url: url,
                     method:'POST',
                     data:data,
-                    success:function(data){    
+                    success:function(data){
                     //    console.log(data);
                     //    clearFormWithoutDelay("ItemAdd");
-                    // var poMasterID = 
-                    //    return;                    
+                    // var poMasterID =
+                    //    return;
                         if(data === '2')
                         {
                             swal({
@@ -1627,7 +1627,7 @@
                                 button: "Ok!",
                             }).then(function (value) {
                                 if(value){
-                                    clearFormWithoutDelay("ItemAdd");                                    
+                                    clearFormWithoutDelay("ItemAdd");
                                     loadPOListDataTable();
                                     document.forms["ItemAddForm"]["purchase_order_master_id"].value = po_master_id;
                                 }
@@ -1675,13 +1675,13 @@
 
         $('#advanced-usage').on('click',".EditFactory", function(){
             var button = $(this);
-            var FactoryID = button.attr("data-id");      
+            var FactoryID = button.attr("data-id");
             var url = '{{ route('lpd1.purchase.order.detail.edit') }}';
             $.ajax({
                 url: url,
                 method:'POST',
                 data:{item_count: FactoryID, purchase_order_master_id: $('#MasterID').val()},
-                success:function(data){                    
+                success:function(data){
                     $('input[name=item_size]').val(data.item_size);
                     $('input[name=item_color]').val(data.item_color);
                     $('input[name=item_description]').val(data.item_description);
@@ -1915,7 +1915,7 @@
                 var primary_delivery_location = document.forms["POUpdate"]["primary_delivery_location"].value;
                 var po_type = document.forms["POUpdate"]["po_type"].value;
                 var flow_count = document.forms["POUpdate"]["flow_count"].value;
-                
+
                 if ($("#HasFlowCount").is(":checked")) {
                     if(flow_count == ""){
                         swal({
