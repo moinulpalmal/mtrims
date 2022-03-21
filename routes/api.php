@@ -39,3 +39,4 @@ Route::get('production/section-setup/not-deleted','Production\SectionController@
 Route::get('lpd1/purchase-order/detail/product-list/{id}','LPD1\API\PurchaseOrderController@getPOProductList');
 Route::get('lpd1/purchase-order/detail/production-plan/{id}','LPD1\API\PurchaseOrderController@getPOProductionPlanByPOID');
 Route::get('lpd1/purchase-order/detail/production-achievement/{id}','LPD1\API\PurchaseOrderController@getPOProductionAchievementByPOID');
+Route::get('lpd1/purchase-order/detail/product-current-stock/{id}','LPD1\API\PurchaseOrderController@getPOProductStockByPOID');

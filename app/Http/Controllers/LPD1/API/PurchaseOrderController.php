@@ -5,6 +5,7 @@ namespace App\Http\Controllers\LPD1\API;
 use App\Http\Controllers\Controller;
 use App\PurchaseOrderDetail;
 use App\ProductionPlanDetailSetup;
+use App\TrimsStock;
 use Illuminate\Http\Request;
 
 class PurchaseOrderController extends Controller
@@ -22,6 +23,11 @@ class PurchaseOrderController extends Controller
     public function getPOProductionAchievementByPOID($id)
     {
         return ProductionPlanDetailSetup::getPOProductionAchievementByPOID($id);
+    } 
+
+    public function getPOProductStockByPOID($id)
+    {
+        return TrimsStock::getPOProductStockByPOID($id);
     } 
 
 }

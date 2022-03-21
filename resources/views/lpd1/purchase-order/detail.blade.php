@@ -397,7 +397,7 @@
                                                                                     {{--                                                                            <input type="number" class="form-control qty" name="quantity" id="ItemQuantity" required>--}}
                                                                                 </div>
                                                                             </div>
-                                                                            
+
                                                                         </div>
                                                                         <div class="row" style="padding: 0px 15px;">
                                                                             <div class="col-md-3 no-padding">
@@ -491,7 +491,7 @@
                                                                     </tr>
                                                                     </thead>
                                                                     <tbody>
-                                                                    
+
 
                                                                     </tbody>
                                                                 </table>
@@ -637,6 +637,9 @@
                                                         <h4><strong>Stock</strong> Available Stock List</h4>
                                                     </div>
                                                     <div class="form-group col-md-6 legend text-right">
+                                                        <a onclick="loadPOProductStockDataTable()" role="button" class="tile-refresh myIcon icon-info icon-ef-3 icon-ef-3b icon-color" title="Refresh">
+                                                            <i class="fa fa-refresh"></i>
+                                                        </a>
                                                         <a href="{{route('lpd1.purchase.order.detail.stock-report', ['id' => $purchaseOrder->id])}}" title="Production Achievement Report" class ="myIcon icon-danger icon-ef-3 icon-ef-3b icon-color">
                                                             <i class="fa fa-file-pdf-o"></i>
                                                         </a>
@@ -659,7 +662,7 @@
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                @foreach($currentStocks as $item)
+                                                                {{-- @foreach($currentStocks as $item)
                                                                     @if($item->status == 'E')
                                                                     <tr class="bg-warning text-white">
                                                                         <td style="font-size: x-small !important;"><p>{!! $item->trims_type !!}</p></td>
@@ -683,7 +686,7 @@
                                                                             <td style="font-size: x-small !important;" class="text-right"><p>{!! $item->stock_quantity !!}</p></td>
                                                                         </tr>
                                                                         @endif
-                                                                @endforeach
+                                                                @endforeach --}}
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -1089,7 +1092,7 @@
 <script src="{{ asset('/js/common.js') }}"></script>
     <script>
 
-        var po_master_id = {{ $purchaseOrder->id }};       
+        var po_master_id = {{ $purchaseOrder->id }};
 
         var po_product_list_table = $('#advanced-usage').DataTable({
             "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
@@ -1103,8 +1106,12 @@
             "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
         });
 
+        var po_product_stock_table = $('#stock_table').DataTable({
+            "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
+        });
+
         $(window).load(function(){
-           
+
             loadPOListDataTable();
 
             // $('#production_plan_table').DataTable({
@@ -1113,14 +1120,15 @@
 
             loadPOProductionPlanDataTable();
             loadPOProductionAchievementDataTable();
+            loadPOProductStockDataTable();
 
             // $('#achievement_table').DataTable({
 
             // });
 
-            $('#stock_table').DataTable({
+            // $('#stock_table').DataTable({
 
-            });
+            // });
 
             $('#confirmed_delivery_table').DataTable({
 
@@ -1141,7 +1149,7 @@
                 $("#IsCheck").toggle();
                 $('input[name="flow_count"]').val('');
 
-                
+
             });
         });
 
@@ -1228,7 +1236,7 @@
                         }
                     },
                     @if($purchaseOrder->close_request == 0)
-                    {                       
+                    {
                         render: function(data, type, api_item) {
                             return "<p class='text-center'>"+
                                     @if(Auth::user()->hasTaskPermission('lpdtwodeleteitem', Auth::user()->id))
@@ -1327,7 +1335,7 @@
                             }
                         }
                     }
-                    
+
                 ]
             });
         }
@@ -1427,7 +1435,72 @@
                     //         }
                     //     }
                     // }
-                    
+
+                ]
+            });
+        }
+
+        function loadPOProductStockDataTable() {
+
+            po_product_stock_table.destroy();
+            var free_table = '<tr><td class="text-center" colspan="8">--- Please Wait... Loading Data  ----</td></tr>';
+            $('#stock_table').find('tbody').append(free_table);
+            // $('tbody').html(free_table);
+            po_product_stock_table = $("#stock_table").DataTable({
+                ajax: {
+                    url: "/mtrims/public/api/lpd1/purchase-order/detail/product-current-stock/"+ {{ $purchaseOrder->id }},
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "trims_type",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "item_description",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "item_size",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "item_color",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "short_unit",
+                        render: function (data) {
+                            return "<p class = 'text-center'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "received_quantity",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "total_delivered_quantity",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "stock_quantity",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+
                 ]
             });
         }
@@ -1536,16 +1609,16 @@
 
                 var url = '{{ route('lpd1.purchase.order.detail.save') }}';
                 // console.log(data);
-                
+
                 $.ajax({
                     url: url,
                     method:'POST',
                     data:data,
-                    success:function(data){    
+                    success:function(data){
                     //    console.log(data);
                     //    clearFormWithoutDelay("ItemAdd");
-                    // var poMasterID = 
-                    //    return;                    
+                    // var poMasterID =
+                    //    return;
                         if(data === '2')
                         {
                             swal({
@@ -1554,7 +1627,7 @@
                                 button: "Ok!",
                             }).then(function (value) {
                                 if(value){
-                                    clearFormWithoutDelay("ItemAdd");                                    
+                                    clearFormWithoutDelay("ItemAdd");
                                     loadPOListDataTable();
                                     document.forms["ItemAddForm"]["purchase_order_master_id"].value = po_master_id;
                                 }
@@ -1602,13 +1675,13 @@
 
         $('#advanced-usage').on('click',".EditFactory", function(){
             var button = $(this);
-            var FactoryID = button.attr("data-id");      
+            var FactoryID = button.attr("data-id");
             var url = '{{ route('lpd1.purchase.order.detail.edit') }}';
             $.ajax({
                 url: url,
                 method:'POST',
                 data:{item_count: FactoryID, purchase_order_master_id: $('#MasterID').val()},
-                success:function(data){                    
+                success:function(data){
                     $('input[name=item_size]').val(data.item_size);
                     $('input[name=item_color]').val(data.item_color);
                     $('input[name=item_description]').val(data.item_description);
@@ -1842,7 +1915,7 @@
                 var primary_delivery_location = document.forms["POUpdate"]["primary_delivery_location"].value;
                 var po_type = document.forms["POUpdate"]["po_type"].value;
                 var flow_count = document.forms["POUpdate"]["flow_count"].value;
-                
+
                 if ($("#HasFlowCount").is(":checked")) {
                     if(flow_count == ""){
                         swal({
