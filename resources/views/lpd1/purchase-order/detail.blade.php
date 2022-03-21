@@ -704,6 +704,9 @@
                                                         {{--                                                        <p>Your personal account settings</p>--}}
                                                     </div>
                                                     <div class="form-group col-md-6 legend text-right">
+                                                        <a onclick="loadPOConfirmedDeleverykDataTable()" role="button" class="tile-refresh myIcon icon-info icon-ef-3 icon-ef-3b icon-color" title="Refresh">
+                                                            <i class="fa fa-refresh"></i>
+                                                        </a>
                                                         <a href="{{route('lpd1.purchase.order.detail.delivery-report', ['id' => $purchaseOrder->id])}}" title="Production Achievement Report" class ="myIcon icon-danger icon-ef-3 icon-ef-3b icon-color">
                                                             <i class="fa fa-file-pdf-o"></i>
                                                         </a>
@@ -715,7 +718,7 @@
                                                             <table class="table table-hover table-bordered table-condensed" id="confirmed_delivery_table">
                                                                 <thead>
                                                                 <tr style="height: 3px !important;">
-                                                                    <th style="font-size: small !important;">Sl</th>
+                                                                    {{-- <th style="font-size: small !important;">Sl</th> --}}
                                                                     <th style="font-size: small !important;">Trims Type</th>
                                                                     <th style="font-size: small !important;">Style No</th>
                                                                     <th style="font-size: small !important;">Delivery Place</th>
@@ -730,11 +733,11 @@
                                                                     <th style="font-size: small !important;">D. Qty</th>
                                                                     <th style="font-size: small !important;">G. Weight(Kg)</th>
                                                                     <th style="font-size: small !important;">N. Weight(Kg)</th>
-                                                                    <th style="font-size: small !important;">Remarks</th>
+                                                                    {{-- <th style="font-size: small !important;">Remarks</th> --}}
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                @php($i = 1)
+                                                                {{-- @php($i = 1)
                                                                 @foreach($deliveryData as $item)
                                                                     @if($item->status == 'AP')
                                                                         <tr style="height: 3px !important;">
@@ -756,7 +759,7 @@
                                                                             <td style="font-size: x-small !important;" class="text-right"><P>{!! $item->remarks !!}</P></td>
                                                                         </tr>
                                                                     @endif
-                                                                @endforeach
+                                                                @endforeach --}}
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -1110,6 +1113,10 @@
             "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
         });
 
+        var po_product_confirmed_table = $('#confirmed_delivery_table').DataTable({
+            "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
+        });
+
         $(window).load(function(){
 
             loadPOListDataTable();
@@ -1121,6 +1128,8 @@
             loadPOProductionPlanDataTable();
             loadPOProductionAchievementDataTable();
             loadPOProductStockDataTable();
+            loadPOProductStockDataTable();
+            loadPOConfirmedDeleverykDataTable();
 
             // $('#achievement_table').DataTable({
 
@@ -1130,9 +1139,9 @@
 
             // });
 
-            $('#confirmed_delivery_table').DataTable({
+            // $('#confirmed_delivery_table').DataTable({
 
-            });
+            // });
 
             $('#not_confirmed_delivery_table').DataTable({
 
@@ -1505,6 +1514,117 @@
             });
         }
 
+        function loadPOConfirmedDeleverykDataTable() {
+
+            po_product_confirmed_table.destroy();
+            var free_table = '<tr><td class="text-center" colspan="14">--- Please Wait... Loading Data  ----</td></tr>';
+            $('#confirmed_delivery_table').find('tbody').append(free_table);
+            // $('tbody').html(free_table);
+            po_product_confirmed_table = $("#confirmed_delivery_table").DataTable({
+                ajax: {
+                    url: "/mtrims/public/api/lpd1/purchase-order/detail/product-approved/"+ {{ $purchaseOrder->id }},
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "trims_type_name",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "style_no",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "store_name",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "item_description",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "challan_date",
+                        render: function (data) {
+                            return "<p class = 'text-center'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "challan_no",
+                        render: function (data) {
+                            return "<p class = 'text-center'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "item_color",
+                        render: function (data) {
+                            return "<p class = 'text-center'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "item_size",
+                        render: function (data) {
+                            return "<p class = 'text-center'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "short_unit",
+                        render: function (data) {
+                            return "<p class = 'text-center'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "gross_delivered_quantity",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        render: function(data, type, api_item) {
+                            // console.log(api_item);
+                            if(api_item.gross_unit === 'P'){
+                                return "<p class ='text-center'>Pcs</p>";
+                            }
+                            else if(api_item.gross_unit === 'L'){
+                                return "<p class ='text-center '>Lassi</p>";
+                            }
+                            else if(api_item.gross_unit === 'R'){
+                                return "<p class ='text-center '>Roll</p>";
+                            }
+                            else {
+
+                            }
+                        }
+                    },
+                    {
+                        data: "delivered_quantity",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "gross_weight",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "total_weight",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+
+                ]
+            });
+        }
 
 
 
