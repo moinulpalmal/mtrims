@@ -637,6 +637,9 @@
                                                         <h4><strong>Stock</strong> Available Stock List</h4>
                                                     </div>
                                                     <div class="form-group col-md-6 legend text-right">
+                                                        <a onclick="loadPOProductStockDataTable()" role="button" class="tile-refresh myIcon icon-info icon-ef-3 icon-ef-3b icon-color" title="Refresh">
+                                                            <i class="fa fa-refresh"></i>
+                                                        </a>
                                                         <a href="{{route('lpd1.purchase.order.detail.stock-report', ['id' => $purchaseOrder->id])}}" title="Production Achievement Report" class ="myIcon icon-danger icon-ef-3 icon-ef-3b icon-color">
                                                             <i class="fa fa-file-pdf-o"></i>
                                                         </a>
@@ -659,7 +662,7 @@
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                @foreach($currentStocks as $item)
+                                                                {{-- @foreach($currentStocks as $item)
                                                                     @if($item->status == 'E')
                                                                     <tr class="bg-warning text-white">
                                                                         <td style="font-size: x-small !important;"><p>{!! $item->trims_type !!}</p></td>
@@ -683,7 +686,7 @@
                                                                             <td style="font-size: x-small !important;" class="text-right"><p>{!! $item->stock_quantity !!}</p></td>
                                                                         </tr>
                                                                         @endif
-                                                                @endforeach
+                                                                @endforeach --}}
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -1103,6 +1106,10 @@
             "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
         });
 
+        var po_product_stock_table = $('#stock_table').DataTable({
+            "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
+        });
+
         $(window).load(function(){
            
             loadPOListDataTable();
@@ -1113,14 +1120,15 @@
 
             loadPOProductionPlanDataTable();
             loadPOProductionAchievementDataTable();
+            loadPOProductStockDataTable();
 
             // $('#achievement_table').DataTable({
 
             // });
 
-            $('#stock_table').DataTable({
+            // $('#stock_table').DataTable({
 
-            });
+            // });
 
             $('#confirmed_delivery_table').DataTable({
 
@@ -1427,6 +1435,71 @@
                     //         }
                     //     }
                     // }
+                    
+                ]
+            });
+        }
+
+        function loadPOProductStockDataTable() {
+
+            po_product_stock_table.destroy();
+            var free_table = '<tr><td class="text-center" colspan="8">--- Please Wait... Loading Data  ----</td></tr>';
+            $('#stock_table').find('tbody').append(free_table);
+            // $('tbody').html(free_table);
+            po_product_stock_table = $("#stock_table").DataTable({
+                ajax: {
+                    url: "/mtrims/public/api/lpd1/purchase-order/detail/product-current-stock/"+ {{ $purchaseOrder->id }},
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "trims_type",
+                        render: function (data) {
+                            return "<p class = 'text-center'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "item_description",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "item_size",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "item_color",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "short_unit",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "stock_quantity",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "stock_quantity",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "stock_quantity",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
                     
                 ]
             });
