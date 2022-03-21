@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\PurchaseOrderDetail;
 use App\ProductionPlanDetailSetup;
 use App\TrimsStock;
+use App\DeliveryDetail;
 use Illuminate\Http\Request;
 
 class PurchaseOrderController extends Controller
@@ -28,6 +29,11 @@ class PurchaseOrderController extends Controller
     public function getPOProductStockByPOID($id)
     {
         return TrimsStock::getPOProductStockByPOID($id);
+    }
+
+    public function getPOProductApprovedByPOID($id)
+    {
+        return DeliveryDetail::getPOProductApprovedByPOID($id);
     } 
 
 }

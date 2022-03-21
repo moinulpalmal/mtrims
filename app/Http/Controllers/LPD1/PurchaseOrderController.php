@@ -584,6 +584,7 @@ class PurchaseOrderController extends Controller
                                     ->orderBy('trims_types.name')
                                     ->groupBy('purchase_order_details.trims_type_id', 'trims_types.short_name', 'trims_types.name')
                                     ->get();
+                                    
                 $deliveryData = DB::table('delivery_details')
                     ->join('delivery_masters', 'delivery_masters.id', '=', 'delivery_details.delivery_master_id')
                     ->join('purchase_order_details', function ($join) {
