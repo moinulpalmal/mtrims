@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class DeliveryDetail extends Model
 {
-    public static function getPOProductApprovedByPOID($master_id)
+    public static function getPOProductApprovedByPOID($purchase_order_master_id)
     {
         return DB::table('delivery_details')
         ->join('delivery_masters', 'delivery_masters.id', '=', 'delivery_details.delivery_master_id')
@@ -24,7 +24,7 @@ class DeliveryDetail extends Model
             'delivery_details.delivered_quantity','delivery_details.gross_delivered_quantity','delivery_details.gross_weight','delivery_details.total_weight',
             'delivery_details.gross_unit','units.short_unit','trims_types.name AS trims_type_name', 'stores.name AS store_name')
         ->where('delivery_masters.status', 'AP')
-        ->where('purchase_order_masters.id', $master_id)
+        ->where('purchase_order_masters.id', $purchase_order_master_id)
         ->orderBy('delivery_masters.challan_date')
         ->get();
     }
