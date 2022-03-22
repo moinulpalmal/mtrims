@@ -326,21 +326,23 @@ class PurchaseOrderController extends Controller
 
         if(!empty($purchaseOrderDetail)){
 
-            $result = DB::table('purchase_order_details')
-                ->where('item_count', $id)
-                ->where('purchase_order_master_id', $request->purchase_order_master_id)
-                ->update(['status' => 'D']);
+            return PurchaseOrderDetail::deletePOProductList($request, $id);
 
-            if($result){
-                $purchaseOrder = PurchaseOrderMaster::find($request->purchase_order_master_id);
-                $purchaseOrder->pi_generation_activated = true;
-                $purchaseOrder->save();
-                return 'Updated';
-            }
-            return "Error";
+            // $result = DB::table('purchase_order_details')
+            //     ->where('item_count', $id)
+            //     ->where('purchase_order_master_id', $request->purchase_order_master_id)
+            //     ->update(['status' => 'D']);
+
+            // if($result){
+            //     $purchaseOrder = PurchaseOrderMaster::find($request->purchase_order_master_id);
+            //     $purchaseOrder->pi_generation_activated = true;
+            //     $purchaseOrder->save();
+            //     return 'Updated';
+            // }
+            // return "Error";
         }
 
-        return "Error";
+        return '0';
     }
 
     public function proposeDate(Request $request){
