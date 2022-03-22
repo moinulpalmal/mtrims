@@ -43,3 +43,5 @@ Route::get('lpd1/purchase-order/detail/product-current-stock/{id}','LPD1\API\Pur
 Route::get('lpd1/purchase-order/detail/product-approved/{id}','LPD1\API\PurchaseOrderController@getPOProductApprovedByPOID');
 Route::get('lpd1/purchase-order/detail/product-not-approved/{id}','LPD1\API\PurchaseOrderController@getPOProductNotApprovedByPOID');
 Route::get('lpd2/purchase-order/detail/product-list/{id}','LPD2\API\PurchaseOrderController@getPOProductList');
+Route::get('lpd2/purchase-order/detail/production-plan/{id}','LPD2\API\PurchaseOrderController@getPOProductionPlanByPOID');
+Route::get('lpd2/purchase-order/detail/production-achievement/{id}','LPD2\API\PurchaseOrderController@getPOProductionAchievementByPOID');

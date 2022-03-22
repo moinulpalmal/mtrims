@@ -534,6 +534,9 @@
                                                         {{--                                                        <p>Your personal account settings</p>--}}
                                                     </div>
                                                     <div class="form-group col-md-6 legend text-right">
+                                                        <a onclick="loadPOProductionPlanDataTable()" role="button" class="tile-refresh myIcon icon-info icon-ef-3 icon-ef-3b icon-color" title="Refresh">
+                                                            <i class="fa fa-refresh"></i>
+                                                        </a>
                                                         <a href="{{route('lpd2.purchase.order.detail.plan-report', ['id' => $purchaseOrder->id])}}" title="Production Plan Report" class ="myIcon icon-danger icon-ef-3 icon-ef-3b icon-color">
                                                             <i class="fa fa-file-pdf-o"></i>
                                                         </a>
@@ -559,7 +562,7 @@
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                @foreach($productionPlanDetails as $item)
+                                                                {{-- @foreach($productionPlanDetails as $item)
                                                                     <tr style="height: 3px !important;">
                                                                         <td style="font-size: x-small !important;"><p>{{ (\App\Helpers\Helper::IDwiseData('machine_setups', 'id', $item->machine_id))->name }}</p></td>
                                                                         <td style="font-size: x-small !important;"><p>{{ \Carbon\Carbon::parse($item->production_date)->format('d/m/Y') }}</p></td>
@@ -573,7 +576,7 @@
                                                                         <td style="font-size: x-small !important;" class="text-right"><p>{!! $item->target_production !!}</p></td>
                                                                         <td style="font-size: x-small !important;" class="text-right"><P>{!! $item->remarks !!}</P></td>
                                                                     </tr>
-                                                                @endforeach
+                                                                @endforeach --}}
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -593,6 +596,9 @@
                                                         {{--                                                        <p>Your personal account settings</p>--}}
                                                     </div>
                                                     <div class="form-group col-md-6 legend text-right">
+                                                        <a onclick="loadPOProductionAchievementDataTable()" role="button" class="tile-refresh myIcon icon-info icon-ef-3 icon-ef-3b icon-color" title="Refresh">
+                                                            <i class="fa fa-refresh"></i>
+                                                        </a>
                                                         <a href="{{route('lpd2.purchase.order.detail.achievement-report', ['id' => $purchaseOrder->id])}}" title="Production Achievement Report" class ="myIcon icon-danger icon-ef-3 icon-ef-3b icon-color">
                                                             <i class="fa fa-file-pdf-o"></i>
                                                         </a>
@@ -616,11 +622,11 @@
                                                                     <th style="font-size: small !important;">Target</th>
                                                                     <th style="font-size: small !important;">Achievement</th>
                                                                     <th style="font-size: small !important;">Variation</th>
-                                                                    <th style="font-size: small !important;">Remarks</th>
+                                                                    {{-- <th style="font-size: small !important;">Remarks</th> --}}
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                @foreach($productionPlanDetails as $item)
+                                                                {{-- @foreach($productionPlanDetails as $item)
                                                                     <tr style="height: 3px !important;">
                                                                         <td style="font-size: x-small !important;"><p>{{ (\App\Helpers\Helper::IDwiseData('machine_setups', 'id', $item->machine_id))->name }}</p></td>
                                                                         <td style="font-size: x-small !important;"><p>{{ \Carbon\Carbon::parse($item->production_date)->format('d/m/Y') }}</p></td>
@@ -636,7 +642,7 @@
                                                                         <td style="font-size: x-small !important;" class="text-right"><p>{!! $item->target_production - $item->achievement_production !!}</p></td>
                                                                         <td style="font-size: x-small !important;" class="text-right"><P>{!! $item->remarks !!}</P></td>
                                                                     </tr>
-                                                                @endforeach
+                                                                @endforeach --}}
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -1304,33 +1310,46 @@
                 "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
             });
 
-            
+        var po_production_plan_table = $('#production_plan_table').DataTable({
+            "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
+        });
+
+        var po_production_achievement_table = $('#achievement_table').DataTable({
+            "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
+        });
+
         $(window).load(function(){
 
             loadPOListDataTable();
+            loadPOProductionPlanDataTable();
+            loadPOProductionAchievementDataTable();
+            loadPOProductStockDataTable();
+            loadPOProductStockDataTable();
+            loadPOConfirmedDeleveryDataTable();
+            loadPONotConfirmedDeleveryDataTable()
 
             // $('#advanced-usage').DataTable({
             // });
 
-            $('#production_plan_table').DataTable({
+            // $('#production_plan_table').DataTable({
 
-            });
+            // });
 
-            $('#achievement_table').DataTable({
+            // $('#achievement_table').DataTable({
 
-            });
+            // });
 
-            $('#stock_table').DataTable({
+            // $('#stock_table').DataTable({
 
-            });
+            // });
 
-            $('#confirmed_delivery_table').DataTable({
+            // $('#confirmed_delivery_table').DataTable({
 
-            });
+            // });
 
-            $('#not_confirmed_delivery_table').DataTable({
+            // $('#not_confirmed_delivery_table').DataTable({
 
-            });
+            // });
 
             $('.select2').select2();
             sessionStorage.clear();
@@ -1482,6 +1501,192 @@
                         }
                     }
                     @endif
+                ]
+            });
+        }
+
+        function loadPOProductionPlanDataTable() {
+
+            po_production_plan_table.destroy();
+            var free_table = '<tr><td class="text-center" colspan="11">--- Please Wait... Loading Data  ----</td></tr>';
+            $('#production_plan_table').find('tbody').append(free_table);
+            // $('tbody').html(free_table);
+            po_production_plan_table = $("#production_plan_table").DataTable({
+                ajax: {
+                    url: "/mtrims/public/api/lpd2/purchase-order/detail/production-plan/"+ {{ $purchaseOrder->id }},
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "machine_name",
+                        render: function (data) {
+                            return "<p class = 'text-center'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "production_date",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "delivery_location",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "trims_type",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "item_description",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "item_size",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "item_color",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "no_of_heads",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "unit_name",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "target_production",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        render: function (data, type, val) {
+                            if(val.remarks === null){
+                                return "<p class = 'text-right'></p>";
+                            }
+                            else{
+                                return "<p class = 'text-right'>"+ val.remarks +"</p>";
+                            }
+                        }
+                    }
+
+                ]
+            });
+        }
+
+        function loadPOProductionAchievementDataTable() {
+
+            po_production_achievement_table.destroy();
+            var free_table = '<tr><td class="text-center" colspan="12">--- Please Wait... Loading Data  ----</td></tr>';
+            $('#achievement_table').find('tbody').append(free_table);
+            // $('tbody').html(free_table);
+            po_production_achievement_table = $("#achievement_table").DataTable({
+                ajax: {
+                    url: "/mtrims/public/api/lpd2/purchase-order/detail/production-achievement/"+ {{ $purchaseOrder->id }},
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "machine_id",
+                        render: function (data) {
+                            return "<p class = 'text-center'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "production_date",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "delivery_location",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "trims_type",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "item_description",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "item_size",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "item_color",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "no_of_heads",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "unit_name",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "target_production",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "achievement_production",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "variation_production",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+                    // {
+                    //     render: function (data, type, val) {
+                    //         if(val.remarks === null){
+                    //             return "<p class = 'text-right'></p>";
+                    //         }
+                    //         else{
+                    //             return "<p class = 'text-right'>"+ val.remarks +"</p>";
+                    //         }
+                    //     }
+                    // }
+
                 ]
             });
         }
