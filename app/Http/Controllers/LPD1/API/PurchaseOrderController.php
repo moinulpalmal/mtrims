@@ -36,4 +36,9 @@ class PurchaseOrderController extends Controller
         return DeliveryDetail::getPOProductApprovedByPOID($id);
     } 
 
+    public function getPOProductNotApprovedByPOID($id)
+    {
+        return DeliveryDetail::getPOProductNotApprovedByPOID($id);
+    } 
+
 }
