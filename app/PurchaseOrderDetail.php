@@ -22,17 +22,6 @@ class PurchaseOrderDetail extends Model
                 ->get();
     }
 
-    // public static function getPOProductionPlan($purchase_order_master_id) {
-    //     // return  DB::table('purchase_order_details')->orderBy('item_count')
-    //     //         ->where('purchase_order_details.status','!=', 'D')
-    //     //         ->where('purchase_order_master_id', $purchase_order_master_id)
-    //     //         ->get();
-
-        
-                
-    // }
-
-
 
     public static function insertPOProductList($request){        
         $purchaseOrderDetail = new PurchaseOrderDetail();
@@ -144,6 +133,22 @@ class PurchaseOrderDetail extends Model
         }
 
         return null;
+    }
+
+    public static function deletePOProductList($request, $id)
+    {
+        $result = DB::table('purchase_order_details')
+                ->where('item_count', $id)
+                ->where('purchase_order_master_id', $request->purchase_order_master_id)
+                ->update(['status' => 'D']);
+
+            if($result){
+                $purchaseOrder = PurchaseOrderMaster::find($request->purchase_order_master_id);
+                $purchaseOrder->pi_generation_activated = true;
+                $purchaseOrder->save();
+                return '2';
+            }
+            return '0';
     }
 
     public function purchase_order_master() {

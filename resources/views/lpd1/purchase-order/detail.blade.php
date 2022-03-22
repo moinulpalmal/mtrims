@@ -453,7 +453,7 @@
                                                                     <ul class="dropdown-menu pull-right with-arrow animated littleFadeInUp">
                                                                         <li>
                                                                             <a role="button" tabindex="0" class="tile-toggle">
-                                                                                <span class="minimize"><i class="fa fa-angle-down"></i>&nbsp;&nbsp;&nbsp;Minimize</span>
+                                                                                {{-- <span class="minimize"><i class="fa fa-angle-down"></i>&nbsp;&nbsp;&nbsp;Minimize</span> --}}
                                                                                 <span class="expand"><i class="fa fa-angle-up"></i>&nbsp;&nbsp;&nbsp;Expand</span>
                                                                             </a>
                                                                         </li>
@@ -1256,13 +1256,13 @@
                     {
                         render: function(data, type, api_item) {
                             return "<p class='text-center'>"+
-                                    @if(Auth::user()->hasTaskPermission('lpdtwodeleteitem', Auth::user()->id))
-                                    "<a title= 'Delete' class= 'DeleteDetail btn btn-danger btn-xs' data-id = "+ api_item.item_count +"><i class='fa fa-trash'></i></a>" +
-                                    " &nbsp;" +
-                                    @endif
-                                    @if(Auth::user()->hasTaskPermission('lpdtwoadditem', Auth::user()->id))
-                                    "<a title= 'Edit' class= 'EditFactory btn btn-warning btn-xs' data-id = "+ api_item.item_count +"><i class='fa fa-edit'></i></a></p>"
-                                    @endif
+                                @if(Auth::user()->hasTaskPermission('lpdtwodeleteitem', Auth::user()->id))
+                                "<a title= 'Delete' class= 'DeleteDetail btn btn-danger btn-xs' data-id = "+ api_item.item_count +"><i class='fa fa-trash'></i></a>" +
+                                " &nbsp;" +
+                                @endif
+                                @if(Auth::user()->hasTaskPermission('lpdtwoadditem', Auth::user()->id))
+                                "<a title= 'Edit' class= 'EditFactory btn btn-warning btn-xs' data-id = "+ api_item.item_count +"><i class='fa fa-edit'></i></a></p>"
+                                @endif
                         }
                     }
                     @endif
@@ -1936,14 +1936,16 @@
                     //$('input[name=gross_calculation_amount]').val(data.gross_calculation_amount);
                     $('input[name=gross_item_order_quantity]').val(data.gross_item_order_quantity);
                     $('input[name=sample_gross_item_order_quantity]').val(data.gross_sample_item_order_quantity);
+                    $('select[name=item_unit ]').val(data.item_unit).change();
+                    $('select[name=trims_type ]').val(data.trims_type_id).change();
 
 
                     //$('input[name=remarks]').val(data.remarks);
 
                     //document.getElementById('ItemRemarks').value = data.remarks;
                     //document.getElementById('Remarks').value = data.remarks;
-                    $("#UnitID option[value = '" + data.item_unit + "']").attr('selected', 'selected').change();
-                    $("#TrimsTypeID option[value = '" + data.trims_type_id + "']").attr('selected', 'selected').change();
+                    //$("#UnitID option[value = '" + data.item_unit + "']").attr('selected', 'selected').change();
+                    //$("#TrimsTypeID option[value = '" + data.trims_type_id + "']").attr('selected', 'selected').change();
 
                     $('input[name=gross_calculation_amount]').val(data.gross_calculation_amount);
                     $('input[name=add_amount_percent]').val(data.add_amount_percent);
