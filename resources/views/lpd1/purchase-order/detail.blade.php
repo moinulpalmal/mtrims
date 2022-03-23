@@ -1357,7 +1357,6 @@
             });
         }
 
-
         function loadPOProductionAchievementDataTable() {
 
             po_production_achievement_table.destroy();
@@ -1642,7 +1641,7 @@
             // $('tbody').html(free_table);
             po_product_not_confirmed_table = $("#not_confirmed_delivery_table").DataTable({
                 ajax: {
-                    url: "/mtrims/public/api/lpd1/purchase-order/detail/product-not-approved/"+ {{ $purchaseOrder->id }},
+                    url: "/mtrims/public/api/lpd2/purchase-order/detail/product-not-approved/"+ {{ $purchaseOrder->id }},
                     dataSrc: ""
                 },
                 columns: [
@@ -1745,8 +1744,6 @@
                 ]
             });
         }
-
-
 
         function getTrimsTypeCode(_category) {
             var categoryId = _category.value;
