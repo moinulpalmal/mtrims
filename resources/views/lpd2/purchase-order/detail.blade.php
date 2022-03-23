@@ -534,6 +534,9 @@
                                                         {{--                                                        <p>Your personal account settings</p>--}}
                                                     </div>
                                                     <div class="form-group col-md-6 legend text-right">
+                                                        <a onclick="loadPOProductionPlanDataTable()" role="button" class="tile-refresh myIcon icon-info icon-ef-3 icon-ef-3b icon-color" title="Refresh">
+                                                            <i class="fa fa-refresh"></i>
+                                                        </a>
                                                         <a href="{{route('lpd2.purchase.order.detail.plan-report', ['id' => $purchaseOrder->id])}}" title="Production Plan Report" class ="myIcon icon-danger icon-ef-3 icon-ef-3b icon-color">
                                                             <i class="fa fa-file-pdf-o"></i>
                                                         </a>
@@ -559,7 +562,7 @@
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                @foreach($productionPlanDetails as $item)
+                                                                {{-- @foreach($productionPlanDetails as $item)
                                                                     <tr style="height: 3px !important;">
                                                                         <td style="font-size: x-small !important;"><p>{{ (\App\Helpers\Helper::IDwiseData('machine_setups', 'id', $item->machine_id))->name }}</p></td>
                                                                         <td style="font-size: x-small !important;"><p>{{ \Carbon\Carbon::parse($item->production_date)->format('d/m/Y') }}</p></td>
@@ -573,7 +576,7 @@
                                                                         <td style="font-size: x-small !important;" class="text-right"><p>{!! $item->target_production !!}</p></td>
                                                                         <td style="font-size: x-small !important;" class="text-right"><P>{!! $item->remarks !!}</P></td>
                                                                     </tr>
-                                                                @endforeach
+                                                                @endforeach --}}
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -593,6 +596,9 @@
                                                         {{--                                                        <p>Your personal account settings</p>--}}
                                                     </div>
                                                     <div class="form-group col-md-6 legend text-right">
+                                                        <a onclick="loadPOProductionAchievementDataTable()" role="button" class="tile-refresh myIcon icon-info icon-ef-3 icon-ef-3b icon-color" title="Refresh">
+                                                            <i class="fa fa-refresh"></i>
+                                                        </a>
                                                         <a href="{{route('lpd2.purchase.order.detail.achievement-report', ['id' => $purchaseOrder->id])}}" title="Production Achievement Report" class ="myIcon icon-danger icon-ef-3 icon-ef-3b icon-color">
                                                             <i class="fa fa-file-pdf-o"></i>
                                                         </a>
@@ -616,11 +622,11 @@
                                                                     <th style="font-size: small !important;">Target</th>
                                                                     <th style="font-size: small !important;">Achievement</th>
                                                                     <th style="font-size: small !important;">Variation</th>
-                                                                    <th style="font-size: small !important;">Remarks</th>
+                                                                    {{-- <th style="font-size: small !important;">Remarks</th> --}}
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                @foreach($productionPlanDetails as $item)
+                                                                {{-- @foreach($productionPlanDetails as $item)
                                                                     <tr style="height: 3px !important;">
                                                                         <td style="font-size: x-small !important;"><p>{{ (\App\Helpers\Helper::IDwiseData('machine_setups', 'id', $item->machine_id))->name }}</p></td>
                                                                         <td style="font-size: x-small !important;"><p>{{ \Carbon\Carbon::parse($item->production_date)->format('d/m/Y') }}</p></td>
@@ -636,7 +642,7 @@
                                                                         <td style="font-size: x-small !important;" class="text-right"><p>{!! $item->target_production - $item->achievement_production !!}</p></td>
                                                                         <td style="font-size: x-small !important;" class="text-right"><P>{!! $item->remarks !!}</P></td>
                                                                     </tr>
-                                                                @endforeach
+                                                                @endforeach --}}
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -653,6 +659,9 @@
                                                         <h4><strong>Stock</strong> Available Stock List</h4>
                                                     </div>
                                                     <div class="form-group col-md-6 legend text-right">
+                                                        <a onclick="loadPOProductStockDataTable()" role="button" class="tile-refresh myIcon icon-info icon-ef-3 icon-ef-3b icon-color" title="Refresh">
+                                                            <i class="fa fa-refresh"></i>
+                                                        </a>
                                                         <a href="{{route('lpd2.purchase.order.detail.stock-report', ['id' => $purchaseOrder->id])}}" title="Production Achievement Report" class ="myIcon icon-danger icon-ef-3 icon-ef-3b icon-color">
                                                             <i class="fa fa-file-pdf-o"></i>
                                                         </a>
@@ -675,7 +684,7 @@
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                @foreach($currentStocks as $item)
+                                                                {{-- @foreach($currentStocks as $item)
                                                                     <tr style="height: 3px !important;">
                                                                         <td style="font-size: x-small !important;"><p>{!! $item->trims_type !!}</p></td>
                                                                         <td style="font-size: x-small !important;"><p>{!! $item->item_description !!}</p></td>
@@ -685,8 +694,9 @@
                                                                         <td style="font-size: x-small !important;" class="text-right"><p>{!! (\App\Helpers\Helper::stockGrossDeliveredQtyTotal($item->id)) + $item->stock_quantity !!}</p></td>
                                                                         <td style="font-size: x-small !important;" class="text-right"><p>{!! \App\Helpers\Helper::stockGrossDeliveredQtyTotal($item->id) !!}</p></td>
                                                                         <td style="font-size: x-small !important;" class="text-right"><p>{!! $item->stock_quantity !!}</p></td>
-                                                                    </tr>
-                                                                    {{--@if($item->status == "A")
+                                                                    </tr> --}}
+                                                                    {{-- @if($item->status == "A")
+                                                                        //original code was comment out this section
                                                                         <tr style="height: 3px !important;">
                                                                             <td style="font-size: x-small !important;"><p>{!! $item->trims_type !!}</p></td>
                                                                             <td style="font-size: x-small !important;"><p>{!! $item->item_description !!}</p></td>
@@ -695,8 +705,8 @@
                                                                             <td style="font-size: x-small !important;" class="text-right"><p>{!! $itmm->full_unit !!}</p></td>
                                                                             <td style="font-size: x-small !important;" class="text-right"><p>{!! $itmm->stock_quantity !!}</p></td>
                                                                         </tr>
-                                                                    @endif--}}
-                                                                @endforeach
+                                                                    @endif --}}
+                                                                {{-- @endforeach --}}
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -714,6 +724,9 @@
                                                         {{--                                                        <p>Your personal account settings</p>--}}
                                                     </div>
                                                     <div class="form-group col-md-6 legend text-right">
+                                                        <a onclick="loadPOConfirmedDeleveryDataTable()" role="button" class="tile-refresh myIcon icon-info icon-ef-3 icon-ef-3b icon-color" title="Refresh">
+                                                            <i class="fa fa-refresh"></i>
+                                                        </a>
                                                         <a href="{{route('lpd2.purchase.order.detail.delivery-report', ['id' => $purchaseOrder->id])}}" title="Production Achievement Report" class ="myIcon icon-danger icon-ef-3 icon-ef-3b icon-color">
                                                             <i class="fa fa-file-pdf-o"></i>
                                                         </a>
@@ -725,7 +738,7 @@
                                                             <table class="table table-hover table-bordered table-condensed" id="confirmed_delivery_table">
                                                                 <thead>
                                                                 <tr style="height: 3px !important;">
-                                                                    <th style="font-size: small !important;">Sl</th>
+                                                                    {{-- <th style="font-size: small !important;">Sl</th> --}}
                                                                     <th style="font-size: small !important;">Trims Type</th>
                                                                     <th style="font-size: small !important;">Style No</th>
                                                                     <th style="font-size: small !important;">Delivery Place</th>
@@ -740,11 +753,11 @@
                                                                     <th style="font-size: small !important;">D. Qty</th>
                                                                     <th style="font-size: small !important;">G. Weight(Kg)</th>
                                                                     <th style="font-size: small !important;">N. Weight(Kg)</th>
-                                                                    <th style="font-size: small !important;">Remarks</th>
+                                                                    {{-- <th style="font-size: small !important;">Remarks</th> --}}
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                @php($i = 1)
+                                                                {{-- @php($i = 1)
                                                                 @foreach($deliveryData as $item)
                                                                     @if($item->status == 'AP')
                                                                         <tr style="height: 3px !important;">
@@ -766,7 +779,7 @@
                                                                             <td style="font-size: x-small !important;" class="text-right"><P>{!! $item->remarks !!}</P></td>
                                                                         </tr>
                                                                     @endif
-                                                                @endforeach
+                                                                @endforeach --}}
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -784,6 +797,9 @@
                                                         {{--                                                        <p>Your personal account settings</p>--}}
                                                     </div>
                                                     <div class="form-group col-md-6 legend text-right">
+                                                        <a onclick="loadPONotConfirmedDeleveryDataTable()" role="button" class="tile-refresh myIcon icon-info icon-ef-3 icon-ef-3b icon-color" title="Refresh">
+                                                            <i class="fa fa-refresh"></i>
+                                                        </a>
                                                         <a href="{{route('lpd2.purchase.order.detail.delivery-not-approved-report', ['id' => $purchaseOrder->id])}}" title="Production Achievement Report" class ="myIcon icon-danger icon-ef-3 icon-ef-3b icon-color">
                                                             <i class="fa fa-file-pdf-o"></i>
                                                         </a>
@@ -795,7 +811,7 @@
                                                             <table class="table table-hover table-bordered table-condensed" id="not_confirmed_delivery_table">
                                                                 <thead>
                                                                 <tr style="height: 3px !important;">
-                                                                    <th style="font-size: small !important;">Sl No</th>
+                                                                    {{-- <th style="font-size: small !important;">Sl No</th> --}}
                                                                     <th style="font-size: small !important;">Trims Type</th>
                                                                     <th style="font-size: small !important;">Style No</th>
                                                                     <th style="font-size: small !important;">Delivery Place</th>
@@ -810,11 +826,11 @@
                                                                     <th style="font-size: small !important;">D. Qty</th>
                                                                     <th style="font-size: small !important;">G. Weight(Kg)</th>
                                                                     <th style="font-size: small !important;">N. Weight(Kg)</th>
-                                                                    <th style="font-size: small !important;">Remarks</th>
+                                                                    {{-- <th style="font-size: small !important;">Remarks</th> --}}
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                @php($i = 1)
+                                                                {{-- @php($i = 1)
                                                                 @foreach($deliveryData as $item)
                                                                     @if($item->status == 'A')
                                                                         <tr style="height: 3px !important;">
@@ -836,7 +852,7 @@
                                                                             <td style="font-size: x-small !important;" class="text-right"><P>{!! $item->remarks !!}</P></td>
                                                                         </tr>
                                                                     @endif
-                                                                @endforeach
+                                                                @endforeach --}}
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -1301,36 +1317,61 @@
         var po_master_id = {{ $purchaseOrder->id }};
 
         var po_product_list_table = $('#advanced-usage').DataTable({
-                "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
-            });
+            "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
+        });
 
-            
+        var po_production_plan_table = $('#production_plan_table').DataTable({
+            "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
+        });
+
+        var po_production_achievement_table = $('#achievement_table').DataTable({
+            "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
+        });
+
+        var po_product_stock_table = $('#stock_table').DataTable({
+            "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
+        });
+
+        var po_product_confirmed_table = $('#confirmed_delivery_table').DataTable({
+            "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
+        });
+
+        var po_product_not_confirmed_table = $('#not_confirmed_delivery_table').DataTable({
+            "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
+        });
+
         $(window).load(function(){
 
             loadPOListDataTable();
+            loadPOProductionPlanDataTable();
+            loadPOProductionAchievementDataTable();
+            loadPOProductStockDataTable();
+            loadPOProductStockDataTable();
+            loadPOConfirmedDeleveryDataTable();
+            loadPONotConfirmedDeleveryDataTable()
 
             // $('#advanced-usage').DataTable({
             // });
 
-            $('#production_plan_table').DataTable({
+            // $('#production_plan_table').DataTable({
 
-            });
+            // });
 
-            $('#achievement_table').DataTable({
+            // $('#achievement_table').DataTable({
 
-            });
+            // });
 
-            $('#stock_table').DataTable({
+            // $('#stock_table').DataTable({
 
-            });
+            // });
 
-            $('#confirmed_delivery_table').DataTable({
+            // $('#confirmed_delivery_table').DataTable({
 
-            });
+            // });
 
-            $('#not_confirmed_delivery_table').DataTable({
+            // $('#not_confirmed_delivery_table').DataTable({
 
-            });
+            // });
 
             $('.select2').select2();
             sessionStorage.clear();
@@ -1486,6 +1527,480 @@
             });
         }
 
+        function loadPOProductionPlanDataTable() {
+
+            po_production_plan_table.destroy();
+            var free_table = '<tr><td class="text-center" colspan="11">--- Please Wait... Loading Data  ----</td></tr>';
+            $('#production_plan_table').find('tbody').append(free_table);
+            // $('tbody').html(free_table);
+            po_production_plan_table = $("#production_plan_table").DataTable({
+                ajax: {
+                    url: "/mtrims/public/api/lpd2/purchase-order/detail/production-plan/"+ {{ $purchaseOrder->id }},
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "machine_name",
+                        render: function (data) {
+                            return "<p class = 'text-center'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "production_date",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "delivery_location",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "trims_type",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "item_description",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "item_size",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "item_color",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "no_of_heads",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "unit_name",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "target_production",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        render: function (data, type, val) {
+                            if(val.remarks === null){
+                                return "<p class = 'text-right'></p>";
+                            }
+                            else{
+                                return "<p class = 'text-right'>"+ val.remarks +"</p>";
+                            }
+                        }
+                    }
+
+                ]
+            });
+        }
+
+        function loadPOProductionAchievementDataTable() {
+
+            po_production_achievement_table.destroy();
+            var free_table = '<tr><td class="text-center" colspan="12">--- Please Wait... Loading Data  ----</td></tr>';
+            $('#achievement_table').find('tbody').append(free_table);
+            // $('tbody').html(free_table);
+            po_production_achievement_table = $("#achievement_table").DataTable({
+                ajax: {
+                    url: "/mtrims/public/api/lpd2/purchase-order/detail/production-achievement/"+ {{ $purchaseOrder->id }},
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "machine_id",
+                        render: function (data) {
+                            return "<p class = 'text-center'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "production_date",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "delivery_location",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "trims_type",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "item_description",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "item_size",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "item_color",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "no_of_heads",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "unit_name",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "target_production",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "achievement_production",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "variation_production",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+                    // {
+                    //     render: function (data, type, val) {
+                    //         if(val.remarks === null){
+                    //             return "<p class = 'text-right'></p>";
+                    //         }
+                    //         else{
+                    //             return "<p class = 'text-right'>"+ val.remarks +"</p>";
+                    //         }
+                    //     }
+                    // }
+
+                ]
+            });
+        }
+
+        function loadPOProductStockDataTable() {
+
+            po_product_stock_table.destroy();
+            var free_table = '<tr><td class="text-center" colspan="8">--- Please Wait... Loading Data  ----</td></tr>';
+            $('#stock_table').find('tbody').append(free_table);
+            // $('tbody').html(free_table);
+            po_product_stock_table = $("#stock_table").DataTable({
+                ajax: {
+                    url: "/mtrims/public/api/lpd2/purchase-order/detail/product-current-stock/"+ {{ $purchaseOrder->id }},
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "trims_type",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "item_description",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "item_size",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "item_color",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "short_unit",
+                        render: function (data) {
+                            return "<p class = 'text-center'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "received_quantity",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "total_delivered_quantity",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "stock_quantity",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+
+                ]
+            });
+        }
+
+        function loadPOConfirmedDeleveryDataTable() {
+
+            po_product_confirmed_table.destroy();
+            var free_table = '<tr><td class="text-center" colspan="14">--- Please Wait... Loading Data  ----</td></tr>';
+            $('#confirmed_delivery_table').find('tbody').append(free_table);
+            // $('tbody').html(free_table);
+            po_product_confirmed_table = $("#confirmed_delivery_table").DataTable({
+                ajax: {
+                    url: "/mtrims/public/api/lpd2/purchase-order/detail/product-approved/"+ {{ $purchaseOrder->id }},
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "trims_type_name",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "style_no",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "store_name",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "item_description",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "challan_date",
+                        render: function (data) {
+                            return "<p class = 'text-center'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "challan_no",
+                        render: function (data) {
+                            return "<p class = 'text-center'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "item_color",
+                        render: function (data) {
+                            return "<p class = 'text-center'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "item_size",
+                        render: function (data) {
+                            return "<p class = 'text-center'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "short_unit",
+                        render: function (data) {
+                            return "<p class = 'text-center'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "gross_delivered_quantity",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        render: function(data, type, api_item) {
+                            // console.log(api_item);
+                            if(api_item.gross_unit === 'P'){
+                                return "<p class ='text-center'>Pcs</p>";
+                            }
+                            else if(api_item.gross_unit === 'L'){
+                                return "<p class ='text-center '>Lassi</p>";
+                            }
+                            else if(api_item.gross_unit === 'R'){
+                                return "<p class ='text-center '>Roll</p>";
+                            }
+                            else {
+
+                            }
+                        }
+                    },
+                    {
+                        data: "delivered_quantity",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "gross_weight",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "total_weight",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+
+                ]
+            });
+        }
+
+        function loadPONotConfirmedDeleveryDataTable() {
+
+            po_product_not_confirmed_table.destroy();
+            var free_table = '<tr><td class="text-center" colspan="14">--- Please Wait... Loading Data  ----</td></tr>';
+            $('#not_confirmed_delivery_table').find('tbody').append(free_table);
+            // $('tbody').html(free_table);
+            po_product_not_confirmed_table = $("#not_confirmed_delivery_table").DataTable({
+                ajax: {
+                    url: "/mtrims/public/api/lpd2/purchase-order/detail/product-not-approved/"+ {{ $purchaseOrder->id }},
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "trims_type_name",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "style_no",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "store_name",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "item_description",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "challan_date",
+                        render: function (data) {
+                            return "<p class = 'text-center'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "challan_no",
+                        render: function (data) {
+                            return "<p class = 'text-center'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "item_color",
+                        render: function (data) {
+                            return "<p class = 'text-center'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "item_size",
+                        render: function (data) {
+                            return "<p class = 'text-center'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "short_unit",
+                        render: function (data) {
+                            return "<p class = 'text-center'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "gross_delivered_quantity",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        render: function(data, type, api_item) {
+                            // console.log(api_item);
+                            if(api_item.gross_unit === 'P'){
+                                return "<p class ='text-center'>Pcs</p>";
+                            }
+                            else if(api_item.gross_unit === 'L'){
+                                return "<p class ='text-center '>Lassi</p>";
+                            }
+                            else if(api_item.gross_unit === 'R'){
+                                return "<p class ='text-center '>Roll</p>";
+                            }
+                            else {
+
+                            }
+                        }
+                    },
+                    {
+                        data: "delivered_quantity",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "gross_weight",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "total_weight",
+                        render: function (data) {
+                            return "<p class = 'text-right'>"+ data +"</p>";
+                        }
+                    },
+
+                ]
+            });
+        }
 
         function getTrimsTypeCode(_category) {
             var categoryId = _category.value;
