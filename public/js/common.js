@@ -26,6 +26,28 @@ function moveToTop() {
     });
 }
 
+function returnStringFormatDate(_date) {
+    let targetDate = Date.parse(_date);
+    let currentDate = new Date(targetDate);
+    return currentDate.toDateString();
+    //return targetDate.('en')
+}
+
+function returnBDStringFormatDate(_date) {
+    let targetDate = Date.parse(_date);
+    let currentDate = new Date(targetDate);
+    let date = currentDate.getDate();
+    if(date < 10){
+        date = '0' + date;
+    }
+    let month = currentDate.getMonth() + 1;
+    if(month < 10){
+        month = '0'+month;
+    }
+    let year = currentDate.getFullYear();
+    return date + '/' + month + '/' + year;
+}
+
 function moveToIDLocation(_target) {
   /*  window.scrollTo(_target.offsetLeft,_target.offsetTop);*/
     let str = '#';
