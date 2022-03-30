@@ -272,7 +272,8 @@
                         <!-- tile body -->
 
                         <div class="tile-body">
-                            <p class="text-default lt">{!! $purchaseOrder->remarks !!}</p>
+                            <p class="text-default lt" id="remark"></p>
+                            {{-- <p class="text-default lt">{!! $purchaseOrder->remarks !!}</p> --}}
                         </div>
                         <!-- /tile body -->
                     </section>
