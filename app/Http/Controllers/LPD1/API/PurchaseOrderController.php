@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\LPD1\API;
 
 use App\Http\Controllers\Controller;
+use App\PurchaseOrderMaster;
 use App\PurchaseOrderDetail;
 use App\ProductionPlanDetailSetup;
 use App\TrimsStock;
@@ -11,6 +12,11 @@ use Illuminate\Http\Request;
 
 class PurchaseOrderController extends Controller
 {
+    // public function getPODetailProduct($id)
+    // {
+    //     return PurchaseOrderMaster::getPODetail($id);
+    // }
+
     public function getPOProductList($id)
     {
         return PurchaseOrderDetail::getPOProductList($id);

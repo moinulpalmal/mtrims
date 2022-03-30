@@ -527,7 +527,7 @@
                     }
                     else
                     {
-                        document.getElementById("demo").innerHTML = "<p class =''><label class='label label-warning'>No</label></p>"
+                        document.getElementById("TIsCho").innerHTML = "<p class =''><label class='label label-warning'>No</label></p>"
                     }
 
                     if (data.status === 'A')
@@ -552,6 +552,7 @@
             })
 
         });
+        
         $('#advanced-usage').on('click',".EditFactory", function(){
             var button = $(this);
             var FactoryID = button.attr("data-id");

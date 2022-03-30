@@ -36,6 +36,7 @@ Route::get('admin/bank-bin/not-deleted','admin\BankBinController@getAllNotDelete
 Route::get('admin/bank-beneficiary-bin/not-deleted','admin\BeneficiaryBinController@getAllNotDeletedBeneficiaryBins');
 Route::get('admin/bank-hs-code/not-deleted','admin\HSCodeController@getAllNotDeletedHSCodes');
 Route::get('production/section-setup/not-deleted','Production\SectionController@getAllNotDeletedSections');
+// Route::post('lpd1/purchase-order/detail/product/{id}','LPD1\API\PurchaseOrderController@getPODetailProduct');
 Route::get('lpd1/purchase-order/detail/product-list/{id}','LPD1\API\PurchaseOrderController@getPOProductList');
 Route::get('lpd1/purchase-order/detail/production-plan/{id}','LPD1\API\PurchaseOrderController@getPOProductionPlanByPOID');
 Route::get('lpd1/purchase-order/detail/production-achievement/{id}','LPD1\API\PurchaseOrderController@getPOProductionAchievementByPOID');
