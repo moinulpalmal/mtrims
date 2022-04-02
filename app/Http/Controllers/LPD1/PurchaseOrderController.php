@@ -164,6 +164,12 @@ class PurchaseOrderController extends Controller
         return redirect()->route('lpd1.purchase.order.detail', ['id' => $purchaseOrderMaster->id]);
     }
 
+
+    public function getPurchaseOrderDetail(Request $req)
+    {
+        return PurchaseOrderMaster::getPurchaseOrderDetail($req);
+    }
+
     
     public function details($id){
         $purchaseOrder = PurchaseOrderMaster::find($id);

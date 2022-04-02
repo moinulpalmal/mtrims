@@ -47,13 +47,15 @@
                     <section id="purchase-order" class="tile tile-simple">
                         <!-- tile widget -->
                         <div class="tile-widget p-30 text-center">
-                            <h4 class="mb-0"><strong>LPD PO No:</strong> {{$purchaseOrder->lpd_po_no}}</h4>
+                            <h4 class="mb-0"><strong>LPD PO No:</strong> <span id="lpdNo"></span></h4>
+                            {{-- <h4 class="mb-0"><strong>LPD PO No:</strong> {{$purchaseOrder->lpd_po_no}}</h4> --}}
                             <span class="text-muted">
                                 <strong>HTL Job No:</strong>
                                 @foreach($uniqTrimsTypes as $item)
-                                {{ $item->short_name }}-
+                                    {{ $item->short_name }}-
                                 @endforeach
-                                    {{$purchaseOrder->job_year}}/{{$purchaseOrder->job_no}}
+                                <span id="jobYearNo"></span>
+                                    {{-- {{$purchaseOrder->job_year}}/{{$purchaseOrder->job_no}} --}}
                             </span>
                             <div class="mt-10">
                                 <a title="Refresh" class ="myIcon icon-info icon-ef-3 icon-ef-3b icon-color" onclick="refresh()">
@@ -94,7 +96,8 @@
                                         <div class="col-md-7 pull-right">
                                             @if($purchaseOrder->po_date != null)
                                                 <p class="text-right text-greensea">
-                                                    {{\Carbon\Carbon::parse($purchaseOrder->po_date)->format('d/m/Y')}}
+                                                    <p class="text-right text-blue" id="poDate"></p>
+                                                    {{-- {{\Carbon\Carbon::parse($purchaseOrder->po_date)->format('d/m/Y')}} --}}
                                                 </p>
                                             @endif
                                         </div>
@@ -108,7 +111,8 @@
                                         </div>
                                         <div class="col-md-7 pull-right">
                                             @if($purchaseOrder->approval_date != null)
-                                                <p class="text-right text-greensea">{{\Carbon\Carbon::parse($purchaseOrder->approval_date_date)->format('d/m/Y')}}</p>
+                                                <p class="text-right text-blue" id="approvalDate"></p>
+                                                {{-- <p class="text-right text-greensea">{{\Carbon\Carbon::parse($purchaseOrder->approval_date_date)->format('d/m/Y')}}</p> --}}
                                             @endif
                                         </div>
                                     </div>
@@ -151,7 +155,8 @@
                                         </div>
                                         <div class="col-md-7 pull-right">
                                             @if($purchaseOrder->sample_submission_date != null)
-                                                <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->sample_submission_date)->format('d/m/Y')}}</p>
+                                                <p class="text-right text-blue" id="sampleSubmissionDate"></p>
+                                                {{-- <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->sample_submission_date)->format('d/m/Y')}}</p> --}}
                                             @endif
                                         </div>
                                     </div>
@@ -164,7 +169,8 @@
                                         </div>
                                         <div class="col-md-7 pull-right">
                                             @if($purchaseOrder->production_start_date != null)
-                                                <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->production_start_date)->format('d/m/Y')}}</p>
+                                                <p class="text-right text-blue" id="productionStartDate"></p>
+                                                {{-- <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->production_start_date)->format('d/m/Y')}}</p> --}}
                                             @endif
                                         </div>
                                     </div>
@@ -177,7 +183,8 @@
                                         </div>
                                         <div class="col-md-7 pull-right">
                                             @if($purchaseOrder->production_end_date != null)
-                                                <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->production_end_date)->format('d/m/Y')}}</p>
+                                                <p class="text-right text-blue" id="productionEndDate"></p>
+                                                {{-- <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->production_end_date)->format('d/m/Y')}}</p> --}}
                                             @endif
                                         </div>
                                     </div>
@@ -190,7 +197,8 @@
                                         </div>
                                         <div class="col-md-7 pull-right">
                                             @if($purchaseOrder->delivery_start_date != null)
-                                                <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->delivery_start_date)->format('d/m/Y')}}</p>
+                                                <p class="text-right text-blue" id="deliveryStartDate"></p>
+                                                {{-- <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->delivery_start_date)->format('d/m/Y')}}</p> --}}
                                             @endif
                                         </div>
                                     </div>
@@ -203,7 +211,8 @@
                                         </div>
                                         <div class="col-md-7 pull-right">
                                             @if($purchaseOrder->delivery_start_date != null)
-                                                <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->delivery_end_date)->format('d/m/Y')}}</p>
+                                                <p class="text-right text-blue" id="deliveryEndDate"></p>
+                                                {{-- <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->delivery_end_date)->format('d/m/Y')}}</p> --}}
                                             @endif
                                         </div>
                                     </div>
@@ -223,7 +232,8 @@
                         <!-- /tile header -->
                         <!-- tile body -->
                         <div class="tile-body">
-                            <p class="text-default lt">{!! $purchaseOrder->remarks !!}</p>
+                            <p class="text-default lt" id="remark"></p>
+                            {{-- <p class="text-default lt">{!! $purchaseOrder->remarks !!}</p> --}}
                         </div>
                         <!-- /tile body -->
                     </section>
@@ -254,7 +264,8 @@
                         <!-- tile body -->
 
                         <div class="tile-body">
-                            <p class="text-default lt">{!! $purchaseOrder->remarks !!}</p>
+                            <p class="text-default lt" id="remark"></p>
+                            {{-- <p class="text-default lt">{!! $purchaseOrder->remarks !!}</p> --}}
                         </div>
                         <!-- /tile body -->
                     </section>
@@ -1342,6 +1353,7 @@
 
         $(window).load(function(){
 
+            loadPurchaseOrderDetail();
             loadPOListDataTable();
             loadPOProductionPlanDataTable();
             loadPOProductionAchievementDataTable();
@@ -1427,6 +1439,43 @@
 
         });
 
+        function loadPurchaseOrderDetail(){
+            $.ajaxSetup({
+                headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' }
+            });
+            var FactoryID = po_master_id;
+            var url = '{{ route('lpd2.purchase.order.detail.get-data') }}';
+            $.ajax({
+                url: url,
+                method:'POST',
+                data:{id: FactoryID},
+                success:function(data){
+                    // console.log(data);
+                    // document.getElementById("lpdNo").innerHTML  = "<strong>LPD PO No: </strong>" + data.lpd_po_no;
+                    document.getElementById("lpdNo").innerHTML  = data.lpd_po_no;
+                    document.getElementById("jobYearNo").innerHTML  = data.job_year + '/' + data.job_no;
+                    document.getElementById("poDate").innerHTML  = returnStringFormatDate(data.po_date);  
+                    document.getElementById("approvalDate").innerHTML  = returnStringFormatDate(data.approval_date);  
+                    document.getElementById("sampleSubmissionDate").innerHTML  = returnStringFormatDate(data.sample_submission_date);  
+                    document.getElementById("productionStartDate").innerHTML  = returnStringFormatDate(data.production_start_date);  
+                    document.getElementById("productionEndDate").innerHTML  = returnStringFormatDate(data.production_end_date);  
+                    document.getElementById("deliveryStartDate").innerHTML  = returnStringFormatDate(data.delivery_start_date);  
+                    document.getElementById("deliveryEndDate").innerHTML  = returnStringFormatDate(data.delivery_end_date);  
+                    document.getElementById("remark").innerHTML  = data.remarks;  
+                },
+                error:function(error){
+                    //console.log(error);
+                    swal({
+                        title: "No Data Found!",
+                        text: "no data!",
+                        icon: "error",
+                        button: "Ok!",
+                        className: "myClass",
+                    });
+                }
+            })
+        }
+
         function loadPOListDataTable() {
 
             po_product_list_table.destroy();
@@ -1435,7 +1484,7 @@
             // $('tbody').html(free_table);
             po_product_list_table = $("#advanced-usage").DataTable({
                 ajax: {
-                    url: "/mtrims/public/api/lpd2/purchase-order/detail/product-list/"+ {{ $purchaseOrder->id }},
+                    url: "/mtrims/public/api/lpd2/purchase-order/detail/product-list/"+ po_master_id,
                     dataSrc: ""
                 },
                 columns: [
@@ -1535,7 +1584,7 @@
             // $('tbody').html(free_table);
             po_production_plan_table = $("#production_plan_table").DataTable({
                 ajax: {
-                    url: "/mtrims/public/api/lpd2/purchase-order/detail/production-plan/"+ {{ $purchaseOrder->id }},
+                    url: "/mtrims/public/api/lpd2/purchase-order/detail/production-plan/"+ po_master_id,
                     dataSrc: ""
                 },
                 columns: [
@@ -1622,7 +1671,7 @@
             // $('tbody').html(free_table);
             po_production_achievement_table = $("#achievement_table").DataTable({
                 ajax: {
-                    url: "/mtrims/public/api/lpd2/purchase-order/detail/production-achievement/"+ {{ $purchaseOrder->id }},
+                    url: "/mtrims/public/api/lpd2/purchase-order/detail/production-achievement/"+ po_master_id,
                     dataSrc: ""
                 },
                 columns: [
@@ -1721,7 +1770,7 @@
             // $('tbody').html(free_table);
             po_product_stock_table = $("#stock_table").DataTable({
                 ajax: {
-                    url: "/mtrims/public/api/lpd2/purchase-order/detail/product-current-stock/"+ {{ $purchaseOrder->id }},
+                    url: "/mtrims/public/api/lpd2/purchase-order/detail/product-current-stock/"+ po_master_id,
                     dataSrc: ""
                 },
                 columns: [
@@ -1786,7 +1835,7 @@
             // $('tbody').html(free_table);
             po_product_confirmed_table = $("#confirmed_delivery_table").DataTable({
                 ajax: {
-                    url: "/mtrims/public/api/lpd2/purchase-order/detail/product-approved/"+ {{ $purchaseOrder->id }},
+                    url: "/mtrims/public/api/lpd2/purchase-order/detail/product-approved/"+ po_master_id,
                     dataSrc: ""
                 },
                 columns: [
@@ -1898,7 +1947,7 @@
             // $('tbody').html(free_table);
             po_product_not_confirmed_table = $("#not_confirmed_delivery_table").DataTable({
                 ajax: {
-                    url: "/mtrims/public/api/lpd2/purchase-order/detail/product-not-approved/"+ {{ $purchaseOrder->id }},
+                    url: "/mtrims/public/api/lpd2/purchase-order/detail/product-not-approved/"+ po_master_id,
                     dataSrc: ""
                 },
                 columns: [
@@ -2077,7 +2126,16 @@
 
         function refresh()
         {
-            window.location.href = window.location.href.replace(/#.*$/, '');
+            loadPurchaseOrderDetail();
+            loadPOListDataTable();
+            loadPOProductionPlanDataTable();
+            loadPOProductionAchievementDataTable();
+            loadPOProductStockDataTable();
+            loadPOProductStockDataTable();
+            loadPOConfirmedDeleveryDataTable();
+            loadPONotConfirmedDeleveryDataTable();
+            clearFormWithoutDelay("ItemAdd");
+            // window.location.href = window.location.href.replace(/#.*$/, '');
         }
 
         function iconChange() {
