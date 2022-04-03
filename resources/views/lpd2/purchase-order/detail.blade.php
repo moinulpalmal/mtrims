@@ -2641,7 +2641,8 @@
                         data:data,
                         success:function(data){
                             //console.log(data);
-                            if(masterId)
+                            
+                            if(data === '2')
                             {
                                 swal({
                                     title: "Data Updated Successfully!",
@@ -2649,11 +2650,12 @@
                                     button: "Ok!",
                                 }).then(function (value) {
                                     if(value){
-                                        window.location.href = window.location.href.replace(/#.*$/, '');
+                                        refresh();
+                                        $('#POUpdateModal').modal('toggle');
                                     }
                                 });
                             }
-                            else
+                            else if(data === '1')
                             {
                                 swal({
                                     title: "Data Inserted Successfully!",
@@ -2661,10 +2663,45 @@
                                     button: "Ok!",
                                 }).then(function (value) {
                                     if(value){
-                                        window.location.href = window.location.href.replace(/#.*$/, '');
+                                        refresh();
+                                        $('#POUpdateModal').modal('toggle');
                                     }
                                 });
                             }
+                            else{
+                                swal({
+                                    title: "Data Not Saved!",
+                                    text: "Please Check Your Data!",
+                                    icon: "error",
+                                    button: "Ok!",
+                                    className: "myClass",
+                                });
+                            }
+
+                            // if(masterId)
+                            // {
+                            //     swal({
+                            //         title: "Data Updated Successfully!",
+                            //         icon: "success",
+                            //         button: "Ok!",
+                            //     }).then(function (value) {
+                            //         if(value){
+                            //             window.location.href = window.location.href.replace(/#.*$/, '');
+                            //         }
+                            //     });
+                            // }
+                            // else
+                            // {
+                            //     swal({
+                            //         title: "Data Inserted Successfully!",
+                            //         icon: "success",
+                            //         button: "Ok!",
+                            //     }).then(function (value) {
+                            //         if(value){
+                            //             window.location.href = window.location.href.replace(/#.*$/, '');
+                            //         }
+                            //     });
+                            // }
                         },
                         error:function(error){
                             console.log(error);
@@ -2681,6 +2718,50 @@
 
             })
         });
+
+        $('.EditPO').click(function(){
+            var FactoryID = po_master_id;
+            var url = '{{ route('lpd2.purchase.order.detail.get-data') }}';
+            $.ajax({
+                url: url,
+                method:'POST',
+                data:{id: FactoryID},
+                success:function(data){
+                    // console.log(data);
+                    $('select[name=buyer_name]').val(data.buyer_id).change();
+                    $('select[name=factory_name]').val(data.factory_id).change();
+                    $('select[name=po_type]').val(data.po_type).change();
+                    $('select[name=primary_delivery_location]').val(data.primary_delivery_location_id).change();
+                    $('input[name=purchase_order_date]').val(data.po_date);
+                    $('input[name=lpd_po_no]').val(data.lpd_po_no);
+                    $('input[name=revise_count]').val(data.revise_count);
+                    $('input[name=flow_count]').val(data.flow_count);
+                    $('input[name=buyer_po_no]').val(data.buyer_po_no);
+                    $('input[name=remarks]').val(data.remarks);
+
+                    if(data.is_urgent == 1)
+                    {
+                        $('input[name=is_urgent]').prop('checked', true);
+                    }
+
+                    if(data.has_flow_count == 1)
+                    {
+                        $('input[name=has_flow_count]').prop('checked', true);
+                    }
+                },
+                error:function(error){
+                    //console.log(error);
+                    swal({
+                        title: "No Data Found!",
+                        text: "no data!",
+                        icon: "error",
+                        button: "Ok!",
+                        className: "myClass",
+                    });
+                }
+            })
+
+        })
 
         $(function(){
             $.ajaxSetup({

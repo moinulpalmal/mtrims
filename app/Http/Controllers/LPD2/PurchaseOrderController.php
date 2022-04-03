@@ -335,6 +335,10 @@ class PurchaseOrderController extends Controller
     //po close section
 
     public function editDetail(Request $request){
+
+
+        return PurchaseOrderDetail::getPOProductListEditDetail($request);
+
         // return PurchaseOrderMaster::getPurchaseOrderDetail($request);
 
         // $subContractor = PurchaseOrderDetail::where('purchase_order_master_id', $request->purchase_order_master_id)
@@ -542,17 +546,17 @@ class PurchaseOrderController extends Controller
             
             //pitash
 
-            if(Auth::user()->id == null){
-                return redirect()->route('lpd2.purchase.order');
-            }
+            // if(Auth::user()->id == null){
+            //     return redirect()->route('lpd2.purchase.order');
+            // }
             
-            $purchaseOrderMaster->inserted_by = Auth::user()->id;
+            $purchaseOrderMaster->last_updated_by = Auth::user()->id;
             if($purchaseOrderMaster->save()){
-                return "Update";
+                return '2';
             }
         }
 
-        return "Error";
+        return '0';
 
     }
 
