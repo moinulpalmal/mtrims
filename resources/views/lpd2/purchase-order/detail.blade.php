@@ -63,7 +63,7 @@
                                 </a>
                                 @if($purchaseOrder->close_request == 0)
                                     @if(Auth::user()->hasTaskPermission('lpdoneupdatepo', Auth::user()->id))
-                                    <a title="Purchase Order Master Update" class ="myIcon icon-warning icon-ef-3 icon-ef-3b icon-color" data-toggle="modal" data-target="#POUpdateModal" data-options="splash-2 splash-ef-12">
+                                    <a title="Purchase Order Master Update" class ="EditPO myIcon icon-warning icon-ef-3 icon-ef-3b icon-color" data-toggle="modal" data-target="#POUpdateModal" data-options="splash-2 splash-ef-12">
                                         <i class="fa fa-edit"></i>
                                     </a>
                                     @endif

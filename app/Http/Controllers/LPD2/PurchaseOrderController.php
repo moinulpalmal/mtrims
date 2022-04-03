@@ -335,37 +335,39 @@ class PurchaseOrderController extends Controller
     //po close section
 
     public function editDetail(Request $request){
-        $subContractor = PurchaseOrderDetail::where('purchase_order_master_id', $request->purchase_order_master_id)
-            ->where('item_count', $request->item_count)
-            ->first();
-        if($subContractor != null){
-            $subContractorData = array(
-                'item_size' => $subContractor->item_size,
-                'item_color' => $subContractor->item_color,
-                'item_description' => $subContractor->item_description,
-                'item_unit' => $subContractor->item_unit_id,
-                'unit_price_in_usd' => $subContractor->unit_price_in_usd,
-                'total_price_in_usd' => $subContractor->total_price_in_usd,
-                'remarks' => $subContractor->remarks,
-                'item_order_quantity' => $subContractor->item_order_quantity,
-                'sample_item_order_quantity' => $subContractor->sample_item_order_quantity,
-                'finished_quantity' => $subContractor->finished_quantity,
-                'sub_con_order_quantity' => $subContractor->sub_con_order_quantity,
-                'sub_con_finished_quantity' => $subContractor->sub_con_finished_quantity,
-                'sub_con_delivered_quantity' => $subContractor->sub_con_delivered_quantity,
-                'style_no' => $subContractor->style_no,
-                'trims_type_id' => $subContractor->trims_type_id,
-                'item_id' => $subContractor->item_count,
-                'gross_unit_price' => $subContractor->gross_unit_price,
-                'gross_calculation_amount' => $subContractor->gross_calculation_amount,
-                'gross_item_order_quantity' => $subContractor->gross_item_order_quantity,
-                'gross_sample_item_order_quantity' => $subContractor->gross_sample_item_order_quantity,
-                'add_amount_percent' => $subContractor->add_amount_percent
-            );
-            return $subContractorData;
-        }
+        // return PurchaseOrderMaster::getPurchaseOrderDetail($request);
 
-        return null;
+        // $subContractor = PurchaseOrderDetail::where('purchase_order_master_id', $request->purchase_order_master_id)
+        //     ->where('item_count', $request->item_count)
+        //     ->first();
+        // if($subContractor != null){
+        //     $subContractorData = array(
+        //         'item_size' => $subContractor->item_size,
+        //         'item_color' => $subContractor->item_color,
+        //         'item_description' => $subContractor->item_description,
+        //         'item_unit' => $subContractor->item_unit_id,
+        //         'unit_price_in_usd' => $subContractor->unit_price_in_usd,
+        //         'total_price_in_usd' => $subContractor->total_price_in_usd,
+        //         'remarks' => $subContractor->remarks,
+        //         'item_order_quantity' => $subContractor->item_order_quantity,
+        //         'sample_item_order_quantity' => $subContractor->sample_item_order_quantity,
+        //         'finished_quantity' => $subContractor->finished_quantity,
+        //         'sub_con_order_quantity' => $subContractor->sub_con_order_quantity,
+        //         'sub_con_finished_quantity' => $subContractor->sub_con_finished_quantity,
+        //         'sub_con_delivered_quantity' => $subContractor->sub_con_delivered_quantity,
+        //         'style_no' => $subContractor->style_no,
+        //         'trims_type_id' => $subContractor->trims_type_id,
+        //         'item_id' => $subContractor->item_count,
+        //         'gross_unit_price' => $subContractor->gross_unit_price,
+        //         'gross_calculation_amount' => $subContractor->gross_calculation_amount,
+        //         'gross_item_order_quantity' => $subContractor->gross_item_order_quantity,
+        //         'gross_sample_item_order_quantity' => $subContractor->gross_sample_item_order_quantity,
+        //         'add_amount_percent' => $subContractor->add_amount_percent
+        //     );
+        //     return $subContractorData;
+        // }
+
+        // return null;
     }
 
     public function saveDetail(Request $request){
