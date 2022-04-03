@@ -69,7 +69,7 @@
                                 </a>
                                 @if($purchaseOrder->close_request == 0)
                                     @if(Auth::user()->hasTaskPermission('lpdtwoupdatepo', Auth::user()->id))
-                                    <a title="Purchase Order Master Update" class ="myIcon icon-warning icon-ef-3 icon-ef-3b icon-color" data-toggle="modal" data-target="#POUpdateModal" data-options="splash-2 splash-ef-12">
+                                    <a title="Purchase Order Master Update" class ="EditPO myIcon icon-warning icon-ef-3 icon-ef-3b icon-color" data-toggle="modal" data-target="#POUpdateModal" data-options="splash-2 splash-ef-12">
                                         <i class="fa fa-edit"></i>
                                     </a>
                                     @endif
@@ -985,7 +985,8 @@
                                             <option value="">- - - Select - - -</option>
                                             @if(!empty($buyers))
                                                 @foreach($buyers as $item)
-                                                    <option value="{{ $item->id }}" @if($item->id == $purchaseOrder->buyer_id) selected = "selected"@endif >{{ $item->name }}</option>
+                                                    {{-- <option value="{{ $item->id }}" @if($item->id == $purchaseOrder->buyer_id) selected = "selected"@endif >{{ $item->name }}</option> --}}
+                                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
                                                 @endforeach
                                             @endif
                                         </select>
@@ -998,7 +999,7 @@
                                             <option value="">- - - Select - - -</option>
                                             @if(!empty($factories))
                                                 @foreach($factories as $item)
-                                                    <option value="{{ $item->id }}" @if($item->id == $purchaseOrder->factory_id) selected = "selected" @endif>{{ $item->name }}</option>
+                                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
                                                 @endforeach
                                             @endif
                                         </select>
@@ -1009,8 +1010,8 @@
                                         <label for="POType" class="control-label">PO Type</label>
                                         <select id="POType" class="form-control select2" name="po_type" style="width: 100%;">
                                             <option value="">- - - Select - - -</option>
-                                            <option value="S" {{ $purchaseOrder->po_type == 'S' ? 'selected' : '' }}>Sample PO</option>
-                                            <option value="P" {{ $purchaseOrder->po_type == 'P' ? 'selected' : '' }}>Production PO</option>
+                                            <option value="S">Sample PO</option>
+                                            <option value="P">Production PO</option>
                                         </select>
                                     </div>
                                 </div>
@@ -1023,7 +1024,7 @@
                                             <option value="">- - - Select - - -</option>
                                             @if(!empty($stores))
                                                 @foreach($stores as $item)
-                                                    <option value="{{ $item->id }}" @if($item->id == $purchaseOrder->primary_delivery_location_id) selected = "selected" @endif>{{ $item->name }}</option>
+                                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
                                                 @endforeach
                                             @endif
                                         </select>
@@ -1032,20 +1033,22 @@
                                 <div class="col-md-3 no-padding">
                                     <div class="form-group">
                                         <label for="PO_Date" class="control-label">Purchase Order Date</label>
-                                        <input type="date" class="form-control" name="purchase_order_date" id="PO_Date" required value="{{ old('purchase_order_date', $purchaseOrder->po_date) }}">
+                                        <input type="date" class="form-control" name="purchase_order_date" id="PO_Date" required value="">
                                     </div>
                                 </div>
                                 <div class="col-md-2 ">
                                     <div class="form-group">
                                         <label class="checkbox checkbox-custom-alt checkbox-custom-lg" style="padding-top: 17px">
-                                            <input type="checkbox" name="is_urgent" value="1"  {{  ($purchaseOrder->is_urgent == 1 ? ' checked' : '') }}/><i></i> <strong>Is Urgent ?</strong>
+                                            {{-- <input type="checkbox" name="is_urgent" value="1"  {{  ($purchaseOrder->is_urgent == 1 ? ' checked' : '') }}/><i></i> <strong>Is Urgent ?</strong> --}}
+                                            <input type="checkbox" name="is_urgent" value="1"><i></i> <strong>Is Urgent ?</strong>
                                         </label>
                                     </div>
                                 </div>
                                 <div class="col-md-3 ">
                                     <div class="form-group">
                                         <label class="checkbox checkbox-custom-alt checkbox-custom-lg" style="padding-top: 17px">
-                                            <input name="has_flow_count" id="HasFlowCount" value="1"  {{  ($purchaseOrder->has_flow_count == 1 ? ' checked' : '') }} type="checkbox"><i></i> <strong>Has Flow Count ?</strong>
+                                            {{-- <input name="has_flow_count" id="HasFlowCount" value="1"  {{  ($purchaseOrder->has_flow_count == 1 ? ' checked' : '') }} type="checkbox"><i></i> <strong>Has Flow Count ?</strong> --}}
+                                            <input name="has_flow_count" id="HasFlowCount" value="1" type="checkbox"><i></i> <strong>Has Flow Count ?</strong>
                                         </label>
                                     </div>
                                 </div>
@@ -1054,27 +1057,28 @@
                                 <div class="col-md-4 no-padding">
                                     <div class="form-group">
                                         <label for="LPD_PO" class="control-label">LPD PO No.</label>
-                                        <input type="text" class="form-control" name="lpd_po_no" id="LPD_PO" placeholder="2485" required value="{{ old('lpd_po_no', $purchaseOrder->lpd_po_no) }}">
+                                        {{-- <input type="text" class="form-control" name="lpd_po_no" id="LPD_PO" placeholder="2485" required value="{{ old('lpd_po_no', $purchaseOrder->lpd_po_no) }}"> --}}
+                                        <input type="text" class="form-control" name="lpd_po_no" id="LPD_PO" placeholder="2485" required value="">
                                     </div>
                                 </div>
                                 <div class="col-md-4 no-padding">
                                     <div class="form-group">
                                         <label for="ReviseCount" class="control-label">Revise Count</label>
-                                        <input type="number" min="0" class="form-control" name="revise_count" id="ReviseCount" placeholder="Enter Revise Count" required value="{{ old('revise_count', $purchaseOrder->revise_count) }}">
+                                        <input type="number" min="0" class="form-control" name="revise_count" id="ReviseCount" placeholder="Enter Revise Count" required value="">
                                     </div>
                                 </div>
                                 @if (($purchaseOrder->has_flow_count == 1))
                                     <div class="col-md-4 no-padding">
                                         <div class="form-group">
                                             <label for="FlowCount" class="control-label">Flow Count</label>
-                                            <input type="number" min="1" class="form-control" name="flow_count" id="FlowCount" placeholder="Enter Flow Count" value="{{ old('flow_count', $purchaseOrder->flow_count) }}">
+                                            <input type="number" min="1" class="form-control" name="flow_count" id="FlowCount" placeholder="Enter Flow Count" value="">
                                         </div>
                                     </div>
                                 @else
                                     <div class="col-md-4 no-padding" style="display: none;" id="IsCheck">
                                         <div class="form-group">
                                             <label for="FlowCount" class="control-label">Flow Count</label>
-                                            <input type="number" min="1" class="form-control" name="flow_count" id="FlowCount" placeholder="Enter Flow Count"  value="{{ old('flow_count', $purchaseOrder->flow_count) }}">
+                                            <input type="number" min="1" class="form-control" name="flow_count" id="FlowCount" placeholder="Enter Flow Count"  value="">
                                         </div>
                                     </div>
                                 @endif
@@ -1083,7 +1087,8 @@
                                 <div class="col-md-12 no-padding">
                                     <div class="form-group">
                                         <label for="Buyer_PO_No" class="control-label">Buyer PO No.</label>
-                                        <input type="text" class="form-control" name="buyer_po_no" id="Buyer_PO_No" required value="{{ old('buyer_po_no', $purchaseOrder->buyer_po_no) }}">
+                                        {{-- <input type="text" class="form-control" name="buyer_po_no" id="Buyer_PO_No" required value="{{ old('buyer_po_no', $purchaseOrder->buyer_po_no) }}"> --}}
+                                        <input type="text" class="form-control" name="buyer_po_no" id="Buyer_PO_No" required value="">
                                     </div>
                                 </div>
                             </div>
@@ -1092,7 +1097,8 @@
                                     <div class="form-group">
                                         <label for="Remarks" class="control-label">Remarks</label>
 {{--                                        <textarea size="5" class="form-control" name="remarks_update" id="Remarks" >{!! $purchaseOrder->remarks !!}</textarea>--}}
-                                        <input type="text" class="form-control" name="remarks" id="Remarks" value="{{old('remarks_update',$purchaseOrder->remarks)}}">
+                                        {{-- <input type="text" class="form-control" name="remarks" id="Remarks" value="{{old('remarks_update',$purchaseOrder->remarks)}}"> --}}
+                                        <input type="text" class="form-control" name="remarks" id="Remark" value="">
                                     </div>
                                 </div>
                             </div>
@@ -1972,6 +1978,50 @@
             })
         });
 
+        $('.EditPO').click(function(){
+            var FactoryID = po_master_id;
+            var url = '{{ route('lpd1.purchase.order.detail.get-data') }}';
+            $.ajax({
+                url: url,
+                method:'POST',
+                data:{id: FactoryID},
+                success:function(data){
+                    // console.log(data);
+                    $('select[name=buyer_name]').val(data.buyer_id).change();
+                    $('select[name=factory_name]').val(data.factory_id).change();
+                    $('select[name=po_type]').val(data.po_type).change();
+                    $('select[name=primary_delivery_location]').val(data.primary_delivery_location_id).change();
+                    $('input[name=purchase_order_date]').val(data.po_date);
+                    $('input[name=lpd_po_no]').val(data.lpd_po_no);
+                    $('input[name=revise_count]').val(data.revise_count);
+                    $('input[name=flow_count]').val(data.flow_count);
+                    $('input[name=buyer_po_no]').val(data.buyer_po_no);
+                    $('input[name=remarks]').val(data.remarks);
+
+                    if(data.is_urgent == 1)
+                    {
+                        $('input[name=is_urgent]').prop('checked', true);
+                    }
+
+                    if(data.has_flow_count == 1)
+                    {
+                        $('input[name=has_flow_count]').prop('checked', true);
+                    }
+                },
+                error:function(error){
+                    //console.log(error);
+                    swal({
+                        title: "No Data Found!",
+                        text: "no data!",
+                        icon: "error",
+                        button: "Ok!",
+                        className: "myClass",
+                    });
+                }
+            })
+
+        })
+
 
         $('#advanced-usage').on('click',".EditFactory", function(){
             var button = $(this);
@@ -2273,7 +2323,7 @@
                         data:data,
                         success:function(data){
                             //console.log(data);
-                            if(masterId)
+                            if(data === '2')
                             {
                                 swal({
                                     title: "Data Updated Successfully!",
@@ -2281,11 +2331,12 @@
                                     button: "Ok!",
                                 }).then(function (value) {
                                     if(value){
-                                        window.location.href = window.location.href.replace(/#.*$/, '');
+                                        refresh();
+                                        $('#POUpdateModal').modal('toggle');
                                     }
                                 });
                             }
-                            else
+                            else if(data === '1')
                             {
                                 swal({
                                     title: "Data Inserted Successfully!",
@@ -2293,10 +2344,45 @@
                                     button: "Ok!",
                                 }).then(function (value) {
                                     if(value){
-                                        window.location.href = window.location.href.replace(/#.*$/, '');
+                                        refresh();
+                                        $('#POUpdateModal').modal('toggle');
                                     }
                                 });
                             }
+                            else{
+                                swal({
+                                    title: "Data Not Saved!",
+                                    text: "Please Check Your Data!",
+                                    icon: "error",
+                                    button: "Ok!",
+                                    className: "myClass",
+                                });
+                            }
+
+                            // if(masterId)
+                            // {
+                            //     swal({
+                            //         title: "Data Updated Successfully!",
+                            //         icon: "success",
+                            //         button: "Ok!",
+                            //     }).then(function (value) {
+                            //         if(value){
+                            //             window.location.href = window.location.href.replace(/#.*$/, '');
+                            //         }
+                            //     });
+                            // }
+                            // else
+                            // {
+                            //     swal({
+                            //         title: "Data Inserted Successfully!",
+                            //         icon: "success",
+                            //         button: "Ok!",
+                            //     }).then(function (value) {
+                            //         if(value){
+                            //             window.location.href = window.location.href.replace(/#.*$/, '');
+                            //         }
+                            //     });
+                            // }
                         },
                         error:function(error){
                             console.log(error);
@@ -2552,6 +2638,7 @@
                 }
             });
         });
+
         $('#purchase-order-close').on('click',".CloseApproveOrder", function(){
             var button = $(this);
             var id = button.attr("data-id");
