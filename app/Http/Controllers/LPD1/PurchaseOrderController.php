@@ -170,7 +170,11 @@ class PurchaseOrderController extends Controller
         return PurchaseOrderMaster::getPurchaseOrderDetail($req);
     }
 
-    
+    public function getPODetailTrim(Request $req)
+    {
+        return PurchaseOrderDetail::getUniqueTrim($req);
+    }
+
     public function details($id){
         $purchaseOrder = PurchaseOrderMaster::find($id);
         // return ($purchaseOrder);
@@ -188,8 +192,6 @@ class PurchaseOrderController extends Controller
 
                 // $purchaseOrderDetails = PurchaseOrderController::getPOProductList($id);
 
-                // return PurchaseOrderMaster::getPODetails($id);
-
                 $buyers = Buyer::getActiveBuyerListForSelect();
                 $factories = Factory::getActiveFactoryListForSelect();
                 $units = Unit::getActiveUnitListForSelect();
@@ -199,12 +201,12 @@ class PurchaseOrderController extends Controller
                 //$trimsType = TrimsType::find($purchaseOrder->trims_type_id);
 
                 $uniqTrimsTypes = DB::table('purchase_order_details')
-                                    ->join('trims_types', 'purchase_order_details.trims_type_id', '=', 'trims_types.id')
-                                    ->select('trims_types.short_name', 'trims_types.name')
-                                    ->where('purchase_order_details.purchase_order_master_id', $id)
-                                    ->orderBy('trims_types.name')
-                                    ->groupBy('purchase_order_details.trims_type_id', 'trims_types.short_name', 'trims_types.name')
-                                    ->get();
+                                ->join('trims_types', 'purchase_order_details.trims_type_id', '=', 'trims_types.id')
+                                ->select('trims_types.short_name', 'trims_types.name')
+                                ->where('purchase_order_details.purchase_order_master_id', $id)
+                                ->orderBy('trims_types.name')
+                                ->groupBy('purchase_order_details.trims_type_id', 'trims_types.short_name', 'trims_types.name')
+                                ->get();
 
 
                 $deliveryMasters = DeliveryMaster::orderBy('challan_date', 'DESC')

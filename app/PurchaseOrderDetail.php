@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\DB;
 
 class PurchaseOrderDetail extends Model
 {
-    //
     public static function getPOProductList($purchase_order_master_id) {
         return  DB::table('purchase_order_details')->orderBy('item_count')
                 ->join('trims_types', 'purchase_order_details.trims_type_id', '=', 'trims_types.id')
@@ -20,6 +19,24 @@ class PurchaseOrderDetail extends Model
                 ->where('purchase_order_details.status','!=', 'D')
                 ->where('purchase_order_master_id', $purchase_order_master_id)
                 ->get();
+    }
+
+    public static function getUniqueTrim($request) 
+    {
+        $uniqTrimsTypes = DB::table('purchase_order_details')
+                    ->join('trims_types', 'purchase_order_details.trims_type_id', '=', 'trims_types.id')
+                    ->select('trims_types.short_name', 'trims_types.name')
+                    ->where('purchase_order_details.purchase_order_master_id', $request->id)
+                    ->orderBy('trims_types.name')
+                    ->groupBy('purchase_order_details.trims_type_id', 'trims_types.short_name', 'trims_types.name')
+                    ->get();
+
+          $result = "";
+          foreach($uniqTrimsTypes as $uniqTrimsType)
+          {
+            $result .= $uniqTrimsType->short_name.'-';
+          }
+          return $result;
     }
 
 
