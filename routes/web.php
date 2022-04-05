@@ -324,6 +324,7 @@ Route::group(['as' => 'lpd1.','prefix' => 'lpd1','namespace' => 'LPD1','middlewa
 
     //purchase order detail
     Route::get('purchase/order/detail/{id}','PurchaseOrderController@details')->name('purchase.order.detail');
+    Route::post('purchase/order/detail/get-trim','PurchaseOrderController@getPODetailTrim')->name('purchase.order.detail.get-trim');
     Route::post('purchase/order/detail/get-data','PurchaseOrderController@getPurchaseOrderDetail')->name('purchase.order.detail.get-data');
     Route::post('purchase/order/detail/edit','PurchaseOrderController@editDetail')->name('purchase.order.detail.edit');
     Route::post('purchase/order/detail/save','PurchaseOrderController@saveDetail')->name('purchase.order.detail.save');
@@ -383,6 +384,7 @@ Route::group(['as' => 'lpd1.','prefix' => 'lpd1','namespace' => 'LPD1','middlewa
 
     //purchase order detail
     Route::get('purchase/order/detail/{id}','PurchaseOrderController@details')->name('purchase.order.detail');
+    Route::post('purchase/order/detail/get-trim','PurchaseOrderController@getPODetailTrim')->name('purchase.order.detail.get-trim');
     Route::post('purchase/order/detail/get-data','PurchaseOrderController@getPurchaseOrderDetail')->name('purchase.order.detail.get-data');
     Route::post('purchase/order/detail/edit','PurchaseOrderController@editDetail')->name('purchase.order.detail.edit');
     Route::post('purchase/order/detail/save','PurchaseOrderController@saveDetail')->name('purchase.order.detail.save');
