@@ -50,7 +50,6 @@
                             {{--<div class="thumb thumb-xl">
                                 <img class="img-circle" src="assets/images/arnold-avatar.jpg" alt="">
                             </div>--}}
-                            {{-- <h4 class="mb-0" id="lpdNo"></h4> --}}
                             {{-- <h4 class="mb-0"><strong>LPD PO No:</strong> {{$purchaseOrder->lpd_po_no}}</h4> --}}
                             <h4 class="mb-0"><strong>LPD PO No:</strong> <span id="lpdNo"></span></h4>
                             <div>

@@ -198,15 +198,13 @@ class PurchaseOrderController extends Controller
                 $trimsTypes = TrimsType::GetLpdActiveTrimsTypesForSelectField(1);
                 $stores = Store::getActiveStoreListForSelectField();
 
-                //$trimsType = TrimsType::find($purchaseOrder->trims_type_id);
-
-                $uniqTrimsTypes = DB::table('purchase_order_details')
-                                ->join('trims_types', 'purchase_order_details.trims_type_id', '=', 'trims_types.id')
-                                ->select('trims_types.short_name', 'trims_types.name')
-                                ->where('purchase_order_details.purchase_order_master_id', $id)
-                                ->orderBy('trims_types.name')
-                                ->groupBy('purchase_order_details.trims_type_id', 'trims_types.short_name', 'trims_types.name')
-                                ->get();
+                // $uniqTrimsTypes = DB::table('purchase_order_details')
+                //                 ->join('trims_types', 'purchase_order_details.trims_type_id', '=', 'trims_types.id')
+                //                 ->select('trims_types.short_name', 'trims_types.name')
+                //                 ->where('purchase_order_details.purchase_order_master_id', $id)
+                //                 ->orderBy('trims_types.name')
+                //                 ->groupBy('purchase_order_details.trims_type_id', 'trims_types.short_name', 'trims_types.name')
+                //                 ->get();
 
 
                 $deliveryMasters = DeliveryMaster::orderBy('challan_date', 'DESC')
@@ -276,11 +274,10 @@ class PurchaseOrderController extends Controller
                     ->orderBy('trims_types.name')
                     ->get();
 
-                    // 'purchaseOrderDetails',
+                    // 'purchaseOrderDetails','uniqTrimsTypes','deliveryData', 
                 return view('lpd1.purchase-order.detail', compact('units','buyers', 'trimsTypes',
                         'factories', 'stores', 'purchaseOrder', 'deliveryMasters',
-                         'deleteAccess',
-                        'proformaInvoices', 'productionPlanDetails', 'deliveryData', 'uniqTrimsTypes','currentStocks'));
+                         'deleteAccess','proformaInvoices', 'productionPlanDetails', 'currentStocks'));
             } // other data
         }
         else{
