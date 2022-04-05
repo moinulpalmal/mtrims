@@ -14,7 +14,7 @@ class PurchaseOrderMaster extends Model
                 ->join('buyers','purchase_order_masters.buyer_id','=','buyers.id')
                 ->join('factories','purchase_order_masters.factory_id','=','factories.id')
                 ->join('stores','purchase_order_masters.primary_delivery_location_id','=','stores.id')
-                ->select('buyers.name AS buyer_name','factories.name AS factory_name','stores.name AS delivery_location',
+                ->select('buyers.id AS buyer_id','buyers.name AS buyer_name','factories.id AS factory_id','factories.name AS factory_name','stores.id AS delivery_location_id','stores.name AS delivery_location',
                     'purchase_order_masters.lpd_po_no','purchase_order_masters.job_no','purchase_order_masters.buyer_po_no','purchase_order_masters.job_year',
                     'purchase_order_masters.status','purchase_order_masters.remarks','purchase_order_masters.inserted_by','purchase_order_masters.approved_by',
                     'purchase_order_masters.lpd','purchase_order_masters.pi_count','purchase_order_masters.pi_generation_activated','purchase_order_masters.po_date',
@@ -31,10 +31,12 @@ class PurchaseOrderMaster extends Model
         $poDetail = array(
             'lpd_po_no' => $poDetails->lpd_po_no,
             'job_no' => $poDetails->job_no,
-            'buyer_id' => $poDetails->buyer_name,
+            'buyer_id' => $poDetails->buyer_id,
+            'buyer_name' => $poDetails->buyer_name,
             'buyer_po_no' => $poDetails->buyer_po_no,
             'job_year' => $poDetails->job_year,
-            'primary_delivery_location_id' => $poDetails->delivery_location,
+            'primary_delivery_location_id' => $poDetails->delivery_location_id,
+            'primary_delivery_location' => $poDetails->delivery_location,
             'status' => $poDetails->status,
             'remarks' => $poDetails->remarks,
             'inserted_by' => $poDetails->inserted_by,
@@ -42,7 +44,8 @@ class PurchaseOrderMaster extends Model
             'lpd' => $poDetails->lpd,
             'pi_count' => $poDetails->pi_count,
             'pi_generation_activated' => $poDetails->pi_generation_activated,
-            'factory_id' => $poDetails->factory_name,
+            'factory_id' => $poDetails->factory_id,
+            'factory_name' => $poDetails->factory_name,
             'po_date' => $poDetails->po_date,
             'approval_date' => $poDetails->approval_date,
             'sample_submission_date' => $poDetails->sample_submission_date,
