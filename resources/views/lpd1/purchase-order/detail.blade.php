@@ -56,9 +56,10 @@
                             <div>
                                 <span class="text-muted">
                                     <strong>HTL Job No:</strong>
-                                    @foreach($uniqTrimsTypes as $item)
+                                        <span id="HTLJOB"></span>
+                                    {{-- @foreach($uniqTrimsTypes as $item)
                                         {{ $item->short_name }}-
-                                    @endforeach
+                                    @endforeach --}}
                                     <span id="jobYearNo"></span>
                                     {{-- <span id="jobYearNo">{{$purchaseOrder->job_year}}/{{$purchaseOrder->job_no}}</span> --}}
                                 </span>
@@ -1150,6 +1151,7 @@
 
             // });
             loadPurchaseOrderDetail();
+            loadPODetailTrim();
             loadPOListDataTable();
             loadPOProductionPlanDataTable();
             loadPOProductionAchievementDataTable();
@@ -1211,6 +1213,34 @@
                     document.getElementById("deliveryStartDate").innerHTML  = returnStringFormatDate(data.delivery_start_date);  
                     document.getElementById("deliveryEndDate").innerHTML  = returnStringFormatDate(data.delivery_end_date);  
                     document.getElementById("remark").innerHTML  = data.remarks;  
+                },
+                error:function(error){
+                    //console.log(error);
+                    swal({
+                        title: "No Data Found!",
+                        text: "no data!",
+                        icon: "error",
+                        button: "Ok!",
+                        className: "myClass",
+                    });
+                }
+            })
+        }
+
+        function loadPODetailTrim(){
+            $.ajaxSetup({
+                headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' }
+            });
+            var FactoryID = po_master_id;
+            var url = '{{ route('lpd1.purchase.order.detail.get-trim') }}';
+            $.ajax({
+                url: url,
+                method:'POST',
+                data:{id: FactoryID},
+                success:function(data){
+                    // console.log(data);
+                    document.getElementById("HTLJOB").innerHTML  = data;
+                    
                 },
                 error:function(error){
                     //console.log(error);
@@ -1884,6 +1914,7 @@
         function refresh()
         {
             loadPurchaseOrderDetail();
+            loadPODetailTrim();
             loadPOListDataTable();
             loadPOProductionPlanDataTable();
             loadPOProductionAchievementDataTable();

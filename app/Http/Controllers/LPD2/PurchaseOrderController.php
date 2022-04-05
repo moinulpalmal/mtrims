@@ -168,6 +168,11 @@ class PurchaseOrderController extends Controller
         return PurchaseOrderMaster::getPurchaseOrderDetail($req);
     }
 
+    public function getPODetailTrim(Request $req)
+    {
+        return PurchaseOrderDetail::getUniqueTrim($req);
+    }
+
     public function details($id){
         $purchaseOrder = PurchaseOrderMaster::find($id);
         if($purchaseOrder->lpd == 2){
