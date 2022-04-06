@@ -170,6 +170,9 @@ class PurchaseOrderController extends Controller
 
     public function details($id){
         $purchaseOrder = PurchaseOrderMaster::find($id);
+
+        // return $purchaseOrder;
+
         if($purchaseOrder->lpd==1){
             if($purchaseOrder == null){
                 return redirect()->route('lpd1.purchase.order');
@@ -265,7 +268,7 @@ class PurchaseOrderController extends Controller
                 //     ->get();
 
                     // 'purchaseOrderDetails','uniqTrimsTypes', 'currentStocks','deliveryData', 'productionPlanDetails', 'deliveryMasters','proformaInvoices'
-                return view('lpd1.purchase-order.detail', compact('units','buyers','factories','stores','trimsTypes', 'purchaseOrder','deleteAccess'));
+                return view('lpd1.purchase-order.detail', compact('units','buyers','factories','stores','trimsTypes', 'purchaseOrder','deleteAccess','id'));
             } // other data
         }
         else{
