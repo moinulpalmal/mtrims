@@ -1457,14 +1457,50 @@
                     document.getElementById("breadcrumblpdNo").innerHTML  = data.lpd_po_no;
                     document.getElementById("lpdNo").innerHTML  = data.lpd_po_no;
                     document.getElementById("jobYearNo").innerHTML  = data.job_year + '/' + data.job_no;
-                    document.getElementById("poDate").innerHTML  = returnStringFormatDate(data.po_date);  
-                    document.getElementById("approvalDate").innerHTML  = returnStringFormatDate(data.approval_date);  
-                    document.getElementById("sampleSubmissionDate").innerHTML  = returnStringFormatDate(data.sample_submission_date);  
-                    document.getElementById("productionStartDate").innerHTML  = returnStringFormatDate(data.production_start_date);  
-                    document.getElementById("productionEndDate").innerHTML  = returnStringFormatDate(data.production_end_date);  
-                    document.getElementById("deliveryStartDate").innerHTML  = returnStringFormatDate(data.delivery_start_date);  
-                    document.getElementById("deliveryEndDate").innerHTML  = returnStringFormatDate(data.delivery_end_date);  
-                    document.getElementById("remark").innerHTML  = data.remarks;  
+                    document.getElementById("remark").innerHTML  = data.remarks; 
+
+                    if ((data.po_date === null) || (data.po_date === "")) {
+                        document.getElementById("poDate").innerHTML  = '';
+                    } else {
+                        document.getElementById("poDate").innerHTML  = returnStringFormatDate(data.po_date);
+                    }
+
+                    if ((data.approval_date === null) || (data.approval_date === "")) {
+                        document.getElementById("approvalDate").innerHTML  = '';
+                    } else {
+                        document.getElementById("approvalDate").innerHTML  = returnStringFormatDate(data.approval_date);
+                    }
+
+                    if ((data.sample_submission_date === null) || (data.sample_submission_date === "")) {
+                        document.getElementById("sampleSubmissionDate").innerHTML  = '';
+                    } else {
+                        document.getElementById("sampleSubmissionDate").innerHTML  = returnStringFormatDate(data.sample_submission_date);  
+                    }
+
+                    if ((data.production_start_date === null) || (data.production_start_date === "")) {
+                        document.getElementById("productionStartDate").innerHTML  = '';
+                    } else {
+                        document.getElementById("productionStartDate").innerHTML  = returnStringFormatDate(data.production_start_date);  
+                    }
+
+                    if ((data.production_end_date === null) || (data.production_end_date === "")) {
+                        document.getElementById("productionEndDate").innerHTML  = '';
+                    } else {
+                        document.getElementById("productionEndDate").innerHTML  = returnStringFormatDate(data.production_end_date);  
+                    }
+
+                    if ((data.delivery_start_date === null) || (data.delivery_start_date === "")) {
+                        document.getElementById("deliveryStartDate").innerHTML  = '';
+                    } else {
+                        document.getElementById("deliveryStartDate").innerHTML  = returnStringFormatDate(data.delivery_start_date);  
+                    }
+
+                    if ((data.delivery_end_date === null) || (data.delivery_end_date === "")) {
+                        document.getElementById("deliveryEndDate").innerHTML  = '';
+                    } else {
+                        document.getElementById("deliveryEndDate").innerHTML  = returnStringFormatDate(data.delivery_end_date);  
+                    }
+                    
                 },
                 error:function(error){
                     //console.log(error);
