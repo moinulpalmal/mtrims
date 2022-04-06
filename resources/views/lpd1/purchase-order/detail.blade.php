@@ -31,7 +31,8 @@
                     </li>
 
                     <li>
-                        <a href="{{route('lpd1.purchase.order.detail', ['id' => $purchaseOrder->id])}}"> PO No: {{$purchaseOrder->lpd_po_no}}</a>
+                        {{-- <a href="{{route('lpd1.purchase.order.detail', ['id' => $purchaseOrder->id])}}"> PO No: {{$purchaseOrder->lpd_po_no}}</a> --}}
+                        <a href="{{route('lpd1.purchase.order.detail', ['id' => $purchaseOrder->id])}}"> PO No: <span id="breadcrumblpdNo"></span></a>
                     </li>
                 </ul>
 
@@ -101,12 +102,13 @@
                                             <strong>Order Date</strong>
                                         </div>
                                         <div class="col-md-7 pull-right">
-                                            @if($purchaseOrder->po_date != null)
+                                            <p class="text-right text-blue" id="poDate"></p>
+                                            {{-- @if($purchaseOrder->po_date != null)
                                                 <p class="text-right text-greensea">
                                                     <p class="text-right text-blue" id="poDate"></p>
-                                                    {{-- {{\Carbon\Carbon::parse($purchaseOrder->po_date)->format('d/m/Y')}} --}}
+                                                    {{\Carbon\Carbon::parse($purchaseOrder->po_date)->format('d/m/Y')}}
                                                 </p>
-                                            @endif
+                                            @endif --}}
                                         </div>
                                     </div>
                                 </li>
@@ -117,10 +119,11 @@
                                             <strong>Last Approval Date</strong>
                                         </div>
                                         <div class="col-md-7 pull-right">
-                                            @if($purchaseOrder->approval_date != null)
+                                            <p class="text-right text-blue" id="approvalDate"></p>
+                                            {{-- @if($purchaseOrder->approval_date != null)
                                                 <p class="text-right text-blue" id="approvalDate"></p>
-                                                {{-- <p class="text-right text-greensea">{{\Carbon\Carbon::parse($purchaseOrder->approval_date)->format('d/m/Y')}}</p> --}}
-                                            @endif
+                                                <p class="text-right text-greensea">{{\Carbon\Carbon::parse($purchaseOrder->approval_date)->format('d/m/Y')}}</p>
+                                            @endif --}}
                                         </div>
                                     </div>
                                 </li>
@@ -161,10 +164,10 @@
                                             <strong>Sample Submission Date</strong>
                                         </div>
                                         <div class="col-md-7 pull-right">
-                                            @if($purchaseOrder->sample_submission_date != null)
-                                                <p class="text-right text-blue" id="sampleSubmissionDate"></p>
-                                                {{-- <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->sample_submission_date)->format('d/m/Y')}}</p> --}}
-                                            @endif
+                                            <p class="text-right text-blue" id="sampleSubmissionDate"></p>
+                                            {{-- @if($purchaseOrder->sample_submission_date != null)
+                                                <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->sample_submission_date)->format('d/m/Y')}}</p>
+                                            @endif --}}
                                         </div>
                                     </div>
                                 </li>
@@ -175,10 +178,10 @@
                                             <strong>Production Start Date</strong>
                                         </div>
                                         <div class="col-md-7 pull-right">
-                                            @if($purchaseOrder->production_start_date != null)
-                                                <p class="text-right text-blue" id="productionStartDate"></p>
-                                                {{-- <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->production_start_date)->format('d/m/Y')}}</p> --}}
-                                            @endif
+                                            <p class="text-right text-blue" id="productionStartDate"></p>
+                                            {{-- @if($purchaseOrder->production_start_date != null)
+                                                <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->production_start_date)->format('d/m/Y')}}</p>
+                                            @endif --}}
                                         </div>
                                     </div>
                                 </li>
@@ -189,10 +192,10 @@
                                             <strong>Production Closing Date</strong>
                                         </div>
                                         <div class="col-md-7 pull-right">
-                                            @if($purchaseOrder->production_end_date != null)
-                                                <p class="text-right text-blue" id="productionEndDate"></p>
-                                                {{-- <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->production_end_date)->format('d/m/Y')}}</p> --}}
-                                            @endif
+                                            <p class="text-right text-blue" id="productionEndDate"></p>
+                                            {{-- @if($purchaseOrder->production_end_date != null)
+                                                <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->production_end_date)->format('d/m/Y')}}</p>
+                                            @endif --}}
                                         </div>
                                     </div>
                                 </li>
@@ -203,10 +206,10 @@
                                             <strong>Delivery Start Date</strong>
                                         </div>
                                         <div class="col-md-7 pull-right">
-                                            @if($purchaseOrder->delivery_start_date != null)
-                                                <p class="text-right text-blue" id="deliveryStartDate"></p>
-                                                {{-- <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->delivery_start_date)->format('d/m/Y')}}</p> --}}
-                                            @endif
+                                            <p class="text-right text-blue" id="deliveryStartDate"></p>
+                                            {{-- @if($purchaseOrder->delivery_start_date != null)
+                                                <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->delivery_start_date)->format('d/m/Y')}}</p>
+                                            @endif --}}
                                         </div>
                                     </div>
                                 </li>
@@ -217,10 +220,10 @@
                                             <strong>Delivery Closing Date</strong>
                                         </div>
                                         <div class="col-md-7 pull-right">
-                                            @if($purchaseOrder->delivery_start_date != null)
-                                                <p class="text-right text-blue" id="deliveryEndDate"></p>
-                                                {{-- <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->delivery_end_date)->format('d/m/Y')}}</p> --}}
-                                            @endif
+                                            <p class="text-right text-blue" id="deliveryEndDate"></p>
+                                            {{-- @if($purchaseOrder->delivery_start_date != null)
+                                                <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->delivery_end_date)->format('d/m/Y')}}</p>
+                                            @endif --}}
                                         </div>
                                     </div>
                                 </li>
@@ -1201,17 +1204,53 @@
                 data:{id: FactoryID},
                 success:function(data){
                     // console.log(data);
-                    // document.getElementById("lpdNo").innerHTML  = "<strong>LPD PO No: </strong>" + data.lpd_po_no;
+                    document.getElementById("breadcrumblpdNo").innerHTML  = data.lpd_po_no;
                     document.getElementById("lpdNo").innerHTML  = data.lpd_po_no;
                     document.getElementById("jobYearNo").innerHTML  = data.job_year + '/' + data.job_no;
-                    document.getElementById("poDate").innerHTML  = returnStringFormatDate(data.po_date);  
-                    document.getElementById("approvalDate").innerHTML  = returnStringFormatDate(data.approval_date);  
-                    document.getElementById("sampleSubmissionDate").innerHTML  = returnStringFormatDate(data.sample_submission_date);  
-                    document.getElementById("productionStartDate").innerHTML  = returnStringFormatDate(data.production_start_date);  
-                    document.getElementById("productionEndDate").innerHTML  = returnStringFormatDate(data.production_end_date);  
-                    document.getElementById("deliveryStartDate").innerHTML  = returnStringFormatDate(data.delivery_start_date);  
-                    document.getElementById("deliveryEndDate").innerHTML  = returnStringFormatDate(data.delivery_end_date);  
-                    document.getElementById("remark").innerHTML  = data.remarks;  
+                    document.getElementById("remark").innerHTML  = data.remarks; 
+
+                    if ((data.po_date === null) || (data.po_date === "")) {
+                        document.getElementById("poDate").innerHTML  = '';
+                    } else {
+                        document.getElementById("poDate").innerHTML  = returnStringFormatDate(data.po_date);
+                    }
+
+                    if ((data.approval_date === null) || (data.approval_date === "")) {
+                        document.getElementById("approvalDate").innerHTML  = '';
+                    } else {
+                        document.getElementById("approvalDate").innerHTML  = returnStringFormatDate(data.approval_date);
+                    }
+
+                    if ((data.sample_submission_date === null) || (data.sample_submission_date === "")) {
+                        document.getElementById("sampleSubmissionDate").innerHTML  = '';
+                    } else {
+                        document.getElementById("sampleSubmissionDate").innerHTML  = returnStringFormatDate(data.sample_submission_date);  
+                    }
+
+                    if ((data.production_start_date === null) || (data.production_start_date === "")) {
+                        document.getElementById("productionStartDate").innerHTML  = '';
+                    } else {
+                        document.getElementById("productionStartDate").innerHTML  = returnStringFormatDate(data.production_start_date);  
+                    }
+
+                    if ((data.production_end_date === null) || (data.production_end_date === "")) {
+                        document.getElementById("productionEndDate").innerHTML  = '';
+                    } else {
+                        document.getElementById("productionEndDate").innerHTML  = returnStringFormatDate(data.production_end_date);  
+                    }
+
+                    if ((data.delivery_start_date === null) || (data.delivery_start_date === "")) {
+                        document.getElementById("deliveryStartDate").innerHTML  = '';
+                    } else {
+                        document.getElementById("deliveryStartDate").innerHTML  = returnStringFormatDate(data.delivery_start_date);  
+                    }
+
+                    if ((data.delivery_end_date === null) || (data.delivery_end_date === "")) {
+                        document.getElementById("deliveryEndDate").innerHTML  = '';
+                    } else {
+                        document.getElementById("deliveryEndDate").innerHTML  = returnStringFormatDate(data.delivery_end_date);  
+                    }
+
                 },
                 error:function(error){
                     //console.log(error);

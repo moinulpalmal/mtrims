@@ -197,16 +197,16 @@ class PurchaseOrderController extends Controller
                 //                 ->get();
 
 
-                $deliveryMasters = DeliveryMaster::orderBy('challan_date', 'DESC')
-                    ->where('status', '!=', 'D')
-                    ->where('purchase_order_master_id', $id)
-                    ->get();
+                // $deliveryMasters = DeliveryMaster::orderBy('challan_date', 'DESC')
+                //     ->where('status', '!=', 'D')
+                //     ->where('purchase_order_master_id', $id)
+                //     ->get();
 
-                $proformaInvoices = ProformaInvoice::orderBy('pi_count')
-                    ->where('purchase_order_master_id', $id)
-                    ->where('status', '!=', 'D')
-                    ->where('pi_count', $purchaseOrder->pi_count)
-                    ->get();
+                // $proformaInvoices = ProformaInvoice::orderBy('pi_count')
+                //     ->where('purchase_order_master_id', $id)
+                //     ->where('status', '!=', 'D')
+                //     ->where('pi_count', $purchaseOrder->pi_count)
+                //     ->get();
 
 
                 $productionPlanDetails = ProductionPlanDetailSetup::orderBy('production_date', 'ASC')
@@ -264,9 +264,8 @@ class PurchaseOrderController extends Controller
                 //     ->orderBy('trims_types.name')
                 //     ->get();
 
-                    // 'purchaseOrderDetails','uniqTrimsTypes', 'currentStocks','deliveryData', 
-                return view('lpd1.purchase-order.detail', compact('units','buyers', 'trimsTypes',
-                        'factories', 'stores', 'purchaseOrder', 'deliveryMasters','deleteAccess','proformaInvoices', 'productionPlanDetails'));
+                    // 'purchaseOrderDetails','uniqTrimsTypes', 'currentStocks','deliveryData', 'productionPlanDetails', 'deliveryMasters','proformaInvoices'
+                return view('lpd1.purchase-order.detail', compact('units','buyers','factories','stores','trimsTypes', 'purchaseOrder','deleteAccess'));
             } // other data
         }
         else{
