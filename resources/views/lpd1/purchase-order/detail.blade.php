@@ -501,10 +501,7 @@
                                                                         <th class="text-center">Unit Price (USD)</th>
                                                                         <th class="text-center">Total Price (USD)</th>
                                                                         <th class="text-center">Remarks</th>
-                                                                        {{-- <th class="text-center">Status</th> --}}
-                                                                        @if($purchaseOrder->close_request == 0)
-                                                                            <th class="text-center">Action</th>
-                                                                        @endif
+                                                                        <th class="text-center">Action</th>
                                                                     </tr>
                                                                     </thead>
                                                                     <tbody>
@@ -1149,9 +1146,6 @@
 
         $(window).load(function(){
 
-            // $('#production_plan_table').DataTable({
-
-            // });
             loadPurchaseOrderDetail();
             loadPODetailTrim();
             loadPOListDataTable();
@@ -1161,22 +1155,6 @@
             loadPOProductStockDataTable();
             loadPOConfirmedDeleveryDataTable();
             loadPONotConfirmedDeleveryDataTable()
-
-            // $('#achievement_table').DataTable({
-
-            // });
-
-            // $('#stock_table').DataTable({
-
-            // });
-
-            // $('#confirmed_delivery_table').DataTable({
-
-            // });
-
-            // $('#not_confirmed_delivery_table').DataTable({
-
-            // });
 
             $('.select2').select2();
             sessionStorage.clear();
@@ -1191,7 +1169,7 @@
 
         });
 
-        
+
         function loadPurchaseOrderDetail(){
             $.ajaxSetup({
                 headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' }
@@ -1203,11 +1181,10 @@
                 method:'POST',
                 data:{id: FactoryID},
                 success:function(data){
-                    // console.log(data);
                     document.getElementById("breadcrumblpdNo").innerHTML  = data.lpd_po_no;
                     document.getElementById("lpdNo").innerHTML  = data.lpd_po_no;
                     document.getElementById("jobYearNo").innerHTML  = data.job_year + '/' + data.job_no;
-                    document.getElementById("remark").innerHTML  = data.remarks; 
+                    document.getElementById("remark").innerHTML  = data.remarks;
 
                     if ((data.po_date === null) || (data.po_date === "")) {
                         document.getElementById("poDate").innerHTML  = '';
@@ -1224,31 +1201,31 @@
                     if ((data.sample_submission_date === null) || (data.sample_submission_date === "")) {
                         document.getElementById("sampleSubmissionDate").innerHTML  = '';
                     } else {
-                        document.getElementById("sampleSubmissionDate").innerHTML  = returnStringFormatDate(data.sample_submission_date);  
+                        document.getElementById("sampleSubmissionDate").innerHTML  = returnStringFormatDate(data.sample_submission_date);
                     }
 
                     if ((data.production_start_date === null) || (data.production_start_date === "")) {
                         document.getElementById("productionStartDate").innerHTML  = '';
                     } else {
-                        document.getElementById("productionStartDate").innerHTML  = returnStringFormatDate(data.production_start_date);  
+                        document.getElementById("productionStartDate").innerHTML  = returnStringFormatDate(data.production_start_date);
                     }
 
                     if ((data.production_end_date === null) || (data.production_end_date === "")) {
                         document.getElementById("productionEndDate").innerHTML  = '';
                     } else {
-                        document.getElementById("productionEndDate").innerHTML  = returnStringFormatDate(data.production_end_date);  
+                        document.getElementById("productionEndDate").innerHTML  = returnStringFormatDate(data.production_end_date);
                     }
 
                     if ((data.delivery_start_date === null) || (data.delivery_start_date === "")) {
                         document.getElementById("deliveryStartDate").innerHTML  = '';
                     } else {
-                        document.getElementById("deliveryStartDate").innerHTML  = returnStringFormatDate(data.delivery_start_date);  
+                        document.getElementById("deliveryStartDate").innerHTML  = returnStringFormatDate(data.delivery_start_date);
                     }
 
                     if ((data.delivery_end_date === null) || (data.delivery_end_date === "")) {
                         document.getElementById("deliveryEndDate").innerHTML  = '';
                     } else {
-                        document.getElementById("deliveryEndDate").innerHTML  = returnStringFormatDate(data.delivery_end_date);  
+                        document.getElementById("deliveryEndDate").innerHTML  = returnStringFormatDate(data.delivery_end_date);
                     }
 
                 },
@@ -1278,7 +1255,7 @@
                 success:function(data){
                     // console.log(data);
                     document.getElementById("HTLJOB").innerHTML  = data;
-                    
+
                 },
                 error:function(error){
                     //console.log(error);
@@ -1375,20 +1352,26 @@
                             }
                         }
                     },
-                    @if($purchaseOrder->close_request == 0)
                     {
                         render: function(data, type, api_item) {
-                            return "<p class='text-center'>"+
-                                @if(Auth::user()->hasTaskPermission('lpdtwodeleteitem', Auth::user()->id))
-                                "<a title= 'Delete' class= 'DeleteDetail btn btn-danger btn-xs' data-id = "+ api_item.item_count +"><i class='fa fa-trash'></i></a>" +
-                                " &nbsp;" +
-                                @endif
-                                @if(Auth::user()->hasTaskPermission('lpdtwoadditem', Auth::user()->id))
-                                "<a title= 'Edit' class= 'EditFactory btn btn-warning btn-xs' data-id = "+ api_item.item_count +"><i class='fa fa-edit'></i></a></p>"
-                                @endif
+                            if(api_item.close_request === 0){
+                                return "<p class='text-center'>"+
+                                    @if(Auth::user()->hasTaskPermission('lpdonedeleteitem', Auth::user()->id))
+                                        "<a title= 'Delete' class= 'DeleteDetail btn btn-danger btn-xs' data-id = "+ api_item.item_count +"><i class='fa fa-trash'></i></a>" +
+                                    " &nbsp;" +
+                                    @endif
+                                        @if(Auth::user()->hasTaskPermission('lpdoneadditem', Auth::user()->id))
+                                        "<a title= 'Edit' class= 'EditFactory btn btn-warning btn-xs' data-id = "+ api_item.item_count +"><i class='fa fa-edit'></i></a>" +
+                                    " &nbsp;" +
+                                    @endif
+                                        "</p>";
+                            }
+                            else{
+                                return "<p class='text-center'></p>";
+                            }
+
                         }
                     }
-                    @endif
                 ]
             });
         }
@@ -1504,7 +1487,7 @@
                         render: function (data) {
                             // return "<p class = 'text-left'>"+ data +"</p>";
                             return "<p class = 'text-left'>"+ returnBDStringFormatDate(data) +"</p>";
-                            
+
                         }
                     },
                     {

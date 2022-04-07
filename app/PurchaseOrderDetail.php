@@ -9,19 +9,20 @@ class PurchaseOrderDetail extends Model
 {
     public static function getPOProductList($purchase_order_master_id) {
         return  DB::table('purchase_order_details')->orderBy('item_count')
+                ->join('purchase_order_masters', 'purchase_order_masters.id', '=', 'purchase_order_details.purchase_order_master_id')
                 ->join('trims_types', 'purchase_order_details.trims_type_id', '=', 'trims_types.id')
                 ->join('units', 'purchase_order_details.item_unit_id', '=', 'units.id')
-                ->select('trims_types.name AS trims_types_name', 'units.full_unit', 
+                ->select('trims_types.name AS trims_types_name', 'units.full_unit',
                     'purchase_order_details.style_no','purchase_order_details.item_size', 'purchase_order_details.item_count',
                     'purchase_order_details.item_color','purchase_order_details.item_description','purchase_order_details.item_order_quantity',
                     'purchase_order_details.sample_item_order_quantity','purchase_order_details.unit_price_in_usd','purchase_order_details.total_price_in_usd',
-                    'purchase_order_details.remarks','purchase_order_details.status')
+                    'purchase_order_details.remarks','purchase_order_details.status', 'purchase_order_masters.close_request')
                 ->where('purchase_order_details.status','!=', 'D')
                 ->where('purchase_order_master_id', $purchase_order_master_id)
                 ->get();
     }
 
-    public static function getUniqueTrim($request) 
+    public static function getUniqueTrim($request)
     {
         $uniqTrimsTypes = DB::table('purchase_order_details')
                     ->join('trims_types', 'purchase_order_details.trims_type_id', '=', 'trims_types.id')
@@ -40,7 +41,7 @@ class PurchaseOrderDetail extends Model
     }
 
 
-    public static function insertPOProductList($request){        
+    public static function insertPOProductList($request){
         $purchaseOrderDetail = new PurchaseOrderDetail();
         $purchaseOrderDetail->purchase_order_master_id = $request->purchase_order_master_id;
         $purchaseOrderDetail->style_no = $request->style_no;
@@ -62,9 +63,9 @@ class PurchaseOrderDetail extends Model
         $purchaseOrderDetail->trims_type_id = $request->trims_type;
         $purchaseOrderDetail->total_price_in_usd = $request->total;
         $purchaseOrderDetail->status = 'A';
-        
+
         $purchaseOrderDetail->item_count = PurchaseOrderDetail::orderBy('item_count', 'desc')->where('purchase_order_master_id', $request->purchase_order_master_id)->first()->item_count + 1;
-    
+
         if($purchaseOrderDetail->save())
         {
             $purchaseOrder = PurchaseOrderMaster::find($request->purchase_order_master_id);
