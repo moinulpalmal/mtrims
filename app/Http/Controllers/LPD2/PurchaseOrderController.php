@@ -187,47 +187,51 @@ class PurchaseOrderController extends Controller
             }
             else{
 
-                $purchaseOrderDetails = PurchaseOrderDetail::orderBy('item_count')
-                    ->where('status','!=', 'D')
-                    ->where('purchase_order_master_id', $id)
-                    ->get();
+                // $purchaseOrderDetails = PurchaseOrderDetail::orderBy('item_count')
+                //     ->where('status','!=', 'D')
+                //     ->where('purchase_order_master_id', $id)
+                //     ->get();
+
                 $buyers = Buyer::getActiveBuyerListForSelect();
                 $factories = Factory::getActiveFactoryListForSelect();
                 $units = Unit::getActiveUnitListForSelect();
                 $trimsTypes = TrimsType::GetLpdActiveTrimsTypesForSelectField(2);
                 $stores = Store::getActiveStoreListForSelectField();
+
+
+
                 //$trimsType = TrimsType::find($purchaseOrder->trims_type_id);
 
-                $uniqTrimsTypes = DB::table('purchase_order_details')
-                                    ->join('trims_types', 'purchase_order_details.trims_type_id', '=', 'trims_types.id')
-                                    ->select('trims_types.short_name', 'trims_types.name')
-                                    ->where('purchase_order_details.purchase_order_master_id', $id)
-                                    ->orderBy('trims_types.name')
-                                    ->groupBy('purchase_order_details.trims_type_id', 'trims_types.short_name', 'trims_types.name')
-                                    ->get();
+                // $uniqTrimsTypes = DB::table('purchase_order_details')
+                //                     ->join('trims_types', 'purchase_order_details.trims_type_id', '=', 'trims_types.id')
+                //                     ->select('trims_types.short_name', 'trims_types.name')
+                //                     ->where('purchase_order_details.purchase_order_master_id', $id)
+                //                     ->orderBy('trims_types.name')
+                //                     ->groupBy('purchase_order_details.trims_type_id', 'trims_types.short_name', 'trims_types.name')
+                //                     ->get();
 
-                $currentStocks = DB::table('trims_stocks')
-                    ->join('purchase_order_masters', 'trims_stocks.purchase_order_master_id', '=', 'purchase_order_masters.id')
-                    ->join('purchase_order_details', function ($join) {
-                        $join->on('purchase_order_details.item_count', '=', 'trims_stocks.purchase_order_detail_id');
-                        $join->on('purchase_order_details.purchase_order_master_id', '=', 'trims_stocks.purchase_order_master_id');
-                    })
-                    ->join('buyers', 'purchase_order_masters.buyer_id', '=', 'buyers.id')
-                    ->join('trims_types', 'purchase_order_details.trims_type_id', '=', 'trims_types.id')
-                    ->join('units', 'purchase_order_details.item_unit_id', '=', 'units.id')
-                    ->select('purchase_order_masters.lpd', 'trims_stocks.stock_quantity', 'trims_stocks.delivered_quantity',
-                        'purchase_order_masters.lpd_po_no', 'purchase_order_details.style_no','buyers.name AS buyer',
-                        'purchase_order_details.item_size', 'purchase_order_details.item_color', 'purchase_order_details.item_description', 'trims_stocks.id',
-                        'units.short_unit', 'trims_types.name AS trims_type')
-                    ->where('trims_stocks.status', 'A')
-                    ->where('purchase_order_masters.id', $id)
-                    ->get();
+                // $currentStocks = DB::table('trims_stocks')
+                //     ->join('purchase_order_masters', 'trims_stocks.purchase_order_master_id', '=', 'purchase_order_masters.id')
+                //     ->join('purchase_order_details', function ($join) {
+                //         $join->on('purchase_order_details.item_count', '=', 'trims_stocks.purchase_order_detail_id');
+                //         $join->on('purchase_order_details.purchase_order_master_id', '=', 'trims_stocks.purchase_order_master_id');
+                //     })
+                //     ->join('buyers', 'purchase_order_masters.buyer_id', '=', 'buyers.id')
+                //     ->join('trims_types', 'purchase_order_details.trims_type_id', '=', 'trims_types.id')
+                //     ->join('units', 'purchase_order_details.item_unit_id', '=', 'units.id')
+                //     ->select('purchase_order_masters.lpd', 'trims_stocks.stock_quantity', 'trims_stocks.delivered_quantity',
+                //         'purchase_order_masters.lpd_po_no', 'purchase_order_details.style_no','buyers.name AS buyer',
+                //         'purchase_order_details.item_size', 'purchase_order_details.item_color', 'purchase_order_details.item_description', 'trims_stocks.id',
+                //         'units.short_unit', 'trims_types.name AS trims_type')
+                //     ->where('trims_stocks.status', 'A')
+                //     ->where('purchase_order_masters.id', $id)
+                //     ->get();
 
 
-                $proformaInvoices = ProformaInvoiceMaster::orderBy('id')
-                    ->where('purchase_order_master_id', $id)
-                    ->where('status', '!=', 'D')
-                    ->get();
+                // $proformaInvoices = ProformaInvoiceMaster::orderBy('id')
+                //     ->where('purchase_order_master_id', $id)
+                //     ->where('status', '!=', 'D')
+                //     ->get();
 
                 $productionPlanDetails = ProductionPlanDetailSetup::where('purchase_order_master_id', $id)
                     ->where('status', '!=', 'D')
@@ -243,42 +247,40 @@ class PurchaseOrderController extends Controller
                     }
                 }
 
-                $deliveryMasters = DeliveryMaster::orderBy('challan_date', 'DESC')
-                    ->where('status', '!=', 'D')
-                    ->where('purchase_order_master_id', $id)
-                    ->get();
+                // $deliveryMasters = DeliveryMaster::orderBy('challan_date', 'DESC')
+                //     ->where('status', '!=', 'D')
+                //     ->where('purchase_order_master_id', $id)
+                //     ->get();
+
                 //return $productionPlanDetails;
 
 
-                $deliveryData = DB::table('delivery_details')
-                    ->join('delivery_masters', 'delivery_masters.id', '=', 'delivery_details.delivery_master_id')
-                    ->join('purchase_order_details', function ($join) {
-                        $join->on('purchase_order_details.item_count', '=', 'delivery_details.purchase_order_detail_id');
-                        $join->on('purchase_order_details.purchase_order_master_id', '=', 'delivery_masters.purchase_order_master_id');
-                    })
-                    ->join('purchase_order_masters', 'purchase_order_details.purchase_order_master_id', '=', 'purchase_order_masters.id')
-                    ->join('units', 'purchase_order_details.item_unit_id', '=', 'units.id')
-                    ->join('stores', 'delivery_masters.store_id', '=', 'stores.id')
-                    ->join('trims_types', 'purchase_order_details.trims_type_id', '=', 'trims_types.id')
-                    ->select('purchase_order_masters.lpd',
-                        'purchase_order_masters.lpd_po_no', 'purchase_order_details.style_no', 'stores.name AS store_name',
-                        'purchase_order_details.item_size', 'purchase_order_details.item_color', 'purchase_order_details.item_description',
-                        'delivery_masters.challan_date', 'delivery_masters.id AS challan_no', 'delivery_details.remarks', 'delivery_details.total_weight',
-                        'delivery_details.delivered_quantity', 'delivery_details.gross_delivered_quantity', 'delivery_details.gross_unit',
-                        'delivery_details.gross_weight',
-                        'units.short_unit', 'delivery_masters.status', 'trims_types.name AS trims_type')
-                    ->where('delivery_masters.status', '!=','D')
-                    ->where('purchase_order_masters.id', $id)
-                    ->orderBy('delivery_masters.challan_date')
-                    ->orderBy('trims_types.name')
-                    ->get();
+                // $deliveryData = DB::table('delivery_details')
+                //     ->join('delivery_masters', 'delivery_masters.id', '=', 'delivery_details.delivery_master_id')
+                //     ->join('purchase_order_details', function ($join) {
+                //         $join->on('purchase_order_details.item_count', '=', 'delivery_details.purchase_order_detail_id');
+                //         $join->on('purchase_order_details.purchase_order_master_id', '=', 'delivery_masters.purchase_order_master_id');
+                //     })
+                //     ->join('purchase_order_masters', 'purchase_order_details.purchase_order_master_id', '=', 'purchase_order_masters.id')
+                //     ->join('units', 'purchase_order_details.item_unit_id', '=', 'units.id')
+                //     ->join('stores', 'delivery_masters.store_id', '=', 'stores.id')
+                //     ->join('trims_types', 'purchase_order_details.trims_type_id', '=', 'trims_types.id')
+                //     ->select('purchase_order_masters.lpd',
+                //         'purchase_order_masters.lpd_po_no', 'purchase_order_details.style_no', 'stores.name AS store_name',
+                //         'purchase_order_details.item_size', 'purchase_order_details.item_color', 'purchase_order_details.item_description',
+                //         'delivery_masters.challan_date', 'delivery_masters.id AS challan_no', 'delivery_details.remarks', 'delivery_details.total_weight',
+                //         'delivery_details.delivered_quantity', 'delivery_details.gross_delivered_quantity', 'delivery_details.gross_unit',
+                //         'delivery_details.gross_weight',
+                //         'units.short_unit', 'delivery_masters.status', 'trims_types.name AS trims_type')
+                //     ->where('delivery_masters.status', '!=','D')
+                //     ->where('purchase_order_masters.id', $id)
+                //     ->orderBy('delivery_masters.challan_date')
+                //     ->orderBy('trims_types.name')
+                //     ->get();
                 //return $deliveryData;
 
-                return view('lpd2.purchase-order.detail',
-                    compact('units','buyers', 'trimsTypes',
-                        'factories', 'stores', 'purchaseOrder', 'deliveryMasters',
-                        'purchaseOrderDetails', 'proformaInvoices', 'productionPlanDetails',
-                        'deliveryData', 'uniqTrimsTypes', 'deleteAccess', 'currentStocks'));
+                //'uniqTrimsTypes','deliveryData','deliveryMasters','proformaInvoices','currentStocks', 'productionPlanDetails','purchaseOrderDetails',
+                return view('lpd2.purchase-order.detail', compact('units','buyers', 'trimsTypes','factories', 'stores', 'purchaseOrder','deleteAccess','id'));
             } // other data
         }
         else{

@@ -31,7 +31,8 @@
                     </li>
 
                     <li>
-                        <a href="{{route('lpd2.purchase.order.detail', ['id' => $purchaseOrder->id])}}"> PO No: {{$purchaseOrder->lpd_po_no}}</a>
+                        {{-- <a href="{{route('lpd2.purchase.order.detail', ['id' => $id])}}"> PO No: {{$purchaseOrder->lpd_po_no}}</a> --}}
+                        <a href="{{route('lpd2.purchase.order.detail', ['id' => $id])}}"> PO No: <span id="breadcrumblpdNo"></span></a>
                     </li>
                 </ul>
 
@@ -70,7 +71,7 @@
                                     @endif
                                     @if($deleteAccess == true)
                                         @if(Auth::user()->hasTaskPermission('lpdtwodeletepo', Auth::user()->id))
-                                            <a title="Delete Purchase Order" class="DeleteOrder myIcon icon-danger icon-ef-3 icon-ef-3b icon-color" data-id = "{{ $purchaseOrder->id }}"><i class="fa fa-trash"></i></a>
+                                            <a title="Delete Purchase Order" class="DeleteOrder myIcon icon-danger icon-ef-3 icon-ef-3b icon-color" data-id = "{{ $id }}"><i class="fa fa-trash"></i></a>
                                         @endif
                                     @endif
                                 @endif
@@ -155,10 +156,10 @@
                                             <strong>Sample Submission Date</strong>
                                         </div>
                                         <div class="col-md-7 pull-right">
-                                            @if($purchaseOrder->sample_submission_date != null)
-                                                <p class="text-right text-blue" id="sampleSubmissionDate"></p>
-                                                {{-- <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->sample_submission_date)->format('d/m/Y')}}</p> --}}
-                                            @endif
+                                            <p class="text-right text-blue" id="sampleSubmissionDate"></p>
+                                            {{-- @if($purchaseOrder->sample_submission_date != null)
+                                                <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->sample_submission_date)->format('d/m/Y')}}</p>
+                                            @endif --}}
                                         </div>
                                     </div>
                                 </li>
@@ -169,10 +170,10 @@
                                             <strong>Production Start Date</strong>
                                         </div>
                                         <div class="col-md-7 pull-right">
-                                            @if($purchaseOrder->production_start_date != null)
-                                                <p class="text-right text-blue" id="productionStartDate"></p>
-                                                {{-- <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->production_start_date)->format('d/m/Y')}}</p> --}}
-                                            @endif
+                                            <p class="text-right text-blue" id="productionStartDate"></p>
+                                            {{-- @if($purchaseOrder->production_start_date != null)
+                                                <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->production_start_date)->format('d/m/Y')}}</p>
+                                            @endif --}}
                                         </div>
                                     </div>
                                 </li>
@@ -183,10 +184,10 @@
                                             <strong>Production Closing Date</strong>
                                         </div>
                                         <div class="col-md-7 pull-right">
-                                            @if($purchaseOrder->production_end_date != null)
-                                                <p class="text-right text-blue" id="productionEndDate"></p>
-                                                {{-- <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->production_end_date)->format('d/m/Y')}}</p> --}}
-                                            @endif
+                                            <p class="text-right text-blue" id="productionEndDate"></p>
+                                            {{-- @if($purchaseOrder->production_end_date != null)
+                                                <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->production_end_date)->format('d/m/Y')}}</p>
+                                            @endif --}}
                                         </div>
                                     </div>
                                 </li>
@@ -197,10 +198,10 @@
                                             <strong>Delivery Start Date</strong>
                                         </div>
                                         <div class="col-md-7 pull-right">
-                                            @if($purchaseOrder->delivery_start_date != null)
-                                                <p class="text-right text-blue" id="deliveryStartDate"></p>
-                                                {{-- <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->delivery_start_date)->format('d/m/Y')}}</p> --}}
-                                            @endif
+                                            <p class="text-right text-blue" id="deliveryStartDate"></p>
+                                            {{-- @if($purchaseOrder->delivery_start_date != null)
+                                                <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->delivery_start_date)->format('d/m/Y')}}</p>
+                                            @endif --}}
                                         </div>
                                     </div>
                                 </li>
@@ -211,10 +212,10 @@
                                             <strong>Delivery Closing Date</strong>
                                         </div>
                                         <div class="col-md-7 pull-right">
-                                            @if($purchaseOrder->delivery_start_date != null)
-                                                <p class="text-right text-blue" id="deliveryEndDate"></p>
-                                                {{-- <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->delivery_end_date)->format('d/m/Y')}}</p> --}}
-                                            @endif
+                                            <p class="text-right text-blue" id="deliveryEndDate"></p>
+                                            {{-- @if($purchaseOrder->delivery_start_date != null)
+                                                <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->delivery_end_date)->format('d/m/Y')}}</p>
+                                            @endif --}}
                                         </div>
                                     </div>
                                 </li>
@@ -249,13 +250,13 @@
                             <div class="mt-10">
                                 @if(Auth::user()->hasTaskPermission('lpdtwoclosereq', Auth::user()->id))
                                     @if($purchaseOrder->close_request == 0)
-                                        <a title="Generate Close Request for This Purchase Order" class="CloseRequestOrder myIcon icon-info icon-ef-3 icon-ef-3b icon-color" data-id = "{{ $purchaseOrder->id }}"><i class="fa fa-times"></i></a>
+                                        <a title="Generate Close Request for This Purchase Order" class="CloseRequestOrder myIcon icon-info icon-ef-3 icon-ef-3b icon-color" data-id = "{{ $id }}"><i class="fa fa-times"></i></a>
                                     @endif
                                 @endif
                                 @if(Auth::user()->hasTaskPermission('lpdtwoapclosereq', Auth::user()->id))
                                     @if($purchaseOrder->close_request == 1)
                                         @if($purchaseOrder->status == "A")
-                                            <a title="Approve Close Request for This Purchase Order" class="CloseApproveOrder myIcon icon-success icon-ef-3 icon-ef-3b icon-color" data-id = "{{ $purchaseOrder->id }}"><i class="fa fa-check"></i></a>
+                                            <a title="Approve Close Request for This Purchase Order" class="CloseApproveOrder myIcon icon-success icon-ef-3 icon-ef-3b icon-color" data-id = "{{ $id }}"><i class="fa fa-check"></i></a>
                                         @endif
                                     @endif
                                 @endif
@@ -310,7 +311,7 @@
                                                                 <!-- tile body -->
                                                                 <div class="tile-body">
                                                                     <input type="hidden" id="DetailID" name="item_id">
-                                                                    <input type="hidden" id="MasterID" name="purchase_order_master_id" value="{{old('purchase_order_master_id', $purchaseOrder->id)}}">
+                                                                    <input type="hidden" id="MasterID" name="purchase_order_master_id" value="{{old('purchase_order_master_id', $id)}}">
                                                                     <div class="row" style="padding: 0px 15px;">
                                                                         <div class="col-md-3 no-padding">
                                                                             <div class="form-group">
@@ -549,7 +550,7 @@
                                                         <a onclick="loadPOProductionPlanDataTable()" role="button" class="tile-refresh myIcon icon-info icon-ef-3 icon-ef-3b icon-color" title="Refresh">
                                                             <i class="fa fa-refresh"></i>
                                                         </a>
-                                                        <a href="{{route('lpd2.purchase.order.detail.plan-report', ['id' => $purchaseOrder->id])}}" title="Production Plan Report" class ="myIcon icon-danger icon-ef-3 icon-ef-3b icon-color">
+                                                        <a href="{{route('lpd2.purchase.order.detail.plan-report', ['id' => $id])}}" title="Production Plan Report" class ="myIcon icon-danger icon-ef-3 icon-ef-3b icon-color">
                                                             <i class="fa fa-file-pdf-o"></i>
                                                         </a>
                                                     </div>
@@ -611,7 +612,7 @@
                                                         <a onclick="loadPOProductionAchievementDataTable()" role="button" class="tile-refresh myIcon icon-info icon-ef-3 icon-ef-3b icon-color" title="Refresh">
                                                             <i class="fa fa-refresh"></i>
                                                         </a>
-                                                        <a href="{{route('lpd2.purchase.order.detail.achievement-report', ['id' => $purchaseOrder->id])}}" title="Production Achievement Report" class ="myIcon icon-danger icon-ef-3 icon-ef-3b icon-color">
+                                                        <a href="{{route('lpd2.purchase.order.detail.achievement-report', ['id' => $id])}}" title="Production Achievement Report" class ="myIcon icon-danger icon-ef-3 icon-ef-3b icon-color">
                                                             <i class="fa fa-file-pdf-o"></i>
                                                         </a>
                                                     </div>
@@ -674,7 +675,7 @@
                                                         <a onclick="loadPOProductStockDataTable()" role="button" class="tile-refresh myIcon icon-info icon-ef-3 icon-ef-3b icon-color" title="Refresh">
                                                             <i class="fa fa-refresh"></i>
                                                         </a>
-                                                        <a href="{{route('lpd2.purchase.order.detail.stock-report', ['id' => $purchaseOrder->id])}}" title="Production Achievement Report" class ="myIcon icon-danger icon-ef-3 icon-ef-3b icon-color">
+                                                        <a href="{{route('lpd2.purchase.order.detail.stock-report', ['id' => $id])}}" title="Production Achievement Report" class ="myIcon icon-danger icon-ef-3 icon-ef-3b icon-color">
                                                             <i class="fa fa-file-pdf-o"></i>
                                                         </a>
                                                     </div>
@@ -739,7 +740,7 @@
                                                         <a onclick="loadPOConfirmedDeleveryDataTable()" role="button" class="tile-refresh myIcon icon-info icon-ef-3 icon-ef-3b icon-color" title="Refresh">
                                                             <i class="fa fa-refresh"></i>
                                                         </a>
-                                                        <a href="{{route('lpd2.purchase.order.detail.delivery-report', ['id' => $purchaseOrder->id])}}" title="Production Achievement Report" class ="myIcon icon-danger icon-ef-3 icon-ef-3b icon-color">
+                                                        <a href="{{route('lpd2.purchase.order.detail.delivery-report', ['id' => $id])}}" title="Production Achievement Report" class ="myIcon icon-danger icon-ef-3 icon-ef-3b icon-color">
                                                             <i class="fa fa-file-pdf-o"></i>
                                                         </a>
                                                     </div>
@@ -812,7 +813,7 @@
                                                         <a onclick="loadPONotConfirmedDeleveryDataTable()" role="button" class="tile-refresh myIcon icon-info icon-ef-3 icon-ef-3b icon-color" title="Refresh">
                                                             <i class="fa fa-refresh"></i>
                                                         </a>
-                                                        <a href="{{route('lpd2.purchase.order.detail.delivery-not-approved-report', ['id' => $purchaseOrder->id])}}" title="Production Achievement Report" class ="myIcon icon-danger icon-ef-3 icon-ef-3b icon-color">
+                                                        <a href="{{route('lpd2.purchase.order.detail.delivery-not-approved-report', ['id' => $id])}}" title="Production Achievement Report" class ="myIcon icon-danger icon-ef-3 icon-ef-3b icon-color">
                                                             <i class="fa fa-file-pdf-o"></i>
                                                         </a>
                                                     </div>
@@ -900,7 +901,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <input type="hidden" id="MasterID" name="purchase_order_master_id" value="{{old('purchase_order_master_id', $purchaseOrder->id)}}">
+                            <input type="hidden" id="MasterID" name="purchase_order_master_id" value="{{old('purchase_order_master_id', $id)}}">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="PO_Date" class="control-label">Production Start Date</label>
@@ -935,7 +936,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <input type="hidden" id="MasterID" name="purchase_order_master_id" value="{{old('purchase_order_master_id', $purchaseOrder->id)}}">
+                            <input type="hidden" id="MasterID" name="purchase_order_master_id" value="{{old('purchase_order_master_id', $id)}}">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="S_Submission_Date" class="control-label">Sample Submission Date</label>
@@ -1008,7 +1009,7 @@
                             </div>
                         @endif
                         <div class="row" style="padding: 0px 15px;">
-                            <input type="hidden" id="MasterID" name="purchase_order_master_id" value="{{old('purchase_order_master_id', $purchaseOrder->id)}}">
+                            <input type="hidden" id="MasterID" name="purchase_order_master_id" value="{{old('purchase_order_master_id', $id)}}">
 
                             <div class="col-md-4 no-padding">
                                 <div class="form-group">
@@ -1165,7 +1166,7 @@
                             </div>
                         @endif
                         <div class="row" style="padding: 0px 15px;">
-                            <input type="hidden" id="MasterID" name="purchase_order_master_id" value="{{old('purchase_order_master_id', $purchaseOrder->id)}}">
+                            <input type="hidden" id="MasterID" name="purchase_order_master_id" value="{{old('purchase_order_master_id', $id)}}">
 
                             <div class="col-md-4 no-padding">
                                 <div class="form-group">
@@ -1256,7 +1257,7 @@
                             </div>
                         @endif
                         <div class="row" style="padding: 0px 15px;">
-                            <input type="hidden" id="MasterID" name="purchase_order_master_id" value="{{old('purchase_order_master_id', $purchaseOrder->id)}}">
+                            <input type="hidden" id="MasterID" name="purchase_order_master_id" value="{{old('purchase_order_master_id', $id)}}">
 
                             <div class="col-md-4 no-padding">
                                 <div class="form-group">
@@ -1326,7 +1327,7 @@
 <script src="{{ asset('/js/common.js') }}"></script>
     <script>
 
-        var po_master_id = {{ $purchaseOrder->id }};
+        var po_master_id = {{ $id }};
 
         var po_product_list_table = $('#advanced-usage').DataTable({
             "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
@@ -1453,17 +1454,53 @@
                 data:{id: FactoryID},
                 success:function(data){
                     // console.log(data);
-                    // document.getElementById("lpdNo").innerHTML  = "<strong>LPD PO No: </strong>" + data.lpd_po_no;
+                    document.getElementById("breadcrumblpdNo").innerHTML  = data.lpd_po_no;
                     document.getElementById("lpdNo").innerHTML  = data.lpd_po_no;
                     document.getElementById("jobYearNo").innerHTML  = data.job_year + '/' + data.job_no;
-                    document.getElementById("poDate").innerHTML  = returnStringFormatDate(data.po_date);  
-                    document.getElementById("approvalDate").innerHTML  = returnStringFormatDate(data.approval_date);  
-                    document.getElementById("sampleSubmissionDate").innerHTML  = returnStringFormatDate(data.sample_submission_date);  
-                    document.getElementById("productionStartDate").innerHTML  = returnStringFormatDate(data.production_start_date);  
-                    document.getElementById("productionEndDate").innerHTML  = returnStringFormatDate(data.production_end_date);  
-                    document.getElementById("deliveryStartDate").innerHTML  = returnStringFormatDate(data.delivery_start_date);  
-                    document.getElementById("deliveryEndDate").innerHTML  = returnStringFormatDate(data.delivery_end_date);  
-                    document.getElementById("remark").innerHTML  = data.remarks;  
+                    document.getElementById("remark").innerHTML  = data.remarks; 
+
+                    if ((data.po_date === null) || (data.po_date === "")) {
+                        document.getElementById("poDate").innerHTML  = '';
+                    } else {
+                        document.getElementById("poDate").innerHTML  = returnStringFormatDate(data.po_date);
+                    }
+
+                    if ((data.approval_date === null) || (data.approval_date === "")) {
+                        document.getElementById("approvalDate").innerHTML  = '';
+                    } else {
+                        document.getElementById("approvalDate").innerHTML  = returnStringFormatDate(data.approval_date);
+                    }
+
+                    if ((data.sample_submission_date === null) || (data.sample_submission_date === "")) {
+                        document.getElementById("sampleSubmissionDate").innerHTML  = '';
+                    } else {
+                        document.getElementById("sampleSubmissionDate").innerHTML  = returnStringFormatDate(data.sample_submission_date);  
+                    }
+
+                    if ((data.production_start_date === null) || (data.production_start_date === "")) {
+                        document.getElementById("productionStartDate").innerHTML  = '';
+                    } else {
+                        document.getElementById("productionStartDate").innerHTML  = returnStringFormatDate(data.production_start_date);  
+                    }
+
+                    if ((data.production_end_date === null) || (data.production_end_date === "")) {
+                        document.getElementById("productionEndDate").innerHTML  = '';
+                    } else {
+                        document.getElementById("productionEndDate").innerHTML  = returnStringFormatDate(data.production_end_date);  
+                    }
+
+                    if ((data.delivery_start_date === null) || (data.delivery_start_date === "")) {
+                        document.getElementById("deliveryStartDate").innerHTML  = '';
+                    } else {
+                        document.getElementById("deliveryStartDate").innerHTML  = returnStringFormatDate(data.delivery_start_date);  
+                    }
+
+                    if ((data.delivery_end_date === null) || (data.delivery_end_date === "")) {
+                        document.getElementById("deliveryEndDate").innerHTML  = '';
+                    } else {
+                        document.getElementById("deliveryEndDate").innerHTML  = returnStringFormatDate(data.delivery_end_date);  
+                    }
+                    
                 },
                 error:function(error){
                     //console.log(error);

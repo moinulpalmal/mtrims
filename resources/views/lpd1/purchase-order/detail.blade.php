@@ -31,7 +31,8 @@
                     </li>
 
                     <li>
-                        <a href="{{route('lpd1.purchase.order.detail', ['id' => $purchaseOrder->id])}}"> PO No: {{$purchaseOrder->lpd_po_no}}</a>
+                        {{-- <a href="{{route('lpd1.purchase.order.detail', ['id' => $purchaseOrder->id])}}"> PO No: {{$purchaseOrder->lpd_po_no}}</a> --}}
+                        <a href="{{route('lpd1.purchase.order.detail', ['id' => $id])}}"> PO No: <span id="breadcrumblpdNo"></span></a>
                     </li>
                 </ul>
 
@@ -50,7 +51,6 @@
                             {{--<div class="thumb thumb-xl">
                                 <img class="img-circle" src="assets/images/arnold-avatar.jpg" alt="">
                             </div>--}}
-                            {{-- <h4 class="mb-0" id="lpdNo"></h4> --}}
                             {{-- <h4 class="mb-0"><strong>LPD PO No:</strong> {{$purchaseOrder->lpd_po_no}}</h4> --}}
                             <h4 class="mb-0"><strong>LPD PO No:</strong> <span id="lpdNo"></span></h4>
                             <div>
@@ -64,24 +64,24 @@
                                     {{-- <span id="jobYearNo">{{$purchaseOrder->job_year}}/{{$purchaseOrder->job_no}}</span> --}}
                                 </span>
                             </div>
-                            <div class="mt-10">
-                                <a title="Refresh" id="" class ="myIcon icon-info icon-ef-3 icon-ef-3b icon-color" onclick="refresh()">
+                            <div class="mt-10" id="MasterButtons">
+                                {{--<a title="Refresh" id="" class ="myIcon icon-info icon-ef-3 icon-ef-3b icon-color" onclick="refresh()">
                                     <i class="fa fa-refresh"></i>
                                 </a>
                                 @if($purchaseOrder->close_request == 0)
-                                    @if(Auth::user()->hasTaskPermission('lpdtwoupdatepo', Auth::user()->id))
+                                    @if(Auth::user()->hasTaskPermission('lpdoneupdatepo', Auth::user()->id))
                                     <a title="Purchase Order Master Update" class ="EditPO myIcon icon-warning icon-ef-3 icon-ef-3b icon-color" data-toggle="modal" data-target="#POUpdateModal" data-options="splash-2 splash-ef-12">
                                         <i class="fa fa-edit"></i>
                                     </a>
                                     @endif
                                     @if($deleteAccess == true)
                                         @if(Auth::user()->hasTaskPermission('lpdonedeletepo', Auth::user()->id))
-                                        <a title="Delete Purchase Order" class="DeleteOrder myIcon icon-danger icon-ef-3 icon-ef-3b icon-color" data-id = "{{ $purchaseOrder->id }}"><i class="fa fa-trash"></i></a>
+                                        <a title="Delete Purchase Order" class="DeleteOrder myIcon icon-danger icon-ef-3 icon-ef-3b icon-color" data-id = "{{ $id }}"><i class="fa fa-trash"></i></a>
                                         @endif
                                     @endif
                                 @else
 
-                                @endif
+                                @endif--}}
                             </div>
                         </div>
                     </section>
@@ -102,12 +102,13 @@
                                             <strong>Order Date</strong>
                                         </div>
                                         <div class="col-md-7 pull-right">
-                                            @if($purchaseOrder->po_date != null)
+                                            <p class="text-right text-blue" id="poDate"></p>
+                                            {{-- @if($purchaseOrder->po_date != null)
                                                 <p class="text-right text-greensea">
                                                     <p class="text-right text-blue" id="poDate"></p>
-                                                    {{-- {{\Carbon\Carbon::parse($purchaseOrder->po_date)->format('d/m/Y')}} --}}
+                                                    {{\Carbon\Carbon::parse($purchaseOrder->po_date)->format('d/m/Y')}}
                                                 </p>
-                                            @endif
+                                            @endif --}}
                                         </div>
                                     </div>
                                 </li>
@@ -118,10 +119,11 @@
                                             <strong>Last Approval Date</strong>
                                         </div>
                                         <div class="col-md-7 pull-right">
-                                            @if($purchaseOrder->approval_date != null)
+                                            <p class="text-right text-blue" id="approvalDate"></p>
+                                            {{-- @if($purchaseOrder->approval_date != null)
                                                 <p class="text-right text-blue" id="approvalDate"></p>
-                                                {{-- <p class="text-right text-greensea">{{\Carbon\Carbon::parse($purchaseOrder->approval_date)->format('d/m/Y')}}</p> --}}
-                                            @endif
+                                                <p class="text-right text-greensea">{{\Carbon\Carbon::parse($purchaseOrder->approval_date)->format('d/m/Y')}}</p>
+                                            @endif --}}
                                         </div>
                                     </div>
                                 </li>
@@ -137,19 +139,19 @@
                             <h1 class="custom-font"><strong>Production</strong> Plans & Date</h1>
                         </div>
                         <div class="tile-widget p-30 text-center">
-                            <div class="mt-10">
+                            <div class="mt-10" id = "ProductionPlanButtons">
                                {{-- @if(Auth::user()->hasTaskPermission('lpdonepropose', Auth::user()->id))
                                     <a title="Production & Delivery Proposal" class ="myIcon icon-warning icon-ef-3 icon-ef-3b icon-color" data-toggle="modal" data-target="#dateProposalModal" data-options="splash-2 splash-ef-12">
                                         <i class="fa fa-calendar"></i>
                                     </a>
                                 @endif--}}
-                                @if($purchaseOrder->close_request == 0)
+                               {{-- @if($purchaseOrder->close_request == 0)
                                     @if(Auth::user()->hasTaskPermission('lpdoneapprovepo', Auth::user()->id))
                                         <a title="Provide Purchase Order Dates" class ="myIcon icon-success icon-ef-3 icon-ef-3b icon-color" data-toggle="modal" data-target="#poApprovalModal" data-options="splash-2 splash-ef-12">
                                             <i class="fa fa-calendar"></i>
                                         </a>
                                         @endif
-                                @endif
+                                @endif--}}
                             </div>
                         </div>
                         <!-- /tile header -->
@@ -162,10 +164,10 @@
                                             <strong>Sample Submission Date</strong>
                                         </div>
                                         <div class="col-md-7 pull-right">
-                                            @if($purchaseOrder->sample_submission_date != null)
-                                                <p class="text-right text-blue" id="sampleSubmissionDate"></p>
-                                                {{-- <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->sample_submission_date)->format('d/m/Y')}}</p> --}}
-                                            @endif
+                                            <p class="text-right text-blue" id="sampleSubmissionDate"></p>
+                                            {{-- @if($purchaseOrder->sample_submission_date != null)
+                                                <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->sample_submission_date)->format('d/m/Y')}}</p>
+                                            @endif --}}
                                         </div>
                                     </div>
                                 </li>
@@ -176,10 +178,10 @@
                                             <strong>Production Start Date</strong>
                                         </div>
                                         <div class="col-md-7 pull-right">
-                                            @if($purchaseOrder->production_start_date != null)
-                                                <p class="text-right text-blue" id="productionStartDate"></p>
-                                                {{-- <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->production_start_date)->format('d/m/Y')}}</p> --}}
-                                            @endif
+                                            <p class="text-right text-blue" id="productionStartDate"></p>
+                                            {{-- @if($purchaseOrder->production_start_date != null)
+                                                <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->production_start_date)->format('d/m/Y')}}</p>
+                                            @endif --}}
                                         </div>
                                     </div>
                                 </li>
@@ -190,10 +192,10 @@
                                             <strong>Production Closing Date</strong>
                                         </div>
                                         <div class="col-md-7 pull-right">
-                                            @if($purchaseOrder->production_end_date != null)
-                                                <p class="text-right text-blue" id="productionEndDate"></p>
-                                                {{-- <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->production_end_date)->format('d/m/Y')}}</p> --}}
-                                            @endif
+                                            <p class="text-right text-blue" id="productionEndDate"></p>
+                                            {{-- @if($purchaseOrder->production_end_date != null)
+                                                <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->production_end_date)->format('d/m/Y')}}</p>
+                                            @endif --}}
                                         </div>
                                     </div>
                                 </li>
@@ -204,10 +206,10 @@
                                             <strong>Delivery Start Date</strong>
                                         </div>
                                         <div class="col-md-7 pull-right">
-                                            @if($purchaseOrder->delivery_start_date != null)
-                                                <p class="text-right text-blue" id="deliveryStartDate"></p>
-                                                {{-- <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->delivery_start_date)->format('d/m/Y')}}</p> --}}
-                                            @endif
+                                            <p class="text-right text-blue" id="deliveryStartDate"></p>
+                                            {{-- @if($purchaseOrder->delivery_start_date != null)
+                                                <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->delivery_start_date)->format('d/m/Y')}}</p>
+                                            @endif --}}
                                         </div>
                                     </div>
                                 </li>
@@ -218,10 +220,10 @@
                                             <strong>Delivery Closing Date</strong>
                                         </div>
                                         <div class="col-md-7 pull-right">
-                                            @if($purchaseOrder->delivery_start_date != null)
-                                                <p class="text-right text-blue" id="deliveryEndDate"></p>
-                                                {{-- <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->delivery_end_date)->format('d/m/Y')}}</p> --}}
-                                            @endif
+                                            <p class="text-right text-blue" id="deliveryEndDate"></p>
+                                            {{-- @if($purchaseOrder->delivery_start_date != null)
+                                                <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->delivery_end_date)->format('d/m/Y')}}</p>
+                                            @endif --}}
                                         </div>
                                     </div>
                                 </li>
@@ -254,19 +256,19 @@
                         </div>
                         <div class="tile-widget p-30 text-center">
 {{--                            {{Auth::user()->hasTaskPermission('lpdonepocloserequest', Auth::user()->id)}}--}}
-                            <div class="mt-10">
-                                @if(Auth::user()->hasTaskPermission('lpdoneclosereq', Auth::user()->id))
+                            <div class="mt-10" id="POCloseButtons">
+                                {{--@if(Auth::user()->hasTaskPermission('lpdoneclosereq', Auth::user()->id))
                                     @if($purchaseOrder->close_request == 0)
-                                        <a title="Generate Close Request for This Purchase Order" class="CloseRequestOrder myIcon icon-info icon-ef-3 icon-ef-3b icon-color" data-id = "{{ $purchaseOrder->id }}"><i class="fa fa-times"></i></a>
+                                        <a title="Generate Close Request for This Purchase Order" class="CloseRequestOrder myIcon icon-info icon-ef-3 icon-ef-3b icon-color" data-id = "{{ $id }}"><i class="fa fa-times"></i></a>
                                     @endif
                                 @endif
                                 @if(Auth::user()->hasTaskPermission('lpdoneapclosereq', Auth::user()->id))
                                     @if($purchaseOrder->close_request == 1)
                                         @if($purchaseOrder->status == "A")
-                                            <a title="Approve Close Request for This Purchase Order" class="CloseApproveOrder myIcon icon-success icon-ef-3 icon-ef-3b icon-color" data-id = "{{ $purchaseOrder->id }}"><i class="fa fa-check"></i></a>
+                                            <a title="Approve Close Request for This Purchase Order" class="CloseApproveOrder myIcon icon-success icon-ef-3 icon-ef-3b icon-color" data-id = "{{ $id }}"><i class="fa fa-check"></i></a>
                                         @endif
                                         @endif
-                                @endif
+                                @endif--}}
                             </div>
                         </div>
                         <!-- /tile header -->
@@ -300,8 +302,7 @@
                                 <div class="tab-content">
                                     <div role="tabpanel" class="tab-pane active" id="itemList">
                                         <div class="wrap-reset">
-                                            @if($purchaseOrder->close_request == 0)
-                                                @if(Auth::user()->hasTaskPermission('lpdtwoadditem', Auth::user()->id))
+                                                @if(Auth::user()->hasTaskPermission('lpdoneadditem', Auth::user()->id))
                                                     <div class="row">
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
                                                             <form method="post" id="ItemAdd" name="ItemAddForm" enctype="multipart/form-data">
@@ -310,15 +311,13 @@
                                                                     <!-- tile header -->
                                                                     <div class="tile-header dvd dvd-btm">
                                                                         <h1 class="custom-font"><strong>Item</strong> Insert/Update Form</h1>
-
                                                                         <a><button id="iconChange" class="pull-right btn-info btn-xs" type="submit"><i class="fa fa-check"></i></button></a>
-
                                                                     </div>
                                                                     <!-- /tile header -->
                                                                     <!-- tile body -->
                                                                     <div class="tile-body">
                                                                         <input type="hidden" id="DetailID" name="item_id">
-                                                                        <input type="hidden" id="MasterID" name="purchase_order_master_id" value="{{old('purchase_order_master_id', $purchaseOrder->id)}}">
+                                                                        <input type="hidden" id="MasterID" name="purchase_order_master_id" value="{{old('purchase_order_master_id', $id)}}">
                                                                         <div class="row" style="padding: 0px 15px;">
                                                                             <div class="col-md-3 no-padding">
                                                                                 <div class="form-group">
@@ -452,7 +451,6 @@
                                                         </div>
                                                     </div>
                                                 @endif
-                                            @endif
                                             <div class="row">
                                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
                                                     <section class="tile">
@@ -499,10 +497,7 @@
                                                                         <th class="text-center">Unit Price (USD)</th>
                                                                         <th class="text-center">Total Price (USD)</th>
                                                                         <th class="text-center">Remarks</th>
-                                                                        {{-- <th class="text-center">Status</th> --}}
-                                                                        @if($purchaseOrder->close_request == 0)
-                                                                            <th class="text-center">Action</th>
-                                                                        @endif
+                                                                        <th class="text-center">Action</th>
                                                                     </tr>
                                                                     </thead>
                                                                     <tbody>
@@ -530,7 +525,7 @@
                                                         <a onclick="loadPOProductionPlanDataTable()" role="button" class="tile-refresh myIcon icon-info icon-ef-3 icon-ef-3b icon-color" title="Refresh">
                                                             <i class="fa fa-refresh"></i>
                                                         </a>
-                                                        <a href="{{route('lpd1.purchase.order.detail.plan-report', ['id' => $purchaseOrder->id])}}" title="Production Plan Report" class ="myIcon icon-danger icon-ef-3 icon-ef-3b icon-color">
+                                                        <a href="{{route('lpd1.purchase.order.detail.plan-report', ['id' => $id])}}" title="Production Plan Report" class ="myIcon icon-danger icon-ef-3 icon-ef-3b icon-color">
                                                             <i class="fa fa-file-pdf-o"></i>
                                                         </a>
                                                     </div>
@@ -555,21 +550,7 @@
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                {{-- @foreach($productionPlanDetails as $item)
-                                                                    <tr style="height: 3px !important;">
-                                                                        <td style="font-size: x-small !important;"><p>{{ (\App\Helpers\Helper::IDwiseData('machine_setups', 'id', $item->machine_id))->name }}</p></td>
-                                                                        <td style="font-size: x-small !important;"><p>{{ \Carbon\Carbon::parse($item->production_date)->format('d/m/Y') }}</p></td>
-                                                                        <td style="font-size: x-small !important;"><p>{!! (\App\Helpers\Helper::IDwiseData('stores', 'id', $item->delivery_location_id))->short_name !!}</p></td>
-                                                                        <td style="font-size: x-small !important;"><p>{!! (\App\Helpers\Helper::IDwiseData('trims_types', 'id', (\App\Helpers\Helper::TwoIDwiseData('purchase_order_details', 'purchase_order_master_id', $item->purchase_order_master_id, 'item_count', $item->purchase_order_detail_id))->trims_type_id))->name !!}</p></td>
-                                                                        <td style="font-size: x-small !important;"><p>{!! (\App\Helpers\Helper::TwoIDwiseData('purchase_order_details', 'purchase_order_master_id', $item->purchase_order_master_id, 'item_count', $item->purchase_order_detail_id))->item_description !!}</p></td>
-                                                                        <td style="font-size: x-small !important;"><P>{!! (\App\Helpers\Helper::TwoIDwiseData('purchase_order_details', 'purchase_order_master_id', $item->purchase_order_master_id, 'item_count', $item->purchase_order_detail_id))->item_size !!}</P></td>
-                                                                        <td style="font-size: x-small !important;"><P>{!! (\App\Helpers\Helper::TwoIDwiseData('purchase_order_details', 'purchase_order_master_id', $item->purchase_order_master_id, 'item_count', $item->purchase_order_detail_id))->item_color !!}</P></td>
-                                                                        <td style="font-size: x-small !important;" class="text-right"><p>{!! $item->no_of_heads !!}</p></td>
-                                                                        <td style="font-size: x-small !important;" class="text-right"><p>{!! (\App\Helpers\Helper::IDwiseData('units', 'id', $item->item_unit_id))->short_unit !!}</p></td>
-                                                                        <td style="font-size: x-small !important;" class="text-right"><p>{!! $item->target_production !!}</p></td>
-                                                                        <td style="font-size: x-small !important;" class="text-right"><P>{!! $item->remarks !!}</P></td>
-                                                                    </tr>
-                                                                @endforeach --}}
+
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -592,7 +573,7 @@
                                                         <a onclick="loadPOProductionAchievementDataTable()" role="button" class="tile-refresh myIcon icon-info icon-ef-3 icon-ef-3b icon-color" title="Refresh">
                                                             <i class="fa fa-refresh"></i>
                                                         </a>
-                                                        <a href="{{route('lpd1.purchase.order.detail.achievement-report', ['id' => $purchaseOrder->id])}}" title="Production Achievement Report" class ="myIcon icon-danger icon-ef-3 icon-ef-3b icon-color">
+                                                        <a href="{{route('lpd1.purchase.order.detail.achievement-report', ['id' => $id])}}" title="Production Achievement Report" class ="myIcon icon-danger icon-ef-3 icon-ef-3b icon-color">
                                                             <i class="fa fa-file-pdf-o"></i>
                                                         </a>
                                                     </div>
@@ -619,23 +600,7 @@
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                {{-- @foreach($productionPlanDetails as $item)
-                                                                    <tr style="height: 3px !important;">
-                                                                        <td style="font-size: x-small !important;"><p>{{ (\App\Helpers\Helper::IDwiseData('machine_setups', 'id', $item->machine_id))->name }}</p></td>
-                                                                        <td style="font-size: x-small !important;"><p>{{ \Carbon\Carbon::parse($item->production_date)->format('d/m/Y') }}</p></td>
-                                                                        <td style="font-size: x-small !important;"><p>{!! (\App\Helpers\Helper::IDwiseData('stores', 'id', $item->delivery_location_id))->short_name !!}</p></td>
-                                                                        <td style="font-size: x-small !important;"><p>{!! (\App\Helpers\Helper::IDwiseData('trims_types', 'id', (\App\Helpers\Helper::TwoIDwiseData('purchase_order_details', 'purchase_order_master_id', $item->purchase_order_master_id, 'item_count', $item->purchase_order_detail_id))->trims_type_id))->name !!}</p></td>
-                                                                        <td style="font-size: x-small !important;"><p>{!! (\App\Helpers\Helper::TwoIDwiseData('purchase_order_details', 'purchase_order_master_id', $item->purchase_order_master_id, 'item_count', $item->purchase_order_detail_id))->item_description !!}</p></td>
-                                                                        <td style="font-size: x-small !important;"><P>{!! (\App\Helpers\Helper::TwoIDwiseData('purchase_order_details', 'purchase_order_master_id', $item->purchase_order_master_id, 'item_count', $item->purchase_order_detail_id))->item_size !!}</P></td>
-                                                                        <td style="font-size: x-small !important;"><P>{!! (\App\Helpers\Helper::TwoIDwiseData('purchase_order_details', 'purchase_order_master_id', $item->purchase_order_master_id, 'item_count', $item->purchase_order_detail_id))->item_color !!}</P></td>
-                                                                        <td style="font-size: x-small !important;" class="text-right"><p>{!! $item->no_of_heads !!}</p></td>
-                                                                        <td style="font-size: x-small !important;" class="text-right"><p>{!! (\App\Helpers\Helper::IDwiseData('units', 'id', $item->item_unit_id))->short_unit !!}</p></td>
-                                                                        <td style="font-size: x-small !important;" class="text-right"><p>{!! $item->target_production !!}</p></td>
-                                                                        <td style="font-size: x-small !important;" class="text-right"><p>{!! $item->achievement_production !!}</p></td>
-                                                                        <td style="font-size: x-small !important;" class="text-right"><p>{!! $item->target_production - $item->achievement_production !!}</p></td>
-                                                                        <td style="font-size: x-small !important;" class="text-right"><P>{!! $item->remarks !!}</P></td>
-                                                                    </tr>
-                                                                @endforeach --}}
+
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -655,7 +620,7 @@
                                                         <a onclick="loadPOProductStockDataTable()" role="button" class="tile-refresh myIcon icon-info icon-ef-3 icon-ef-3b icon-color" title="Refresh">
                                                             <i class="fa fa-refresh"></i>
                                                         </a>
-                                                        <a href="{{route('lpd1.purchase.order.detail.stock-report', ['id' => $purchaseOrder->id])}}" title="Production Achievement Report" class ="myIcon icon-danger icon-ef-3 icon-ef-3b icon-color">
+                                                        <a href="{{route('lpd1.purchase.order.detail.stock-report', ['id' => $id])}}" title="Production Achievement Report" class ="myIcon icon-danger icon-ef-3 icon-ef-3b icon-color">
                                                             <i class="fa fa-file-pdf-o"></i>
                                                         </a>
                                                     </div>
@@ -665,16 +630,16 @@
                                                         <div class="table-responsive">
                                                             <table class="table table-hover table-bordered table-condensed" id="stock_table">
                                                                 <thead>
-                                                                <tr style="height: 3px !important;">
-                                                                    <th style="font-size: small !important;">Trims Type</th>
-                                                                    <th style="font-size: small !important;">Item Description</th>
-                                                                    <th style="font-size: small !important;">Size</th>
-                                                                    <th style="font-size: small !important;">Color</th>
-                                                                    <th style="font-size: small !important;">Unit</th>
-                                                                    <th style="font-size: small !important;">Received Quantity</th>
-                                                                    <th style="font-size: small !important;">Delivered Quantity</th>
-                                                                    <th style="font-size: small !important;">Balance Quantity</th>
-                                                                </tr>
+                                                                    <tr style="height: 3px !important;">
+                                                                        <th style="font-size: small !important;">Trims Type</th>
+                                                                        <th style="font-size: small !important;">Item Description</th>
+                                                                        <th style="font-size: small !important;">Size</th>
+                                                                        <th style="font-size: small !important;">Color</th>
+                                                                        <th style="font-size: small !important;">Unit</th>
+                                                                        <th style="font-size: small !important;">Received Quantity</th>
+                                                                        <th style="font-size: small !important;">Delivered Quantity</th>
+                                                                        <th style="font-size: small !important;">Balance Quantity</th>
+                                                                    </tr>
                                                                 </thead>
                                                                 <tbody>
                                                                 {{-- @foreach($currentStocks as $item)
@@ -722,7 +687,7 @@
                                                         <a onclick="loadPOConfirmedDeleveryDataTable()" role="button" class="tile-refresh myIcon icon-info icon-ef-3 icon-ef-3b icon-color" title="Refresh">
                                                             <i class="fa fa-refresh"></i>
                                                         </a>
-                                                        <a href="{{route('lpd1.purchase.order.detail.delivery-report', ['id' => $purchaseOrder->id])}}" title="Production Achievement Report" class ="myIcon icon-danger icon-ef-3 icon-ef-3b icon-color">
+                                                        <a href="{{route('lpd1.purchase.order.detail.delivery-report', ['id' => $id])}}" title="Production Achievement Report" class ="myIcon icon-danger icon-ef-3 icon-ef-3b icon-color">
                                                             <i class="fa fa-file-pdf-o"></i>
                                                         </a>
                                                     </div>
@@ -752,29 +717,7 @@
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                {{-- @php($i = 1)
-                                                                @foreach($deliveryData as $item)
-                                                                    @if($item->status == 'AP')
-                                                                        <tr style="height: 3px !important;">
-                                                                            <td class="text-center" style="font-size: x-small !important;"><P>{!! $i++ !!}</P></td>
-                                                                            <td style="font-size: x-small !important;" class="text-right"><p>{!! $item->trims_type !!}</p></td>
-                                                                            <td style="font-size: x-small !important;" class="text-left"><P>{!! $item->style_no!!}</P></td>
-                                                                            <td style="font-size: x-small !important;" class="text-left"><P>{!! $item->store_name!!}</P></td>
-                                                                            <td style="font-size: x-small !important;" class="text-left"><P>{!! $item->item_description!!}</P></td>
-                                                                            <td style="font-size: x-small !important;" class="text-center"><P>{{\Carbon\Carbon::parse($item->challan_date)->format('j-M-Y')}}</P></td>
-                                                                            <td style="font-size: x-small !important;" class="text-center"><P>{!! $item->challan_no!!}</P></td>
-                                                                            <td style="font-size: x-small !important;" class="text-center"><P>{!! $item->item_color!!}</P></td>
-                                                                            <td style="font-size: x-small !important;" class="text-center"><P>{!! $item->item_size!!}</P></td>
-                                                                            <td style="font-size: x-small !important;" class="text-center"><P>{!! $item->short_unit!!}</P></td>
-                                                                            <td style="font-size: x-small !important;" class="text-right"><P>{!! $item->gross_delivered_quantity!!}</P></td>
-                                                                            <td style="font-size: x-small !important;" class="text-center"><P>@if($item->gross_unit == 'P')Pcs @elseif($item->gross_unit == 'L')Lassi @elseif($item->gross_unit == 'R') Roll @endif</P></td>
-                                                                            <td style="font-size: x-small !important;" class="text-right"><P>{!! $item->delivered_quantity!!}</P></td>
-                                                                            <td style="font-size: x-small !important;" class="text-right"><P>{!! $item->gross_weight!!}</P></td>
-                                                                            <td style="font-size: x-small !important;" class="text-right"><P>{!! $item->total_weight!!}</P></td>
-                                                                            <td style="font-size: x-small !important;" class="text-right"><P>{!! $item->remarks !!}</P></td>
-                                                                        </tr>
-                                                                    @endif
-                                                                @endforeach --}}
+
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -795,7 +738,7 @@
                                                         <a onclick="loadPONotConfirmedDeleveryDataTable()" role="button" class="tile-refresh myIcon icon-info icon-ef-3 icon-ef-3b icon-color" title="Refresh">
                                                             <i class="fa fa-refresh"></i>
                                                         </a>
-                                                        <a href="{{route('lpd1.purchase.order.detail.delivery-not-approved-report', ['id' => $purchaseOrder->id])}}" title="Production Achievement Report" class ="myIcon icon-danger icon-ef-3 icon-ef-3b icon-color">
+                                                        <a href="{{route('lpd1.purchase.order.detail.delivery-not-approved-report', ['id' => $id])}}" title="Production Achievement Report" class ="myIcon icon-danger icon-ef-3 icon-ef-3b icon-color">
                                                             <i class="fa fa-file-pdf-o"></i>
                                                         </a>
                                                     </div>
@@ -825,29 +768,7 @@
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                {{-- @php($i = 1)
-                                                                @foreach($deliveryData as $item)
-                                                                    @if($item->status == 'A')
-                                                                        <tr style="height: 3px !important;">
-                                                                            <td class="text-center" style="font-size: x-small !important;"><P>{!! $i++ !!}</P></td>
-                                                                            <td style="font-size: x-small !important;" class="text-left"><p>{!! $item->trims_type !!}</p></td>
-                                                                            <td style="font-size: x-small !important;" class="text-left"><P>{!! $item->style_no!!}</P></td>
-                                                                            <td style="font-size: x-small !important;" class="text-left"><P>{!! $item->store_name!!}</P></td>
-                                                                            <td style="font-size: x-small !important;" class="text-left"><P>{!! $item->item_description!!}</P></td>
-                                                                            <td style="font-size: x-small !important;" class="text-center"><P>{{\Carbon\Carbon::parse($item->challan_date)->format('j-M-Y')}}</P></td>
-                                                                            <td style="font-size: x-small !important;" class="text-center"><P>{!! $item->challan_no!!}</P></td>
-                                                                            <td style="font-size: x-small !important;" class="text-center"><P>{!! $item->item_color!!}</P></td>
-                                                                            <td style="font-size: x-small !important;" class="text-center"><P>{!! $item->item_size!!}</P></td>
-                                                                            <td style="font-size: x-small !important;" class="text-center"><P>{!! $item->short_unit!!}</P></td>
-                                                                            <td style="font-size: x-small !important;" class="text-right"><P>{!! $item->gross_delivered_quantity!!}</P></td>
-                                                                            <td style="font-size: x-small !important;" class="text-center"><P>@if($item->gross_unit == 'P')Pcs @elseif($item->gross_unit == 'L')Lassi @elseif($item->gross_unit == 'R') Roll @endif</P></td>
-                                                                            <td style="font-size: x-small !important;" class="text-right"><P>{!! $item->delivered_quantity!!}</P></td>
-                                                                            <td style="font-size: x-small !important;" class="text-right"><P>{!! $item->gross_weight!!}</P></td>
-                                                                            <td style="font-size: x-small !important;" class="text-right"><P>{!! $item->total_weight!!}</P></td>
-                                                                            <td style="font-size: x-small !important;" class="text-right"><P>{!! $item->remarks !!}</P></td>
-                                                                        </tr>
-                                                                    @endif
-                                                                @endforeach --}}
+
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -883,7 +804,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <input type="hidden" id="MasterID" name="purchase_order_master_id" value="{{old('purchase_order_master_id', $purchaseOrder->id)}}">
+                            <input type="hidden" id="MasterID" name="purchase_order_master_id" value="{{old('purchase_order_master_id', $id)}}">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="PO_Date" class="control-label">Production Start Date</label>
@@ -918,7 +839,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <input type="hidden" id="MasterID" name="purchase_order_master_id" value="{{old('purchase_order_master_id', $purchaseOrder->id)}}">
+                            <input type="hidden" id="MasterID" name="purchase_order_master_id" value="{{old('purchase_order_master_id', $id)}}">
                             <div class="col-md-12">
                             <div class="form-group">
                                 <label for="S_Submission_Date" class="control-label">Sample Submission Date</label>
@@ -977,7 +898,7 @@
                     </div>
                     <div class="modal-body">
                             <div class="row" style="padding: 0px 15px;">
-                                <input type="hidden" id="MasterID" name="purchase_order_master_id" value="{{old('purchase_order_master_id', $purchaseOrder->id)}}">
+                                <input type="hidden" id="MasterID" name="purchase_order_master_id" value="{{old('purchase_order_master_id', $id)}}">
 
                                 <div class="col-md-4 no-padding">
                                     <div class="form-group">
@@ -1119,7 +1040,9 @@
 <script src="{{ asset('/js/common.js') }}"></script>
     <script>
 
-        var po_master_id = {{ $purchaseOrder->id }};
+        var po_master_id = {{ $id }};
+        var po_close_request = false;
+        var delete_access = true;
 
         var po_product_list_table = $('#advanced-usage').DataTable({
             "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
@@ -1147,9 +1070,6 @@
 
         $(window).load(function(){
 
-            // $('#production_plan_table').DataTable({
-
-            // });
             loadPurchaseOrderDetail();
             loadPODetailTrim();
             loadPOListDataTable();
@@ -1159,22 +1079,6 @@
             loadPOProductStockDataTable();
             loadPOConfirmedDeleveryDataTable();
             loadPONotConfirmedDeleveryDataTable()
-
-            // $('#achievement_table').DataTable({
-
-            // });
-
-            // $('#stock_table').DataTable({
-
-            // });
-
-            // $('#confirmed_delivery_table').DataTable({
-
-            // });
-
-            // $('#not_confirmed_delivery_table').DataTable({
-
-            // });
 
             $('.select2').select2();
             sessionStorage.clear();
@@ -1189,7 +1093,7 @@
 
         });
 
-        
+
         function loadPurchaseOrderDetail(){
             $.ajaxSetup({
                 headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' }
@@ -1201,18 +1105,109 @@
                 method:'POST',
                 data:{id: FactoryID},
                 success:function(data){
-                    // console.log(data);
-                    // document.getElementById("lpdNo").innerHTML  = "<strong>LPD PO No: </strong>" + data.lpd_po_no;
+                    document.getElementById("breadcrumblpdNo").innerHTML  = data.lpd_po_no;
                     document.getElementById("lpdNo").innerHTML  = data.lpd_po_no;
                     document.getElementById("jobYearNo").innerHTML  = data.job_year + '/' + data.job_no;
-                    document.getElementById("poDate").innerHTML  = returnStringFormatDate(data.po_date);  
-                    document.getElementById("approvalDate").innerHTML  = returnStringFormatDate(data.approval_date);  
-                    document.getElementById("sampleSubmissionDate").innerHTML  = returnStringFormatDate(data.sample_submission_date);  
-                    document.getElementById("productionStartDate").innerHTML  = returnStringFormatDate(data.production_start_date);  
-                    document.getElementById("productionEndDate").innerHTML  = returnStringFormatDate(data.production_end_date);  
-                    document.getElementById("deliveryStartDate").innerHTML  = returnStringFormatDate(data.delivery_start_date);  
-                    document.getElementById("deliveryEndDate").innerHTML  = returnStringFormatDate(data.delivery_end_date);  
-                    document.getElementById("remark").innerHTML  = data.remarks;  
+                    document.getElementById("remark").innerHTML  = data.remarks;
+
+                    if(parseInt(data.close_request) === 0){
+                        po_close_request = false;
+                    }
+                    else{
+                        po_close_request = true;
+                    }
+                    if(parseFloat(data.total_achievement) > 0){
+                        delete_access = false;
+                    }
+                    else{
+                        delete_access = true;
+                    }
+                    let master_button = "<a title='Refresh' id='' class = 'myIcon icon-info icon-ef-3 icon-ef-3b icon-color' onclick='refresh()'><i class='fa fa-refresh'></i></a>&nbsp;";
+                    let product_plan_buttons = "";
+                    let po_close_buttons = "";
+                    if(po_close_request === false){
+                       document.getElementById("iconChange").disabled = false;
+                        @if(Auth::user()->hasTaskPermission('lpdoneupdatepo', Auth::user()->id))
+                            master_button = master_button + "<a title='Purchase Order Master Update' onclick='fillPOUpdateDataToUpdateModal()' class ='myIcon icon-warning icon-ef-3 icon-ef-3b icon-color' data-toggle='modal' data-target='#POUpdateModal' data-options='splash-2 splash-ef-12'><i class='fa fa-edit'></i></a>&nbsp;";
+                        @else
+                            master_button = master_button + "";
+                        @endif
+                        @if(Auth::user()->hasTaskPermission('lpdoneapprovepo', Auth::user()->id))
+                            product_plan_buttons = "<a title='Provide Purchase Order Dates' class ='myIcon icon-success icon-ef-3 icon-ef-3b icon-color' data-toggle='modal' data-target='#poApprovalModal' data-options='splash-2 splash-ef-12'><i class='fa fa-calendar'></i></a>&nbsp;";
+                        @else
+                            product_plan_buttons = product_plan_buttons + "";
+                        @endif
+
+                        @if(Auth::user()->hasTaskPermission('lpdoneclosereq', Auth::user()->id))
+                            po_close_buttons = po_close_buttons + "<a title='Generate Close Request for This Purchase Order' class='CloseRequestOrder myIcon icon-info icon-ef-3 icon-ef-3b icon-color' data-id = '"+ po_master_id +"'><i class='fa fa-times'></i></a>&nbsp;";
+                        @endif
+                    }
+                    else{
+                        master_button = master_button + "";
+                        if(data.status === 'A'){
+                            @if(Auth::user()->hasTaskPermission('lpdoneapclosereq', Auth::user()->id))
+                                po_close_buttons = po_close_buttons + "<a title='Approve Close Request for This Purchase Order' class='CloseApproveOrder myIcon icon-success icon-ef-3 icon-ef-3b icon-color' data-id = '"+ po_master_id +"'><i class='fa fa-check'></i></a>&nbsp;";
+                            @endif
+                        }
+                        document.getElementById("iconChange").disabled = true;
+                    }
+
+                    if(delete_access === true){
+                        @if(Auth::user()->hasTaskPermission('lpdonedeletepo', Auth::user()->id))
+                            master_button = master_button + "<a title='Delete Purchase Order' class='DeleteOrder myIcon icon-danger icon-ef-3 icon-ef-3b icon-color' data-id = '" + po_master_id + "'><i class='fa fa-trash''></i></a>&nbsp;";
+                        @else
+                            master_button = master_button + "";
+                        @endif
+                    }
+                    else{
+                        master_button = master_button + "";
+                    }
+                    document.getElementById("MasterButtons").innerHTML = master_button;
+                    document.getElementById("ProductionPlanButtons").innerHTML = product_plan_buttons;
+                    document.getElementById("POCloseButtons").innerHTML = po_close_buttons;
+
+                    if ((data.po_date === null) || (data.po_date === "")) {
+                        document.getElementById("poDate").innerHTML  = '';
+                    } else {
+                        document.getElementById("poDate").innerHTML  = returnStringFormatDate(data.po_date);
+                    }
+
+                    if ((data.approval_date === null) || (data.approval_date === "")) {
+                        document.getElementById("approvalDate").innerHTML  = '';
+                    } else {
+                        document.getElementById("approvalDate").innerHTML  = returnStringFormatDate(data.approval_date);
+                    }
+
+                    if ((data.sample_submission_date === null) || (data.sample_submission_date === "")) {
+                        document.getElementById("sampleSubmissionDate").innerHTML  = '';
+                    } else {
+                        document.getElementById("sampleSubmissionDate").innerHTML  = returnStringFormatDate(data.sample_submission_date);
+                    }
+
+                    if ((data.production_start_date === null) || (data.production_start_date === "")) {
+                        document.getElementById("productionStartDate").innerHTML  = '';
+                    } else {
+                        document.getElementById("productionStartDate").innerHTML  = returnStringFormatDate(data.production_start_date);
+                    }
+
+                    if ((data.production_end_date === null) || (data.production_end_date === "")) {
+                        document.getElementById("productionEndDate").innerHTML  = '';
+                    } else {
+                        document.getElementById("productionEndDate").innerHTML  = returnStringFormatDate(data.production_end_date);
+                    }
+
+                    if ((data.delivery_start_date === null) || (data.delivery_start_date === "")) {
+                        document.getElementById("deliveryStartDate").innerHTML  = '';
+                    } else {
+                        document.getElementById("deliveryStartDate").innerHTML  = returnStringFormatDate(data.delivery_start_date);
+                    }
+
+                    if ((data.delivery_end_date === null) || (data.delivery_end_date === "")) {
+                        document.getElementById("deliveryEndDate").innerHTML  = '';
+                    } else {
+                        document.getElementById("deliveryEndDate").innerHTML  = returnStringFormatDate(data.delivery_end_date);
+                    }
+
                 },
                 error:function(error){
                     //console.log(error);
@@ -1240,7 +1235,7 @@
                 success:function(data){
                     // console.log(data);
                     document.getElementById("HTLJOB").innerHTML  = data;
-                    
+
                 },
                 error:function(error){
                     //console.log(error);
@@ -1337,20 +1332,26 @@
                             }
                         }
                     },
-                    @if($purchaseOrder->close_request == 0)
                     {
                         render: function(data, type, api_item) {
-                            return "<p class='text-center'>"+
-                                @if(Auth::user()->hasTaskPermission('lpdtwodeleteitem', Auth::user()->id))
-                                "<a title= 'Delete' class= 'DeleteDetail btn btn-danger btn-xs' data-id = "+ api_item.item_count +"><i class='fa fa-trash'></i></a>" +
-                                " &nbsp;" +
-                                @endif
-                                @if(Auth::user()->hasTaskPermission('lpdtwoadditem', Auth::user()->id))
-                                "<a title= 'Edit' class= 'EditFactory btn btn-warning btn-xs' data-id = "+ api_item.item_count +"><i class='fa fa-edit'></i></a></p>"
-                                @endif
+                            if(api_item.close_request === 0){
+                                return "<p class='text-center'>"+
+                                    @if(Auth::user()->hasTaskPermission('lpdonedeleteitem', Auth::user()->id))
+                                        "<a title= 'Delete' class= 'DeleteDetail btn btn-danger btn-xs' data-id = "+ api_item.item_count +"><i class='fa fa-trash'></i></a>" +
+                                    " &nbsp;" +
+                                    @endif
+                                        @if(Auth::user()->hasTaskPermission('lpdoneadditem', Auth::user()->id))
+                                        "<a title= 'Edit' class= 'EditFactory btn btn-warning btn-xs' data-id = "+ api_item.item_count +"><i class='fa fa-edit'></i></a>" +
+                                    " &nbsp;" +
+                                    @endif
+                                        "</p>";
+                            }
+                            else{
+                                return "<p class='text-center'></p>";
+                            }
+
                         }
                     }
-                    @endif
                 ]
             });
         }
@@ -1466,7 +1467,7 @@
                         render: function (data) {
                             // return "<p class = 'text-left'>"+ data +"</p>";
                             return "<p class = 'text-left'>"+ returnBDStringFormatDate(data) +"</p>";
-                            
+
                         }
                     },
                     {
@@ -2009,7 +2010,7 @@
             })
         });
 
-        $('.EditPO').click(function(){
+        function fillPOUpdateDataToUpdateModal(){
             var FactoryID = po_master_id;
             var url = '{{ route('lpd1.purchase.order.detail.get-data') }}';
             $.ajax({
@@ -2050,8 +2051,7 @@
                     });
                 }
             })
-
-        })
+        }
 
 
         $('#advanced-usage').on('click',".EditFactory", function(){
