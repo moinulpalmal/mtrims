@@ -280,7 +280,7 @@ class PurchaseOrderController extends Controller
                 //return $deliveryData;
 
                 //'uniqTrimsTypes','deliveryData','deliveryMasters','proformaInvoices','currentStocks', 'productionPlanDetails','purchaseOrderDetails',
-                return view('lpd2.purchase-order.detail', compact('units','buyers', 'trimsTypes','factories', 'stores', 'purchaseOrder','deleteAccess'));
+                return view('lpd2.purchase-order.detail', compact('units','buyers', 'trimsTypes','factories', 'stores', 'purchaseOrder','deleteAccess','id'));
             } // other data
         }
         else{

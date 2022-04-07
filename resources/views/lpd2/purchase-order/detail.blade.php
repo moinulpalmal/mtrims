@@ -31,8 +31,8 @@
                     </li>
 
                     <li>
-                        {{-- <a href="{{route('lpd2.purchase.order.detail', ['id' => $purchaseOrder->id])}}"> PO No: {{$purchaseOrder->lpd_po_no}}</a> --}}
-                        <a href="{{route('lpd2.purchase.order.detail', ['id' => $purchaseOrder->id])}}"> PO No: <span id="breadcrumblpdNo"></span></a>
+                        {{-- <a href="{{route('lpd2.purchase.order.detail', ['id' => $id])}}"> PO No: {{$purchaseOrder->lpd_po_no}}</a> --}}
+                        <a href="{{route('lpd2.purchase.order.detail', ['id' => $id])}}"> PO No: <span id="breadcrumblpdNo"></span></a>
                     </li>
                 </ul>
 
@@ -71,7 +71,7 @@
                                     @endif
                                     @if($deleteAccess == true)
                                         @if(Auth::user()->hasTaskPermission('lpdtwodeletepo', Auth::user()->id))
-                                            <a title="Delete Purchase Order" class="DeleteOrder myIcon icon-danger icon-ef-3 icon-ef-3b icon-color" data-id = "{{ $purchaseOrder->id }}"><i class="fa fa-trash"></i></a>
+                                            <a title="Delete Purchase Order" class="DeleteOrder myIcon icon-danger icon-ef-3 icon-ef-3b icon-color" data-id = "{{ $id }}"><i class="fa fa-trash"></i></a>
                                         @endif
                                     @endif
                                 @endif
@@ -250,13 +250,13 @@
                             <div class="mt-10">
                                 @if(Auth::user()->hasTaskPermission('lpdtwoclosereq', Auth::user()->id))
                                     @if($purchaseOrder->close_request == 0)
-                                        <a title="Generate Close Request for This Purchase Order" class="CloseRequestOrder myIcon icon-info icon-ef-3 icon-ef-3b icon-color" data-id = "{{ $purchaseOrder->id }}"><i class="fa fa-times"></i></a>
+                                        <a title="Generate Close Request for This Purchase Order" class="CloseRequestOrder myIcon icon-info icon-ef-3 icon-ef-3b icon-color" data-id = "{{ $id }}"><i class="fa fa-times"></i></a>
                                     @endif
                                 @endif
                                 @if(Auth::user()->hasTaskPermission('lpdtwoapclosereq', Auth::user()->id))
                                     @if($purchaseOrder->close_request == 1)
                                         @if($purchaseOrder->status == "A")
-                                            <a title="Approve Close Request for This Purchase Order" class="CloseApproveOrder myIcon icon-success icon-ef-3 icon-ef-3b icon-color" data-id = "{{ $purchaseOrder->id }}"><i class="fa fa-check"></i></a>
+                                            <a title="Approve Close Request for This Purchase Order" class="CloseApproveOrder myIcon icon-success icon-ef-3 icon-ef-3b icon-color" data-id = "{{ $id }}"><i class="fa fa-check"></i></a>
                                         @endif
                                     @endif
                                 @endif
@@ -311,7 +311,7 @@
                                                                 <!-- tile body -->
                                                                 <div class="tile-body">
                                                                     <input type="hidden" id="DetailID" name="item_id">
-                                                                    <input type="hidden" id="MasterID" name="purchase_order_master_id" value="{{old('purchase_order_master_id', $purchaseOrder->id)}}">
+                                                                    <input type="hidden" id="MasterID" name="purchase_order_master_id" value="{{old('purchase_order_master_id', $id)}}">
                                                                     <div class="row" style="padding: 0px 15px;">
                                                                         <div class="col-md-3 no-padding">
                                                                             <div class="form-group">
@@ -550,7 +550,7 @@
                                                         <a onclick="loadPOProductionPlanDataTable()" role="button" class="tile-refresh myIcon icon-info icon-ef-3 icon-ef-3b icon-color" title="Refresh">
                                                             <i class="fa fa-refresh"></i>
                                                         </a>
-                                                        <a href="{{route('lpd2.purchase.order.detail.plan-report', ['id' => $purchaseOrder->id])}}" title="Production Plan Report" class ="myIcon icon-danger icon-ef-3 icon-ef-3b icon-color">
+                                                        <a href="{{route('lpd2.purchase.order.detail.plan-report', ['id' => $id])}}" title="Production Plan Report" class ="myIcon icon-danger icon-ef-3 icon-ef-3b icon-color">
                                                             <i class="fa fa-file-pdf-o"></i>
                                                         </a>
                                                     </div>
@@ -612,7 +612,7 @@
                                                         <a onclick="loadPOProductionAchievementDataTable()" role="button" class="tile-refresh myIcon icon-info icon-ef-3 icon-ef-3b icon-color" title="Refresh">
                                                             <i class="fa fa-refresh"></i>
                                                         </a>
-                                                        <a href="{{route('lpd2.purchase.order.detail.achievement-report', ['id' => $purchaseOrder->id])}}" title="Production Achievement Report" class ="myIcon icon-danger icon-ef-3 icon-ef-3b icon-color">
+                                                        <a href="{{route('lpd2.purchase.order.detail.achievement-report', ['id' => $id])}}" title="Production Achievement Report" class ="myIcon icon-danger icon-ef-3 icon-ef-3b icon-color">
                                                             <i class="fa fa-file-pdf-o"></i>
                                                         </a>
                                                     </div>
@@ -675,7 +675,7 @@
                                                         <a onclick="loadPOProductStockDataTable()" role="button" class="tile-refresh myIcon icon-info icon-ef-3 icon-ef-3b icon-color" title="Refresh">
                                                             <i class="fa fa-refresh"></i>
                                                         </a>
-                                                        <a href="{{route('lpd2.purchase.order.detail.stock-report', ['id' => $purchaseOrder->id])}}" title="Production Achievement Report" class ="myIcon icon-danger icon-ef-3 icon-ef-3b icon-color">
+                                                        <a href="{{route('lpd2.purchase.order.detail.stock-report', ['id' => $id])}}" title="Production Achievement Report" class ="myIcon icon-danger icon-ef-3 icon-ef-3b icon-color">
                                                             <i class="fa fa-file-pdf-o"></i>
                                                         </a>
                                                     </div>
@@ -740,7 +740,7 @@
                                                         <a onclick="loadPOConfirmedDeleveryDataTable()" role="button" class="tile-refresh myIcon icon-info icon-ef-3 icon-ef-3b icon-color" title="Refresh">
                                                             <i class="fa fa-refresh"></i>
                                                         </a>
-                                                        <a href="{{route('lpd2.purchase.order.detail.delivery-report', ['id' => $purchaseOrder->id])}}" title="Production Achievement Report" class ="myIcon icon-danger icon-ef-3 icon-ef-3b icon-color">
+                                                        <a href="{{route('lpd2.purchase.order.detail.delivery-report', ['id' => $id])}}" title="Production Achievement Report" class ="myIcon icon-danger icon-ef-3 icon-ef-3b icon-color">
                                                             <i class="fa fa-file-pdf-o"></i>
                                                         </a>
                                                     </div>
@@ -813,7 +813,7 @@
                                                         <a onclick="loadPONotConfirmedDeleveryDataTable()" role="button" class="tile-refresh myIcon icon-info icon-ef-3 icon-ef-3b icon-color" title="Refresh">
                                                             <i class="fa fa-refresh"></i>
                                                         </a>
-                                                        <a href="{{route('lpd2.purchase.order.detail.delivery-not-approved-report', ['id' => $purchaseOrder->id])}}" title="Production Achievement Report" class ="myIcon icon-danger icon-ef-3 icon-ef-3b icon-color">
+                                                        <a href="{{route('lpd2.purchase.order.detail.delivery-not-approved-report', ['id' => $id])}}" title="Production Achievement Report" class ="myIcon icon-danger icon-ef-3 icon-ef-3b icon-color">
                                                             <i class="fa fa-file-pdf-o"></i>
                                                         </a>
                                                     </div>
@@ -901,7 +901,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <input type="hidden" id="MasterID" name="purchase_order_master_id" value="{{old('purchase_order_master_id', $purchaseOrder->id)}}">
+                            <input type="hidden" id="MasterID" name="purchase_order_master_id" value="{{old('purchase_order_master_id', $id)}}">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="PO_Date" class="control-label">Production Start Date</label>
@@ -936,7 +936,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <input type="hidden" id="MasterID" name="purchase_order_master_id" value="{{old('purchase_order_master_id', $purchaseOrder->id)}}">
+                            <input type="hidden" id="MasterID" name="purchase_order_master_id" value="{{old('purchase_order_master_id', $id)}}">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="S_Submission_Date" class="control-label">Sample Submission Date</label>
@@ -1009,7 +1009,7 @@
                             </div>
                         @endif
                         <div class="row" style="padding: 0px 15px;">
-                            <input type="hidden" id="MasterID" name="purchase_order_master_id" value="{{old('purchase_order_master_id', $purchaseOrder->id)}}">
+                            <input type="hidden" id="MasterID" name="purchase_order_master_id" value="{{old('purchase_order_master_id', $id)}}">
 
                             <div class="col-md-4 no-padding">
                                 <div class="form-group">
@@ -1166,7 +1166,7 @@
                             </div>
                         @endif
                         <div class="row" style="padding: 0px 15px;">
-                            <input type="hidden" id="MasterID" name="purchase_order_master_id" value="{{old('purchase_order_master_id', $purchaseOrder->id)}}">
+                            <input type="hidden" id="MasterID" name="purchase_order_master_id" value="{{old('purchase_order_master_id', $id)}}">
 
                             <div class="col-md-4 no-padding">
                                 <div class="form-group">
@@ -1257,7 +1257,7 @@
                             </div>
                         @endif
                         <div class="row" style="padding: 0px 15px;">
-                            <input type="hidden" id="MasterID" name="purchase_order_master_id" value="{{old('purchase_order_master_id', $purchaseOrder->id)}}">
+                            <input type="hidden" id="MasterID" name="purchase_order_master_id" value="{{old('purchase_order_master_id', $id)}}">
 
                             <div class="col-md-4 no-padding">
                                 <div class="form-group">
@@ -1327,7 +1327,7 @@
 <script src="{{ asset('/js/common.js') }}"></script>
     <script>
 
-        var po_master_id = {{ $purchaseOrder->id }};
+        var po_master_id = {{ $id }};
 
         var po_product_list_table = $('#advanced-usage').DataTable({
             "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
