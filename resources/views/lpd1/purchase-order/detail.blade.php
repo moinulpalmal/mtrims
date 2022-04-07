@@ -64,12 +64,12 @@
                                     {{-- <span id="jobYearNo">{{$purchaseOrder->job_year}}/{{$purchaseOrder->job_no}}</span> --}}
                                 </span>
                             </div>
-                            <div class="mt-10">
-                                <a title="Refresh" id="" class ="myIcon icon-info icon-ef-3 icon-ef-3b icon-color" onclick="refresh()">
+                            <div class="mt-10" id="MasterButtons">
+                                {{--<a title="Refresh" id="" class ="myIcon icon-info icon-ef-3 icon-ef-3b icon-color" onclick="refresh()">
                                     <i class="fa fa-refresh"></i>
                                 </a>
                                 @if($purchaseOrder->close_request == 0)
-                                    @if(Auth::user()->hasTaskPermission('lpdtwoupdatepo', Auth::user()->id))
+                                    @if(Auth::user()->hasTaskPermission('lpdoneupdatepo', Auth::user()->id))
                                     <a title="Purchase Order Master Update" class ="EditPO myIcon icon-warning icon-ef-3 icon-ef-3b icon-color" data-toggle="modal" data-target="#POUpdateModal" data-options="splash-2 splash-ef-12">
                                         <i class="fa fa-edit"></i>
                                     </a>
@@ -81,7 +81,7 @@
                                     @endif
                                 @else
 
-                                @endif
+                                @endif--}}
                             </div>
                         </div>
                     </section>
@@ -139,19 +139,19 @@
                             <h1 class="custom-font"><strong>Production</strong> Plans & Date</h1>
                         </div>
                         <div class="tile-widget p-30 text-center">
-                            <div class="mt-10">
+                            <div class="mt-10" id = "ProductionPlanButtons">
                                {{-- @if(Auth::user()->hasTaskPermission('lpdonepropose', Auth::user()->id))
                                     <a title="Production & Delivery Proposal" class ="myIcon icon-warning icon-ef-3 icon-ef-3b icon-color" data-toggle="modal" data-target="#dateProposalModal" data-options="splash-2 splash-ef-12">
                                         <i class="fa fa-calendar"></i>
                                     </a>
                                 @endif--}}
-                                @if($purchaseOrder->close_request == 0)
+                               {{-- @if($purchaseOrder->close_request == 0)
                                     @if(Auth::user()->hasTaskPermission('lpdoneapprovepo', Auth::user()->id))
                                         <a title="Provide Purchase Order Dates" class ="myIcon icon-success icon-ef-3 icon-ef-3b icon-color" data-toggle="modal" data-target="#poApprovalModal" data-options="splash-2 splash-ef-12">
                                             <i class="fa fa-calendar"></i>
                                         </a>
                                         @endif
-                                @endif
+                                @endif--}}
                             </div>
                         </div>
                         <!-- /tile header -->
@@ -256,8 +256,8 @@
                         </div>
                         <div class="tile-widget p-30 text-center">
 {{--                            {{Auth::user()->hasTaskPermission('lpdonepocloserequest', Auth::user()->id)}}--}}
-                            <div class="mt-10">
-                                @if(Auth::user()->hasTaskPermission('lpdoneclosereq', Auth::user()->id))
+                            <div class="mt-10" id="POCloseButtons">
+                                {{--@if(Auth::user()->hasTaskPermission('lpdoneclosereq', Auth::user()->id))
                                     @if($purchaseOrder->close_request == 0)
                                         <a title="Generate Close Request for This Purchase Order" class="CloseRequestOrder myIcon icon-info icon-ef-3 icon-ef-3b icon-color" data-id = "{{ $id }}"><i class="fa fa-times"></i></a>
                                     @endif
@@ -268,7 +268,7 @@
                                             <a title="Approve Close Request for This Purchase Order" class="CloseApproveOrder myIcon icon-success icon-ef-3 icon-ef-3b icon-color" data-id = "{{ $id }}"><i class="fa fa-check"></i></a>
                                         @endif
                                         @endif
-                                @endif
+                                @endif--}}
                             </div>
                         </div>
                         <!-- /tile header -->
@@ -302,8 +302,7 @@
                                 <div class="tab-content">
                                     <div role="tabpanel" class="tab-pane active" id="itemList">
                                         <div class="wrap-reset">
-                                            @if($purchaseOrder->close_request == 0)
-                                                @if(Auth::user()->hasTaskPermission('lpdtwoadditem', Auth::user()->id))
+                                                @if(Auth::user()->hasTaskPermission('lpdoneadditem', Auth::user()->id))
                                                     <div class="row">
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
                                                             <form method="post" id="ItemAdd" name="ItemAddForm" enctype="multipart/form-data">
@@ -312,9 +311,7 @@
                                                                     <!-- tile header -->
                                                                     <div class="tile-header dvd dvd-btm">
                                                                         <h1 class="custom-font"><strong>Item</strong> Insert/Update Form</h1>
-
                                                                         <a><button id="iconChange" class="pull-right btn-info btn-xs" type="submit"><i class="fa fa-check"></i></button></a>
-
                                                                     </div>
                                                                     <!-- /tile header -->
                                                                     <!-- tile body -->
@@ -454,7 +451,6 @@
                                                         </div>
                                                     </div>
                                                 @endif
-                                            @endif
                                             <div class="row">
                                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
                                                     <section class="tile">
@@ -554,7 +550,7 @@
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                
+
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -1045,6 +1041,8 @@
     <script>
 
         var po_master_id = {{ $id }};
+        var po_close_request = false;
+        var delete_access = true;
 
         var po_product_list_table = $('#advanced-usage').DataTable({
             "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
@@ -1111,6 +1109,62 @@
                     document.getElementById("lpdNo").innerHTML  = data.lpd_po_no;
                     document.getElementById("jobYearNo").innerHTML  = data.job_year + '/' + data.job_no;
                     document.getElementById("remark").innerHTML  = data.remarks;
+
+                    if(parseInt(data.close_request) === 0){
+                        po_close_request = false;
+                    }
+                    else{
+                        po_close_request = true;
+                    }
+                    if(parseFloat(data.total_achievement) > 0){
+                        delete_access = false;
+                    }
+                    else{
+                        delete_access = true;
+                    }
+                    let master_button = "<a title='Refresh' id='' class = 'myIcon icon-info icon-ef-3 icon-ef-3b icon-color' onclick='refresh()'><i class='fa fa-refresh'></i></a>&nbsp;";
+                    let product_plan_buttons = "";
+                    let po_close_buttons = "";
+                    if(po_close_request === false){
+                       document.getElementById("iconChange").disabled = false;
+                        @if(Auth::user()->hasTaskPermission('lpdoneupdatepo', Auth::user()->id))
+                            master_button = master_button + "<a title='Purchase Order Master Update' onclick='fillPOUpdateDataToUpdateModal()' class ='myIcon icon-warning icon-ef-3 icon-ef-3b icon-color' data-toggle='modal' data-target='#POUpdateModal' data-options='splash-2 splash-ef-12'><i class='fa fa-edit'></i></a>&nbsp;";
+                        @else
+                            master_button = master_button + "";
+                        @endif
+                        @if(Auth::user()->hasTaskPermission('lpdoneapprovepo', Auth::user()->id))
+                            product_plan_buttons = "<a title='Provide Purchase Order Dates' class ='myIcon icon-success icon-ef-3 icon-ef-3b icon-color' data-toggle='modal' data-target='#poApprovalModal' data-options='splash-2 splash-ef-12'><i class='fa fa-calendar'></i></a>&nbsp;";
+                        @else
+                            product_plan_buttons = product_plan_buttons + "";
+                        @endif
+
+                        @if(Auth::user()->hasTaskPermission('lpdoneclosereq', Auth::user()->id))
+                            po_close_buttons = po_close_buttons + "<a title='Generate Close Request for This Purchase Order' class='CloseRequestOrder myIcon icon-info icon-ef-3 icon-ef-3b icon-color' data-id = '"+ po_master_id +"'><i class='fa fa-times'></i></a>&nbsp;";
+                        @endif
+                    }
+                    else{
+                        master_button = master_button + "";
+                        if(data.status === 'A'){
+                            @if(Auth::user()->hasTaskPermission('lpdoneapclosereq', Auth::user()->id))
+                                po_close_buttons = po_close_buttons + "<a title='Approve Close Request for This Purchase Order' class='CloseApproveOrder myIcon icon-success icon-ef-3 icon-ef-3b icon-color' data-id = '"+ po_master_id +"'><i class='fa fa-check'></i></a>&nbsp;";
+                            @endif
+                        }
+                        document.getElementById("iconChange").disabled = true;
+                    }
+
+                    if(delete_access === true){
+                        @if(Auth::user()->hasTaskPermission('lpdonedeletepo', Auth::user()->id))
+                            master_button = master_button + "<a title='Delete Purchase Order' class='DeleteOrder myIcon icon-danger icon-ef-3 icon-ef-3b icon-color' data-id = '" + po_master_id + "'><i class='fa fa-trash''></i></a>&nbsp;";
+                        @else
+                            master_button = master_button + "";
+                        @endif
+                    }
+                    else{
+                        master_button = master_button + "";
+                    }
+                    document.getElementById("MasterButtons").innerHTML = master_button;
+                    document.getElementById("ProductionPlanButtons").innerHTML = product_plan_buttons;
+                    document.getElementById("POCloseButtons").innerHTML = po_close_buttons;
 
                     if ((data.po_date === null) || (data.po_date === "")) {
                         document.getElementById("poDate").innerHTML  = '';
@@ -1956,7 +2010,7 @@
             })
         });
 
-        $('.EditPO').click(function(){
+        function fillPOUpdateDataToUpdateModal(){
             var FactoryID = po_master_id;
             var url = '{{ route('lpd1.purchase.order.detail.get-data') }}';
             $.ajax({
@@ -1997,8 +2051,7 @@
                     });
                 }
             })
-
-        })
+        }
 
 
         $('#advanced-usage').on('click',".EditFactory", function(){

@@ -11,6 +11,7 @@ class PurchaseOrderMaster extends Model
         // $poDetails = PurchaseOrderMaster::find($request->id);
 
         $poDetails = DB::table('purchase_order_masters')
+                ->join('production_achieve_asum_master','purchase_order_masters.id','=','production_achieve_asum_master.id')
                 ->join('buyers','purchase_order_masters.buyer_id','=','buyers.id')
                 ->join('factories','purchase_order_masters.factory_id','=','factories.id')
                 ->join('stores','purchase_order_masters.primary_delivery_location_id','=','stores.id')
@@ -22,7 +23,7 @@ class PurchaseOrderMaster extends Model
                     'purchase_order_masters.production_end_date','purchase_order_masters.delivery_start_date','purchase_order_masters.delivery_end_date',
                     'purchase_order_masters.close_requested_by','purchase_order_masters.close_approved_by','purchase_order_masters.close_request','purchase_order_masters.close_request_date',
                     'purchase_order_masters.close_approval_date','purchase_order_masters.flow_count','purchase_order_masters.revise_count','purchase_order_masters.has_flow_count',
-                    'purchase_order_masters.is_urgent','purchase_order_masters.po_type','purchase_order_masters.id')
+                    'purchase_order_masters.is_urgent','purchase_order_masters.po_type','purchase_order_masters.id', 'production_achieve_asum_master.total_achievement')
                 ->where('purchase_order_masters.status','!=', 'D')
                 ->where('purchase_order_masters.id', $request->id)
                 ->first();
@@ -63,6 +64,7 @@ class PurchaseOrderMaster extends Model
             'has_flow_count' => $poDetails->has_flow_count,
             'is_urgent' => $poDetails->is_urgent,
             'po_type' => $poDetails->po_type,
+            'total_achievement' => $poDetails->total_achievement,
             'id' => $poDetails->id
         );
         return $poDetail;
