@@ -59,8 +59,8 @@
                                 <span id="jobYearNo"></span>
                                     {{-- {{$purchaseOrder->job_year}}/{{$purchaseOrder->job_no}} --}}
                             </span>
-                            <div class="mt-10">
-                                <a title="Refresh" class ="myIcon icon-info icon-ef-3 icon-ef-3b icon-color" onclick="refresh()">
+                            <div class="mt-10" id="MasterButtons">
+                                {{-- <a title="Refresh" class ="myIcon icon-info icon-ef-3 icon-ef-3b icon-color" onclick="refresh()">
                                     <i class="fa fa-refresh"></i>
                                 </a>
                                 @if($purchaseOrder->close_request == 0)
@@ -74,7 +74,7 @@
                                             <a title="Delete Purchase Order" class="DeleteOrder myIcon icon-danger icon-ef-3 icon-ef-3b icon-color" data-id = "{{ $id }}"><i class="fa fa-trash"></i></a>
                                         @endif
                                     @endif
-                                @endif
+                                @endif --}}
 
                             </div>
                         </div>
@@ -98,7 +98,7 @@
                                         <div class="col-md-7 pull-right">
                                             @if($purchaseOrder->po_date != null)
                                                 <p class="text-right text-greensea">
-                                                    <p class="text-right text-blue" id="poDate"></p>
+                                                    <p class="text-right text-blue" id="PODate"></p>
                                                     {{-- {{\Carbon\Carbon::parse($purchaseOrder->po_date)->format('d/m/Y')}} --}}
                                                 </p>
                                             @endif
@@ -113,7 +113,7 @@
                                         </div>
                                         <div class="col-md-7 pull-right">
                                             @if($purchaseOrder->approval_date != null)
-                                                <p class="text-right text-blue" id="approvalDate"></p>
+                                                <p class="text-right text-blue" id="ApprovalDate"></p>
                                                 {{-- <p class="text-right text-greensea">{{\Carbon\Carbon::parse($purchaseOrder->approval_date_date)->format('d/m/Y')}}</p> --}}
                                             @endif
                                         </div>
@@ -132,17 +132,17 @@
                             <h1 class="custom-font"><strong>Production</strong> Plans & Date</h1>
                         </div>
                         <div class="tile-widget p-30 text-center">
-                            <div class="mt-10">
+                            <div class="mt-10" id ="ProductionPlanButtons">
                                 {{--@if(Auth::user()->hasTaskPermission('lpdtwopropose', Auth::user()->id))
                                 <a title="Production & Delivery Proposal" class ="myIcon icon-warning icon-ef-3 icon-ef-3b icon-color" data-toggle="modal" data-target="#dateProposalModal" data-options="splash-2 splash-ef-12">
                                     <i class="fa fa-calendar"></i>
                                 </a>
                                 @endif--}}
-                                    @if(Auth::user()->hasTaskPermission('lpdtwoapprovepo', Auth::user()->id))
+                                    {{-- @if(Auth::user()->hasTaskPermission('lpdtwoapprovepo', Auth::user()->id))
                                         <a title="Provide Purchase Order Dates" class ="myIcon icon-success icon-ef-3 icon-ef-3b icon-color" data-toggle="modal" data-target="#poApprovalModal" data-options="splash-2 splash-ef-12">
                                             <i class="fa fa-calendar"></i>
                                         </a>
-                                        @endif
+                                        @endif --}}
                             </div>
                         </div>
                         <!-- /tile header -->
@@ -156,7 +156,7 @@
                                             <strong>Sample Submission Date</strong>
                                         </div>
                                         <div class="col-md-7 pull-right">
-                                            <p class="text-right text-blue" id="sampleSubmissionDate"></p>
+                                            <p class="text-right text-blue" id="SampleSubmissionDate"></p>
                                             {{-- @if($purchaseOrder->sample_submission_date != null)
                                                 <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->sample_submission_date)->format('d/m/Y')}}</p>
                                             @endif --}}
@@ -170,7 +170,7 @@
                                             <strong>Production Start Date</strong>
                                         </div>
                                         <div class="col-md-7 pull-right">
-                                            <p class="text-right text-blue" id="productionStartDate"></p>
+                                            <p class="text-right text-blue" id="ProductionStartDate"></p>
                                             {{-- @if($purchaseOrder->production_start_date != null)
                                                 <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->production_start_date)->format('d/m/Y')}}</p>
                                             @endif --}}
@@ -184,7 +184,7 @@
                                             <strong>Production Closing Date</strong>
                                         </div>
                                         <div class="col-md-7 pull-right">
-                                            <p class="text-right text-blue" id="productionEndDate"></p>
+                                            <p class="text-right text-blue" id="ProductionEndDate"></p>
                                             {{-- @if($purchaseOrder->production_end_date != null)
                                                 <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->production_end_date)->format('d/m/Y')}}</p>
                                             @endif --}}
@@ -198,7 +198,7 @@
                                             <strong>Delivery Start Date</strong>
                                         </div>
                                         <div class="col-md-7 pull-right">
-                                            <p class="text-right text-blue" id="deliveryStartDate"></p>
+                                            <p class="text-right text-blue" id="DeliveryStartDate"></p>
                                             {{-- @if($purchaseOrder->delivery_start_date != null)
                                                 <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->delivery_start_date)->format('d/m/Y')}}</p>
                                             @endif --}}
@@ -212,7 +212,7 @@
                                             <strong>Delivery Closing Date</strong>
                                         </div>
                                         <div class="col-md-7 pull-right">
-                                            <p class="text-right text-blue" id="deliveryEndDate"></p>
+                                            <p class="text-right text-blue" id="DeliveryEndDate"></p>
                                             {{-- @if($purchaseOrder->delivery_start_date != null)
                                                 <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->delivery_end_date)->format('d/m/Y')}}</p>
                                             @endif --}}
@@ -247,8 +247,8 @@
                         </div>
                         <div class="tile-widget p-30 text-center">
                             {{--                            {{Auth::user()->hasTaskPermission('lpdonepocloserequest', Auth::user()->id)}}--}}
-                            <div class="mt-10">
-                                @if(Auth::user()->hasTaskPermission('lpdtwoclosereq', Auth::user()->id))
+                            <div class="mt-10" id="POCloseButtons">
+                                {{-- @if(Auth::user()->hasTaskPermission('lpdtwoclosereq', Auth::user()->id))
                                     @if($purchaseOrder->close_request == 0)
                                         <a title="Generate Close Request for This Purchase Order" class="CloseRequestOrder myIcon icon-info icon-ef-3 icon-ef-3b icon-color" data-id = "{{ $id }}"><i class="fa fa-times"></i></a>
                                     @endif
@@ -259,7 +259,7 @@
                                             <a title="Approve Close Request for This Purchase Order" class="CloseApproveOrder myIcon icon-success icon-ef-3 icon-ef-3b icon-color" data-id = "{{ $id }}"><i class="fa fa-check"></i></a>
                                         @endif
                                     @endif
-                                @endif
+                                @endif --}}
                             </div>
                         </div>
                         <!-- /tile header -->
@@ -293,7 +293,7 @@
                                 <div class="tab-content">
                                     <div role="tabpanel" class="tab-pane active" id="itemList">
                                         <div class="wrap-reset">
-                                            @if($purchaseOrder->close_request == 0)
+                                            {{-- @if($purchaseOrder->close_request == 0) --}}
                                             @if(Auth::user()->hasTaskPermission('lpdtwoadditem', Auth::user()->id))
                                                 <div class="row">
                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
@@ -443,7 +443,7 @@
                                                         </form>
                                                     </div>
                                                 </div>
-                                            @endif
+                                            {{-- @endif --}}
                                             @endif
                                             <div class="row">
                                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
@@ -492,9 +492,9 @@
                                                                         <th class="text-center">Unit Price (USD)</th>
                                                                         <th class="text-center">Total Price (USD)</th>
                                                                         <th class="text-center">Remarks</th>
-                                                                        @if($purchaseOrder->close_request == 0)
-                                                                            <th class="text-center">Action</th>
-                                                                        @endif
+                                                                        {{-- @if($purchaseOrder->close_request == 0)
+                                                                        @endif --}}
+                                                                        <th class="text-center">Action</th>
                                                                     </tr>
                                                                     </thead>
                                                                     <tbody>
@@ -1088,7 +1088,8 @@
                             <div class="col-md-4 no-padding">
                                 <div class="form-group">
                                     <label for="LPD_PO" class="control-label">LPD PO No.</label>
-                                    <input type="text" class="form-control" name="lpd_po_no" id="LPD_PO" placeholder="2485" required value="{{ old('lpd_po_no', $purchaseOrder->lpd_po_no) }}">
+                                    {{-- <input type="text" class="form-control" name="lpd_po_no" id="LPD_PO" placeholder="2485" required value="{{ old('lpd_po_no', $purchaseOrder->lpd_po_no) }}"> --}}
+                                    <input type="text" class="form-control" name="lpd_po_no" id="LPD_PO" placeholder="2485" required value="">
                                 </div>
                             </div>
                             <div class="col-md-4 no-padding">
@@ -1328,6 +1329,8 @@
     <script>
 
         var po_master_id = {{ $id }};
+        var po_close_request = false;
+        var delete_access = true;
 
         var po_product_list_table = $('#advanced-usage').DataTable({
             "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
@@ -1442,6 +1445,8 @@
 
         });
 
+        
+
         function loadPurchaseOrderDetail(){
             $.ajaxSetup({
                 headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' }
@@ -1459,46 +1464,102 @@
                     document.getElementById("jobYearNo").innerHTML  = data.job_year + '/' + data.job_no;
                     document.getElementById("remark").innerHTML  = data.remarks; 
 
+                    if(parseInt(data.close_request) === 0){
+                        po_close_request = false;
+                    }
+                    else{
+                        po_close_request = true;
+                    }
+                    if(parseFloat(data.total_achievement) > 0){
+                        delete_access = false;
+                    }
+                    else{
+                        delete_access = true;
+                    }
+                    let master_button = "<a title='Refresh' id='' class = 'myIcon icon-info icon-ef-3 icon-ef-3b icon-color' onclick='refresh()'><i class='fa fa-refresh'></i></a>&nbsp;";
+                    let product_plan_buttons = "";
+                    let po_close_buttons = "";
+                    if(po_close_request === false){
+                       document.getElementById("iconChange").disabled = false;
+                        @if(Auth::user()->hasTaskPermission('lpdoneupdatepo', Auth::user()->id))
+                            master_button = master_button + "<a title='Purchase Order Master Update' onclick='fillPOUpdateDataToUpdateModal()' class ='myIcon icon-warning icon-ef-3 icon-ef-3b icon-color' data-toggle='modal' data-target='#POUpdateModal' data-options='splash-2 splash-ef-12'><i class='fa fa-edit'></i></a>&nbsp;";
+                        @else
+                            master_button = master_button + "";
+                        @endif
+                        @if(Auth::user()->hasTaskPermission('lpdoneapprovepo', Auth::user()->id))
+                            product_plan_buttons = "<a title='Provide Purchase Order Dates' class ='myIcon icon-success icon-ef-3 icon-ef-3b icon-color' data-toggle='modal' data-target='#poApprovalModal' data-options='splash-2 splash-ef-12'><i class='fa fa-calendar'></i></a>&nbsp;";
+                        @else
+                            product_plan_buttons = product_plan_buttons + "";
+                        @endif
+
+                        @if(Auth::user()->hasTaskPermission('lpdoneclosereq', Auth::user()->id))
+                            po_close_buttons = po_close_buttons + "<a title='Generate Close Request for This Purchase Order' class='CloseRequestOrder myIcon icon-info icon-ef-3 icon-ef-3b icon-color' data-id = '"+ po_master_id +"'><i class='fa fa-times'></i></a>&nbsp;";
+                        @endif
+                    }
+                    else{
+                        master_button = master_button + "";
+                        if(data.status === 'A'){
+                            @if(Auth::user()->hasTaskPermission('lpdoneapclosereq', Auth::user()->id))
+                                po_close_buttons = po_close_buttons + "<a title='Approve Close Request for This Purchase Order' class='CloseApproveOrder myIcon icon-success icon-ef-3 icon-ef-3b icon-color' data-id = '"+ po_master_id +"'><i class='fa fa-check'></i></a>&nbsp;";
+                            @endif
+                        }
+                        document.getElementById("iconChange").disabled = true;
+                    }
+
+                    if(delete_access === true){
+                        @if(Auth::user()->hasTaskPermission('lpdonedeletepo', Auth::user()->id))
+                            master_button = master_button + "<a title='Delete Purchase Order' class='DeleteOrder myIcon icon-danger icon-ef-3 icon-ef-3b icon-color' data-id = '" + po_master_id + "'><i class='fa fa-trash''></i></a>&nbsp;";
+                        @else
+                            master_button = master_button + "";
+                        @endif
+                    }
+                    else{
+                        master_button = master_button + "";
+                    }
+                    document.getElementById("MasterButtons").innerHTML = master_button;
+                    document.getElementById("ProductionPlanButtons").innerHTML = product_plan_buttons;
+                    document.getElementById("POCloseButtons").innerHTML = po_close_buttons;
+
                     if ((data.po_date === null) || (data.po_date === "")) {
-                        document.getElementById("poDate").innerHTML  = '';
+                        document.getElementById("PODate").innerHTML  = '';
                     } else {
-                        document.getElementById("poDate").innerHTML  = returnStringFormatDate(data.po_date);
+                        document.getElementById("PODate").innerHTML  = returnStringFormatDate(data.po_date);
                     }
 
                     if ((data.approval_date === null) || (data.approval_date === "")) {
-                        document.getElementById("approvalDate").innerHTML  = '';
+                        document.getElementById("ApprovalDate").innerHTML  = '';
                     } else {
-                        document.getElementById("approvalDate").innerHTML  = returnStringFormatDate(data.approval_date);
+                        document.getElementById("ApprovalDate").innerHTML  = returnStringFormatDate(data.approval_date);
                     }
 
                     if ((data.sample_submission_date === null) || (data.sample_submission_date === "")) {
-                        document.getElementById("sampleSubmissionDate").innerHTML  = '';
+                        document.getElementById("SampleSubmissionDate").innerHTML  = '';
                     } else {
-                        document.getElementById("sampleSubmissionDate").innerHTML  = returnStringFormatDate(data.sample_submission_date);  
+                        document.getElementById("SampleSubmissionDate").innerHTML  = returnStringFormatDate(data.sample_submission_date);  
                     }
 
                     if ((data.production_start_date === null) || (data.production_start_date === "")) {
-                        document.getElementById("productionStartDate").innerHTML  = '';
+                        document.getElementById("ProductionStartDate").innerHTML  = '';
                     } else {
-                        document.getElementById("productionStartDate").innerHTML  = returnStringFormatDate(data.production_start_date);  
+                        document.getElementById("ProductionStartDate").innerHTML  = returnStringFormatDate(data.production_start_date);  
                     }
 
                     if ((data.production_end_date === null) || (data.production_end_date === "")) {
-                        document.getElementById("productionEndDate").innerHTML  = '';
+                        document.getElementById("ProductionEndDate").innerHTML  = '';
                     } else {
-                        document.getElementById("productionEndDate").innerHTML  = returnStringFormatDate(data.production_end_date);  
+                        document.getElementById("ProductionEndDate").innerHTML  = returnStringFormatDate(data.production_end_date);  
                     }
 
                     if ((data.delivery_start_date === null) || (data.delivery_start_date === "")) {
-                        document.getElementById("deliveryStartDate").innerHTML  = '';
+                        document.getElementById("DeliveryStartDate").innerHTML  = '';
                     } else {
-                        document.getElementById("deliveryStartDate").innerHTML  = returnStringFormatDate(data.delivery_start_date);  
+                        document.getElementById("DeliveryStartDate").innerHTML  = returnStringFormatDate(data.delivery_start_date);  
                     }
 
                     if ((data.delivery_end_date === null) || (data.delivery_end_date === "")) {
-                        document.getElementById("deliveryEndDate").innerHTML  = '';
+                        document.getElementById("DeliveryEndDate").innerHTML  = '';
                     } else {
-                        document.getElementById("deliveryEndDate").innerHTML  = returnStringFormatDate(data.delivery_end_date);  
+                        document.getElementById("DeliveryEndDate").innerHTML  = returnStringFormatDate(data.delivery_end_date);  
                     }
                     
                 },
@@ -1625,20 +1686,25 @@
                             }
                         }
                     },
-                    @if($purchaseOrder->close_request == 0)
                     {
                         render: function(data, type, api_item) {
-                            return "<p class='text-center'>"+
-                                @if(Auth::user()->hasTaskPermission('lpdtwodeleteitem', Auth::user()->id))
-                                "<a title= 'Delete' class= 'DeleteDetail btn btn-danger btn-xs' data-id = "+ api_item.item_count +"><i class='fa fa-trash'></i></a>" +
-                                " &nbsp;" +
-                                @endif
-                                @if(Auth::user()->hasTaskPermission('lpdtwoadditem', Auth::user()->id))
-                                "<a title= 'Edit' class= 'EditFactory btn btn-warning btn-xs' data-id = "+ api_item.item_count +"><i class='fa fa-edit'></i></a></p>"
-                                @endif
+                            if(api_item.close_request === 0){
+                                return "<p class='text-center'>"+
+                                        @if(Auth::user()->hasTaskPermission('lpdtwodeleteitem', Auth::user()->id))
+                                        "<a title= 'Delete' class= 'DeleteDetail btn btn-danger btn-xs' data-id = "+ api_item.item_count +"><i class='fa fa-trash'></i></a>" +
+                                        " &nbsp;" +
+                                        @endif
+                                        @if(Auth::user()->hasTaskPermission('lpdtwoadditem', Auth::user()->id))
+                                        "<a title= 'Edit' class= 'EditFactory btn btn-warning btn-xs' data-id = "+ api_item.item_count +"><i class='fa fa-edit'></i></a>" +
+                                        " &nbsp;" +
+                                        @endif
+                                    "</p>";
+                            }
+                            else{
+                                    return "<p class='text-center'></p>";
+                                }       
                         }
                     }
-                    @endif
                 ]
             });
         }
@@ -2289,6 +2355,50 @@
             })
         });
 
+
+        function fillPOUpdateDataToUpdateModal(){
+            var FactoryID = po_master_id;
+            var url = '{{ route('lpd2.purchase.order.detail.get-data') }}';
+            $.ajax({
+                url: url,
+                method:'POST',
+                data:{id: FactoryID},
+                success:function(data){
+                    // console.log(data);
+                    $('select[name=buyer_name]').val(data.buyer_id).change();
+                    $('select[name=factory_name]').val(data.factory_id).change();
+                    $('select[name=po_type]').val(data.po_type).change();
+                    $('select[name=primary_delivery_location]').val(data.primary_delivery_location_id).change();
+                    $('input[name=purchase_order_date]').val(data.po_date);
+                    $('input[name=lpd_po_no]').val(data.lpd_po_no);
+                    $('input[name=revise_count]').val(data.revise_count);
+                    $('input[name=flow_count]').val(data.flow_count);
+                    $('input[name=buyer_po_no]').val(data.buyer_po_no);
+                    $('input[name=remarks]').val(data.remarks);
+
+                    if(data.is_urgent == 1)
+                    {
+                        $('input[name=is_urgent]').prop('checked', true);
+                    }
+
+                    if(data.has_flow_count == 1)
+                    {
+                        $('input[name=has_flow_count]').prop('checked', true);
+                    }
+                },
+                error:function(error){
+                    //console.log(error);
+                    swal({
+                        title: "No Data Found!",
+                        text: "no data!",
+                        icon: "error",
+                        button: "Ok!",
+                        className: "myClass",
+                    });
+                }
+            })
+        };
+
         $('#advanced-usage').on('click',".EditFactory", function(){
             var button = $(this);
             var FactoryID = button.attr("data-id");
@@ -2787,49 +2897,49 @@
             })
         });
 
-        $('.EditPO').click(function(){
-            var FactoryID = po_master_id;
-            var url = '{{ route('lpd2.purchase.order.detail.get-data') }}';
-            $.ajax({
-                url: url,
-                method:'POST',
-                data:{id: FactoryID},
-                success:function(data){
-                    // console.log(data);
-                    $('select[name=buyer_name]').val(data.buyer_id).change();
-                    $('select[name=factory_name]').val(data.factory_id).change();
-                    $('select[name=po_type]').val(data.po_type).change();
-                    $('select[name=primary_delivery_location]').val(data.primary_delivery_location_id).change();
-                    $('input[name=purchase_order_date]').val(data.po_date);
-                    $('input[name=lpd_po_no]').val(data.lpd_po_no);
-                    $('input[name=revise_count]').val(data.revise_count);
-                    $('input[name=flow_count]').val(data.flow_count);
-                    $('input[name=buyer_po_no]').val(data.buyer_po_no);
-                    $('input[name=remarks]').val(data.remarks);
+        // $('.EditPO').click(function(){
+        //     var FactoryID = po_master_id;
+        //     var url = '{{ route('lpd2.purchase.order.detail.get-data') }}';
+        //     $.ajax({
+        //         url: url,
+        //         method:'POST',
+        //         data:{id: FactoryID},
+        //         success:function(data){
+        //             // console.log(data);
+        //             $('select[name=buyer_name]').val(data.buyer_id).change();
+        //             $('select[name=factory_name]').val(data.factory_id).change();
+        //             $('select[name=po_type]').val(data.po_type).change();
+        //             $('select[name=primary_delivery_location]').val(data.primary_delivery_location_id).change();
+        //             $('input[name=purchase_order_date]').val(data.po_date);
+        //             $('input[name=lpd_po_no]').val(data.lpd_po_no);
+        //             $('input[name=revise_count]').val(data.revise_count);
+        //             $('input[name=flow_count]').val(data.flow_count);
+        //             $('input[name=buyer_po_no]').val(data.buyer_po_no);
+        //             $('input[name=remarks]').val(data.remarks);
 
-                    if(data.is_urgent == 1)
-                    {
-                        $('input[name=is_urgent]').prop('checked', true);
-                    }
+        //             if(data.is_urgent == 1)
+        //             {
+        //                 $('input[name=is_urgent]').prop('checked', true);
+        //             }
 
-                    if(data.has_flow_count == 1)
-                    {
-                        $('input[name=has_flow_count]').prop('checked', true);
-                    }
-                },
-                error:function(error){
-                    //console.log(error);
-                    swal({
-                        title: "No Data Found!",
-                        text: "no data!",
-                        icon: "error",
-                        button: "Ok!",
-                        className: "myClass",
-                    });
-                }
-            })
+        //             if(data.has_flow_count == 1)
+        //             {
+        //                 $('input[name=has_flow_count]').prop('checked', true);
+        //             }
+        //         },
+        //         error:function(error){
+        //             //console.log(error);
+        //             swal({
+        //                 title: "No Data Found!",
+        //                 text: "no data!",
+        //                 icon: "error",
+        //                 button: "Ok!",
+        //                 className: "myClass",
+        //             });
+        //         }
+        //     })
 
-        })
+        // })
 
         $(function(){
             $.ajaxSetup({

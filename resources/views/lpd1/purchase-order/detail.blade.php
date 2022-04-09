@@ -969,8 +969,8 @@
                                 <div class="col-md-3 ">
                                     <div class="form-group">
                                         <label class="checkbox checkbox-custom-alt checkbox-custom-lg" style="padding-top: 17px">
-                                            {{-- <input name="has_flow_count" id="HasFlowCount" value="1"  {{  ($purchaseOrder->has_flow_count == 1 ? ' checked' : '') }} type="checkbox"><i></i> <strong>Has Flow Count ?</strong> --}}
-                                            <input name="has_flow_count" id="HasFlowCount" value="1" type="checkbox"><i></i> <strong>Has Flow Count ?</strong>
+                                            <input name="has_flow_count" id="HasFlowCount" value="1"  {{  ($purchaseOrder->has_flow_count == 1 ? ' checked' : '') }} type="checkbox"><i></i> <strong>Has Flow Count ?</strong>
+                                            {{-- <input name="has_flow_count" id="HasFlowCount" value="1" type="checkbox"><i></i> <strong>Has Flow Count ?</strong> --}}
                                         </label>
                                     </div>
                                 </div>
@@ -2165,7 +2165,6 @@
                 }
             });
         });
-
 
         $(function(){
             $.ajaxSetup({
