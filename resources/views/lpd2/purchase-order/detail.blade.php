@@ -1436,7 +1436,7 @@
 
         });
 
-        
+
 
         function loadPurchaseOrderDetail(){
             $.ajaxSetup({
@@ -1481,25 +1481,25 @@
                     let po_close_buttons = "";
                     if(po_close_request === false){
                        document.getElementById("iconChange").disabled = false;
-                        @if(Auth::user()->hasTaskPermission('lpdoneupdatepo', Auth::user()->id))
+                        @if(Auth::user()->hasTaskPermission('lpdtwooupdatepo', Auth::user()->id))
                             master_button = master_button + "<a title='Purchase Order Master Update' onclick='fillPOUpdateDataToUpdateModal()' class ='myIcon icon-warning icon-ef-3 icon-ef-3b icon-color' data-toggle='modal' data-target='#POUpdateModal' data-options='splash-2 splash-ef-12'><i class='fa fa-edit'></i></a>&nbsp;";
                         @else
                             master_button = master_button + "";
                         @endif
-                        @if(Auth::user()->hasTaskPermission('lpdoneapprovepo', Auth::user()->id))
+                        @if(Auth::user()->hasTaskPermission('lpdtwooapprovepo', Auth::user()->id))
                             product_plan_buttons = "<a title='Provide Purchase Order Dates' class ='myIcon icon-success icon-ef-3 icon-ef-3b icon-color' data-toggle='modal' data-target='#poApprovalModal' data-options='splash-2 splash-ef-12'><i class='fa fa-calendar'></i></a>&nbsp;";
                         @else
                             product_plan_buttons = product_plan_buttons + "";
                         @endif
 
-                        @if(Auth::user()->hasTaskPermission('lpdoneclosereq', Auth::user()->id))
+                        @if(Auth::user()->hasTaskPermission('lpdtwooclosereq', Auth::user()->id))
                             po_close_buttons = po_close_buttons + "<a title='Generate Close Request for This Purchase Order' class='CloseRequestOrder myIcon icon-info icon-ef-3 icon-ef-3b icon-color' data-id = '"+ po_master_id +"'><i class='fa fa-times'></i></a>&nbsp;";
                         @endif
                     }
                     else{
                         master_button = master_button + "";
                         if(data.status === 'A'){
-                            @if(Auth::user()->hasTaskPermission('lpdoneapclosereq', Auth::user()->id))
+                            @if(Auth::user()->hasTaskPermission('lpdtwooapclosereq', Auth::user()->id))
                                 po_close_buttons = po_close_buttons + "<a title='Approve Close Request for This Purchase Order' class='CloseApproveOrder myIcon icon-success icon-ef-3 icon-ef-3b icon-color' data-id = '"+ po_master_id +"'><i class='fa fa-check'></i></a>&nbsp;";
                             @endif
                         }
@@ -1507,7 +1507,7 @@
                     }
 
                     if(delete_access === true){
-                        @if(Auth::user()->hasTaskPermission('lpdonedeletepo', Auth::user()->id))
+                        @if(Auth::user()->hasTaskPermission('lpdtwoodeletepo', Auth::user()->id))
                             master_button = master_button + "<a title='Delete Purchase Order' class='DeleteOrder myIcon icon-danger icon-ef-3 icon-ef-3b icon-color' data-id = '" + po_master_id + "'><i class='fa fa-trash''></i></a>&nbsp;";
                         @else
                             master_button = master_button + "";
@@ -1535,33 +1535,33 @@
                     if ((data.sample_submission_date === null) || (data.sample_submission_date === "")) {
                         document.getElementById("SampleSubmissionDate").innerHTML  = '';
                     } else {
-                        document.getElementById("SampleSubmissionDate").innerHTML  = returnStringFormatDate(data.sample_submission_date);  
+                        document.getElementById("SampleSubmissionDate").innerHTML  = returnStringFormatDate(data.sample_submission_date);
                     }
 
                     if ((data.production_start_date === null) || (data.production_start_date === "")) {
                         document.getElementById("ProductionStartDate").innerHTML  = '';
                     } else {
-                        document.getElementById("ProductionStartDate").innerHTML  = returnStringFormatDate(data.production_start_date);  
+                        document.getElementById("ProductionStartDate").innerHTML  = returnStringFormatDate(data.production_start_date);
                     }
 
                     if ((data.production_end_date === null) || (data.production_end_date === "")) {
                         document.getElementById("ProductionEndDate").innerHTML  = '';
                     } else {
-                        document.getElementById("ProductionEndDate").innerHTML  = returnStringFormatDate(data.production_end_date);  
+                        document.getElementById("ProductionEndDate").innerHTML  = returnStringFormatDate(data.production_end_date);
                     }
 
                     if ((data.delivery_start_date === null) || (data.delivery_start_date === "")) {
                         document.getElementById("DeliveryStartDate").innerHTML  = '';
                     } else {
-                        document.getElementById("DeliveryStartDate").innerHTML  = returnStringFormatDate(data.delivery_start_date);  
+                        document.getElementById("DeliveryStartDate").innerHTML  = returnStringFormatDate(data.delivery_start_date);
                     }
 
                     if ((data.delivery_end_date === null) || (data.delivery_end_date === "")) {
                         document.getElementById("DeliveryEndDate").innerHTML  = '';
                     } else {
-                        document.getElementById("DeliveryEndDate").innerHTML  = returnStringFormatDate(data.delivery_end_date);  
+                        document.getElementById("DeliveryEndDate").innerHTML  = returnStringFormatDate(data.delivery_end_date);
                     }
-                    
+
                 },
                 error:function(error){
                     //console.log(error);
@@ -1589,7 +1589,7 @@
                 success:function(data){
                     // console.log(data);
                     document.getElementById("HTLJOB").innerHTML  = data;
-                    
+
                 },
                 error:function(error){
                     //console.log(error);
@@ -1702,7 +1702,7 @@
                             }
                             else{
                                     return "<p class='text-center'></p>";
-                                }       
+                                }
                         }
                     }
                 ]
@@ -2819,7 +2819,7 @@
                         data:data,
                         success:function(data){
                             //console.log(data);
-                            
+
                             if(data === '2')
                             {
                                 swal({
