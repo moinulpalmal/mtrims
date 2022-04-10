@@ -32,7 +32,7 @@
 
                     <li>
                         {{-- <a href="{{route('lpd1.purchase.order.detail', ['id' => $purchaseOrder->id])}}"> PO No: {{$purchaseOrder->lpd_po_no}}</a> --}}
-                        <a href="{{route('lpd1.purchase.order.detail', ['id' => $id])}}"> PO No: <span id="breadcrumblpdNo"></span></a>
+                        <a href="{{route('lpd1.purchase.order.detail', ['id' => $id])}}"> PO No: <span id="BreadcrumblpdNo"></span></a>
                     </li>
                 </ul>
 
@@ -52,7 +52,7 @@
                                 <img class="img-circle" src="assets/images/arnold-avatar.jpg" alt="">
                             </div>--}}
                             {{-- <h4 class="mb-0"><strong>LPD PO No:</strong> {{$purchaseOrder->lpd_po_no}}</h4> --}}
-                            <h4 class="mb-0"><strong>LPD PO No:</strong> <span id="lpdNo"></span></h4>
+                            <h4 class="mb-0"><strong>LPD PO No:</strong> <span id="LPDNo"></span></h4>
                             <div>
                                 <span class="text-muted">
                                     <strong>HTL Job No:</strong>
@@ -60,7 +60,7 @@
                                     {{-- @foreach($uniqTrimsTypes as $item)
                                         {{ $item->short_name }}-
                                     @endforeach --}}
-                                    <span id="jobYearNo"></span>
+                                    <span id="JobYearNo"></span>
                                     {{-- <span id="jobYearNo">{{$purchaseOrder->job_year}}/{{$purchaseOrder->job_no}}</span> --}}
                                 </span>
                             </div>
@@ -119,7 +119,7 @@
                                             <strong>Last Approval Date</strong>
                                         </div>
                                         <div class="col-md-7 pull-right">
-                                            <p class="text-right text-blue" id="approvalDate"></p>
+                                            <p class="text-right text-blue" id="ApprovalDate"></p>
                                             {{-- @if($purchaseOrder->approval_date != null)
                                                 <p class="text-right text-blue" id="approvalDate"></p>
                                                 <p class="text-right text-greensea">{{\Carbon\Carbon::parse($purchaseOrder->approval_date)->format('d/m/Y')}}</p>
@@ -164,7 +164,7 @@
                                             <strong>Sample Submission Date</strong>
                                         </div>
                                         <div class="col-md-7 pull-right">
-                                            <p class="text-right text-blue" id="sampleSubmissionDate"></p>
+                                            <p class="text-right text-blue" id="SampleSubmissionDate"></p>
                                             {{-- @if($purchaseOrder->sample_submission_date != null)
                                                 <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->sample_submission_date)->format('d/m/Y')}}</p>
                                             @endif --}}
@@ -178,7 +178,7 @@
                                             <strong>Production Start Date</strong>
                                         </div>
                                         <div class="col-md-7 pull-right">
-                                            <p class="text-right text-blue" id="productionStartDate"></p>
+                                            <p class="text-right text-blue" id="ProductionStartDate"></p>
                                             {{-- @if($purchaseOrder->production_start_date != null)
                                                 <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->production_start_date)->format('d/m/Y')}}</p>
                                             @endif --}}
@@ -192,7 +192,7 @@
                                             <strong>Production Closing Date</strong>
                                         </div>
                                         <div class="col-md-7 pull-right">
-                                            <p class="text-right text-blue" id="productionEndDate"></p>
+                                            <p class="text-right text-blue" id="ProductionEndDate"></p>
                                             {{-- @if($purchaseOrder->production_end_date != null)
                                                 <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->production_end_date)->format('d/m/Y')}}</p>
                                             @endif --}}
@@ -206,7 +206,7 @@
                                             <strong>Delivery Start Date</strong>
                                         </div>
                                         <div class="col-md-7 pull-right">
-                                            <p class="text-right text-blue" id="deliveryStartDate"></p>
+                                            <p class="text-right text-blue" id="DeliveryStartDate"></p>
                                             {{-- @if($purchaseOrder->delivery_start_date != null)
                                                 <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->delivery_start_date)->format('d/m/Y')}}</p>
                                             @endif --}}
@@ -220,7 +220,7 @@
                                             <strong>Delivery Closing Date</strong>
                                         </div>
                                         <div class="col-md-7 pull-right">
-                                            <p class="text-right text-blue" id="deliveryEndDate"></p>
+                                            <p class="text-right text-blue" id="DeliveryEndDate"></p>
                                             {{-- @if($purchaseOrder->delivery_start_date != null)
                                                 <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->delivery_end_date)->format('d/m/Y')}}</p>
                                             @endif --}}
@@ -989,21 +989,12 @@
                                         <input type="number" min="0" class="form-control" name="revise_count" id="ReviseCount" placeholder="Enter Revise Count" required value="">
                                     </div>
                                 </div>
-                                @if (($purchaseOrder->has_flow_count == 1))
-                                    <div class="col-md-4 no-padding">
-                                        <div class="form-group">
-                                            <label for="FlowCount" class="control-label">Flow Count</label>
-                                            <input type="number" min="1" class="form-control" name="flow_count" id="FlowCount" placeholder="Enter Flow Count" value="">
-                                        </div>
+                                <div class="col-md-4 no-padding" id="FlowIsCheck">
+                                    <div class="form-group">
+                                        <label for="FlowCount" class="control-label">Flow Count</label>
+                                        <input type="number" min="1" class="form-control" name="flow_count" id="FlowCount" placeholder="Enter Flow Count" value="">
                                     </div>
-                                @else
-                                    <div class="col-md-4 no-padding" style="display: none;" id="IsCheck">
-                                        <div class="form-group">
-                                            <label for="FlowCount" class="control-label">Flow Count</label>
-                                            <input type="number" min="1" class="form-control" name="flow_count" id="FlowCount" placeholder="Enter Flow Count"  value="">
-                                        </div>
-                                    </div>
-                                @endif
+                                </div>
                             </div>
                             <div class="row" style="padding: 0px 15px;">
                                 <div class="col-md-12 no-padding">
@@ -1087,7 +1078,7 @@
 
         $(document).ready(function(){
             $("#HasFlowCount").click(function () {
-                $("#IsCheck").toggle();
+                $("#FlowIsCheck").toggle();
                 $('input[name="flow_count"]').val('');
             });
 
@@ -1105,10 +1096,20 @@
                 method:'POST',
                 data:{id: FactoryID},
                 success:function(data){
-                    document.getElementById("breadcrumblpdNo").innerHTML  = data.lpd_po_no;
-                    document.getElementById("lpdNo").innerHTML  = data.lpd_po_no;
-                    document.getElementById("jobYearNo").innerHTML  = data.job_year + '/' + data.job_no;
+                    // console.log(data);
+                    document.getElementById("BreadcrumblpdNo").innerHTML  = data.lpd_po_no;
+                    document.getElementById("LPDNo").innerHTML  = data.lpd_po_no;
+                    document.getElementById("JobYearNo").innerHTML  = data.job_year + '/' + data.job_no;
                     document.getElementById("remark").innerHTML  = data.remarks;
+
+                    //when po detail update start
+                    if(parseInt(data.has_flow_count) === 1){
+                        $("#FlowIsCheck").show();
+                    }
+                    else{
+                        $("#FlowIsCheck").hide();
+                    }
+                    //when po detail update end
 
                     if(parseInt(data.close_request) === 0){
                         po_close_request = false;
@@ -1173,39 +1174,39 @@
                     }
 
                     if ((data.approval_date === null) || (data.approval_date === "")) {
-                        document.getElementById("approvalDate").innerHTML  = '';
+                        document.getElementById("ApprovalDate").innerHTML  = '';
                     } else {
-                        document.getElementById("approvalDate").innerHTML  = returnStringFormatDate(data.approval_date);
+                        document.getElementById("ApprovalDate").innerHTML  = returnStringFormatDate(data.approval_date);
                     }
 
                     if ((data.sample_submission_date === null) || (data.sample_submission_date === "")) {
-                        document.getElementById("sampleSubmissionDate").innerHTML  = '';
+                        document.getElementById("SampleSubmissionDate").innerHTML  = '';
                     } else {
-                        document.getElementById("sampleSubmissionDate").innerHTML  = returnStringFormatDate(data.sample_submission_date);
+                        document.getElementById("SampleSubmissionDate").innerHTML  = returnStringFormatDate(data.sample_submission_date);
                     }
 
                     if ((data.production_start_date === null) || (data.production_start_date === "")) {
-                        document.getElementById("productionStartDate").innerHTML  = '';
+                        document.getElementById("ProductionStartDate").innerHTML  = '';
                     } else {
-                        document.getElementById("productionStartDate").innerHTML  = returnStringFormatDate(data.production_start_date);
+                        document.getElementById("ProductionStartDate").innerHTML  = returnStringFormatDate(data.production_start_date);
                     }
 
                     if ((data.production_end_date === null) || (data.production_end_date === "")) {
-                        document.getElementById("productionEndDate").innerHTML  = '';
+                        document.getElementById("ProductionEndDate").innerHTML  = '';
                     } else {
-                        document.getElementById("productionEndDate").innerHTML  = returnStringFormatDate(data.production_end_date);
+                        document.getElementById("ProductionEndDate").innerHTML  = returnStringFormatDate(data.production_end_date);
                     }
 
                     if ((data.delivery_start_date === null) || (data.delivery_start_date === "")) {
-                        document.getElementById("deliveryStartDate").innerHTML  = '';
+                        document.getElementById("DeliveryStartDate").innerHTML  = '';
                     } else {
-                        document.getElementById("deliveryStartDate").innerHTML  = returnStringFormatDate(data.delivery_start_date);
+                        document.getElementById("DeliveryStartDate").innerHTML  = returnStringFormatDate(data.delivery_start_date);
                     }
 
                     if ((data.delivery_end_date === null) || (data.delivery_end_date === "")) {
-                        document.getElementById("deliveryEndDate").innerHTML  = '';
+                        document.getElementById("DeliveryEndDate").innerHTML  = '';
                     } else {
-                        document.getElementById("deliveryEndDate").innerHTML  = returnStringFormatDate(data.delivery_end_date);
+                        document.getElementById("DeliveryEndDate").innerHTML  = returnStringFormatDate(data.delivery_end_date);
                     }
 
                 },
@@ -2165,7 +2166,6 @@
                 }
             });
         });
-
 
         $(function(){
             $.ajaxSetup({
