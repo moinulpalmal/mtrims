@@ -96,12 +96,7 @@
                                             <strong>Order Date</strong>
                                         </div>
                                         <div class="col-md-7 pull-right">
-                                            @if($purchaseOrder->po_date != null)
-                                                <p class="text-right text-greensea">
-                                                    <p class="text-right text-blue" id="PODate"></p>
-                                                    {{-- {{\Carbon\Carbon::parse($purchaseOrder->po_date)->format('d/m/Y')}} --}}
-                                                </p>
-                                            @endif
+                                            <p class="text-right text-blue" id="PODate"></p>
                                         </div>
                                     </div>
                                 </li>
@@ -112,10 +107,7 @@
                                             <strong>Approval Date</strong>
                                         </div>
                                         <div class="col-md-7 pull-right">
-                                            @if($purchaseOrder->approval_date != null)
-                                                <p class="text-right text-blue" id="ApprovalDate"></p>
-                                                {{-- <p class="text-right text-greensea">{{\Carbon\Carbon::parse($purchaseOrder->approval_date_date)->format('d/m/Y')}}</p> --}}
-                                            @endif
+                                            <p class="text-right text-blue" id="ApprovalDate"></p>
                                         </div>
                                     </div>
                                 </li>
@@ -157,9 +149,6 @@
                                         </div>
                                         <div class="col-md-7 pull-right">
                                             <p class="text-right text-blue" id="SampleSubmissionDate"></p>
-                                            {{-- @if($purchaseOrder->sample_submission_date != null)
-                                                <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->sample_submission_date)->format('d/m/Y')}}</p>
-                                            @endif --}}
                                         </div>
                                     </div>
                                 </li>
@@ -171,9 +160,6 @@
                                         </div>
                                         <div class="col-md-7 pull-right">
                                             <p class="text-right text-blue" id="ProductionStartDate"></p>
-                                            {{-- @if($purchaseOrder->production_start_date != null)
-                                                <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->production_start_date)->format('d/m/Y')}}</p>
-                                            @endif --}}
                                         </div>
                                     </div>
                                 </li>
@@ -199,9 +185,6 @@
                                         </div>
                                         <div class="col-md-7 pull-right">
                                             <p class="text-right text-blue" id="DeliveryStartDate"></p>
-                                            {{-- @if($purchaseOrder->delivery_start_date != null)
-                                                <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->delivery_start_date)->format('d/m/Y')}}</p>
-                                            @endif --}}
                                         </div>
                                     </div>
                                 </li>
@@ -213,9 +196,6 @@
                                         </div>
                                         <div class="col-md-7 pull-right">
                                             <p class="text-right text-blue" id="DeliveryEndDate"></p>
-                                            {{-- @if($purchaseOrder->delivery_start_date != null)
-                                                <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->delivery_end_date)->format('d/m/Y')}}</p>
-                                            @endif --}}
                                         </div>
                                     </div>
                                 </li>
@@ -1018,7 +998,8 @@
                                         <option value="">- - - Select - - -</option>
                                         @if(!empty($buyers))
                                             @foreach($buyers as $item)
-                                                <option value="{{ $item->id }}" @if($item->id == $purchaseOrder->buyer_id) selected = "selected"@endif >{{ $item->name }}</option>
+                                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                                {{-- <option value="{{ $item->id }}" @if($item->id == $purchaseOrder->buyer_id) selected = "selected"@endif >{{ $item->name }}</option> --}}
                                             @endforeach
                                         @endif
                                     </select>
@@ -1031,7 +1012,8 @@
                                         <option value="">- - - Select - - -</option>
                                         @if(!empty($factories))
                                             @foreach($factories as $item)
-                                                <option value="{{ $item->id }}" @if($item->id == $purchaseOrder->factory_id) selected = "selected" @endif>{{ $item->name }}</option>
+                                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                                {{-- <option value="{{ $item->id }}" @if($item->id == $purchaseOrder->factory_id) selected = "selected" @endif>{{ $item->name }}</option> --}}
                                             @endforeach
                                         @endif
                                     </select>
@@ -1481,25 +1463,25 @@
                     let po_close_buttons = "";
                     if(po_close_request === false){
                        document.getElementById("iconChange").disabled = false;
-                        @if(Auth::user()->hasTaskPermission('lpdtwooupdatepo', Auth::user()->id))
+                        @if(Auth::user()->hasTaskPermission('lpdtwoupdatepo', Auth::user()->id))
                             master_button = master_button + "<a title='Purchase Order Master Update' onclick='fillPOUpdateDataToUpdateModal()' class ='myIcon icon-warning icon-ef-3 icon-ef-3b icon-color' data-toggle='modal' data-target='#POUpdateModal' data-options='splash-2 splash-ef-12'><i class='fa fa-edit'></i></a>&nbsp;";
                         @else
                             master_button = master_button + "";
                         @endif
-                        @if(Auth::user()->hasTaskPermission('lpdtwooapprovepo', Auth::user()->id))
+                        @if(Auth::user()->hasTaskPermission('lpdtwoapprovepo', Auth::user()->id))
                             product_plan_buttons = "<a title='Provide Purchase Order Dates' class ='myIcon icon-success icon-ef-3 icon-ef-3b icon-color' data-toggle='modal' data-target='#poApprovalModal' data-options='splash-2 splash-ef-12'><i class='fa fa-calendar'></i></a>&nbsp;";
                         @else
                             product_plan_buttons = product_plan_buttons + "";
                         @endif
 
-                        @if(Auth::user()->hasTaskPermission('lpdtwooclosereq', Auth::user()->id))
+                        @if(Auth::user()->hasTaskPermission('lpdtwoclosereq', Auth::user()->id))
                             po_close_buttons = po_close_buttons + "<a title='Generate Close Request for This Purchase Order' class='CloseRequestOrder myIcon icon-info icon-ef-3 icon-ef-3b icon-color' data-id = '"+ po_master_id +"'><i class='fa fa-times'></i></a>&nbsp;";
                         @endif
                     }
                     else{
                         master_button = master_button + "";
                         if(data.status === 'A'){
-                            @if(Auth::user()->hasTaskPermission('lpdtwooapclosereq', Auth::user()->id))
+                            @if(Auth::user()->hasTaskPermission('lpdtwoapclosereq', Auth::user()->id))
                                 po_close_buttons = po_close_buttons + "<a title='Approve Close Request for This Purchase Order' class='CloseApproveOrder myIcon icon-success icon-ef-3 icon-ef-3b icon-color' data-id = '"+ po_master_id +"'><i class='fa fa-check'></i></a>&nbsp;";
                             @endif
                         }
@@ -1507,7 +1489,7 @@
                     }
 
                     if(delete_access === true){
-                        @if(Auth::user()->hasTaskPermission('lpdtwoodeletepo', Auth::user()->id))
+                        @if(Auth::user()->hasTaskPermission('lpdtwodeletepo', Auth::user()->id))
                             master_button = master_button + "<a title='Delete Purchase Order' class='DeleteOrder myIcon icon-danger icon-ef-3 icon-ef-3b icon-color' data-id = '" + po_master_id + "'><i class='fa fa-trash''></i></a>&nbsp;";
                         @else
                             master_button = master_button + "";
