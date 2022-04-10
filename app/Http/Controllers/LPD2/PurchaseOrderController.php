@@ -233,19 +233,19 @@ class PurchaseOrderController extends Controller
                 //     ->where('status', '!=', 'D')
                 //     ->get();
 
-                $productionPlanDetails = ProductionPlanDetailSetup::where('purchase_order_master_id', $id)
-                    ->where('status', '!=', 'D')
-                    ->orderBy('production_date', 'DESC')
-                    ->get();
+                // $productionPlanDetails = ProductionPlanDetailSetup::where('purchase_order_master_id', $id)
+                //     ->where('status', '!=', 'D')
+                //     ->orderBy('production_date', 'DESC')
+                //     ->get();
 
-                $deleteAccess = true;
+                // $deleteAccess = true;
 
-                foreach ($productionPlanDetails as $item){
-                    if($item->achievement_production > 0){
-                        $deleteAccess = false;
-                        break;
-                    }
-                }
+                // foreach ($productionPlanDetails as $item){
+                //     if($item->achievement_production > 0){
+                //         $deleteAccess = false;
+                //         break;
+                //     }
+                // }
 
                 // $deliveryMasters = DeliveryMaster::orderBy('challan_date', 'DESC')
                 //     ->where('status', '!=', 'D')
@@ -280,7 +280,7 @@ class PurchaseOrderController extends Controller
                 //return $deliveryData;
 
                 //'uniqTrimsTypes','deliveryData','deliveryMasters','proformaInvoices','currentStocks', 'productionPlanDetails','purchaseOrderDetails',
-                return view('lpd2.purchase-order.detail', compact('units','buyers', 'trimsTypes','factories', 'stores', 'purchaseOrder','deleteAccess','id'));
+                return view('lpd2.purchase-order.detail', compact('units','buyers', 'trimsTypes','factories', 'stores', 'purchaseOrder','id'));
             } // other data
         }
         else{
