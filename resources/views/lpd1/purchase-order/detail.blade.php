@@ -1077,36 +1077,14 @@
 
         });
 
-        // $(document).ready(function(){
-        //     $("#HasFlowCount").click(function () {
-        //         // $("#FlowIsCheck").toggle();
-        //         $('input[name="flow_count"]').val('0');
-        //     });
-
-        // });
-
         $(document).ready(function(){
             $("#HasFlowCount").click(function () {
                 // $("#FlowIsCheck").toggle();
-                $('input[name="flow_count"]').val('1');
+                $('input[name="flow_count"]').val('0');
             });
             $('input[name="flow_count"]').val('0');
 
         });
-
-        function HasFlCount(){
-            // var clicked = document.getElementById('#HasFlowCount');
-            // alert('clicked');
-            // if(clicked)
-            // {
-            //     // $('input[name="flow_count"]').val('1');
-            // }
-            // else{
-            //     // $('input[name="flow_count"]').val('0');
-            // }
-        }
-        
-
 
         function loadPurchaseOrderDetail(){
             $.ajaxSetup({
@@ -2322,10 +2300,8 @@
                 var lpd_po_no = document.forms["POUpdate"]["lpd_po_no"].value;
 
                 if ($("#HasFlowCount").is(":checked")) {
-                    // console.log('k');
                     if(flow_count == "" || flow_count == 0)
                     {
-                        // console.log('k2');
                         swal({
                             title: "Insert Flow Count Min Value 1",
                             icon: "warning",
