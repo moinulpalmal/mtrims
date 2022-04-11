@@ -207,9 +207,9 @@ class PurchaseOrderController extends Controller
             if($purchaseOrder->save()){
                 return $request->id;
             }
-            return null;
+            return '2';
         }
-        return null;
+        return '0';
     }
 
 
