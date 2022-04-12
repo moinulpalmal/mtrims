@@ -970,7 +970,7 @@
                                     <div class="form-group">
                                         <label class="checkbox checkbox-custom-alt checkbox-custom-lg" style="padding-top: 17px">
                                             {{-- <input name="has_flow_count" id="HasFlowCount" value="1"  {{  ($purchaseOrder->has_flow_count == 1 ? ' checked' : '') }} type="checkbox"><i></i> <strong>Has Flow Count ?</strong> --}}
-                                            <input name="has_flow_count" onclick="HasFlCount()" id="HasFlowCount" value="1" type="checkbox"><i></i> <strong>Has Flow Count ?</strong>
+                                            <input name="has_flow_count" id="HasFlowCount" value="1" type="checkbox"><i></i> <strong>Has Flow Count ?</strong>
                                         </label>
                                         {{-- onclick="HasFlCount()" --}}
                                     </div>
@@ -1078,12 +1078,27 @@
         });
 
         $(document).ready(function(){
-            $("#HasFlowCount").click(function () {
-                // $("#FlowIsCheck").toggle();
-                $('input[name="flow_count"]').val('0');
-            });
-            $('input[name="flow_count"]').val('0');
+            // $("#HasFlowCount").click(function () {
+            //     // $("#FlowIsCheck").toggle();
+            //     $('input[name="flow_count"]').val('0');
+            // });
 
+            $("#HasFlowCount").click(function () {
+                if(document.getElementById("HasFlowCount").checked){
+
+                }
+                else{
+                    $('input[name="flow_count"]').val('0');
+                }
+            });
+
+        });
+
+        // check negative sign
+        $('#FlowCount').keypress(function(event) {
+            if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
         });
 
         function loadPurchaseOrderDetail(){

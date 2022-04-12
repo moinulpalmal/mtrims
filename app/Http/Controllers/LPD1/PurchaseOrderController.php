@@ -323,7 +323,7 @@ class PurchaseOrderController extends Controller
             }
             else
             {
-                $purchaseOrderMaster->flow_count = $request->flow_count;
+                $purchaseOrderMaster->flow_count = 0;
                 $purchaseOrderMaster->has_flow_count = false;
             }
 

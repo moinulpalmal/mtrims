@@ -179,15 +179,13 @@ class PurchaseOrderController extends Controller
             if($purchaseOrder == null){
                 return redirect()->route('lpd2.purchase.order');
             }
-            else if($purchaseOrder->status == 'D'){
-                return redirect()->route('lpd2.purchase.order');
-            }
+            // else if($purchaseOrder->status == 'D'){
+            //     return redirect()->route('lpd2.purchase.order');
+            // }
             else if($purchaseOrder->status == 'CP'){
                 return redirect()->route('lpd2.purchase.order');
             }
             else{
-
-
                 $buyers = Buyer::getActiveBuyerListForSelect();
                 $factories = Factory::getActiveFactoryListForSelect();
                 $units = Unit::getActiveUnitListForSelect();
@@ -209,7 +207,8 @@ class PurchaseOrderController extends Controller
         if($purchaseOrder != null){
             $purchaseOrder->status = 'D';
             if($purchaseOrder->save()){
-                return $request->id;
+                // return $request->id;
+                return '2';
             }
             return null;
         }
@@ -461,7 +460,7 @@ class PurchaseOrderController extends Controller
             }
             else
             {
-                $purchaseOrderMaster->flow_count = $request->flow_count;
+                $purchaseOrderMaster->flow_count = 0;
                 $purchaseOrderMaster->has_flow_count = false;
             }
 
