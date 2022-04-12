@@ -177,9 +177,9 @@ class PurchaseOrderController extends Controller
             if($purchaseOrder == null){
                 return redirect()->route('lpd1.purchase.order');
             }
-            else if($purchaseOrder->status == 'D'){
-                return redirect()->route('lpd1.purchase.order');
-            }
+            // else if($purchaseOrder->status == 'D'){
+            //     return redirect()->route('lpd1.purchase.order');
+            // }
             else if($purchaseOrder->status == 'CP'){
                 return redirect()->route('lpd1.purchase.order');
             }
@@ -205,11 +205,12 @@ class PurchaseOrderController extends Controller
         if($purchaseOrder != null){
             $purchaseOrder->status = 'D';
             if($purchaseOrder->save()){
-                return $request->id;
+                // return $request->id;
+                return '2';
             }
-            return '2';
+            return null;
         }
-        return '0';
+        return null;
     }
 
 

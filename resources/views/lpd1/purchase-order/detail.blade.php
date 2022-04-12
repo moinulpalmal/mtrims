@@ -2596,17 +2596,8 @@
                                         className: "myClass",
                                     });
                                 }
-                                // swal({
-                                //     title: "Operation Successful!",
-                                //     icon: "success",
-                                //     button: "Ok!",
-                                // }).then(function (value) {
-                                //     if(value){
-                                //         //console.log(value);
-                                //         window.location.href = window.location.href.replace(/#.*$/, '');
-                                //     }
-                                // });
                             }
+                            window.location.href = "{{ route('lpd1.purchase.order')}}";
                         },
                         error:function(error){
                             console.log(error);
