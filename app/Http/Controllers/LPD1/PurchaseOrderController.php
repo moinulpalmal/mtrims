@@ -177,9 +177,9 @@ class PurchaseOrderController extends Controller
             if($purchaseOrder == null){
                 return redirect()->route('lpd1.purchase.order');
             }
-            else if($purchaseOrder->status == 'D'){
-                return redirect()->route('lpd1.purchase.order');
-            }
+            // else if($purchaseOrder->status == 'D'){
+            //     return redirect()->route('lpd1.purchase.order');
+            // }
             else if($purchaseOrder->status == 'CP'){
                 return redirect()->route('lpd1.purchase.order');
             }
@@ -190,8 +190,8 @@ class PurchaseOrderController extends Controller
                 $units = Unit::getActiveUnitListForSelect();
                 $trimsTypes = TrimsType::GetLpdActiveTrimsTypesForSelectField(1);
                 $stores = Store::getActiveStoreListForSelectField();
-                // 'purchaseOrderDetails','uniqTrimsTypes', 'currentStocks','deliveryData', 'productionPlanDetails', 'deliveryMasters','proformaInvoices'
-                return view('lpd1.purchase-order.detail', compact('units','buyers','factories','stores','trimsTypes', 'purchaseOrder', 'id'));
+                // 'purchaseOrderDetails','uniqTrimsTypes', 'currentStocks','deliveryData', 'productionPlanDetails', 'deliveryMasters','proformaInvoices', 'purchaseOrder'
+                return view('lpd1.purchase-order.detail', compact('units','buyers','factories','stores','trimsTypes', 'id'));
             } // other data
         }
         else{
@@ -205,7 +205,8 @@ class PurchaseOrderController extends Controller
         if($purchaseOrder != null){
             $purchaseOrder->status = 'D';
             if($purchaseOrder->save()){
-                return $request->id;
+                // return $request->id;
+                return '2';
             }
             return null;
         }
@@ -322,7 +323,7 @@ class PurchaseOrderController extends Controller
             }
             else
             {
-                $purchaseOrderMaster->flow_count = $request->flow_count;
+                $purchaseOrderMaster->flow_count = 0;
                 $purchaseOrderMaster->has_flow_count = false;
             }
 

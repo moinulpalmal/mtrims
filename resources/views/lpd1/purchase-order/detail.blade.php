@@ -972,6 +972,7 @@
                                             {{-- <input name="has_flow_count" id="HasFlowCount" value="1"  {{  ($purchaseOrder->has_flow_count == 1 ? ' checked' : '') }} type="checkbox"><i></i> <strong>Has Flow Count ?</strong> --}}
                                             <input name="has_flow_count" id="HasFlowCount" value="1" type="checkbox"><i></i> <strong>Has Flow Count ?</strong>
                                         </label>
+                                        {{-- onclick="HasFlCount()" --}}
                                     </div>
                                 </div>
                             </div>
@@ -992,7 +993,7 @@
                                 <div class="col-md-4 no-padding" id="FlowIsCheck">
                                     <div class="form-group">
                                         <label for="FlowCount" class="control-label">Flow Count</label>
-                                        <input type="number" min="1" class="form-control" name="flow_count" id="FlowCount" placeholder="Enter Flow Count" value="">
+                                        <input type="number"  class="form-control" name="flow_count" id="FlowCount" placeholder="Enter Flow Count" value="">
                                     </div>
                                 </div>
                             </div>
@@ -1077,13 +1078,28 @@
         });
 
         $(document).ready(function(){
+            // $("#HasFlowCount").click(function () {
+            //     // $("#FlowIsCheck").toggle();
+            //     $('input[name="flow_count"]').val('0');
+            // });
+
             $("#HasFlowCount").click(function () {
-                $("#FlowIsCheck").toggle();
-                $('input[name="flow_count"]').val('');
+                if(document.getElementById("HasFlowCount").checked){
+
+                }
+                else{
+                    $('input[name="flow_count"]').val('0');
+                }
             });
 
         });
 
+        // check negative sign
+        $('#FlowCount , #ReviseCount').keypress(function(event) {
+            if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
 
         function loadPurchaseOrderDetail(){
             $.ajaxSetup({
@@ -1102,14 +1118,12 @@
                     document.getElementById("JobYearNo").innerHTML  = data.job_year + '/' + data.job_no;
                     document.getElementById("remark").innerHTML  = data.remarks;
 
-                    //when po detail update start
-                    if(parseInt(data.has_flow_count) === 1){
-                        $("#FlowIsCheck").show();
-                    }
-                    else{
-                        $("#FlowIsCheck").hide();
-                    }
-                    //when po detail update end
+                    // if(parseInt(data.has_flow_count) === 1){
+                    //     // $("#FlowIsCheck").show();
+                    // }
+                    // else{
+                    //     // $("#FlowIsCheck").hide();
+                    // }
 
                     if(parseInt(data.close_request) === 0){
                         po_close_request = false;
@@ -2298,20 +2312,20 @@
                 var primary_delivery_location = document.forms["POUpdate"]["primary_delivery_location"].value;
                 var po_type = document.forms["POUpdate"]["po_type"].value;
                 var flow_count = document.forms["POUpdate"]["flow_count"].value;
+                var lpd_po_no = document.forms["POUpdate"]["lpd_po_no"].value;
 
                 if ($("#HasFlowCount").is(":checked")) {
-                    if(flow_count == ""){
+                    if(flow_count == "" || flow_count == 0)
+                    {
                         swal({
-                            title: "Insert Flow Count!",
+                            title: "Insert Flow Count Min Value 1",
                             icon: "warning",
                             button: "Ok!",
                         });
                         return false;
                     }
-                    } else {
-
-                    }
-                if(buyer_name == ""){
+                }
+                 if(buyer_name == ""){
                     swal({
                         title: "Select Buyer Name!",
                         icon: "warning",
@@ -2343,7 +2357,14 @@
                     });
                     return false;
                 }
-
+                else if(isNaN(lpd_po_no)){
+                    swal({
+                        title: "Insert Only Number In LPD PO Number!",
+                        icon: "warning",
+                        button: "Ok!",
+                    });
+                    return false;
+                }
                 else{
                     var url = '{{ route('lpd1.purchase.order.update') }}';
                     //console.log(data);
@@ -2389,31 +2410,6 @@
                                     className: "myClass",
                                 });
                             }
-
-                            // if(masterId)
-                            // {
-                            //     swal({
-                            //         title: "Data Updated Successfully!",
-                            //         icon: "success",
-                            //         button: "Ok!",
-                            //     }).then(function (value) {
-                            //         if(value){
-                            //             window.location.href = window.location.href.replace(/#.*$/, '');
-                            //         }
-                            //     });
-                            // }
-                            // else
-                            // {
-                            //     swal({
-                            //         title: "Data Inserted Successfully!",
-                            //         icon: "success",
-                            //         button: "Ok!",
-                            //     }).then(function (value) {
-                            //         if(value){
-                            //             window.location.href = window.location.href.replace(/#.*$/, '');
-                            //         }
-                            //     });
-                            // }
                         },
                         error:function(error){
                             console.log(error);
@@ -2595,17 +2591,28 @@
                         success:function(data){
                             if(data){
                                 //console.log(data);
-                                swal({
-                                    title: "Operation Successful!",
-                                    icon: "success",
-                                    button: "Ok!",
-                                }).then(function (value) {
-                                    if(value){
-                                        //console.log(value);
-                                        window.location.href = window.location.href.replace(/#.*$/, '');
-                                    }
-                                });
+                                if(data === '2'){
+                                    swal({
+                                        title: "Operation Successful!",
+                                        icon: "success",
+                                        button: "Ok!",
+                                    }).then(function (value) {
+                                        if(value){
+                                            refresh();
+                                        }
+                                    });
+                                }
+                                else{
+                                    swal({
+                                        title: "Operation Unsuccessful!",
+                                        text: "Something wrong happened please check!",
+                                        icon: "error",
+                                        button: "Ok!",
+                                        className: "myClass",
+                                    });
+                                }
                             }
+                            window.location.href = "{{ route('lpd1.purchase.order')}}";
                         },
                         error:function(error){
                             console.log(error);
