@@ -2478,7 +2478,8 @@
                                         button: "Ok!",
                                     }).then(function (value) {
                                         if(value){
-                                            refresh();
+                                            // refresh();
+                                            window.location.href = "{{ route('lpd2.purchase.order')}}";
                                         }
                                     });
                                 }
@@ -2492,7 +2493,6 @@
                                     });
                                 }
                             }
-                            window.location.href = "{{ route('lpd2.purchase.order')}}";
                         },
                         error:function(error){
                             console.log(error);
@@ -2594,7 +2594,7 @@
                     method:'POST',
                     data:data,
                     success:function(data){
-                        console.log(data);
+                        // console.log(data);
                         if(id)
                         {
                             swal({
@@ -2603,7 +2603,8 @@
                                 button: "Ok!",
                             }).then(function (value) {
                                 if(value){
-                                    window.location.href = window.location.href.replace(/#.*$/, '');
+                                    refresh();
+                                    // window.location.href = window.location.href.replace(/#.*$/, '');
                                 }
                             });
                         }
@@ -2615,7 +2616,8 @@
                                 button: "Ok!",
                             }).then(function (value) {
                                 if(value){
-                                    window.location.href = window.location.href.replace(/#.*$/, '');
+                                    refresh();
+                                    // window.location.href = window.location.href.replace(/#.*$/, '');
                                 }
                             });
                         }
@@ -2662,7 +2664,8 @@
                                 button: "Ok!",
                             }).then(function (value) {
                                 if(value){
-                                    window.location.href = window.location.href.replace(/#.*$/, '');
+                                    refresh();
+                                    // window.location.href = window.location.href.replace(/#.*$/, '');
                                 }
                             });
                         }
@@ -2674,7 +2677,8 @@
                                 button: "Ok!",
                             }).then(function (value) {
                                 if(value){
-                                    window.location.href = window.location.href.replace(/#.*$/, '');
+                                    refresh();
+                                    // window.location.href = window.location.href.replace(/#.*$/, '');
                                 }
                             });
                         }
@@ -2863,7 +2867,8 @@
                                     button: "Ok!",
                                 }).then(function (value) {
                                     if(value){
-                                        window.location.href = window.location.href.replace(/#.*$/, '');
+                                        // window.location.href = window.location.href.replace(/#.*$/, '');
+                                        refresh();
                                     }
                                 });
                             }
@@ -2875,7 +2880,8 @@
                                     button: "Ok!",
                                 }).then(function (value) {
                                     if(value){
-                                        window.location.href = window.location.href.replace(/#.*$/, '');
+                                        // window.location.href = window.location.href.replace(/#.*$/, '');
+                                        refresh();
                                     }
                                 });
                             }
@@ -2934,7 +2940,8 @@
                                     button: "Ok!",
                                 }).then(function (value) {
                                     if(value){
-                                        window.location.href = window.location.href.replace(/#.*$/, '');
+                                        refresh();
+                                        // window.location.href = window.location.href.replace(/#.*$/, '');
                                     }
                                 });
                             }
@@ -2946,7 +2953,8 @@
                                     button: "Ok!",
                                 }).then(function (value) {
                                     if(value){
-                                        window.location.href = window.location.href.replace(/#.*$/, '');
+                                        refresh();
+                                        // window.location.href = window.location.href.replace(/#.*$/, '');
                                     }
                                 });
                             }
@@ -2995,7 +3003,8 @@
                                 }).then(function (value) {
                                     if(value){
                                         //console.log(value);
-                                        window.location.href = window.location.href.replace(/#.*$/, '');
+                                        // window.location.href = window.location.href.replace(/#.*$/, '');
+                                        refresh();
                                     }
                                 });
                             }
@@ -3041,7 +3050,8 @@
                                 }).then(function (value) {
                                     if(value){
                                         //console.log(value);
-                                        window.location.href = window.location.href.replace(/#.*$/, '');
+                                        // window.location.href = window.location.href.replace(/#.*$/, '');
+                                        refresh();
                                     }
                                 });
                             }
