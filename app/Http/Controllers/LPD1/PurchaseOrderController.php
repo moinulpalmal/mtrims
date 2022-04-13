@@ -287,7 +287,9 @@ class PurchaseOrderController extends Controller
             $purchaseOrderMaster->remarks = $request->remarks;
             $purchaseOrderMaster->lpd = 1;
             $purchaseOrderMaster->factory_id = $request->factory_name;
-            $purchaseOrderMaster->pi_generation_activated = true;
+            if($purchaseOrderMaster->revise_count != $request->revise_count){
+                $purchaseOrderMaster->pi_generation_activated = true;
+            }
             $purchaseOrderMaster->po_date = $request->purchase_order_date;
 
             //pitash
@@ -301,6 +303,9 @@ class PurchaseOrderController extends Controller
             else
             {
                 $purchaseOrderMaster->is_urgent = false;
+            }
+            if($purchaseOrderMaster->flow_count != $request->flow_count){
+                $purchaseOrderMaster->pi_generation_activated = true;
             }
             if($request->get('has_flow_count') == 1)
             {
