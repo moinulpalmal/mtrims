@@ -150,10 +150,26 @@ class ProformaInvoiceController extends Controller
             $proformaInvoiceMaster->lpd = $purchaseOrderMaster->lpd;
             $proformaInvoiceMaster->job_year = $ger_date->year;
             $proformaInvoiceMaster->purchase_order_master_id = $request->purchase_order_master_id;
-            $proformaInvoiceMaster->is_revise = false;
-            $proformaInvoiceMaster->pi_revise_count = 0;
-            $proformaInvoiceMaster->is_follow_pi = false;
-            $proformaInvoiceMaster->pi_follow_count = 0;
+
+            if($purchaseOrderMaster->revise_count > 0){
+                $proformaInvoiceMaster->is_revise = true;
+                $proformaInvoiceMaster->pi_revise_count = $purchaseOrderMaster->revise_count;
+            }
+            else{
+                $proformaInvoiceMaster->is_revise = false;
+                $proformaInvoiceMaster->pi_revise_count = 0;
+            }
+
+            if($purchaseOrderMaster->has_flow_count == 1){
+                $proformaInvoiceMaster->is_follow_pi = true;
+                $proformaInvoiceMaster->pi_follow_count = $purchaseOrderMaster->revise_count;
+            }
+            else{
+                $proformaInvoiceMaster->is_follow_pi = false;
+                $proformaInvoiceMaster->pi_follow_count = 0;
+            }
+
+
             $proformaInvoiceMaster->remarks = $request->pi_remarks;
             $proformaInvoiceMaster->terms_conditions = $request->terms_conditions;
             $proformaInvoiceMaster->bank_information = $request->bank_information;
@@ -329,7 +345,7 @@ class ProformaInvoiceController extends Controller
     public function updateSinglePI(Request $request){
 
         $proformaInvoiceMaster = ProformaInvoiceMaster::find($request->id);
-
+        return $proformaInvoiceMaster;
         if($proformaInvoiceMaster != null){
             if($proformaInvoiceMaster->status == 'D'){
                 return null;
@@ -343,38 +359,28 @@ class ProformaInvoiceController extends Controller
                     ->where('purchase_order_master_id', $request->purchase_order_master_id)
                     ->get();
 
-//                if($request->pi_date != $proformaInvoiceMaster->pi_date){
-//                    $ger_date = new Carbon($request->pi_date);
-//                    $proformaInvoiceMaster->job_year = $ger_date->year;
-//
-//                    $lastProformaInvoiceMaster = ProformaInvoiceMaster::orderBy('job_no', 'DESC')
-//                        ->where('status','!=', 'D')
-//                        ->where('job_year', $ger_date->year)
-//                        ->first();
-//
-//                    if($lastProformaInvoiceMaster == null){
-//                        $proformaInvoiceMaster->job_no = 1;
-//                    }
-//                    else if($lastProformaInvoiceMaster->count() >= 0){
-//                        $proformaInvoiceMaster->job_no = 1;
-//                    }
-//                    else{
-//                        $proformaInvoiceMaster->job_no = $lastProformaInvoiceMaster->job_no + 1;
-//                    }
-//                    $proformaInvoiceMaster->job_year = $ger_date->year;
-//                    $proformaInvoiceMaster->pi_date = $request->pi_date;
-//                }
                 $proformaInvoiceMaster->pi_date = $request->pi_date;
                 $proformaInvoiceMaster->lpd = $purchaseOrderMaster->lpd;
                 $proformaInvoiceMaster->purchase_order_master_id = $request->purchase_order_master_id;
-                if($proformaInvoiceMaster->status == 'A'){
+
+                if($purchaseOrderMaster->revise_count > 0){
                     $proformaInvoiceMaster->is_revise = true;
-                    $proformaInvoiceMaster->pi_revise_count = $proformaInvoiceMaster->pi_revise_count + 1;
+                    $proformaInvoiceMaster->pi_revise_count = $purchaseOrderMaster->revise_count;
+                }
+                else{
+                    $proformaInvoiceMaster->is_revise = false;
+                    $proformaInvoiceMaster->pi_revise_count = 0;
                 }
 
+                if($purchaseOrderMaster->has_flow_count == 1){
+                    $proformaInvoiceMaster->is_follow_pi = true;
+                    $proformaInvoiceMaster->pi_follow_count = $purchaseOrderMaster->revise_count;
+                }
+                else{
+                    $proformaInvoiceMaster->is_follow_pi = false;
+                    $proformaInvoiceMaster->pi_follow_count = 0;
+                }
 
-                $proformaInvoiceMaster->is_follow_pi = false;
-                $proformaInvoiceMaster->pi_follow_count = 0;
                 $proformaInvoiceMaster->remarks = $request->pi_remarks;
                 $proformaInvoiceMaster->terms_conditions = $request->terms_conditions;
                 $proformaInvoiceMaster->bank_information = $request->bank_information;

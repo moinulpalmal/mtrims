@@ -90,11 +90,11 @@
                                                 <i class="fa fa-save"></i>
                                             </a>
                                         @endif
-                                        @if($followPIApplicable  == true)
+                                        {{--@if($followPIApplicable  == true)
                                                 <a title="Generate New Flow PI" class ="myIcon icon-warning icon-ef-3 icon-ef-3b icon-color" data-toggle="modal" data-target="#FollowPIGenerateModal" data-options="splash-2 splash-ef-12">
                                                     <i class="fa fa-save"></i>
                                                 </a>
-                                            @endif
+                                            @endif--}}
                                     @endif
                                 @endif
                             </div>
@@ -288,10 +288,10 @@
     <!-- PO Update Approval Modal -->
 
     <!-- Follow PI Generate Modal -->
-    <div class="modal splash fade" id="FollowPIGenerateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    {{--<div class="modal splash fade" id="FollowPIGenerateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
 
-            <form method="post" name="FollowPIGenerateForm" id="FollowPIGenerate" {{--onsubmit="return validateForm()"--}} enctype="multipart/form-data">
+            <form method="post" name="FollowPIGenerateForm" id="FollowPIGenerate" --}}{{--onsubmit="return validateForm()"--}}{{-- enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <div class="modal-content">
                     <div class="modal-header bg-greensea">
@@ -341,7 +341,7 @@
                             <div class="col-md-12 no-padding">
                                 <div class="form-group">
                                     <label for="FollowPIRemarks" class="control-label">Remarks</label>
-                                    {{--                                    <textarea size="5" class="form-control" name="pi_remarks" id="PIRemarks" ></textarea>--}}
+                                    --}}{{--                                    <textarea size="5" class="form-control" name="pi_remarks" id="PIRemarks" ></textarea>--}}{{--
                                     <input type="text" class="form-control" name="pi_remarks" id="FollowPIRemarks">
                                 </div>
                             </div>
@@ -368,8 +368,8 @@
                                                 <th>PO Qty</th>
                                                 <th>Pending Qty</th>
                                                 <th>PI Qty</th>
-                                                {{--<th>Price</th>--}}
-                                                {{--<th>Remarks</th>--}}
+                                                --}}{{--<th>Price</th>--}}{{--
+                                                --}}{{--<th>Remarks</th>--}}{{--
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -391,7 +391,7 @@
                                                     <td><input type="number" class="form-control" name="po_quantity[]" readonly required="" value="{{ $item->item_order_quantity}}"></td>
                                                     <td><input type="number" class="form-control" name="pending_quantity[]" readonly required step="any" value="{{ \App\Helpers\PIHelper::getPIItemPendingQuantity($item->purchase_order_master_id, $item->item_count)}}"></td>
                                                     <td><input type="number" class="form-control qty" name="follow_pi_quantity[]" required @if(\App\Helpers\PIHelper::getPIItemPendingQuantity($item->purchase_order_master_id, $item->item_count) == 0) readonly @endif step="any" value="0" max="{{ \App\Helpers\PIHelper::getPIItemPendingQuantity($item->purchase_order_master_id, $item->item_count)}}"></td>
-{{--                                                    <td><input type="text" class="form-control"  name="pi_item_remarks[]" @if(\App\Helpers\PIHelper::getPIItemPendingQuantity($item->purchase_order_master_id, $item->item_count) == 0) readonly @endif></td>--}}
+--}}{{--                                                    <td><input type="text" class="form-control"  name="pi_item_remarks[]" @if(\App\Helpers\PIHelper::getPIItemPendingQuantity($item->purchase_order_master_id, $item->item_count) == 0) readonly @endif></td>--}}{{--
 
                                                 </tr>
                                                 @endif
@@ -414,7 +414,7 @@
 
 
         </div>
-    </div>
+    </div>--}}
     <!-- PO Update Approval Modal -->
     @endsection
 
