@@ -1266,7 +1266,6 @@
         }
 
         function loadPOListDataTable() {
-
             po_product_list_table.destroy();
             var free_table = '<tr><td class="text-center" colspan="12">--- Please Wait... Loading Data  ----</td></tr>';
             $('#advanced-usage').find('tbody').append(free_table);
