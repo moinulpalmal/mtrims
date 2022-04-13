@@ -96,12 +96,7 @@
                                             <strong>Order Date</strong>
                                         </div>
                                         <div class="col-md-7 pull-right">
-                                            @if($purchaseOrder->po_date != null)
-                                                <p class="text-right text-greensea">
-                                                    <p class="text-right text-blue" id="PODate"></p>
-                                                    {{-- {{\Carbon\Carbon::parse($purchaseOrder->po_date)->format('d/m/Y')}} --}}
-                                                </p>
-                                            @endif
+                                            <p class="text-right text-blue" id="PODate"></p>
                                         </div>
                                     </div>
                                 </li>
@@ -112,10 +107,7 @@
                                             <strong>Approval Date</strong>
                                         </div>
                                         <div class="col-md-7 pull-right">
-                                            @if($purchaseOrder->approval_date != null)
-                                                <p class="text-right text-blue" id="ApprovalDate"></p>
-                                                {{-- <p class="text-right text-greensea">{{\Carbon\Carbon::parse($purchaseOrder->approval_date_date)->format('d/m/Y')}}</p> --}}
-                                            @endif
+                                            <p class="text-right text-blue" id="ApprovalDate"></p>
                                         </div>
                                     </div>
                                 </li>
@@ -157,9 +149,6 @@
                                         </div>
                                         <div class="col-md-7 pull-right">
                                             <p class="text-right text-blue" id="SampleSubmissionDate"></p>
-                                            {{-- @if($purchaseOrder->sample_submission_date != null)
-                                                <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->sample_submission_date)->format('d/m/Y')}}</p>
-                                            @endif --}}
                                         </div>
                                     </div>
                                 </li>
@@ -171,9 +160,6 @@
                                         </div>
                                         <div class="col-md-7 pull-right">
                                             <p class="text-right text-blue" id="ProductionStartDate"></p>
-                                            {{-- @if($purchaseOrder->production_start_date != null)
-                                                <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->production_start_date)->format('d/m/Y')}}</p>
-                                            @endif --}}
                                         </div>
                                     </div>
                                 </li>
@@ -199,9 +185,6 @@
                                         </div>
                                         <div class="col-md-7 pull-right">
                                             <p class="text-right text-blue" id="DeliveryStartDate"></p>
-                                            {{-- @if($purchaseOrder->delivery_start_date != null)
-                                                <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->delivery_start_date)->format('d/m/Y')}}</p>
-                                            @endif --}}
                                         </div>
                                     </div>
                                 </li>
@@ -213,9 +196,6 @@
                                         </div>
                                         <div class="col-md-7 pull-right">
                                             <p class="text-right text-blue" id="DeliveryEndDate"></p>
-                                            {{-- @if($purchaseOrder->delivery_start_date != null)
-                                                <p class="text-right text-blue">{{\Carbon\Carbon::parse($purchaseOrder->delivery_end_date)->format('d/m/Y')}}</p>
-                                            @endif --}}
                                         </div>
                                     </div>
                                 </li>
@@ -1018,7 +998,8 @@
                                         <option value="">- - - Select - - -</option>
                                         @if(!empty($buyers))
                                             @foreach($buyers as $item)
-                                                <option value="{{ $item->id }}" @if($item->id == $purchaseOrder->buyer_id) selected = "selected"@endif >{{ $item->name }}</option>
+                                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                                {{-- <option value="{{ $item->id }}" @if($item->id == $purchaseOrder->buyer_id) selected = "selected"@endif >{{ $item->name }}</option> --}}
                                             @endforeach
                                         @endif
                                     </select>
@@ -1031,7 +1012,8 @@
                                         <option value="">- - - Select - - -</option>
                                         @if(!empty($factories))
                                             @foreach($factories as $item)
-                                                <option value="{{ $item->id }}" @if($item->id == $purchaseOrder->factory_id) selected = "selected" @endif>{{ $item->name }}</option>
+                                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                                {{-- <option value="{{ $item->id }}" @if($item->id == $purchaseOrder->factory_id) selected = "selected" @endif>{{ $item->name }}</option> --}}
                                             @endforeach
                                         @endif
                                     </select>
@@ -1101,7 +1083,7 @@
                             <div class="col-md-4 no-padding" id="FlowIsCheck">
                                 <div class="form-group">
                                     <label for="FlowCount" class="control-label">Flow Count</label>
-                                    <input type="number" min="1" class="form-control" name="flow_count" id="FlowCount" placeholder="Enter Flow Count" value="">
+                                    <input type="number" class="form-control" name="flow_count" id="FlowCount" placeholder="Enter Flow Count" value="">
                                 </div>
                             </div>
                         </div>
@@ -1428,14 +1410,32 @@
 
 
             $(document).ready(function(){
+                // $("#HasFlowCount").click(function () {
+                //     $("#FlowIsCheck").toggle();
+                //     $('input[name="flow_count"]').val('');
+                // });
+
                 $("#HasFlowCount").click(function () {
-                    $("#FlowIsCheck").toggle();
-                    $('input[name="flow_count"]').val('');
+                if(document.getElementById("HasFlowCount").checked){
+
+                }
+                else{
+                    $('input[name="flow_count"]').val('0');
+                    }
                 });
+
             });
 
-        });
+            // check negative sign
+            $('#FlowCount , #ReviseCount').keypress(function(event) {
+                if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                    event.preventDefault();
+                }
+            });
 
+
+
+        });
 
 
         function loadPurchaseOrderDetail(){
@@ -1456,12 +1456,12 @@
                     document.getElementById("remark").innerHTML  = data.remarks;
 
                     //when po detail update start
-                    if(parseInt(data.has_flow_count) === 1){
-                        $("#FlowIsCheck").show();
-                    }
-                    else{
-                        $("#FlowIsCheck").hide();
-                    }
+                    // if(parseInt(data.has_flow_count) === 1){
+                    //     $("#FlowIsCheck").show();
+                    // }
+                    // else{
+                    //     $("#FlowIsCheck").hide();
+                    // }
                     //when po detail update end
 
                     if(parseInt(data.close_request) === 0){
@@ -1481,25 +1481,25 @@
                     let po_close_buttons = "";
                     if(po_close_request === false){
                        document.getElementById("iconChange").disabled = false;
-                        @if(Auth::user()->hasTaskPermission('lpdtwooupdatepo', Auth::user()->id))
+                        @if(Auth::user()->hasTaskPermission('lpdtwoupdatepo', Auth::user()->id))
                             master_button = master_button + "<a title='Purchase Order Master Update' onclick='fillPOUpdateDataToUpdateModal()' class ='myIcon icon-warning icon-ef-3 icon-ef-3b icon-color' data-toggle='modal' data-target='#POUpdateModal' data-options='splash-2 splash-ef-12'><i class='fa fa-edit'></i></a>&nbsp;";
                         @else
                             master_button = master_button + "";
                         @endif
-                        @if(Auth::user()->hasTaskPermission('lpdtwooapprovepo', Auth::user()->id))
+                        @if(Auth::user()->hasTaskPermission('lpdtwoapprovepo', Auth::user()->id))
                             product_plan_buttons = "<a title='Provide Purchase Order Dates' class ='myIcon icon-success icon-ef-3 icon-ef-3b icon-color' data-toggle='modal' data-target='#poApprovalModal' data-options='splash-2 splash-ef-12'><i class='fa fa-calendar'></i></a>&nbsp;";
                         @else
                             product_plan_buttons = product_plan_buttons + "";
                         @endif
 
-                        @if(Auth::user()->hasTaskPermission('lpdtwooclosereq', Auth::user()->id))
+                        @if(Auth::user()->hasTaskPermission('lpdtwoclosereq', Auth::user()->id))
                             po_close_buttons = po_close_buttons + "<a title='Generate Close Request for This Purchase Order' class='CloseRequestOrder myIcon icon-info icon-ef-3 icon-ef-3b icon-color' data-id = '"+ po_master_id +"'><i class='fa fa-times'></i></a>&nbsp;";
                         @endif
                     }
                     else{
                         master_button = master_button + "";
                         if(data.status === 'A'){
-                            @if(Auth::user()->hasTaskPermission('lpdtwooapclosereq', Auth::user()->id))
+                            @if(Auth::user()->hasTaskPermission('lpdtwoapclosereq', Auth::user()->id))
                                 po_close_buttons = po_close_buttons + "<a title='Approve Close Request for This Purchase Order' class='CloseApproveOrder myIcon icon-success icon-ef-3 icon-ef-3b icon-color' data-id = '"+ po_master_id +"'><i class='fa fa-check'></i></a>&nbsp;";
                             @endif
                         }
@@ -1507,7 +1507,7 @@
                     }
 
                     if(delete_access === true){
-                        @if(Auth::user()->hasTaskPermission('lpdtwoodeletepo', Auth::user()->id))
+                        @if(Auth::user()->hasTaskPermission('lpdtwodeletepo', Auth::user()->id))
                             master_button = master_button + "<a title='Delete Purchase Order' class='DeleteOrder myIcon icon-danger icon-ef-3 icon-ef-3b icon-color' data-id = '" + po_master_id + "'><i class='fa fa-trash''></i></a>&nbsp;";
                         @else
                             master_button = master_button + "";
@@ -2480,17 +2480,28 @@
                         success:function(data){
                             if(data){
                                 //console.log(data);
-                                swal({
-                                    title: "Operation Successful!",
-                                    icon: "success",
-                                    button: "Ok!",
-                                }).then(function (value) {
-                                    if(value){
-                                        //console.log(value);
-                                        window.location.href = window.location.href.replace(/#.*$/, '');
-                                    }
-                                });
+                                if(data === '2'){
+                                    swal({
+                                        title: "Operation Successful!",
+                                        icon: "success",
+                                        button: "Ok!",
+                                    }).then(function (value) {
+                                        if(value){
+                                            refresh();
+                                        }
+                                    });
+                                }
+                                else{
+                                    swal({
+                                        title: "Operation Unsuccessful!",
+                                        text: "Something wrong happened please check!",
+                                        icon: "error",
+                                        button: "Ok!",
+                                        className: "myClass",
+                                    });
+                                }
                             }
+                            window.location.href = "{{ route('lpd2.purchase.order')}}";
                         },
                         error:function(error){
                             console.log(error);
@@ -2573,65 +2584,6 @@
                 }
             });
         });
-
-        // $(function(){
-        //     $.ajaxSetup({
-        //         headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' }
-        //     });
-        //     $('#ItemAdd').submit(function(e){
-        //         e.preventDefault();
-        //         var data = $(this).serialize();
-        //         var id = $('#DetailID').val();
-        //         var masterId = $('#MasterID').val();
-        //         //console.log(masterId);
-        //         //return;
-        //         var url = '{{ route('lpd2.purchase.order.detail.save') }}';
-        //         //console.log(data);
-        //         $.ajax({
-        //             url: url,
-        //             method:'POST',
-        //             data:data,
-        //             success:function(data){
-        //                 console.log(data);
-        //                 if(id)
-        //                 {
-        //                     swal({
-        //                         title: "Data Updated Successfully!",
-        //                         icon: "success",
-        //                         button: "Ok!",
-        //                     }).then(function (value) {
-        //                         if(value){
-        //                             window.location.href = window.location.href.replace(/#.*$/, '');
-        //                         }
-        //                     });
-        //                 }
-        //                 else
-        //                 {
-        //                     swal({
-        //                         title: "Data Inserted Successfully!",
-        //                         icon: "success",
-        //                         button: "Ok!",
-        //                     }).then(function (value) {
-        //                         if(value){
-        //                             window.location.href = window.location.href.replace(/#.*$/, '');
-        //                         }
-        //                     });
-        //                 }
-        //             },
-        //             error:function(error){
-        //                 console.log(error);
-        //                 swal({
-        //                     title: "Data Not Saved!",
-        //                     text: "Please Check Your Data!",
-        //                     icon: "error",
-        //                     button: "Ok!",
-        //                     className: "myClass",
-        //                 });
-        //             }
-        //         })
-
-        //     })
-        // });
 
         $(function(){
             $.ajaxSetup({
@@ -2764,19 +2716,19 @@
                 var primary_delivery_location = document.forms["POUpdate"]["primary_delivery_location"].value;
                 var po_type = document.forms["POUpdate"]["po_type"].value;
                 var flow_count = document.forms["POUpdate"]["flow_count"].value;
+                var lpd_po_no = document.forms["POUpdate"]["lpd_po_no"].value;
 
                 if ($("#HasFlowCount").is(":checked")) {
-                    if(flow_count == ""){
+                    if(flow_count == "" || flow_count == 0)
+                    {
                         swal({
-                            title: "Insert Flow Count!",
+                            title: "Insert Flow Count Min Value 1",
                             icon: "warning",
                             button: "Ok!",
                         });
                         return false;
                     }
-                    } else {
-
-                    }
+                }
                 if(buyer_name == ""){
                     swal({
                         title: "Select Buyer Name!",
@@ -2804,6 +2756,14 @@
                 else if(po_type == ""){
                     swal({
                         title: "Select PO Type!",
+                        icon: "warning",
+                        button: "Ok!",
+                    });
+                    return false;
+                }
+                else if(isNaN(lpd_po_no)){
+                    swal({
+                        title: "Insert Only Number In LPD PO Number!",
                         icon: "warning",
                         button: "Ok!",
                     });
