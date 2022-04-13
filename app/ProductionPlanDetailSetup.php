@@ -31,7 +31,6 @@ class ProductionPlanDetailSetup extends Model
     }
 
     public static function getPOProductionAchievementByPOID($purchase_order_master_id) {
-        return null;
         return DB::table('production_plan_detail_setups')
             ->join('purchase_order_masters', 'production_plan_detail_setups.purchase_order_master_id', '=', 'purchase_order_masters.id')
                     ->join('purchase_order_details', function ($join) {

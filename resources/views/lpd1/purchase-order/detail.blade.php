@@ -907,7 +907,6 @@
                                             <option value="">- - - Select - - -</option>
                                             @if(!empty($buyers))
                                                 @foreach($buyers as $item)
-                                                    {{-- <option value="{{ $item->id }}" @if($item->id == $purchaseOrder->buyer_id) selected = "selected"@endif >{{ $item->name }}</option> --}}
                                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                                                 @endforeach
                                             @endif
@@ -961,7 +960,6 @@
                                 <div class="col-md-2 ">
                                     <div class="form-group">
                                         <label class="checkbox checkbox-custom-alt checkbox-custom-lg" style="padding-top: 17px">
-                                            {{-- <input type="checkbox" name="is_urgent" value="1"  {{  ($purchaseOrder->is_urgent == 1 ? ' checked' : '') }}/><i></i> <strong>Is Urgent ?</strong> --}}
                                             <input type="checkbox" name="is_urgent" value="1"><i></i> <strong>Is Urgent ?</strong>
                                         </label>
                                     </div>
@@ -969,10 +967,8 @@
                                 <div class="col-md-3 ">
                                     <div class="form-group">
                                         <label class="checkbox checkbox-custom-alt checkbox-custom-lg" style="padding-top: 17px">
-                                            {{-- <input name="has_flow_count" id="HasFlowCount" value="1"  {{  ($purchaseOrder->has_flow_count == 1 ? ' checked' : '') }} type="checkbox"><i></i> <strong>Has Flow Count ?</strong> --}}
                                             <input name="has_flow_count" id="HasFlowCount" value="1" type="checkbox"><i></i> <strong>Has Flow Count ?</strong>
                                         </label>
-                                        {{-- onclick="HasFlCount()" --}}
                                     </div>
                                 </div>
                             </div>
@@ -980,7 +976,6 @@
                                 <div class="col-md-4 no-padding">
                                     <div class="form-group">
                                         <label for="LPD_PO" class="control-label">LPD PO No.</label>
-                                        {{-- <input type="text" class="form-control" name="lpd_po_no" id="LPD_PO" placeholder="2485" required value="{{ old('lpd_po_no', $purchaseOrder->lpd_po_no) }}"> --}}
                                         <input type="text" class="form-control" name="lpd_po_no" id="LPD_PO" placeholder="2485" required value="">
                                     </div>
                                 </div>
@@ -1001,7 +996,6 @@
                                 <div class="col-md-12 no-padding">
                                     <div class="form-group">
                                         <label for="Buyer_PO_No" class="control-label">Buyer PO No.</label>
-                                        {{-- <input type="text" class="form-control" name="buyer_po_no" id="Buyer_PO_No" required value="{{ old('buyer_po_no', $purchaseOrder->buyer_po_no) }}"> --}}
                                         <input type="text" class="form-control" name="buyer_po_no" id="Buyer_PO_No" required value="">
                                     </div>
                                 </div>
@@ -1010,8 +1004,6 @@
                                 <div class="col-md-12 no-padding">
                                     <div class="form-group">
                                         <label for="Remarks" class="control-label">Remarks</label>
-{{--                                        <textarea size="5" class="form-control" name="remarks_update" id="Remarks" >{!! $purchaseOrder->remarks !!}</textarea>--}}
-                                        {{-- <input type="text" class="form-control" name="remarks" id="Remarks" value="{{old('remarks_update',$purchaseOrder->remarks)}}"> --}}
                                         <input type="text" class="form-control" name="remarks" id="Remark" value="">
                                     </div>
                                 </div>
@@ -1078,11 +1070,6 @@
         });
 
         $(document).ready(function(){
-            // $("#HasFlowCount").click(function () {
-            //     // $("#FlowIsCheck").toggle();
-            //     $('input[name="flow_count"]').val('0');
-            // });
-
             $("#HasFlowCount").click(function () {
                 if(document.getElementById("HasFlowCount").checked){
 
@@ -1117,14 +1104,6 @@
                     document.getElementById("LPDNo").innerHTML  = data.lpd_po_no;
                     document.getElementById("JobYearNo").innerHTML  = data.job_year + '/' + data.job_no;
                     document.getElementById("remark").innerHTML  = data.remarks;
-
-                    // if(parseInt(data.has_flow_count) === 1){
-                    //     // $("#FlowIsCheck").show();
-                    // }
-                    // else{
-                    //     // $("#FlowIsCheck").hide();
-                    // }
-
                     if(parseInt(data.close_request) === 0){
                         po_close_request = false;
                     }

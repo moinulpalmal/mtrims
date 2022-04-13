@@ -1455,15 +1455,6 @@
                     document.getElementById("JobYearNo").innerHTML  = data.job_year + '/' + data.job_no;
                     document.getElementById("remark").innerHTML  = data.remarks;
 
-                    //when po detail update start
-                    // if(parseInt(data.has_flow_count) === 1){
-                    //     $("#FlowIsCheck").show();
-                    // }
-                    // else{
-                    //     $("#FlowIsCheck").hide();
-                    // }
-                    //when po detail update end
-
                     if(parseInt(data.close_request) === 0){
                         po_close_request = false;
                     }
@@ -2816,30 +2807,7 @@
                                 });
                             }
 
-                            // if(masterId)
-                            // {
-                            //     swal({
-                            //         title: "Data Updated Successfully!",
-                            //         icon: "success",
-                            //         button: "Ok!",
-                            //     }).then(function (value) {
-                            //         if(value){
-                            //             window.location.href = window.location.href.replace(/#.*$/, '');
-                            //         }
-                            //     });
-                            // }
-                            // else
-                            // {
-                            //     swal({
-                            //         title: "Data Inserted Successfully!",
-                            //         icon: "success",
-                            //         button: "Ok!",
-                            //     }).then(function (value) {
-                            //         if(value){
-                            //             window.location.href = window.location.href.replace(/#.*$/, '');
-                            //         }
-                            //     });
-                            // }
+
                         },
                         error:function(error){
                             console.log(error);
