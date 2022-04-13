@@ -1427,7 +1427,7 @@
             });
 
             // check negative sign
-            $('#FlowCount').keypress(function(event) {
+            $('#FlowCount , #ReviseCount').keypress(function(event) {
                 if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
                     event.preventDefault();
                 }

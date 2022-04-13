@@ -190,8 +190,8 @@ class PurchaseOrderController extends Controller
                 $units = Unit::getActiveUnitListForSelect();
                 $trimsTypes = TrimsType::GetLpdActiveTrimsTypesForSelectField(1);
                 $stores = Store::getActiveStoreListForSelectField();
-                // 'purchaseOrderDetails','uniqTrimsTypes', 'currentStocks','deliveryData', 'productionPlanDetails', 'deliveryMasters','proformaInvoices'
-                return view('lpd1.purchase-order.detail', compact('units','buyers','factories','stores','trimsTypes', 'purchaseOrder', 'id'));
+                // 'purchaseOrderDetails','uniqTrimsTypes', 'currentStocks','deliveryData', 'productionPlanDetails', 'deliveryMasters','proformaInvoices', 'purchaseOrder'
+                return view('lpd1.purchase-order.detail', compact('units','buyers','factories','stores','trimsTypes', 'id'));
             } // other data
         }
         else{
