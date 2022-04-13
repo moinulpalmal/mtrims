@@ -150,10 +150,25 @@ class ProformaInvoiceController extends Controller
             $proformaInvoiceMaster->lpd = $purchaseOrderMaster->lpd;
             $proformaInvoiceMaster->job_year = $ger_date->year;
             $proformaInvoiceMaster->purchase_order_master_id = $request->purchase_order_master_id;
-            $proformaInvoiceMaster->is_revise = false;
-            $proformaInvoiceMaster->pi_revise_count = 0;
-            $proformaInvoiceMaster->is_follow_pi = false;
-            $proformaInvoiceMaster->pi_follow_count = 0;
+
+            if($purchaseOrderMaster->revise_count > 0){
+                $proformaInvoiceMaster->is_revise = true;
+            }
+            else{
+                $proformaInvoiceMaster->is_revise = false;
+            }
+
+            $proformaInvoiceMaster->pi_revise_count = $purchaseOrderMaster->revise_count;
+            if($purchaseOrderMaster->has_flow_count == 1){
+                $proformaInvoiceMaster->is_follow_pi = true;
+                $proformaInvoiceMaster->pi_follow_count = $purchaseOrderMaster->revise_count;
+            }
+            else{
+                $proformaInvoiceMaster->is_follow_pi = false;
+                $proformaInvoiceMaster->pi_follow_count = 0;
+            }
+
+
             $proformaInvoiceMaster->remarks = $request->pi_remarks;
             $proformaInvoiceMaster->terms_conditions = $request->terms_conditions;
             $proformaInvoiceMaster->bank_information = $request->bank_information;
