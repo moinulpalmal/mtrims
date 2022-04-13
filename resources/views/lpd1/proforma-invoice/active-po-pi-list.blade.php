@@ -159,7 +159,7 @@
                                                                             <td class="text-right" style="font-size: xx-small">{{$item->remarks}}</td>
                                                                             <td class="text-center">
                                                                                 @if(Auth::user()->hasTaskPermission('lpdoneupdatepi', Auth::user()->id))
-                                                                                    @if($item->is_follow_pi == true)
+                                                                                   {{-- @if($item->is_follow_pi == true)
                                                                                         <a title="Update Flow PI" class ="btn btn-warning btn-xs" data-toggle="modal" data-target="#PIUpdateModalFollow{{$item->id}}" data-options="splash-2 splash-ef-12">
                                                                                             <i class="fa fa-edit"></i>
                                                                                         </a>
@@ -167,7 +167,10 @@
                                                                                         <a title="Update PI" class ="btn btn-warning btn-xs" data-toggle="modal" data-target="#PIUpdateModal{{$item->id}}" data-options="splash-2 splash-ef-12">
                                                                                             <i class="fa fa-edit"></i>
                                                                                         </a>
-                                                                                        @endif
+                                                                                        @endif--}}
+                                                                                        <a title="Update PI" class ="btn btn-warning btn-xs" data-toggle="modal" data-target="#PIUpdateModal{{$item->id}}" data-options="splash-2 splash-ef-12">
+                                                                                            <i class="fa fa-edit"></i>
+                                                                                        </a>
                                                                                 @endif
                                                                                 <a target="_blank" href="{{route('lpd1.proforma-invoice.download', ['id' => $item->id])}}" title="Download PI" class ="btn btn-danger btn-xs">
                                                                                         <i class="fa fa-file-pdf-o"></i>
@@ -429,10 +432,10 @@
 
 <!-- PI Update Modal -->
 @foreach($proformaInvoices as $itemPI)
-    @if($itemPI->is_follow_pi)
+    {{--@if($itemPI->is_follow_pi)
         <div class="modal splash fade" id="PIUpdateModalFollow{{$itemPI->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
-                <form method="post" name="FollowPIUpdateForm{{$itemPI->id}}" id="FollowPIUpdate{{$itemPI->id}}" {{--onsubmit="return validateForm()"--}} enctype="multipart/form-data">
+                <form method="post" name="FollowPIUpdateForm{{$itemPI->id}}" id="FollowPIUpdate{{$itemPI->id}}" --}}{{--onsubmit="return validateForm()"--}}{{-- enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="modal-content">
                         <div class="modal-header bg-blue">
@@ -487,7 +490,7 @@
                                 <div class="col-md-12 no-padding">
                                     <div class="form-group">
                                         <label for="FollowPIRemarks" class="control-label">Remarks</label>
-                                        {{--                                    <textarea size="5" class="form-control" name="pi_remarks" id="PIRemarks" ></textarea>--}}
+                                        --}}{{--                                    <textarea size="5" class="form-control" name="pi_remarks" id="PIRemarks" ></textarea>--}}{{--
                                         <input type="text" class="form-control" name="pi_remarks" id="FollowPIRemarks" value="{{ old('pi_remarks', $itemPI->remarks) }}">
                                     </div>
                                 </div>
@@ -514,7 +517,7 @@
                                                     <th>PO Qty</th>
                                                     <th>Pending Qty</th>
                                                     <th>PI Qty</th>
-{{--                                                    <th>Remarks</th>--}}
+--}}{{--                                                    <th>Remarks</th>--}}{{--
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -561,7 +564,7 @@
     @else
         <div class="modal splash fade" id="PIUpdateModal{{$itemPI->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
-                <form method="post" name="PIUpdateFormSingle{{$itemPI->id}}" id="PIUpdate{{$itemPI->id}}" {{--onsubmit="return validateForm()"--}} enctype="multipart/form-data">
+                <form method="post" name="PIUpdateFormSingle{{$itemPI->id}}" id="PIUpdate{{$itemPI->id}}" --}}{{--onsubmit="return validateForm()"--}}{{-- enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="modal-content">
                         <div class="modal-header bg-blue">
@@ -617,7 +620,7 @@
                                 <div class="col-md-12 no-padding">
                                     <div class="form-group">
                                         <label for="PIRemarks" class="control-label">Remarks</label>
-                                        {{--                                    <textarea size="5" class="form-control" name="pi_remarks" id="PIRemarks" ></textarea>--}}
+                                        --}}{{--                                    <textarea size="5" class="form-control" name="pi_remarks" id="PIRemarks" ></textarea>--}}{{--
                                         <input type="text" class="form-control" name="pi_remarks" id="PIRemarks" value="{{ old('pi_remarks', $itemPI->remarks) }}">
                                     </div>
                                 </div>
@@ -631,7 +634,80 @@
                 </form>
             </div>
         </div>
-        @endif
+        @endif--}}
+
+    <div class="modal splash fade" id="PIUpdateModal{{$itemPI->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <form method="post" name="PIUpdateFormSingle{{$itemPI->id}}" id="PIUpdate{{$itemPI->id}}" {{--onsubmit="return validateForm()"--}} enctype="multipart/form-data">
+                {{ csrf_field() }}
+                <div class="modal-content">
+                    <div class="modal-header bg-blue">
+                        <h3 class="modal-title custom-font text-white">Update Current Proforma Invoice</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row" style="padding: 0px 15px;">
+                            <input type="hidden" id="MasterID" name="purchase_order_master_id" value="{{old('purchase_order_master_id', $purchaseOrder->id)}}">
+                            <input type="hidden" id="PIMasterID" name="id" value="{{old('id', $itemPI->id)}}">
+
+                            <div class="col-md-6 no-padding">
+                                <div class="form-group">
+                                    <label for="PIAmount" class="control-label">PI Value (USD)</label>
+                                    <input type="number" class="form-control" name="total_pi_amount" id="PIAmount" readonly required value="{{ old('total_pi_amount', $orderQty->total_items) }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6 no-padding">
+                                <div class="form-group">
+                                    <label for="PI_Date" class="control-label">PI Date</label>
+                                    <input type="date" class="form-control" name="pi_date" id="PI_Date" required value="{{ old('pi_date', $itemPI->pi_date) }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="padding: 0px 15px;">
+                            <div class="col-md-12 no-padding">
+                                <div class="form-group">
+                                    <label for="AmountInWords" class="control-label">Amount in Words</label>
+                                    <input type="text" class="form-control" name="amount_in_words" id="AmountInWords" onkeypress="return /^[a-zA-Z ]+$/.test(event.key)" required value="{{ old('amount_in_words', $itemPI->total_pi_amount_words) }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="padding: 0px 15px;">
+                            <div class="col-md-12 no-padding">
+                                <div class="form-group">
+                                    <label for="BankInformationUpdate" class="control-label">Bank Information</label>
+                                    <textarea size="20" class="form-control" name="bank_information" id="BankInformationUpdate">
+                                            {!! $itemPI->bank_information !!}
+                                        </textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="padding: 0px 15px;">
+                            <div class="col-md-12 no-padding">
+                                <div class="form-group">
+                                    <label for="TermsConditionUpdate" class="control-label">Term & Conditions</label>
+                                    <textarea size="20" class="form-control" name="terms_conditions" id="TermsConditionUpdate">
+                                            {!! $itemPI->terms_conditions !!}
+                                        </textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="padding: 0px 15px;">
+                            <div class="col-md-12 no-padding">
+                                <div class="form-group">
+                                    <label for="PIRemarks" class="control-label">Remarks</label>
+                                    {{--                                    <textarea size="5" class="form-control" name="pi_remarks" id="PIRemarks" ></textarea>--}}
+                                    <input type="text" class="form-control" name="pi_remarks" id="PIRemarks" value="{{ old('pi_remarks', $itemPI->remarks) }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a><button class="btn btn-success btn-ef btn-ef-3 btn-ef-3c" type="submit"><i class="fa fa-arrow-right"></i> Update Single</button></a>
+                        <button class="btn btn-lightred btn-ef btn-ef-4 btn-ef-4c" data-dismiss="modal"><i class="fa fa-arrow-left"></i> Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 @endforeach
 <!-- PI Update Approval Modal -->
 
@@ -1040,7 +1116,8 @@
         }
 
         @foreach($proformaInvoices as $itemPI)
-        @if($itemPI->is_follow_pi)
+        {{--@if($itemPI->is_follow_pi)
+
         $('#myTableFollowUpdate{{$itemPI->id}}').delegate('.qty, .gross, .GrossUnitPrice','keyup',function(){
 
             var tr = $(this).parent().parent();
@@ -1166,7 +1243,7 @@
 
             })
         });
-            @else
+            @else--}}
 
         $(function(){
             $.ajaxSetup({
@@ -1255,7 +1332,7 @@
 
             })
         });
-            @endif
+            {{--@endif--}}
         @endforeach
 
 
