@@ -119,6 +119,7 @@ class ProformaInvoiceController extends Controller
 
     public function saveNewSinglePI(Request $request){
         $purchaseOrderMaster = PurchaseOrderMaster::find($request->purchase_order_master_id);
+        //return $purchaseOrderMaster;
 
         $purchaseOrderDetails = PurchaseOrderDetail::orderBy('item_count')
             ->where('status','!=', 'D')
@@ -126,7 +127,6 @@ class ProformaInvoiceController extends Controller
             ->get();
 
         if($purchaseOrderDetails->count() > 0){
-
             $proformaInvoiceMaster = new ProformaInvoiceMaster();
             $ger_date = new Carbon($request->pi_date);
             $proformaInvoiceMaster->job_year = $ger_date->year;
@@ -162,7 +162,7 @@ class ProformaInvoiceController extends Controller
 
             if($purchaseOrderMaster->has_flow_count == 1){
                 $proformaInvoiceMaster->is_follow_pi = true;
-                $proformaInvoiceMaster->pi_follow_count = $purchaseOrderMaster->revise_count;
+                $proformaInvoiceMaster->pi_follow_count = $purchaseOrderMaster->flow_count;
             }
             else{
                 $proformaInvoiceMaster->is_follow_pi = false;
@@ -177,6 +177,7 @@ class ProformaInvoiceController extends Controller
             $proformaInvoiceMaster->total_pi_amount_words = $request->amount_in_words;
             $proformaInvoiceMaster->inserted_by = Auth::id();
             $proformaInvoiceMaster->pi_date = $request->pi_date;
+            $proformaInvoiceMaster->status = 'I';
 
             if($proformaInvoiceMaster->save()){
                 $purchaseOrderMaster->pi_generation_activated = false;
@@ -184,7 +185,6 @@ class ProformaInvoiceController extends Controller
                     $counter = 1;
                     foreach( $purchaseOrderDetails as $detail){
                         $proformaInvoiceDetail = new ProformaInvoiceDetail();
-
                         $proformaInvoiceDetail->proforma_invoice_master_id = $proformaInvoiceMaster->id;
                         $proformaInvoiceDetail->purchase_order_master_id = $request->purchase_order_master_id;
                         $proformaInvoiceDetail->purchase_order_detail_id = $detail->item_count;
@@ -345,7 +345,7 @@ class ProformaInvoiceController extends Controller
     public function updateSinglePI(Request $request){
 
         $proformaInvoiceMaster = ProformaInvoiceMaster::find($request->id);
-        return $proformaInvoiceMaster;
+        //return $proformaInvoiceMaster;
         if($proformaInvoiceMaster != null){
             if($proformaInvoiceMaster->status == 'D'){
                 return null;
@@ -353,7 +353,7 @@ class ProformaInvoiceController extends Controller
             else{
 
                 $purchaseOrderMaster = PurchaseOrderMaster::find($request->purchase_order_master_id);
-
+                //return $purchaseOrderMaster;
                 $purchaseOrderDetails = PurchaseOrderDetail::orderBy('item_count')
                     ->where('status','!=', 'D')
                     ->where('purchase_order_master_id', $request->purchase_order_master_id)
@@ -374,7 +374,7 @@ class ProformaInvoiceController extends Controller
 
                 if($purchaseOrderMaster->has_flow_count == 1){
                     $proformaInvoiceMaster->is_follow_pi = true;
-                    $proformaInvoiceMaster->pi_follow_count = $purchaseOrderMaster->revise_count;
+                    $proformaInvoiceMaster->pi_follow_count = $purchaseOrderMaster->flow_count;
                 }
                 else{
                     $proformaInvoiceMaster->is_follow_pi = false;
@@ -386,7 +386,9 @@ class ProformaInvoiceController extends Controller
                 $proformaInvoiceMaster->bank_information = $request->bank_information;
                 $proformaInvoiceMaster->total_pi_amount = $request->total_pi_amount;
                 $proformaInvoiceMaster->total_pi_amount_words = $request->amount_in_words;
-                $proformaInvoiceMaster->inserted_by = Auth::id();
+               // $proformaInvoiceMaster->inserted_by = Auth::id();
+                $proformaInvoiceMaster->updated_by = Auth::id();
+                $proformaInvoiceMaster->status = 'I';
 
                 if($proformaInvoiceMaster->save()){
                     DB::table('proforma_invoice_details')->where('proforma_invoice_master_id', $request->id)->delete();
