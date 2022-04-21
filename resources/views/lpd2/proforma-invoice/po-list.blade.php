@@ -169,8 +169,6 @@
 
             } );
             
-
-
         });
 
 
@@ -192,7 +190,6 @@
                         }
                     },
                     {
-                        // data: "job_year",
                         render: function (data,type,item) {
                             return "<p class = 'text-center'>"+'HTL-'+ item.job_year + '/' + item.job_no +"</p>";
                         }
@@ -218,20 +215,14 @@
                                 return "<p class ='text-center '><label class='label label-warning'>No</label></p>";
                             }
                             else{
-
+                                return "<p class = 'text-center'></p>";
                             }
                         }
                     },
                     {
                         /*data: "id",*/
                         render: function(data, type, api_item) {
-                            if(api_item.status === 'A'){
-                                return "<p class='text-center'><a title= 'Show Detail' class= 'ShowDetail btn btn-info btn-xs' data-toggle='modal' data-target='#FactoryModal' data-options='splash-2 splash-ef-12' data-id = "+ api_item.id +"><i class='fa fa-eye'></i></a>" +
-                                    " &nbsp;" +"</p>"
-                            }
-                            else{
-
-                            }
+                            return "<p class='text-center'><a title= 'Show Detail' class= 'ShowDetail btn btn-info btn-xs' data-toggle='modal' data-target='#FactoryModal' data-options='splash-2 splash-ef-12' data-id = "+ api_item.id +"><i class='fa fa-eye'></i></a>" +"</p>"
                         }
                     }
                 ],
@@ -249,8 +240,6 @@
                             } );
                         } );
                     }
-
-
 
 
             });

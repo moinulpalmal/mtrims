@@ -10,7 +10,7 @@ class ProformaInvoiceController extends Controller
 {
     public function getPOList()
     {
-        return PurchaseOrderMaster::getProformaInvoicePOList();
+        return PurchaseOrderMaster::getProformaInvoicePOList(2);
     }
     
 }

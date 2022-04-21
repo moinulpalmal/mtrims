@@ -70,7 +70,7 @@ class PurchaseOrderMaster extends Model
         return $poDetail;
     }
 
-    public static function getProformaInvoicePOList()
+    public static function getProformaInvoicePOList($lpd)
     {
         return PurchaseOrderMaster::orderBy('lpd_po_no', 'DESC')
             ->join('buyers','purchase_order_masters.buyer_id','=','buyers.id')
@@ -78,7 +78,7 @@ class PurchaseOrderMaster extends Model
             'purchase_order_masters.po_date','purchase_order_masters.status','purchase_order_masters.pi_generation_activated','purchase_order_masters.id')
             ->where('purchase_order_masters.status', '!=', 'D')
 //            ->where('pi_generation_activated', true)
-            ->where('lpd', 2)
+            ->where('lpd', $lpd)
             ->take(1500)
             ->get();
 
