@@ -24,15 +24,16 @@ class ProformaInvoiceController extends Controller
 
     public function poList(){
 
-        $purchaseOrders= DB::table('purchase_order_masters')->orderBy('lpd_po_no', 'DESC')
-            ->where('status', '!=', 'D')
-//            ->where('pi_generation_activated', true)
-            ->where('lpd', 2)
-            ->take(1500)
-            ->get();
+//         $purchaseOrders= DB::table('purchase_order_masters')->orderBy('lpd_po_no', 'DESC')
+//             ->where('status', '!=', 'D')
+// //            ->where('pi_generation_activated', true)
+//             ->where('lpd', 2)
+//             ->take(1500)
+//             ->get();
 
         //return $purchaseOrderMaster;
-        return view('lpd2.proforma-invoice.po-list', compact('purchaseOrders'));
+        // return view('lpd2.proforma-invoice.po-list', compact('purchaseOrders'));
+        return view('lpd2.proforma-invoice.po-list');
     }
 
     public function poPIList($masterID){
