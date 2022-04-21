@@ -252,7 +252,6 @@
                                 <div class="form-group">
                                     <label for="AmountInWords" class="control-label">Amount in Words</label>
                                     <input type="text" class="form-control" name="amount_in_words" id="AmountInWords" required onkeypress="return /^[a-zA-Z ]+$/.test(event.key)">
-
                                    {{-- <input type="text" name="field" maxlength="8"
                                            title="Only Letters"
                                            value="Type Letters Only"
@@ -951,7 +950,8 @@
                         method:'POST',
                         data:data,
                         success:function(data){
-                            //console.log(data);
+                            console.log(data);
+                            return;
                             if(data)
                             {
                                 swal({
@@ -978,7 +978,7 @@
                             }
                         },
                         error:function(error){
-                            console.log(error);
+                            //console.log(error);
                             swal({
                                 title: "Data Not Saved!",
                                 text: "Please Check Your Data!",
@@ -1292,6 +1292,7 @@
                         data:data,
                         success:function(data){
                             //console.log(data);
+                            //return;
                             if(data)
                             {
                                 swal({

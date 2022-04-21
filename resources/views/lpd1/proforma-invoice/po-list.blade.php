@@ -63,7 +63,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a onclick="refresh()" role="button" tabindex="0" class="tile-refresh">
+                                        <a onclick="loadDataTable()" role="button" tabindex="0" class="tile-refresh">
                                             <i class="fa fa-refresh"></i> Refresh
                                         </a>
                                     </li>
@@ -76,20 +76,20 @@
                     <!-- tile body -->
                     <div class="tile-body">
                         <div class="table-responsive">
-                            <h3 class="text-success text-center">{{Session::get('message')}}</h3>
+                            {{-- <h3 class="text-success text-center">{{Session::get('message')}}</h3> --}}
                             <table class="table table-hover table-bordered table-condensed table-responsive" id="advanced-usage">
                                 <thead>
                                 <tr style="background-color: #1693A5; color: white;">
-                                    <th class="text-center">Sl No.</th>
                                     <th class="text-center">LPD PO No.</th>
                                     <th class="text-center">HTL Job No.</th>
                                     <th class="text-center">Order Date</th>
                                     <th class="text-center">Buyer Name</th>
+                                    <td class="text-center">Is PI Generated?</td>
                                     <th class="text-center">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @php($i = 1)
+                                {{-- @php($i = 1)
                                 @foreach($purchaseOrders as $item)
                                     <tr @if($item->pi_generation_activated == true) class="bg-warning" @else class="bg-success" @endif >
                                         <td class="text-center">{{$i++}}</td>
@@ -101,20 +101,18 @@
                                             <a title="PI List" href="{{route('lpd1.proforma-invoice.po.pi-list',['id'=>$item->id])}}" class="btn btn-info btn-xs">
                                                 <i class="fa fa-eye"></i>
                                             </a>
-                                            {{--<button class="btn btn-info btn-xs" data-toggle="modal" data-target="#user{{$item->id}}" data-options="splash-2 splash-ef-12"><i class="fa fa-eye"></i></button>
-                                            <a onclick="iconChange()" data-id = "{{ $item->id }}" class="EditFactory btn btn-warning btn-xs"><i class="fa fa-edit"></i></a>
-                                            <a class="DeleteFactory btn btn-danger btn-xs" ><i class="fa fa-trash"></i></a>--}}
+                                            
                                         </td>
                                     </tr>
-                                @endforeach
+                                @endforeach --}}
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td class="text-center">Sl No.</td>
                                         <td class="text-center">LPD PO No.</td>
                                         <td class="text-center">HTL Job No.</td>
                                         <td class="text-center">Order Date</td>
                                         <td class="text-center">Buyer Name</td>
+                                        <td class="text-center">Is PI Generated?</td>
                                         <td class="text-center">Action</td>
                                     </tr>
                                 </tfoot>
@@ -132,8 +130,15 @@
 @endsection
 
 @section('pageScripts')
+<script src="{{ asset('/js/common.js') }}"></script>
     <script>
+        var po_list_table = $('#advanced-usage').DataTable({
+            "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
+        });
+
         $(window).load(function(){
+            loadDataTable();
+
             $(document).ready(function() {
                 // Setup - add a text input to each footer cell
                 $('#advanced-usage tfoot td').each( function () {
@@ -141,9 +146,67 @@
                     $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
                 } );
 
-                // DataTable
-                var table = $('#advanced-usage').DataTable({
-                    initComplete: function () {
+
+            } );
+        });
+
+        function loadDataTable() {
+            po_list_table.destroy();
+            var free_table = '<tr><td class="text-center" colspan="6">--- Please Wait... Loading Data  ----</td></tr>';
+            $('#advanced-usage').find('tbody').append(free_table);
+           // $('tbody').html(free_table);
+           po_list_table = $("#advanced-usage").DataTable({
+                ajax: {
+                    url: "/mtrims/public/api/lpd1/proforma-invoice/active-po-list",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "lpd_po_no",
+                        render: function (data) {
+                            return "<p class ='text-center'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "job_year",
+                        render: function (data,type,item) {
+                            return "<p class = 'text-center'>"+'HTL-'+ item.job_year + '/' + item.job_no +"</p>";
+                        }
+                    },
+                    {
+                        data: "po_date",
+                        render: function (data) {
+                            return "<p class ='text-center'>"+ returnBDStringFormatDate(data) +"</p>";
+                        }
+                    },
+                    {
+                        data: "buyer_name",
+                        render: function (data) {
+                            return "<p class ='text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        render: function(row, data, api_item) {
+                            if(api_item.pi_generation_activated === 0){
+                                return "<p class ='text-center'><label class='label label-success'>Yes</label></p>";
+                            }
+                            else if(api_item.pi_generation_activated === 1){
+                                return "<p class ='text-center '><label class='label label-warning'>No</label></p>";
+                            }
+                            else{
+                                return "<p class = 'text-center'></p>";
+                            }
+                        }
+                    },
+                    {
+                        /*data: "id",*/
+                        render: function(data, type, api_item) {
+                            return "<p class='text-center'><a title= 'Show Detail' class= 'ShowDetail btn btn-info btn-xs' data-toggle='modal' data-target='#FactoryModal' data-options='splash-2 splash-ef-12' data-id = "+ api_item.id +"><i class='fa fa-eye'></i></a>" +"</p>"
+                        }
+                    }
+                ],
+
+                initComplete: function () {
                         // Apply the search
                         this.api().columns().every( function () {
                             var that = this;
@@ -156,9 +219,19 @@
                             } );
                         } );
                     }
-                });
 
-            } );
+
+            });
+        }
+
+
+        $('#advanced-usage').on('click',".ShowDetail", function(){
+            var button = $(this);
+            var id = button.attr("data-id");
+            var url = '{{ route('lpd1.proforma-invoice.po.pi-list', ['id' =>  'ListID']) }}';
+            url = url.replace('ListID', id);
+            window.open(url, "_blank");
+
         });
 
         function refresh()
