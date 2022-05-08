@@ -144,6 +144,37 @@ Route::middleware('auth')->group(function (){
         Route::delete('delete-sub-contractor','SubContractorController@deleteSubContractor')->name('delete-sub-contractor');
         //sub-contractor setup
 
+        //unit setup
+        Route::get('unit','UnitController@index')->name('unit');
+        Route::post('save-unit','UnitController@saveUnit')->name('save-unit');
+        Route::post('edit-unit','UnitController@updateUnit')->name('edit-unit');
+        Route::delete('activate-unit','UnitController@activate')->name('unit-activate');
+        Route::delete('de_activate-unit','UnitController@inActivate')->name('unit.de-activate');
+        Route::delete('delete-unit','UnitController@deleteUnit')->name('delete-unit');
+        //unit setup
+
+        //trims type setup
+        Route::get('trims-type','TrimsTypeController@index')->name('trims-type');
+        Route::post('save-trims-type','TrimsTypeController@saveTrims')->name('save-trims-type');
+        Route::post('edit-trims-type','TrimsTypeController@updateTrims')->name('edit-trims-type');
+        Route::delete('delete-trims-type','TrimsTypeController@deleteTrimsType')->name('delete-trims-type');
+        Route::delete('activate-trims-type','TrimsTypeController@activateTrims')->name('activate-trims-type');
+        Route::delete('de-activate-trims-type','TrimsTypeController@deActivateTrims')->name('de-activate-trims-type');
+        //trims type setup
+
+        //pitash
+
+        //product brand setup
+        Route::get('product/brand','ProductBrandController@index')->name('product.brand');
+        Route::post('product/brand/save','ProductBrandController@saveBrand')->name('product.brand.save');
+        Route::post('product/brand/edit','ProductBrandController@updateBrand')->name('product.brand.edit');
+        Route::delete('product/brand/activate','ProductBrandController@activate')->name('product.brand.activate');
+        Route::delete('product/brand/de-activate','ProductBrandController@inActivate')->name('product.brand.de-activate');
+        Route::delete('product/brand/delete','ProductBrandController@fullDelete')->name('product.brand.delete');
+        //product brand setup
+
+        //pitash
+
         //yarn type setup
         Route::get('yarn/type','YarnTypeController@index')->name('yarn.type');
         Route::post('yarn/type/save','YarnTypeController@saveType')->name('yarn.type.save');
@@ -171,24 +202,6 @@ Route::middleware('auth')->group(function (){
         Route::delete('yarn/setup/de-activate','YarnController@inActivate')->name('yarn.setup.de-activate');
         Route::delete('yarn/setup/delete','YarnController@fullDelete')->name('yarn.setup.delete');
         //yarn setup
-
-        //unit setup
-        Route::get('unit','UnitController@index')->name('unit');
-        Route::post('save-unit','UnitController@saveUnit')->name('save-unit');
-        Route::post('edit-unit','UnitController@updateUnit')->name('edit-unit');
-        Route::delete('activate-unit','UnitController@activate')->name('unit-activate');
-        Route::delete('de_activate-unit','UnitController@inActivate')->name('unit.de-activate');
-        Route::delete('delete-unit','UnitController@deleteUnit')->name('delete-unit');
-        //unit setup
-
-        //trims type setup
-        Route::get('trims-type','TrimsTypeController@index')->name('trims-type');
-        Route::post('save-trims-type','TrimsTypeController@saveTrims')->name('save-trims-type');
-        Route::post('edit-trims-type','TrimsTypeController@updateTrims')->name('edit-trims-type');
-        Route::delete('delete-trims-type','TrimsTypeController@deleteTrimsType')->name('delete-trims-type');
-        Route::delete('activate-trims-type','TrimsTypeController@activateTrims')->name('activate-trims-type');
-        Route::delete('de-activate-trims-type','TrimsTypeController@deActivateTrims')->name('de-activate-trims-type');
-        //trims type setup
 
         //bank setup
         Route::get('bank/setup','BankController@index')->name('bank.setup');
