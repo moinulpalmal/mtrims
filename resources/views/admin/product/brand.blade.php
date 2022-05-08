@@ -165,10 +165,10 @@
                     {
                         render: function (data, type, val) {
                             if(val.remarks === null){
-                                return "<p class = 'text-right'></p>";
+                                return "<p class = 'text-left'></p>";
                             }
                             else{
-                                return "<p class = 'text-right'>"+ val.remarks +"</p>";
+                                return "<p class = 'text-left'>"+ val.remarks +"</p>";
                             }
                         }
                     },
