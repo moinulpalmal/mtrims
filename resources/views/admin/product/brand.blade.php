@@ -25,7 +25,7 @@
                         <a href="{{route('admin.home')}}"><i class="fa fa-home"></i> Administration</a>
                     </li>
                     <li>
-                        <a href="{{route('admin.yarn.type')}}"> Product Brand</a>
+                        <a href="{{route('admin.product.brand')}}"> Product Brand</a>
                     </li>
                 </ul>
             </div>
