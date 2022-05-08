@@ -21,6 +21,14 @@
                                 <li class="{{ (request()->is('admin/sub-contractor')) ? 'active' : '' }}"><a href="{{route('admin.sub-contractor')}}"><i class="fa fa-file"></i> <span>Sub-Contractor</span></a></li>
                                 <li class="{{ (request()->is('admin/unit')) ? 'active' : '' }}"><a href="{{route('admin.unit')}}"><i class="fa fa-database"></i> <span>Unit</span></a></li>
                                 <li class="{{ (request()->is('admin/trims-type')) ? 'active' : '' }}"><a href="{{route('admin.trims-type')}}"><i class="fa fa-database"></i> <span>Trims Type</span></a></li>
+                                <li class="{{ (request()->is('admin/product*')) ? 'active open' : '' }}">
+                                    <a role="button" tabindex="0"><i class="fa fa-tag"></i> <span>Product</span></a>
+                                    <ul>
+                                        <li class="{{ (request()->is('admin/product/brand')) ? 'active' : '' }}" ><a href="{{route('admin.product.brand')}}"><i class="fa fa-caret-right"></i> Product Brand</a></li>
+                                        <li class="{{ (request()->is('admin/yarn/count')) ? 'active' : '' }}" ><a href="{{route('admin.yarn.count')}}"><i class="fa fa-caret-right"></i> Product Category</a></li>
+                                        <li class="{{ (request()->is('admin/yarn/setup')) ? 'active' : '' }}" ><a href="{{route('admin.yarn.setup')}}"><i class="fa fa-caret-right"></i> Product Setup</a></li>
+                                    </ul>
+                                </li>
                                 <li class="{{ (request()->is('admin/yarn*')) ? 'active open' : '' }}">
                                     <a role="button" tabindex="0"><i class="fa fa-database"></i> <span>Yarn</span></a>
                                     <ul>
