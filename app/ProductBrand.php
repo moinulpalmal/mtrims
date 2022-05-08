@@ -17,12 +17,12 @@ class ProductBrand extends Model
     }
 
     public static function insertProductBrand($request){
-        $supplier = new ProductBrand();
-        $supplier->name = $request->name;
-        $supplier->remarks = $request->remarks;
-        $supplier->inserted_by = Auth::id();
-        $supplier->status = 'A';
-        if($supplier->save())
+        $model = new ProductBrand();
+        $model->name = $request->name;
+        $model->remarks = $request->remarks;
+        $model->inserted_by = Auth::id();
+        $model->status = 'A';
+        if($model->save())
         {
             return '1';
         }
@@ -30,12 +30,12 @@ class ProductBrand extends Model
     }
 
     public static function updateProductBrand($request){
-        $supplier = ProductBrand::find($request->id);
-        if($supplier != null){
-            $supplier->name = $request->name;
-            $supplier->remarks = $request->remarks;
-            $supplier->last_updated_by = Auth::id();
-            if($supplier->save())
+        $model = ProductBrand::find($request->id);
+        if($model != null){
+            $model->name = $request->name;
+            $model->remarks = $request->remarks;
+            $model->last_updated_by = Auth::id();
+            if($model->save())
             {
                 return '2';
             }
@@ -45,23 +45,23 @@ class ProductBrand extends Model
     }
 
     public static function getBrandDetail($request){
-        $supplier =  ProductBrand::find($request->id);
+        $model =  ProductBrand::find($request->id);
 
-        if($supplier == null)
+        if($model == null)
             return null;
 
         $brandData = array(
-            'id' => $supplier->id,
-            'name' => $supplier->name,
-            'remarks' => $supplier->remarks,
+            'id' => $model->id,
+            'name' => $model->name,
+            'remarks' => $model->remarks,
         );
         return $brandData;
     }
 
     public static function activateProductBrand($request){
-        $supplier = ProductBrand::find($request->id);
-        $supplier->status = 'A';
-        if($supplier->save())
+        $model = ProductBrand::find($request->id);
+        $model->status = 'A';
+        if($model->save())
         {
             return '2';
         }
@@ -69,9 +69,9 @@ class ProductBrand extends Model
     }
 
     public static function inActivateProductBrand($request){
-        $supplier = ProductBrand::find($request->id);
-        $supplier->status = 'I';
-        if($supplier->save())
+        $model = ProductBrand::find($request->id);
+        $model->status = 'I';
+        if($model->save())
         {
             return '2';
         }
@@ -79,9 +79,9 @@ class ProductBrand extends Model
     }
 
     public static function deleteProductBrand($request){
-        $supplier = ProductBrand::find($request->id);
-        $supplier->status = 'D';
-        if($supplier->save())
+        $model = ProductBrand::find($request->id);
+        $model->status = 'D';
+        if($model->save())
         {
             return '2';
         }
