@@ -173,6 +173,15 @@ Route::middleware('auth')->group(function (){
         Route::delete('product/brand/delete','ProductBrandController@fullDelete')->name('product.brand.delete');
         //product brand setup
 
+        //product category setup
+        Route::get('product/category','ProductCategoryController@index')->name('product.category');
+        Route::post('product/category/save','ProductCategoryController@saveCategory')->name('product.category.save');
+        Route::post('product/category/edit','ProductCategoryController@updateCategory')->name('product.category.edit');
+        Route::delete('product/category/activate','ProductCategoryController@activate')->name('product.category.activate');
+        Route::delete('product/category/de-activate','ProductCategoryController@inActivate')->name('product.category.de-activate');
+        Route::delete('product/category/delete','ProductCategoryController@fullDelete')->name('product.category.delete');
+        //product category setup
+
         //pitash
 
         //yarn type setup
