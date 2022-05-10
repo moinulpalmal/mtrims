@@ -182,6 +182,15 @@ Route::middleware('auth')->group(function (){
         Route::delete('product/category/delete','ProductCategoryController@fullDelete')->name('product.category.delete');
         //product category setup
 
+        //product setup
+        Route::get('product/setup','ProductSetupController@index')->name('product.setup');
+        Route::post('product/setup/save','ProductSetupController@saveProduct')->name('product.setup.save');
+        Route::post('product/setup/edit','ProductSetupController@updateProduct')->name('product.setup.edit');
+        Route::delete('product/setup/activate','ProductSetupController@activate')->name('product.setup.activate');
+        Route::delete('product/setup/de-activate','ProductSetupController@inActivate')->name('product.setup.de-activate');
+        Route::delete('product/setup/delete','ProductSetupController@fullDelete')->name('product.setup.delete');
+        //product setup
+
         //pitash
 
         //yarn type setup
