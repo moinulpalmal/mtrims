@@ -24,7 +24,7 @@
                                 <li class="{{ (request()->is('admin/product*')) ? 'active open' : '' }}">
                                     <a role="button" tabindex="0"><i class="fa fa-tag"></i> <span>Product</span></a>
                                     <ul>
-                                        <li class="{{ (request()->is('admin/product/brand')) ? 'active' : '' }}" ><a href="{{route('admin.product.brand')}}"><i class="fa fa-caret-right"></i> Product Brand</a></li>
+                                        {{-- <li class="{{ (request()->is('admin/product/brand')) ? 'active' : '' }}" ><a href="{{route('admin.product.brand')}}"><i class="fa fa-caret-right"></i> Product Brand</a></li> --}}
                                         <li class="{{ (request()->is('admin/product/category')) ? 'active' : '' }}" ><a href="{{route('admin.product.category')}}"><i class="fa fa-caret-right"></i> Product Category</a></li>
                                         <li class="{{ (request()->is('admin/product/setup')) ? 'active' : '' }}" ><a href="{{route('admin.product.setup')}}"><i class="fa fa-caret-right"></i> Product Setup</a></li>
                                     </ul>

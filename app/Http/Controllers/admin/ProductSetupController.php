@@ -13,10 +13,10 @@ class ProductSetupController extends Controller
 {
     public function index()
     {
-        $brands = ProductBrand::orderBy('name')->where('status', '!=', 'D')->get();
+        // $brands = ProductBrand::orderBy('name')->where('status', '!=', 'D')->get();
         $categories = ProductCategory::orderBy('name')->where('status', '!=', 'D')->get();
         $units = Unit::orderBy('full_unit')->where('status', '!=', 'D')->get();
-        return view('admin.product.setup', compact('brands','categories','units'));
+        return view('admin.product.setup', compact('categories','units'));
     }
 
     public function getAllNotDeletedProduct()

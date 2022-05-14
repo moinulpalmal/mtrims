@@ -165,12 +165,14 @@ Route::middleware('auth')->group(function (){
         //pitash
 
         //product brand setup
-        Route::get('product/brand','ProductBrandController@index')->name('product.brand');
-        Route::post('product/brand/save','ProductBrandController@saveBrand')->name('product.brand.save');
-        Route::post('product/brand/edit','ProductBrandController@updateBrand')->name('product.brand.edit');
-        Route::delete('product/brand/activate','ProductBrandController@activate')->name('product.brand.activate');
-        Route::delete('product/brand/de-activate','ProductBrandController@inActivate')->name('product.brand.de-activate');
-        Route::delete('product/brand/delete','ProductBrandController@fullDelete')->name('product.brand.delete');
+
+        // Route::get('product/brand','ProductBrandController@index')->name('product.brand');
+        // Route::post('product/brand/save','ProductBrandController@saveBrand')->name('product.brand.save');
+        // Route::post('product/brand/edit','ProductBrandController@updateBrand')->name('product.brand.edit');
+        // Route::delete('product/brand/activate','ProductBrandController@activate')->name('product.brand.activate');
+        // Route::delete('product/brand/de-activate','ProductBrandController@inActivate')->name('product.brand.de-activate');
+        // Route::delete('product/brand/delete','ProductBrandController@fullDelete')->name('product.brand.delete');
+        
         //product brand setup
 
         //product category setup
