@@ -101,4 +101,29 @@ class Product extends Model
         return '0';
     }
 
+    public static function getProdUnit($req)
+    {
+        // $product = Product::find($req->id);
+        // $product_units = Unit::whereIn('id', $product)->get();
+        // dd($product_units);
+
+
+        $product_units = DB::table('products')
+                ->join('units', 'products.default_unit_id', '=', 'units.id')
+                ->select('units.full_unit AS unit_name', 'units.short_unit','units.id')
+                ->where('products.id',$req->id)
+                ->get();
+
+
+                if($product_units->count() > 0){
+                    $ProductData = array(
+                        'unit_name' => $product_units[0]->unit_name,
+                        'unit_name_id' => $product_units[0]->id,
+                    );
+                    return $ProductData;
+
+                }
+
+    }
+
 }

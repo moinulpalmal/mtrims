@@ -20,7 +20,7 @@ class PurchaseOrderController extends Controller
     public function getPOProductList($id)
     {
         return PurchaseOrderDetail::getPOProductList($id);
-    } 
+    }
 
     public function getPOProductionPlanByPOID($id)
     {

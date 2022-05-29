@@ -57,5 +57,10 @@ class ProductSetupController extends Controller
     {
         return Product::deleteProduct($request);
     }
+
+    public function getProductUnit(Request $req)
+    {
+        return Product::getProdUnit($req);
+    }
     
 }

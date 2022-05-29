@@ -273,6 +273,7 @@ Route::middleware('auth')->group(function (){
     Route::group(['as' => 'admin.','prefix' => 'admin','namespace' => 'Admin','middleware' => ['auth']] , function(){
 
         Route::post('trims-type/get-code','TrimsTypeController@getTrimsCode')->name('trims-type.get-code');
+        Route::post('product-setup/get-product-unit','ProductSetupController@getProductUnit')->name('product-setup.get-product-unit');
     });
     Route::group(['as' => 'lpd2.','prefix' => 'lpd2','namespace' => 'LPD2','middleware' => ['auth','lpd2', 'lpdtwocreatepo']] , function(){
         Route::get('purchase/order/new','PurchaseOrderController@newPurchaseOrder')->name('purchase.order.new');
@@ -304,7 +305,7 @@ Route::middleware('auth')->group(function (){
 
     // LPD 2 Proforma Invoices
 
-// LPD 2 Proforma Invoices
+// LPD 1 Proforma Invoices
 Route::group(['as' => 'lpd1.','prefix' => 'lpd1','namespace' => 'LPD1','middleware' => ['auth','lpd1', 'lpdonepi']] , function(){
     Route::get('proforma-invoice/po-list','ProformaInvoiceController@poList')->name('proforma-invoice.po-list');
     Route::get('proforma-invoice/po/pi-list/{id}','ProformaInvoiceController@poPIList')->name('proforma-invoice.po.pi-list');
@@ -327,7 +328,7 @@ Route::group(['as' => 'lpd1.','prefix' => 'lpd1','namespace' => 'LPD1','middlewa
     Route::get('proforma-invoice','ProformaInvoiceController@index')->name('proforma-invoice');
 });
 
-// LPD 2 Proforma Invoices
+// LPD 1 Proforma Invoices
 
 
     Route::group(['as' => 'lpd2.','prefix' => 'lpd2','namespace' => 'LPD2','middleware' => ['auth','lpd2']] , function(){
@@ -423,6 +424,13 @@ Route::group(['as' => 'lpd1.','prefix' => 'lpd1','namespace' => 'LPD1','middlewa
     Route::post('purchase/order/detail/save','PurchaseOrderController@saveDetail')->name('purchase.order.detail.save');
     Route::delete('purchase/order/detail/delete','PurchaseOrderController@deleteDetail')->name('purchase.order.detail.delete');
     Route::delete('purchase/order/detail/complete','PurchaseOrderController@completeDetail')->name('purchase.order.detail.complete');
+    
+    //consumption plan start
+    Route::post('purchase/order/detail/consumption/save','ConsumptionPlanController@saveConsumption')->name('purchase.order.detail.consumption.save');
+    Route::post('purchase/order/detail/consumption/edit','ConsumptionPlanController@updateConsumptionPlan')->name('purchase.order.detail.consumption.edit');
+    Route::delete('purchase/order/detail/consumption/delete','ConsumptionPlanController@deleteConsumption')->name('purchase.order.detail.consumption.delete');
+     //consumption plan end
+
     //reports
     Route::get('purchase/order/detail/plan-report/{id}','PurchaseOrderController@planReport')->name('purchase.order.detail.plan-report');
     Route::get('purchase/order/detail/achievement-report/{id}','PurchaseOrderController@achievementReport')->name('purchase.order.detail.achievement-report');

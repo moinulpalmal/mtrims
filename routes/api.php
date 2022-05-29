@@ -41,6 +41,7 @@ Route::get('admin/bank-hs-code/not-deleted','admin\HSCodeController@getAllNotDel
 Route::get('production/section-setup/not-deleted','Production\SectionController@getAllNotDeletedSections');
 // Route::post('lpd1/purchase-order/detail/product/{id}','LPD1\API\PurchaseOrderController@getPODetailProduct');
 Route::get('lpd1/purchase-order/detail/product-list/{id}','LPD1\API\PurchaseOrderController@getPOProductList');
+Route::get('lpd1/purchase-order/detail/consumption-plan/{master_id}/{detail_id}','LPD1\API\ConsumptionPlanController@getConsumptionPlanList');
 Route::get('lpd1/purchase-order/detail/production-plan/{id}','LPD1\API\PurchaseOrderController@getPOProductionPlanByPOID');
 Route::get('lpd1/purchase-order/detail/production-achievement/{id}','LPD1\API\PurchaseOrderController@getPOProductionAchievementByPOID');
 Route::get('lpd1/purchase-order/detail/product-current-stock/{id}','LPD1\API\PurchaseOrderController@getPOProductStockByPOID');
