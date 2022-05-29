@@ -1019,7 +1019,7 @@
     </div>
     <!-- PO Update Approval Modal -->
 
-    <!-- PO Item Add Modal -->
+    <!-- PO Consumption Add Modal -->
 
     <div class="modal splash fade" id="ConsumptionAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -1115,7 +1115,7 @@
         </form>
         </div>
     </div>
-    <!-- PO Item Add Modal -->
+    <!-- PO Consumption Add Modal -->
 @endsection
 
 @section('pageScripts')
@@ -1157,7 +1157,6 @@
         $(window).load(function(){
 
             loadPurchaseOrderDetail();
-            // loadConsumptionPlanTable();
             loadPODetailTrim();
             loadPOListDataTable();
             loadPOProductionPlanDataTable();
@@ -1435,7 +1434,7 @@
                     },
                     {
                         render: function(data, type, api_item) {
-                            console.log(api_item);
+                            // console.log(api_item);
                             if(api_item.close_request === 0){
                                 return "<p class='text-center'>"+
                                     @if(Auth::user()->hasTaskPermission('lpdonedeleteitem', Auth::user()->id))
@@ -3017,7 +3016,7 @@
                     },
                     {
                         render: function(data, type, api_item) {
-                            console.log(api_item);
+                            // console.log(api_item);
                             if(api_item.issued_qty == 0){
                                 return "<p class='text-center'><a title= 'Delete' class= 'DeleteConsumption btn btn-danger btn-xs' detail-id ="+ api_item.purchase_order_detail_id +" data-id = "+ api_item.product_id +"><i class='fa fa-trash'></i></a>" +
                                 " &nbsp;" + "<a title= 'Edit' class= 'EditConsumption btn btn-warning btn-xs' detail-id ="+ api_item.purchase_order_detail_id +" data-id = "+ api_item.product_id +"><i class='fa fa-edit'></i></a></p>"
@@ -3041,7 +3040,7 @@
             let master_id = $('#MasterID').val();
             let detail_id = button.attr("detail-id");
             let product_id = button.attr("data-id");
-            alert(product_id);
+            // alert(product_id);
             var url = '{{ route('lpd1.purchase.order.detail.consumption.edit') }}';
             $.ajax({
                 url: url,

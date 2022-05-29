@@ -365,6 +365,12 @@ Route::group(['as' => 'lpd1.','prefix' => 'lpd1','namespace' => 'LPD1','middlewa
     Route::delete('purchase/order/detail/delete','PurchaseOrderController@deleteDetail')->name('purchase.order.detail.delete');
     Route::delete('purchase/order/detail/complete','PurchaseOrderController@completeDetail')->name('purchase.order.detail.complete');
 
+    //consumption plan start
+    Route::post('purchase/order/detail/consumption/save','ConsumptionPlanController@saveConsumption')->name('purchase.order.detail.consumption.save');
+    Route::post('purchase/order/detail/consumption/edit','ConsumptionPlanController@updateConsumptionPlan')->name('purchase.order.detail.consumption.edit');
+    Route::delete('purchase/order/detail/consumption/delete','ConsumptionPlanController@deleteConsumption')->name('purchase.order.detail.consumption.delete');
+     //consumption plan end
+     
     //reports
     Route::get('purchase/order/detail/plan-report/{id}','PurchaseOrderController@planReport')->name('purchase.order.detail.plan-report');
     Route::get('purchase/order/detail/achievement-report/{id}','PurchaseOrderController@achievementReport')->name('purchase.order.detail.achievement-report');
