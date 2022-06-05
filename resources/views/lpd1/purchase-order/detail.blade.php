@@ -1035,14 +1035,14 @@
                             <input type="hidden" name="unit_name_id" id="UnitName" value="">
                             <input type="hidden" id="DetailID" name="item_count" value="">
 
-                            <div class="col-md-4 no-padding">
+                            <div class="col-md-8 no-padding">
                                 <div class="form-group">
                                     <label for="ProductName" class="control-label">Select Product</label>
                                     <select id="ConProductName" class="form-control select2" name="product_name" onchange="javascript:getProductUnit(this)" required = "" style="width: 100%;">
                                         <option value="">- - - Select - - -</option>
                                         @if(!empty($products))
                                             @foreach($products as $product)
-                                                <option value="{{ $product->id }}">{{ $product->name }}</option>
+                                                <option value="{{ $product->id }}">{{ $product->category_name." "."-"." ".$product->name }}</option>
                                             @endforeach
                                         @endif
                                     </select>
@@ -1052,12 +1052,6 @@
                                 <div class="form-group">
                                     <label for="UnitName" class="control-label">Unit</label>
                                     <input type="text" class="form-control" name="unit_name" id="UnitName" placeholder="Unit Name" readonly = "" required="">
-                                </div>
-                            </div>
-                            <div class="col-md-4 no-padding">
-                                <div class="form-group">
-                                    <label for="PlannedQuantity" class="control-label">Planned Quantity</label>
-                                    <input type="number" min="0" class="form-control" name="planned_qty" id="PlannedQuantity" placeholder="Enter Plan Quantity" required="">
                                 </div>
                             </div>
                         </div>
@@ -1074,13 +1068,19 @@
                                     <input type="number" min="0" class="form-control" name="used_qty" id="UsedQty" placeholder="Enter Used Quantity" required="">
                                 </div>
                             </div> --}}
-                            <div class="col-md-4 no-padding">
+                            <div class="col-md-3 no-padding">
+                                <div class="form-group">
+                                    <label for="PlannedQuantity" class="control-label">Planned Quantity</label>
+                                    <input type="number" min="0" class="form-control" name="planned_qty" id="PlannedQuantity" placeholder="Enter Plan Quantity" required="">
+                                </div>
+                            </div>
+                            <div class="col-md-3 no-padding">
                                 <div class="form-group">
                                     <label for="Color" class="control-label">Color</label>
                                     <input type="text" class="form-control" name="con_color" id="Color" placeholder="Enter Color" required="">
                                 </div>
                             </div>
-                            <div class="col-md-8 no-padding">
+                            <div class="col-md-6 no-padding">
                                 <div class="form-group">
                                     <label for="ConRemark" class="control-label">Remark</label>
                                     <input type="text" class="form-control" name="con_remarks" id="ConRemark" maxlength="200"  placeholder="Enter Remark" required="">
@@ -1092,7 +1092,7 @@
                         <a><button class="btn btn-success btn-ef btn-ef-3 btn-ef-3c" type="submit"><i class="fa fa-arrow-right"></i> Save</button></a>
                         <button class="btn btn-lightred btn-ef btn-ef-4 btn-ef-4c" data-dismiss="modal" onclick="consumCloseFunction()"><i class="fa fa-arrow-left"></i> Close</button>
                     </div>
-                
+
                     <table class="table table-hover table-bordered table-condensed table-responsive" id="consumption-plan">
                         <thead>
                         <tr style="background-color: #1693A5; color: white;">
@@ -1108,7 +1108,7 @@
                         </tr>
                         </thead>
                         <tbody>
-        
+
                         </tbody>
                     </table>
             </div>
@@ -1439,7 +1439,7 @@
                                 return "<p class='text-center'>"+
                                     @if(Auth::user()->hasTaskPermission('lpdonedeleteitem', Auth::user()->id))
                                         "<a title= 'Delete' class= 'DeleteDetail btn btn-danger btn-xs' data-id = "+ api_item.item_count +"><i class='fa fa-trash'></i></a>" +
-                                    " &nbsp;" + 
+                                    " &nbsp;" +
                                     @endif
                                         @if(Auth::user()->hasTaskPermission('lpdoneadditem', Auth::user()->id))
                                         "<a title= 'Edit' class= 'EditFactory btn btn-warning btn-xs' data-id = "+ api_item.item_count +"><i class='fa fa-edit'></i></a>" +
@@ -2946,8 +2946,8 @@
                 })
             });
         //Purchase order detail consumption plan save End
-        
-        
+
+
         function loadConsumptionPlanTable(master_id,detail_id)
         {
             po_consumption_plan_table.destroy();
