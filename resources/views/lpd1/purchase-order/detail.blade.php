@@ -1018,6 +1018,104 @@
         </div>
     </div>
     <!-- PO Update Approval Modal -->
+
+    <!-- PO Consumption Add Modal -->
+
+    <div class="modal splash fade" id="ConsumptionAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <form method="post" id="ConsumptionPlan" name="ConsumptionAddForm" enctype="multipart/form-data">
+                {{ csrf_field() }}
+                <div class="modal-content">
+                    <div class="modal-header bg-greensea">
+                        <h3 class="modal-title custom-font text-white">Consumption Plan Form</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row" style="padding: 0px 15px;">
+                            <input type="hidden" id="MasterID" name="purchase_order_master_id" value="{{old('purchase_order_master_id', $id)}}">
+                            <input type="hidden" name="unit_name_id" id="UnitName" value="">
+                            <input type="hidden" id="DetailID" name="item_count" value="">
+
+                            <div class="col-md-4 no-padding">
+                                <div class="form-group">
+                                    <label for="ProductName" class="control-label">Select Product</label>
+                                    <select id="ConProductName" class="form-control select2" name="product_name" onchange="javascript:getProductUnit(this)" required = "" style="width: 100%;">
+                                        <option value="">- - - Select - - -</option>
+                                        @if(!empty($products))
+                                            @foreach($products as $product)
+                                                <option value="{{ $product->id }}">{{ $product->name }}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4 no-padding">
+                                <div class="form-group">
+                                    <label for="UnitName" class="control-label">Unit</label>
+                                    <input type="text" class="form-control" name="unit_name" id="UnitName" placeholder="Unit Name" readonly = "" required="">
+                                </div>
+                            </div>
+                            <div class="col-md-4 no-padding">
+                                <div class="form-group">
+                                    <label for="PlannedQuantity" class="control-label">Planned Quantity</label>
+                                    <input type="number" min="0" class="form-control" name="planned_qty" id="PlannedQuantity" placeholder="Enter Plan Quantity" required="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="padding: 0px 15px;">
+                            {{-- <div class="col-md-4 no-padding">
+                                <div class="form-group">
+                                    <label for="IssueQuantity" class="control-label">Issued Quantity</label>
+                                    <input type="number" min="0" class="form-control" name="issued_qty" id="IssueQuantity" placeholder="Enter Issue Quantity" required="">
+                                </div>
+                            </div>
+                            <div class="col-md-4 no-padding">
+                                <div class="form-group">
+                                    <label for="UsedQty" class="control-label">Used Quantity</label>
+                                    <input type="number" min="0" class="form-control" name="used_qty" id="UsedQty" placeholder="Enter Used Quantity" required="">
+                                </div>
+                            </div> --}}
+                            <div class="col-md-4 no-padding">
+                                <div class="form-group">
+                                    <label for="Color" class="control-label">Color</label>
+                                    <input type="text" class="form-control" name="con_color" id="Color" placeholder="Enter Color" required="">
+                                </div>
+                            </div>
+                            <div class="col-md-8 no-padding">
+                                <div class="form-group">
+                                    <label for="ConRemark" class="control-label">Remark</label>
+                                    <input type="text" class="form-control" name="con_remarks" id="ConRemark" maxlength="200"  placeholder="Enter Remark" required="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a><button class="btn btn-success btn-ef btn-ef-3 btn-ef-3c" type="submit"><i class="fa fa-arrow-right"></i> Save</button></a>
+                        <button class="btn btn-lightred btn-ef btn-ef-4 btn-ef-4c" data-dismiss="modal" onclick="consumCloseFunction()"><i class="fa fa-arrow-left"></i> Close</button>
+                    </div>
+                
+                    <table class="table table-hover table-bordered table-condensed table-responsive" id="consumption-plan">
+                        <thead>
+                        <tr style="background-color: #1693A5; color: white;">
+                            <th class="text-center">Name</th>
+                            <th class="text-center">Unit</th>
+                            {{-- <th class="text-center">Item</th> --}}
+                            <th class="text-center">Plan Qty</th>
+                            <th class="text-center">Issue Qty</th>
+                            <th class="text-center">Used Qty</th>
+                            <th class="text-center">Color</th>
+                            <th class="text-center">Remark</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+        
+                        </tbody>
+                    </table>
+            </div>
+        </form>
+        </div>
+    </div>
+    <!-- PO Consumption Add Modal -->
 @endsection
 
 @section('pageScripts')
@@ -1029,6 +1127,10 @@
         var delete_access = true;
 
         var po_product_list_table = $('#advanced-usage').DataTable({
+            "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
+        });
+
+        var po_consumption_plan_table = $('#consumption-plan').DataTable({
             "lengthMenu": [[10, 50, 100, 200, -1], [10, 50, 100, 200, "All"]]
         });
 
@@ -1081,8 +1183,13 @@
 
         });
 
+        function consumCloseFunction() {
+            $("#ConsumptionPlan").trigger("reset");
+            $('#ConProductName').val('').change();
+        }
+
         // check negative sign
-        $('#FlowCount , #ReviseCount').keypress(function(event) {
+        $('#FlowCount , #ReviseCount','#PlanQuantity','#IssueQuantity','#UsedQty').keypress(function(event) {
             if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
                 event.preventDefault();
             }
@@ -1327,15 +1434,17 @@
                     },
                     {
                         render: function(data, type, api_item) {
+                            // console.log(api_item);
                             if(api_item.close_request === 0){
                                 return "<p class='text-center'>"+
                                     @if(Auth::user()->hasTaskPermission('lpdonedeleteitem', Auth::user()->id))
                                         "<a title= 'Delete' class= 'DeleteDetail btn btn-danger btn-xs' data-id = "+ api_item.item_count +"><i class='fa fa-trash'></i></a>" +
-                                    " &nbsp;" +
+                                    " &nbsp;" + 
                                     @endif
                                         @if(Auth::user()->hasTaskPermission('lpdoneadditem', Auth::user()->id))
                                         "<a title= 'Edit' class= 'EditFactory btn btn-warning btn-xs' data-id = "+ api_item.item_count +"><i class='fa fa-edit'></i></a>" +
-                                    " &nbsp;" +
+                                        " &nbsp;" + "<a title= 'Consumption Plan' class= 'ConsumptionPlanButton btn btn-info btn-xs' data-toggle='modal' data-target='#ConsumptionAddModal' data-options='splash-2 splash-ef-12' data-id = "+ api_item.item_count +"><i class='fa fa-plus'></i></a>" +
+                                        " &nbsp;"
                                     @endif
                                         "</p>";
                             }
@@ -1862,6 +1971,30 @@
             }
         };
 
+        function getProductUnit(_product) {
+            var productId = _product.value;
+            // console.log(productId);
+            var url = '{{ route('admin.product-setup.get-product-unit') }}';
+            $.ajaxSetup({
+                headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'}
+            });
+            if (productId) {
+                $.ajax({
+                    url: url,
+                    data: {id: productId},
+                    type: "POST",
+                    dataType: "json",
+                    success: function (data) {
+                        document.forms["ConsumptionAddForm"]["unit_name"].value = data.unit_name;
+                        document.forms["ConsumptionAddForm"]["unit_name_id"].value = data.unit_name_id;
+
+                    }
+                });
+            } else {
+                document.forms["ConsumptionAddForm"]["unit_name"].value = '';
+            }
+        };
+
 
         $('#ItemAdd').delegate('.qty, .s_qty, .UnitPrice,.Total, .AddAmountPercent, .gross_factor, .GrossUnitPrice','keyup',function(){
             var tr = $(this).parent().parent().parent().parent().parent().parent();
@@ -1917,7 +2050,6 @@
             loadPOConfirmedDeleveryDataTable();
             loadPONotConfirmedDeleveryDataTable();
             clearFormWithoutDelay("ItemAdd");
-            // window.location.href = window.location.href.replace(/#.*$/, '');
         }
 
         function iconChange() {
@@ -1926,6 +2058,7 @@
 
         }
 
+        //Purchase order detail save Start
         $(function(){
             $.ajaxSetup({
                 headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' }
@@ -2002,6 +2135,7 @@
 
             })
         });
+        //Purchase order detail save End
 
         function fillPOUpdateDataToUpdateModal(){
             var FactoryID = po_master_id;
@@ -2695,6 +2829,291 @@
                                         refresh();
                                     }
                                 });
+                            }
+                        },
+                        error:function(error){
+                            console.log(error);
+                            swal({
+                                title: "Operation Unsuccessful!",
+                                text: "Somthing wrong happend please check!",
+                                icon: "error",
+                                button: "Ok!",
+                                className: "myClass",
+                            });
+                        }
+                    })
+                }
+            });
+        });
+
+
+        $('#advanced-usage').on('click',".ConsumptionPlanButton", function(){
+            let button = $(this);
+            let master_id = $('#MasterID').val();
+            let detail_id = button.attr("data-id");
+            document.forms["ConsumptionAddForm"]["item_count"].value = detail_id;
+            document.forms["ConsumptionAddForm"]["purchase_order_master_id"].value = master_id;
+            loadConsumptionPlanTable(master_id,detail_id);
+
+        });
+
+        //Purchase order detail consumption plan save Start
+        $(function(){
+            $.ajaxSetup({
+                    headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' }
+                });
+                $('#ConsumptionPlan').submit(function(e){
+                    e.preventDefault();
+                    let data = $(this).serialize();
+                    var url = '{{ route('lpd1.purchase.order.detail.consumption.save') }}';
+
+                    $.ajax({
+                        url: url,
+                        method:'POST',
+                        data:data,
+                        success:function(data){
+                            if(data === '2')
+                            {
+                                swal({
+                                    title: "Data Updated Successfully!",
+                                    icon: "success",
+                                    button: "Ok!",
+                                }).then(function (value) {
+                                    if(value){
+                                        // clearFormWithoutDelay("ConsumptionPlan");
+                                        let master_id = $('#MasterID').val();
+                                        let detail_id =  document.forms["ConsumptionAddForm"]["item_count"].value
+                                        loadConsumptionPlanTable(master_id, detail_id);
+                                        $('select[name=product_name]').val('').change();
+                                        $('input[name=unit_name]').val('');
+                                        $('input[name=planned_qty]').val('');
+                                        $('input[name=con_color]').val('');
+                                        $('input[name=con_remarks]').val('');
+                                    }
+                                });
+                            }
+                            else if(data === '1')
+                            {
+                                swal({
+                                    title: "Data Inserted Successfully!",
+                                    icon: "success",
+                                    button: "Ok!",
+                                }).then(function (value) {
+                                    if(value){
+                                        // clearFormWithoutDelay("ConsumptionPlan");
+                                        let master_id = $('#MasterID').val();
+                                        let detail_id =  document.forms["ConsumptionAddForm"]["item_count"].value
+                                        loadConsumptionPlanTable(master_id, detail_id);
+                                        $('select[name=product_name]').val('').change();
+                                        $('input[name=unit_name]').val('');
+                                        $('input[name=planned_qty]').val('');
+                                        $('input[name=con_color]').val('');
+                                        $('input[name=con_remarks]').val('');
+                                    }
+                                });
+                            }
+                            // else if(data === '4'){
+                            //     swal({
+                            //         title: "Your Product Alreday Exists!",
+                            //         text: "Please Change Your Data!",
+                            //         icon: "error",
+                            //         button: "Ok!",
+                            //         className: "myClass",
+                            //     });
+                            // }
+                            else{
+                                swal({
+                                    title: "Data Not Saved!",
+                                    text: "Please Check Your Data!",
+                                    icon: "error",
+                                    button: "Ok!",
+                                    className: "myClass",
+                                });
+                            }
+                        },
+                        error:function(error){
+                            console.log(error);
+                            swal({
+                                title: "Data Not Saved!",
+                                text: "Please Check Your Data!",
+                                icon: "error",
+                                button: "Ok!",
+                                className: "myClass",
+                            });
+                        }
+                    })
+
+                })
+            });
+        //Purchase order detail consumption plan save End
+        
+        
+        function loadConsumptionPlanTable(master_id,detail_id)
+        {
+            po_consumption_plan_table.destroy();
+            var free_table = '<tr><td class="text-center" colspan="8">--- Please Wait... Loading Data  ----</td></tr>';
+            $('#consumption-plan').find('tbody').append(free_table);
+           // $('tbody').html(free_table);
+           po_consumption_plan_table = $("#consumption-plan").DataTable({
+                ajax: {
+                    url: "/mtrims/public/api/lpd1/purchase-order/detail/consumption-plan/"+ po_master_id +"/"+detail_id,
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "product_name",
+                        render: function (data) {
+                            return "<p class = 'text-center'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "full_unit",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        data: "planned_qty",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        render: function (data, type, val) {
+                            if(val.issued_qty === null){
+                                return "<p class = 'text-right'></p>";
+                            }
+                            else{
+                                return "<p class = 'text-left'>"+ val.issued_qty +"</p>";
+                            }
+                        }
+                    },
+                    {
+                        render: function (data, type, val) {
+                            if(val.used_qty === null){
+                                return "<p class = 'text-right'></p>";
+                            }
+                            else{
+                                return "<p class = 'text-left'>"+ val.used_qty +"</p>";
+                            }
+                        }
+                    },
+                    {
+                        data: "color",
+                        render: function (data) {
+                            return "<p class = 'text-left'>"+ data +"</p>";
+                        }
+                    },
+                    {
+                        render: function (data, type, val) {
+                            if(val.remarks === null){
+                                return "<p class = 'text-right'></p>";
+                            }
+                            else{
+                                return "<p class = 'text-right'>"+ val.remarks +"</p>";
+                            }
+                        }
+                    },
+                    {
+                        render: function(data, type, api_item) {
+                            // console.log(api_item);
+                            if(api_item.issued_qty == 0){
+                                return "<p class='text-center'><a title= 'Delete' class= 'DeleteConsumption btn btn-danger btn-xs' detail-id ="+ api_item.purchase_order_detail_id +" data-id = "+ api_item.product_id +"><i class='fa fa-trash'></i></a>" +
+                                " &nbsp;" + "<a title= 'Edit' class= 'EditConsumption btn btn-warning btn-xs' detail-id ="+ api_item.purchase_order_detail_id +" data-id = "+ api_item.product_id +"><i class='fa fa-edit'></i></a></p>"
+                            }
+                            else {
+                                return "<p class='text-center'><a title= 'Edit' class= 'EditConsumption btn btn-warning btn-xs' detail-id ="+ api_item.purchase_order_detail_id +" data-id = "+ api_item.product_id +"><i class='fa fa-edit'></i></a></p>"
+                            }
+                            // else{
+                            //     return "<p class = 'text-center'></p>";
+                            // }
+                        }
+
+
+                    }
+                ]
+            });
+        }
+
+        $('#consumption-plan').on('click',".EditConsumption", function(){
+            let button = $(this);
+            let master_id = $('#MasterID').val();
+            let detail_id = button.attr("detail-id");
+            let product_id = button.attr("data-id");
+            // alert(product_id);
+            var url = '{{ route('lpd1.purchase.order.detail.consumption.edit') }}';
+            $.ajax({
+                url: url,
+                method:'POST',
+                data:{product_name: product_id, purchase_order_master_id: master_id, purchase_order_detail_id: detail_id},
+                success:function(data){
+                    // console.log(data);
+                    $('select[name=product_name]').val(data.product_name).change();
+                    $('input[name=unit_name]').val(data.unit_name_id);
+                    $('input[name=planned_qty]').val(data.planned_qty);
+                    $('input[name=con_color]').val(data.con_color);
+                    $('input[name=con_remarks]').val(data.con_remarks);
+                    $('input[name=purchase_order_master_id]').val(data.purchase_order_master_id);
+                    $('input[name=item_count]').val(data.purchase_order_detail_id);
+                    // $('input[name=id]').val(data.id);
+                    console.log();
+                    // moveToTop();
+                },
+                error:function(error){
+                    swal({
+                        title: "No Data Found!",
+                        text: "no data!",
+                        icon: "error",
+                        button: "Ok!",
+                        className: "myClass",
+                    });
+                }
+            })
+
+        });
+
+
+        $('#consumption-plan').on('click',".DeleteConsumption", function(){
+            var button = $(this);
+            var id = button.attr("data-id");
+            let detail_id = button.attr("detail-id");
+            var url = '{{ route('lpd1.purchase.order.detail.consumption.delete') }}';
+            swal({
+                title: 'Are you sure?',
+                text: 'This consumption will be removed permanently!',
+                icon: 'warning',
+                buttons: ["Cancel", "Yes!"],
+            }).then(function(value) {
+                if (value) {
+                    //window.location.href = url;
+                    //console.log(id);
+                    $.ajax({
+                        method:'DELETE',
+                        url: url,
+                        data:{product_name: id, _token: '{{csrf_token()}}', purchase_order_master_id: $('#MasterID').val(), purchase_order_detail_id: detail_id},
+                        success:function(data){
+                            if(data){
+                                // console.log(data);
+                                if(data === '2'){
+                                    swal({
+                                        title: "Operation Successful!",
+                                        icon: "success",
+                                        button: "Ok!",
+                                    }).then(function (value) {
+                                        if(value){
+                                            loadConsumptionPlanTable();
+                                        }
+                                    });
+                                }
+                                else{
+                                    swal({
+                                        title: "Operation Unsuccessful!",
+                                        text: "Something wrong happened please check!",
+                                        icon: "error",
+                                        button: "Ok!",
+                                        className: "myClass",
+                                    });
+                                }
                             }
                         },
                         error:function(error){

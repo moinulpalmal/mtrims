@@ -7,6 +7,7 @@ use App\DeliveryMaster;
 use App\Factory;
 use App\FreeTrimsStock;
 use App\Http\Controllers\Controller;
+use App\Product;
 use App\ProductionPlanDetailSetup;
 use App\ProformaInvoice;
 use App\PurchaseOrderDetail;
@@ -185,13 +186,14 @@ class PurchaseOrderController extends Controller
             }
             else{
 
+                $products = Product::getAllNotDeletedProduct();
                 $buyers = Buyer::getActiveBuyerListForSelect();
                 $factories = Factory::getActiveFactoryListForSelect();
                 $units = Unit::getActiveUnitListForSelect();
                 $trimsTypes = TrimsType::GetLpdActiveTrimsTypesForSelectField(1);
                 $stores = Store::getActiveStoreListForSelectField();
                 // 'purchaseOrderDetails','uniqTrimsTypes', 'currentStocks','deliveryData', 'productionPlanDetails', 'deliveryMasters','proformaInvoices', 'purchaseOrder'
-                return view('lpd1.purchase-order.detail', compact('units','buyers','factories','stores','trimsTypes', 'id'));
+                return view('lpd1.purchase-order.detail', compact('units','buyers','factories','stores','trimsTypes', 'products','id'));
             } // other data
         }
         else{
@@ -250,6 +252,7 @@ class PurchaseOrderController extends Controller
 
         return '0';
     }
+
 
     public function proposeDate(Request $request){
         $purchaseOrderMaster = PurchaseOrderMaster::find($request->purchase_order_master_id);
