@@ -10,10 +10,10 @@ class Product extends Model
 {
     public static function getAllNotDeletedProduct(){
         return DB::table('products')
-            ->join('product_brands','product_brands.id', '=', 'products.product_brand_id')
+            // ->join('product_brands','product_brands.id', '=', 'products.product_brand_id')
             ->join('product_categories','product_categories.id', '=', 'products.product_category_id')
             ->join('units','units.id', '=', 'products.default_unit_id')
-            ->select('product_brands.name AS brand_name', 'product_categories.name AS category_name', 
+            ->select('product_categories.name AS category_name', 
                 'units.full_unit AS unit_name','products.name','products.remarks','products.status','products.id')
             ->where('products.status', '!=', 'D')
             ->orderBy('products.name')
@@ -22,7 +22,7 @@ class Product extends Model
 
     public static function insertProduct($request){
         $model = new Product();
-        $model->product_brand_id = $request->brand_name;
+        // $model->product_brand_id = $request->brand_name;
         $model->product_category_id = $request->category_name;
         $model->default_unit_id = $request->unit_name;
         $model->name = $request->name;
@@ -39,7 +39,7 @@ class Product extends Model
     public static function updateProduct($request){
         $model = Product::find($request->id);
         if($model != null){
-            $model->product_brand_id = $request->brand_name;
+            // $model->product_brand_id = $request->brand_name;
             $model->product_category_id = $request->category_name;
             $model->default_unit_id = $request->unit_name;
             $model->name = $request->name;
@@ -62,7 +62,7 @@ class Product extends Model
 
         $ProductData = array(
             'id' => $model->id,
-            'brand_name' => $model->product_brand_id,
+            // 'brand_name' => $model->product_brand_id,
             'category_name' => $model->product_category_id,
             'unit_name' => $model->default_unit_id,
             'name' => $model->name,
@@ -99,6 +99,31 @@ class Product extends Model
             return '2';
         }
         return '0';
+    }
+
+    public static function getProdUnit($req)
+    {
+        // $product = Product::find($req->id);
+        // $product_units = Unit::whereIn('id', $product)->get();
+        // dd($product_units);
+
+
+        $product_units = DB::table('products')
+                ->join('units', 'products.default_unit_id', '=', 'units.id')
+                ->select('units.full_unit AS unit_name', 'units.short_unit','units.id')
+                ->where('products.id',$req->id)
+                ->get();
+
+
+                if($product_units->count() > 0){
+                    $ProductData = array(
+                        'unit_name' => $product_units[0]->unit_name,
+                        'unit_name_id' => $product_units[0]->id,
+                    );
+                    return $ProductData;
+
+                }
+
     }
 
 }

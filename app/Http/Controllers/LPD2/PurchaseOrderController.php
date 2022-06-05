@@ -5,6 +5,7 @@ namespace App\Http\Controllers\LPD2;
 use App\Buyer;
 use App\Factory;
 use App\Http\Controllers\Controller;
+use App\Product;
 use App\ProductionPlanDetailSetup;
 use App\PurchaseOrderDetail;
 use App\PurchaseOrderMaster;
@@ -184,13 +185,14 @@ class PurchaseOrderController extends Controller
                 return redirect()->route('lpd2.purchase.order');
             }
             else{
+                $products = Product::getAllNotDeletedProduct();
                 $buyers = Buyer::getActiveBuyerListForSelect();
                 $factories = Factory::getActiveFactoryListForSelect();
                 $units = Unit::getActiveUnitListForSelect();
                 $trimsTypes = TrimsType::GetLpdActiveTrimsTypesForSelectField(2);
                 $stores = Store::getActiveStoreListForSelectField();
 
-                return view('lpd2.purchase-order.detail', compact('units','buyers', 'trimsTypes','factories', 'stores', 'id'));
+                return view('lpd2.purchase-order.detail', compact('units','buyers', 'trimsTypes','factories', 'stores', 'products','id'));
             } // other data
         }
         else{

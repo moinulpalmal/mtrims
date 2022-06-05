@@ -49,7 +49,7 @@
                             <input type="hidden" id="HiddenFactoryID" name="id">
                             <div class="row" style="padding: 0px 15px;">
 
-                                <div class="col-md-2 no-padding">
+                                {{-- <div class="col-md-2 no-padding">
                                     <div class="form-group">
                                         <label for="BrandName" class="control-label">Select Brand</label>
                                         <select class="form-control select2" name="brand_name" id="BrandName" style="width: 100% !important; height: 100% !important;"  required>
@@ -61,7 +61,7 @@
                                                 @endif
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-md-2 no-padding">
                                     <div class="form-group">
                                         <label for="CategoryName" class="control-label">Select Category</label>
@@ -94,7 +94,7 @@
                                         <input type="text" class="form-control" name="name" id="ProductName" placeholder="Enter Product Name" required="">
                                     </div>
                                 </div>
-                                <div class="col-md-4 no-padding">
+                                <div class="col-md-6 no-padding">
                                     <div class="form-group">
                                         <label for="Remarks" class="control-label">Remarks</label>
                                         <input type="text" class="form-control" name="remarks" id="Remarks" placeholder="Enter remarks">
@@ -146,7 +146,7 @@
                                 <thead>
                                 <tr style="background-color: #1693A5; color: white;">
                                     <th class="text-center">Name</th>
-                                    <th class="text-center">Brand</th>
+                                    {{-- <th class="text-center">Brand</th> --}}
                                     <th class="text-center">Category</th>
                                     <th class="text-center">Unit</th>
                                     <th class="text-center">Remarks</th>
@@ -191,7 +191,7 @@
 
         function loadDataTable() {
             table.destroy();
-            var free_table = '<tr><td class="text-center" colspan="7">--- Please Wait... Loading Data  ----</td></tr>';
+            var free_table = '<tr><td class="text-center" colspan="6">--- Please Wait... Loading Data  ----</td></tr>';
             $('#advanced-usage').find('tbody').append(free_table);
            // $('tbody').html(free_table);
             table = $("#advanced-usage").DataTable({
@@ -206,12 +206,12 @@
                             return "<p class = 'text-left'>"+ data +"</p>";
                         }
                     },
-                    {
-                        data: "brand_name",
-                        render: function (data) {
-                            return "<p class = 'text-left'>"+ data +"</p>";
-                        }
-                    },
+                    // {
+                    //     data: "brand_name",
+                    //     render: function (data) {
+                    //         return "<p class = 'text-left'>"+ data +"</p>";
+                    //     }
+                    // },
                     {
                         data: "category_name",
                         render: function (data) {
