@@ -786,7 +786,7 @@
                                             <form class="profile-settings">
                                                 <div class="row">
                                                     <div class="form-group col-md-6 legend">
-                                                        <h4><strong>Delivery</strong>Not Approved Delivered Item List</h4>
+                                                        <h4><strong>Delivery</strong> Not Approved Delivered Item List</h4>
                                                         {{--                                                        <p>Your personal account settings</p>--}}
                                                     </div>
                                                     <div class="form-group col-md-6 legend text-right">
@@ -1175,7 +1175,7 @@
                     </div>
                     <div class="modal-footer">
                         <a><button class="btn btn-success btn-ef btn-ef-3 btn-ef-3c" type="submit"><i class="fa fa-arrow-right"></i> Save</button></a>
-                        <button class="btn btn-lightred btn-ef btn-ef-4 btn-ef-4c" data-dismiss="modal" onclick="consumCloseFunction()"><i class="fa fa-arrow-left"></i> Close</button>
+                        <button class="btn btn-lightred btn-ef btn-ef-4 btn-ef-4c" data-dismiss="modal" onclick="consumCloseButton()"><i class="fa fa-arrow-left"></i> Close</button>
                     </div>
                 
                     <table class="table table-hover table-bordered table-condensed table-responsive" id="consumption-plan">
@@ -1497,33 +1497,41 @@
                     ['para', ['ul', 'ol', 'paragraph']],
                     ['height', ['height']]
                 ]
-            });
+            }); 
+
+        });
 
 
-            $(document).ready(function(){
-                // $("#HasFlowCount").click(function () {
-                //     $("#FlowIsCheck").toggle();
-                //     $('input[name="flow_count"]').val('');
-                // });
 
-                $("#HasFlowCount").click(function () {
-                if(document.getElementById("HasFlowCount").checked){
+        $(document).ready(function()
+        {
+            // $("#HasFlowCount").click(function () {
+            //     $("#FlowIsCheck").toggle();
+            //     $('input[name="flow_count"]').val('');
+            // });
 
-                }
-                else{
-                    $('input[name="flow_count"]').val('0');
-                    }
-                });
+            $("#HasFlowCount").click(function () {
+            if(document.getElementById("HasFlowCount").checked){
 
-            });
-
-            // check negative sign
-            $('#FlowCount , #ReviseCount','#PlanQuantity','#IssueQuantity','#UsedQty').keypress(function(event) {
-                if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
-                    event.preventDefault();
+            }
+            else{
+                $('input[name="flow_count"]').val('0');
                 }
             });
 
+        });
+
+        function consumCloseButton() 
+        {
+            $("#ConsumptionPlan").trigger("reset");
+            $('#ConProductName').val('').change();
+        }
+
+        // check negative sign
+        $('#FlowCount , #ReviseCount','#PlanQuantity','#IssueQuantity','#UsedQty').keypress(function(event) {
+            if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
         });
 
 
